@@ -7,10 +7,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -25,6 +23,7 @@ import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherNavGraph
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
@@ -41,6 +40,8 @@ fun MainScreen(
     val navController = rememberNavController()
     val navActions: TeacherNavigationActions =
         remember(navController) { TeacherNavigationActions(navController) }
+    val scaffoldState = rememberScaffoldState()
+    val coroutineScope = rememberCoroutineScope()
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -87,8 +88,17 @@ fun MainScreen(
         }
     }
 
+    val showSnackbar: ((message: String) -> Unit) = remember(scaffoldState) {
+        { message ->
+            coroutineScope.launch {
+                scaffoldState.snackbarHostState.showSnackbar(message = message)
+            }
+        }
+    }
+
     Scaffold(
         modifier = modifier,
+        scaffoldState = scaffoldState,
         topBar = {
             TeacherTopBar(
                 title = title,
@@ -124,6 +134,7 @@ fun MainScreen(
             navController = navController,
             navActions = navActions,
             setTitle = setTitle,
+            showSnackbar = showSnackbar,
             addActionMenuItems = addActionMenuItems,
             removeActionMenuItems = removeActionMenuItems,
             addFabAction = addFabAction,

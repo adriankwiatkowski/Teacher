@@ -29,6 +29,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
     navController: NavController,
     navActions: TeacherNavigationActions,
     setTitle: (String) -> Unit,
+    showSnackbar: (message: String) -> Unit,
     addActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     addFabAction: (fabAction: FabAction) -> Unit,
@@ -78,6 +79,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
         // Observe deletion.
         LaunchedEffect(isSchoolClassDeleted) {
             if (isSchoolClassDeleted) {
+                showSnackbar("Usunięto klasę")
                 navController.navigateUp()
             }
         }
