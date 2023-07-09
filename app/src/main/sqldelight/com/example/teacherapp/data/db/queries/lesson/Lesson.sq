@@ -1,0 +1,28 @@
+getLessonById:
+SELECT
+    l.id,
+    l.name AS 'lesson_name',
+    l.school_class_id,
+    sc.name AS 'school_class_name'
+FROM lesson l
+INNER JOIN school_class sc ON l.school_class_id = sc.id
+WHERE l.id = :id;
+
+getLessonsBySchoolClassId:
+SELECT
+    lesson.id,
+    lesson.name,
+    lesson.school_class_id
+FROM lesson
+INNER JOIN school_class sc ON lesson.school_class_id = sc.id
+WHERE sc.id = :id;
+
+insertLesson:
+INSERT OR FAIL
+INTO lesson
+VALUES (?, ?, ?);
+
+updateLesson:
+UPDATE lesson
+SET name = :name
+WHERE id = :id;

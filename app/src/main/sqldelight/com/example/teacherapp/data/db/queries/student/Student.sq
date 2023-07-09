@@ -1,0 +1,41 @@
+getStudentById:
+SELECT
+    s.id,
+    s.order_in_class,
+    s.school_class_id,
+    s.name,
+    s.surname,
+    s.email,
+    s.phone,
+    sc.name AS 'school_class_name'
+FROM student s
+INNER JOIN school_class sc ON s.school_class_id = sc.id
+WHERE s.id = :id;
+
+getStudentsBySchoolClassId:
+SELECT
+    s.id,
+    s.order_in_class,
+    s.school_class_id,
+    s.name,
+    s.surname,
+    s.email,
+    s.phone
+FROM student s
+INNER JOIN school_class sc ON s.school_class_id = sc.id
+WHERE sc.id = :id;
+
+insertStudent:
+INSERT OR FAIL
+INTO student
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+updateStudent:
+UPDATE student
+SET
+    name = :name,
+    surname = :surname,
+    email = :email,
+    phone = :phone,
+    order_in_class = :order_in_class
+WHERE id = :id;

@@ -1,0 +1,46 @@
+getAllSchoolYears:
+SELECT
+    s.id,
+    s.name AS 'school_year_name',
+    s.term_first_id AS 'term_first_id',
+    s.term_second_id AS 'term_second_id',
+    t1.name AS 'term_first_name',
+    t1.start_date AS 'term_first_start_date',
+    t1.end_date AS 'term_first_end_date',
+    t2.name AS 'term_second_name',
+    t2.start_date AS 'term_second_start_date',
+    t2.end_date AS 'term_second_end_date'
+FROM school_year s
+INNER JOIN term t1 ON s.term_first_id = t1.id
+INNER JOIN term t2 ON s.term_second_id = t2.id;
+
+getSchoolYearById:
+SELECT
+    s.id,
+    s.name AS 'school_year_name',
+    s.term_first_id AS 'term_first_id',
+    s.term_second_id AS 'term_second_id',
+    t1.name AS 'term_first_name',
+    t1.start_date AS 'term_first_start_date',
+    t1.end_date AS 'term_first_end_date',
+    t2.name AS 'term_second_name',
+    t2.start_date AS 'term_second_start_date',
+    t2.end_date AS 'term_second_end_date'
+FROM school_year s
+INNER JOIN term t1 ON s.term_first_id = t1.id
+INNER JOIN term t2 ON s.term_second_id = t2.id
+WHERE s.id = :id;
+
+insertSchoolYear:
+INSERT OR FAIL
+INTO school_year
+VALUES (?, ?, ?, ?);
+
+deleteSchoolYearById:
+DELETE FROM school_year
+WHERE id = :id;
+
+insertTerm:
+INSERT OR FAIL
+INTO term
+VALUES (?, ?, ?, ?);
