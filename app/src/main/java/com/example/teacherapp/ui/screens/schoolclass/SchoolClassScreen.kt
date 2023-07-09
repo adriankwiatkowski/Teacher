@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.SchoolClass
-import com.example.teacherapp.ui.components.ResourceContent
+import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.screens.paramproviders.SchoolClassPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.*
 import com.example.teacherapp.ui.theme.TeacherAppTheme
@@ -34,11 +34,12 @@ fun SchoolClassScreen(
     isLessonsExpanded: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
-    ResourceContent(modifier = modifier, resource = schoolClassResource) { schoolClass ->
+    ResourceContent(
+        modifier = modifier,
+        resource = schoolClassResource,
+    ) { schoolClass ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+            modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(8.dp),
         ) {
             stickyHeader {

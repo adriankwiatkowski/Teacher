@@ -30,8 +30,8 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.ui.components.FormStatusContent
-import com.example.teacherapp.ui.components.ResourceContent
+import com.example.teacherapp.ui.components.form.FormStatusContent
+import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.screens.paramproviders.StudentPreviewParameterProvider
@@ -65,14 +65,15 @@ fun StudentCreatorScreen(
     ResourceContent(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(8.dp),
         resource = studentResource,
     ) { student ->
         FormStatusContent(
             formStatus = formStatus,
             savingText = "Zapisywanie studenta...",
         ) {
-            MainScreen(
+            Content(
+                modifier = Modifier.fillMaxSize(),
                 name = name,
                 onNameChange = onNameChange,
                 surname = surname,
@@ -91,7 +92,7 @@ fun StudentCreatorScreen(
 }
 
 @Composable
-private fun MainScreen(
+private fun Content(
     name: InputField<String>,
     onNameChange: (name: String) -> Unit,
     surname: InputField<String>,

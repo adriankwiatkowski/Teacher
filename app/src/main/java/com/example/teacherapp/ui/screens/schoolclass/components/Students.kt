@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.Card
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -14,9 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.entities.BasicStudent
-import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.components.student.StudentItem
 import com.example.teacherapp.ui.components.utils.expandableItems
 import com.example.teacherapp.ui.screens.paramproviders.BasicStudentsPreviewParameterProvider
@@ -35,6 +33,14 @@ fun LazyListScope.students(
         expanded = expanded,
         items = students,
         key = { student -> "student-${student.id}" },
+        additionalIcon = {
+            IconButton(onClick = onAddStudentClick) {
+                Icon(
+                    imageVector = Icons.Default.AddCircle,
+                    contentDescription = null,
+                )
+            }
+        },
     ) { contentPadding, student ->
         Card(Modifier.fillMaxWidth()) {
             StudentItem(
@@ -50,18 +56,18 @@ fun LazyListScope.students(
         }
     }
 
-    item {
-        Card {
-            TeacherOutlinedButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                onClick = onAddStudentClick,
-            ) {
-                Text(text = "Dodaj ucznia")
-            }
-        }
-    }
+//    item {
+//        Card {
+//            TeacherOutlinedButton(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(8.dp),
+//                onClick = onAddStudentClick,
+//            ) {
+//                Text(text = "Dodaj ucznia")
+//            }
+//        }
+//    }
 }
 
 @Preview

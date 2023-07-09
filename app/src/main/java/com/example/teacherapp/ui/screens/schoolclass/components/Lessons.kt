@@ -5,10 +5,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.entities.BasicLesson
-import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.components.utils.expandableItems
 import com.example.teacherapp.ui.screens.paramproviders.BasicLessonsPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
@@ -35,7 +33,15 @@ fun LazyListScope.lessons(
         label = "Zajęcia (${lessons.size})",
         expanded = expanded,
         items = lessons,
-        key = { lesson -> "lesson-${lesson.id}" }
+        key = { lesson -> "lesson-${lesson.id}" },
+        additionalIcon = {
+            IconButton(onClick = onAddLessonClick) {
+                Icon(
+                    imageVector = Icons.Default.AddCircle,
+                    contentDescription = null,
+                )
+            }
+        },
     ) { contentPadding, lesson ->
         Card(Modifier.fillMaxWidth()) {
             LessonItem(
@@ -45,19 +51,6 @@ fun LazyListScope.lessons(
                 name = lesson.name,
                 onLessonClick = { onLessonClick(lesson.id) },
             )
-        }
-    }
-
-    item {
-        Card {
-            TeacherOutlinedButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                onClick = onAddLessonClick,
-            ) {
-                Text(text = "Dodaj zajęcia")
-            }
         }
     }
 }
@@ -89,7 +82,7 @@ private fun LessonItemPreview(
 ) {
     TeacherAppTheme {
         Surface {
-            val expanded = remember { mutableStateOf(false) }
+            val expanded = remember { mutableStateOf(true) }
             LazyColumn {
                 lessons(
                     lessons = lessons,

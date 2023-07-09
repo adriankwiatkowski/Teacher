@@ -8,9 +8,11 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,13 +22,15 @@ fun LazyListScope.expandableItem(
     label: String,
     expanded: MutableState<Boolean>,
     modifier: Modifier = Modifier,
+    additionalIcon: @Composable (LazyItemScope.() -> Unit)? = null,
     content: @Composable LazyItemScope.(contentPadding: PaddingValues) -> Unit,
 ) {
     expandableItem(
+        modifier = modifier,
         label = label,
         expanded = expanded.value,
         toggleExpanded = { expanded.value = !expanded.value },
-        modifier = modifier,
+        additionalIcon = additionalIcon,
         content = content
     )
 }
@@ -36,6 +40,7 @@ fun LazyListScope.expandableItem(
     expanded: Boolean,
     toggleExpanded: () -> Unit,
     modifier: Modifier = Modifier,
+    additionalIcon: @Composable (LazyItemScope.() -> Unit)? = null,
     content: @Composable LazyItemScope.(contentPadding: PaddingValues) -> Unit,
 ) {
     expandableContent(
@@ -43,6 +48,7 @@ fun LazyListScope.expandableItem(
         label = label,
         expanded = expanded,
         toggleExpanded = toggleExpanded,
+        additionalIcon = additionalIcon,
     ) { contentPadding ->
         item {
             content(contentPadding)
@@ -57,6 +63,7 @@ fun <T> LazyListScope.expandableItems(
     modifier: Modifier = Modifier,
     key: ((item: T) -> Any)? = null,
     contentType: (item: T) -> Any? = { null },
+    additionalIcon: @Composable (LazyItemScope.() -> Unit)? = null,
     itemContent: @Composable LazyItemScope.(
         contentPadding: PaddingValues,
         item: T,
@@ -70,6 +77,7 @@ fun <T> LazyListScope.expandableItems(
         items = items,
         key = key,
         contentType = contentType,
+        additionalIcon = additionalIcon,
         itemContent = itemContent
     )
 }
@@ -82,6 +90,7 @@ fun <T> LazyListScope.expandableItems(
     modifier: Modifier = Modifier,
     key: ((item: T) -> Any)? = null,
     contentType: (item: T) -> Any? = { null },
+    additionalIcon: @Composable (LazyItemScope.() -> Unit)? = null,
     itemContent: @Composable LazyItemScope.(
         contentPadding: PaddingValues,
         item: T,
@@ -92,6 +101,7 @@ fun <T> LazyListScope.expandableItems(
         label = label,
         expanded = expanded,
         toggleExpanded = toggleExpanded,
+        additionalIcon = additionalIcon,
     ) { contentPadding ->
         items(items, key = key, contentType = contentType) { item ->
             itemContent(
@@ -106,6 +116,7 @@ private inline fun LazyListScope.expandableContent(
     label: String,
     expanded: Boolean,
     noinline toggleExpanded: () -> Unit,
+    noinline additionalIcon: @Composable (LazyItemScope.() -> Unit)?,
     modifier: Modifier = Modifier,
     content: LazyListScope.(contentPadding: PaddingValues) -> Unit,
 ) {
@@ -121,6 +132,7 @@ private inline fun LazyListScope.expandableContent(
                         .fillMaxWidth()
                         .clickable(onClick = toggleExpanded)
                         .padding(vertical = 8.dp, horizontal = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                         Icon(
@@ -130,8 +142,13 @@ private inline fun LazyListScope.expandableContent(
                     }
 
                     Text(text = label)
-                }
 
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    if (additionalIcon != null) {
+                        additionalIcon()
+                    }
+                }
             }
         }
     }
@@ -152,6 +169,14 @@ private fun ExpandableLazyItemPreview() {
                 expandableItem(
                     label = "Label",
                     expanded = expanded,
+                    additionalIcon = {
+                        IconButton(onClick = {}) {
+                            Icon(
+                                imageVector = Icons.Default.AddCircle,
+                                contentDescription = null,
+                            )
+                        }
+                    }
                 ) { contentPadding ->
                     Text(
                         modifier = Modifier.padding(contentPadding),

@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.components
+package com.example.teacherapp.ui.components.resource
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

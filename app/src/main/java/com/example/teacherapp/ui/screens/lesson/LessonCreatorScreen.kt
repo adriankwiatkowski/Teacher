@@ -30,8 +30,8 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.Lesson
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.ui.components.FormStatusContent
-import com.example.teacherapp.ui.components.ResourceContent
+import com.example.teacherapp.ui.components.form.FormStatusContent
+import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.screens.lesson.data.LessonFormProvider
@@ -59,7 +59,7 @@ fun LessonCreatorScreen(
     ResourceContent(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(8.dp),
         resource = lessonResource,
     ) { lesson ->
         FormStatusContent(
@@ -67,9 +67,7 @@ fun LessonCreatorScreen(
             savingText = "Zapisywanie przedmiotu...",
         ) {
             Content(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+                modifier = modifier.fillMaxSize(),
                 schoolClassName = schoolClassName,
                 name = name,
                 onNameChange = onNameChange,

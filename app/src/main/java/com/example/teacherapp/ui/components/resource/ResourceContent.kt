@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.components
+package com.example.teacherapp.ui.components.resource
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable

@@ -3,6 +3,7 @@ package com.example.teacherapp.ui.screens.schoolclass
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -11,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.entities.SchoolYear
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
@@ -42,7 +44,7 @@ fun SchoolClassCreatorScreen(
         }
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(8.dp)) {
         ClassNameInput(
             modifier = Modifier.fillMaxWidth(),
             schoolClassName = schoolClassName,

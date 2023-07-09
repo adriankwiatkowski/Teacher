@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -23,7 +24,7 @@ fun StudentScreen(
     modifier: Modifier = Modifier,
 ) {
     MainScreen(
-        modifier = modifier,
+        modifier = modifier.padding(8.dp),
         studentName = "Jan Kowalski",
         email = "jan.kowalski@email.com",
         onEmailClick = {},

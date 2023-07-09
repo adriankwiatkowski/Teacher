@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputDate
 import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.ui.components.FormStatusContent
+import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.screens.schoolyear.components.TermCreator
@@ -60,7 +60,6 @@ fun SchoolYearCreatorScreen(
                         schoolYearNameInput = schoolYearName,
                         onSchoolYearNameChange = onSchoolYearNameChange,
                     )
-                    Divider()
                 }
 
                 itemsIndexed(
