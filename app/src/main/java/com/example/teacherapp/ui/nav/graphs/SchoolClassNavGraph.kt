@@ -94,8 +94,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
         SchoolClassScreen(
             schoolClassResource = schoolClassResource,
             onStudentClick = { studentId ->
-                navActions.navigateToStudentCreatorRoute(
-                    schoolClassId = schoolClassId,
+                navActions.navigateToStudentRoute(
                     studentId = studentId,
                 )
             },

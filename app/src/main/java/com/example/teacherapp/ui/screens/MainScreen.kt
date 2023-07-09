@@ -54,7 +54,8 @@ fun MainScreen(
         when (route) {
             TeacherDestinations.SCHEDULE_ROUTE -> TeacherBottomNavScreen.Calendar
             TeacherDestinations.SCHOOL_CLASSES_ROUTE,
-            TeacherDestinations.SCHOOL_CLASS_ROUTE -> TeacherBottomNavScreen.SchoolClasses
+            TeacherDestinations.SCHOOL_CLASS_ROUTE,
+            TeacherDestinations.STUDENT_ROUTE -> TeacherBottomNavScreen.SchoolClasses
             TeacherDestinations.SETTINGS_ROUTE -> TeacherBottomNavScreen.Settings
             else -> null
         }
@@ -67,6 +68,7 @@ fun MainScreen(
             when (route) {
                 TeacherDestinations.SCHEDULE_ROUTE,
                 TeacherDestinations.SCHOOL_CLASSES_ROUTE,
+                TeacherDestinations.STUDENT_ROUTE,
                 TeacherDestinations.SETTINGS_ROUTE,
                 TeacherDestinations.SCHOOL_CLASS_ROUTE -> true
                 else -> false

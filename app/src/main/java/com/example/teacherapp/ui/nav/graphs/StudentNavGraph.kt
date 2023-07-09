@@ -12,12 +12,32 @@ import androidx.navigation.navArgument
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import com.example.teacherapp.ui.screens.student.StudentCreatorScreen
+import com.example.teacherapp.ui.screens.student.StudentScreen
 import com.example.teacherapp.ui.screens.student.data.StudentCreatorViewModel
 
 fun NavGraphBuilder.addStudentRouteGraph(
     navController: NavController,
     setTitle: (String) -> Unit,
 ) {
+    composable(
+        TeacherDestinations.STUDENT_ROUTE,
+        arguments = listOf(
+            navArgument(TeacherDestinationsArgs.STUDENT_ID_ARG) {
+                type = NavType.LongType
+            }
+        ),
+    ) {
+        // TODO:
+//        LaunchedEffect(schoolClassName) {
+//            setTitle("Klasa ${schoolClassName ?: ""}")
+//        }
+        LaunchedEffect(Unit) {
+            setTitle("Klasa #TODO")
+        }
+
+        StudentScreen()
+    }
+
     composable(
         TeacherDestinations.STUDENT_CREATOR_ROUTE,
         arguments = listOf(
