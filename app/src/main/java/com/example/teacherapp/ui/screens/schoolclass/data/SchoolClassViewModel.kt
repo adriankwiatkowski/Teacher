@@ -45,7 +45,13 @@ class SchoolClassViewModel @Inject constructor(
             when (status) {
                 ResourceStatus.Loading -> Resource.Loading
                 ResourceStatus.Error -> Resource.Error(NoSuchElementException())
-                ResourceStatus.Success -> Resource.Success(schoolClass!!)
+                ResourceStatus.Success -> {
+                    if (schoolClass != null) {
+                        Resource.Success(schoolClass)
+                    } else {
+                        Resource.Error(NoSuchElementException())
+                    }
+                }
             }
         }.stateIn(
             scope = viewModelScope,

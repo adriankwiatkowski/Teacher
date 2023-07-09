@@ -10,23 +10,24 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs.LESSON_ID_ARG
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs.STUDENT_ID_ARG
-import com.example.teacherapp.ui.nav.TeacherScreens.CALENDAR_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.LESSON_CREATOR_SCREEN
+import com.example.teacherapp.ui.nav.TeacherScreens.SCHEDULE_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASSES_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASS_CREATOR_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASS_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_YEAR_CREATOR_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SETTINGS_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.STUDENT_CREATOR_SCREEN
+import com.example.teacherapp.ui.nav.TeacherScreens.STUDENT_SCREEN
 
 enum class TeacherBottomNavScreen(val route: String, val title: String, val icon: ImageVector) {
-    Calendar(TeacherDestinations.CALENDAR_ROUTE, "Plan zajęć", Icons.Default.Person),
+    Calendar(TeacherDestinations.SCHEDULE_ROUTE, "Plan zajęć", Icons.Default.Person),
     SchoolClasses(TeacherDestinations.SCHOOL_CLASSES_ROUTE, "Klasy", Icons.Default.Menu),
     Settings(TeacherDestinations.SETTINGS_ROUTE, "Ustawienia", Icons.Default.Settings),
 }
 
 private object TeacherScreens {
-    const val CALENDAR_SCREEN = "calendar"
+    const val SCHEDULE_SCREEN = "schedule"
 
     const val SCHOOL_CLASSES_SCREEN = "schoolClasses"
     const val SCHOOL_CLASS_SCREEN = "schoolClass"
@@ -34,6 +35,7 @@ private object TeacherScreens {
 
     const val SCHOOL_YEAR_CREATOR_SCREEN = "schoolYearCreator"
 
+    const val STUDENT_SCREEN = "student"
     const val STUDENT_CREATOR_SCREEN = "student-creator"
 
     const val LESSON_CREATOR_SCREEN = "lesson-creator"
@@ -48,7 +50,7 @@ object TeacherDestinationsArgs {
 }
 
 object TeacherDestinations {
-    const val CALENDAR_ROUTE = CALENDAR_SCREEN
+    const val SCHEDULE_ROUTE = SCHEDULE_SCREEN
 
     const val SCHOOL_CLASSES_ROUTE = SCHOOL_CLASSES_SCREEN
     const val SCHOOL_CLASS_ROUTE = "${SCHOOL_CLASS_SCREEN}/{$SCHOOL_CLASS_ID_ARG}"
@@ -56,6 +58,7 @@ object TeacherDestinations {
 
     const val SCHOOL_YEAR_CREATOR_ROUTE = SCHOOL_YEAR_CREATOR_SCREEN
 
+    const val STUDENT_ROUTE = "${STUDENT_SCREEN}/${STUDENT_ID_ARG}"
     const val STUDENT_CREATOR_ROUTE =
         "${STUDENT_CREATOR_SCREEN}/{$SCHOOL_CLASS_ID_ARG}?$STUDENT_ID_ARG={$STUDENT_ID_ARG}"
 
@@ -68,7 +71,7 @@ object TeacherDestinations {
 class TeacherNavigationActions(private val navController: NavController) {
 
     fun navigateToCalendarRoute() {
-        navigateToBottomBar(TeacherDestinations.CALENDAR_ROUTE)
+        navigateToBottomBar(TeacherDestinations.SCHEDULE_ROUTE)
     }
 
     fun navigateToSchoolClassesRoute() {
@@ -85,6 +88,10 @@ class TeacherNavigationActions(private val navController: NavController) {
 
     fun navigateToSchoolYearCreatorRoute() {
         navController.navigate(TeacherDestinations.SCHOOL_YEAR_CREATOR_ROUTE)
+    }
+
+    fun navigateToStudentRoute(studentId: Long) {
+        navController.navigate("$STUDENT_SCREEN/$studentId")
     }
 
     fun navigateToStudentCreatorRoute(schoolClassId: Long, studentId: Long?) {

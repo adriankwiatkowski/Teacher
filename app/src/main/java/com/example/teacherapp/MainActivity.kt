@@ -6,10 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.screens.MainScreen
+import com.example.teacherapp.ui.screens.MainScreenViewModel
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +28,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainScreen()
+                    val viewModel: MainScreenViewModel = hiltViewModel()
+
+                    MainScreen(
+                        title = viewModel.title,
+                        setTitle = { title -> viewModel.title = title },
+                        menuItems = viewModel.actionMenuItems,
+                        addActionMenuItems = viewModel::addActionMenuItems,
+                        removeActionMenuItems = viewModel::removeActionMenuItems,
+                        fabAction = viewModel.fabAction,
+                        addFabAction = viewModel::addFabAction,
+                        removeFabAction = viewModel::removeFabAction,
+                    )
                 }
             }
         }
@@ -34,6 +50,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun DefaultPreview() {
     TeacherAppTheme {
-        MainScreen()
+        MainScreen(
+            title = "",
+            setTitle = {},
+            menuItems = listOf(),
+            addActionMenuItems = {},
+            removeActionMenuItems = {},
+            fabAction = FabAction(
+                onClick = {},
+                imageVector = Icons.Default.AddCircle,
+                contentDescription = null,
+            ),
+            addFabAction = {},
+            removeFabAction = {},
+        )
     }
 }

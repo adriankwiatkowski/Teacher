@@ -1,8 +1,8 @@
 package com.example.teacherapp.ui.nav
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -12,6 +12,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.teacherapp.data.models.ActionMenuItem
+import com.example.teacherapp.data.models.FabAction
+import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.ui.screens.lesson.LessonCreatorScreen
 import com.example.teacherapp.ui.screens.lesson.data.LessonCreatorViewModel
 import com.example.teacherapp.ui.screens.other.ProfileScreen
@@ -32,6 +35,11 @@ fun TeacherNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = TeacherDestinations.SCHOOL_CLASSES_ROUTE,
+    setTitle: (String) -> Unit,
+    addActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
+    removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
+    addFabAction: (fabAction: FabAction) -> Unit,
+    removeFabAction: (fabAction: FabAction) -> Unit,
     navActions: TeacherNavigationActions = remember(navController) {
         TeacherNavigationActions(navController)
     },
@@ -41,7 +49,7 @@ fun TeacherNavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(TeacherDestinations.CALENDAR_ROUTE) {
+        composable(TeacherDestinations.SCHEDULE_ROUTE) {
             ProfileScreen()
         }
 
@@ -64,7 +72,9 @@ fun TeacherNavGraph(
                 onStudentsClick = { schoolClassId ->
                 },
                 onLessonsClick = { schoolClassId ->
-                }
+                },
+                addFabAction = addFabAction,
+                removeFabAction = removeFabAction,
             )
         }
         composable(
@@ -79,6 +89,29 @@ fun TeacherNavGraph(
             val schoolClassResource by schoolClassViewModel.uiState.collectAsStateWithLifecycle()
             val schoolClassId =
                 backStackEntry.arguments!!.getLong(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG)
+
+            LaunchedEffect(schoolClassResource) {
+                val schoolClass = schoolClassResource as? Resource.Success
+                val title = "Klasa ${schoolClass?.data?.name ?: ""}"
+                setTitle(title)
+            }
+
+            DisposableEffect(schoolClassResource) {
+                val menuItems = listOf(
+                    ActionMenuItem(
+                        name = "",
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = null,
+                        onClick = {},
+                    ),
+                )
+
+                addActionMenuItems(menuItems)
+
+                onDispose {
+                    removeActionMenuItems(menuItems)
+                }
+            }
 
             SchoolClassScreen(
                 schoolClassResource = schoolClassResource,
@@ -115,6 +148,10 @@ fun TeacherNavGraph(
             val viewModel = hiltViewModel<SchoolClassCreatorViewModel>()
             val schoolYears by viewModel.schoolYears.collectAsStateWithLifecycle()
 
+            LaunchedEffect(Unit) {
+                setTitle("Stwórz nową klasę")
+            }
+
             SchoolClassCreatorScreen(
                 schoolClassName = viewModel.schoolClassName,
                 onSchoolClassNameChange = viewModel::onSchoolClassNameChange,
@@ -136,6 +173,10 @@ fun TeacherNavGraph(
         composable(TeacherDestinations.SCHOOL_YEAR_CREATOR_ROUTE) {
             val viewModel = hiltViewModel<SchoolYearCreatorViewModel>()
             val form = viewModel.form
+
+            LaunchedEffect(Unit) {
+                setTitle("Stwórz nowy rok szkolny")
+            }
 
             SchoolYearCreatorScreen(
                 termForms = form.termForms,
@@ -167,6 +208,10 @@ fun TeacherNavGraph(
             val studentResource by viewModel.studentResource.collectAsStateWithLifecycle()
             val form = viewModel.form
             val schoolClassName by viewModel.schoolClassName.collectAsStateWithLifecycle()
+
+            LaunchedEffect(schoolClassName) {
+                setTitle("Klasa ${schoolClassName ?: ""}")
+            }
 
             StudentCreatorScreen(
                 studentResource = studentResource,
@@ -202,6 +247,10 @@ fun TeacherNavGraph(
             val lessonResource by viewModel.lessonResource.collectAsStateWithLifecycle()
             val form = viewModel.form
             val schoolClassName by viewModel.schoolClassName.collectAsStateWithLifecycle()
+
+            LaunchedEffect(schoolClassName) {
+                setTitle("Klasa ${schoolClassName ?: ""}")
+            }
 
             LessonCreatorScreen(
                 lessonResource = lessonResource,

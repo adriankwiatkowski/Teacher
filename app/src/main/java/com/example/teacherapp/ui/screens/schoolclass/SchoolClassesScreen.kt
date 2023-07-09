@@ -5,18 +5,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.data.models.entities.BasicSchoolClass
 import com.example.teacherapp.ui.components.form.TeacherChip
-import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.screens.paramproviders.BasicSchoolClassesPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.warning
@@ -28,8 +30,23 @@ fun SchoolClassesScreen(
     onClassClick: (id: Long) -> Unit,
     onStudentsClick: (classId: Long) -> Unit,
     onLessonsClick: (classId: Long) -> Unit,
+    addFabAction: (fabAction: FabAction) -> Unit,
+    removeFabAction: (fabAction: FabAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    DisposableEffect(onAddSchoolClassClick) {
+        val fabAction = FabAction(
+            imageVector = Icons.Default.Add,
+            contentDescription = null,
+            onClick = onAddSchoolClassClick,
+        )
+        addFabAction(fabAction)
+
+        onDispose {
+            removeFabAction(fabAction)
+        }
+    }
+
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -48,15 +65,6 @@ fun SchoolClassesScreen(
         if (classes.isEmpty()) {
             item {
                 EmptyClasses(Modifier.fillMaxWidth())
-            }
-        }
-
-        item {
-            TeacherOutlinedButton(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = { onAddSchoolClassClick() },
-            ) {
-                Text(text = "Dodaj klasę")
             }
         }
     }
@@ -199,6 +207,8 @@ private fun SchoolClassesScreenPreview(
                 onClassClick = {},
                 onStudentsClick = {},
                 onLessonsClick = {},
+                addFabAction = {},
+                removeFabAction = {},
             )
         }
     }
