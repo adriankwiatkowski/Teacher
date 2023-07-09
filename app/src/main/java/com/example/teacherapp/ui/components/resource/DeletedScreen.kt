@@ -3,25 +3,25 @@ package com.example.teacherapp.ui.components.resource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun LoadingScreen(
+fun DeletedScreen(
     modifier: Modifier = Modifier,
-    label: String = "Wczytywnanie...",
+    label: String = "Usunięto dane",
 ) {
-    LoadingScreen(
+    DeletedScreen(
         modifier = modifier,
-        label = { Text(label) },
+        label = { Text(text = label, style = MaterialTheme.typography.h2) },
     )
 }
 
 @Composable
-fun LoadingScreen(
+fun DeletedScreen(
     label: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -30,7 +30,6 @@ fun LoadingScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        CircularProgressIndicator()
         label()
     }
 }

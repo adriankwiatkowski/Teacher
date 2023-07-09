@@ -32,11 +32,14 @@ fun SchoolClassScreen(
     isSchoolYearExpanded: MutableState<Boolean>,
     isStudentsExpanded: MutableState<Boolean>,
     isLessonsExpanded: MutableState<Boolean>,
+    isSchoolClassDeleted: Boolean,
     modifier: Modifier = Modifier,
 ) {
     ResourceContent(
         modifier = modifier,
         resource = schoolClassResource,
+        isDeleted = isSchoolClassDeleted,
+        deletedMessage = "Usunięto pomyślnie klasę."
     ) { schoolClass ->
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
@@ -101,6 +104,32 @@ private fun SchoolClassScreenPreview(
                 isSchoolYearExpanded = isSchoolYearExpanded,
                 isStudentsExpanded = isStudentsExpanded,
                 isLessonsExpanded = isLessonsExpanded,
+                isSchoolClassDeleted = false
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun SchoolClassScreenDeletedPreview() {
+    val isSchoolYearExpanded = remember { mutableStateOf(false) }
+    val isStudentsExpanded = remember { mutableStateOf(false) }
+    val isLessonsExpanded = remember { mutableStateOf(false) }
+
+    TeacherAppTheme {
+        Surface {
+            SchoolClassScreen(
+                modifier = Modifier.fillMaxSize(),
+                schoolClassResource = Resource.Loading,
+                onStudentClick = {},
+                onAddStudentClick = {},
+                onLessonClick = {},
+                onAddLessonClick = {},
+                isSchoolYearExpanded = isSchoolYearExpanded,
+                isStudentsExpanded = isStudentsExpanded,
+                isLessonsExpanded = isLessonsExpanded,
+                isSchoolClassDeleted = true,
             )
         }
     }

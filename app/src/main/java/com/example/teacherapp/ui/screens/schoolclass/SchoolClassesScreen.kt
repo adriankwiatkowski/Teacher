@@ -163,6 +163,7 @@ private fun ClassItem(
                         Icon(Icons.Default.List, contentDescription = "")
                     }
                 ) {
+                    // TODO: Add lesson count.
                     Text("Zajęcia")
                 }
             }

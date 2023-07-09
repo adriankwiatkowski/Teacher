@@ -67,20 +67,28 @@ fun NavGraphBuilder.addSchoolClassGraph(
         val schoolClassResource by schoolClassViewModel.uiState.collectAsStateWithLifecycle()
         val schoolClassId =
             backStackEntry.arguments!!.getLong(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG)
+        val isSchoolClassDeleted = schoolClassViewModel.isSchoolClassDeleted
 
+        // Set title.
         LaunchedEffect(schoolClassResource) {
             val schoolClass = schoolClassResource as? Resource.Success
             val title = "Klasa ${schoolClass?.data?.name ?: ""}"
             setTitle(title)
         }
-
-        DisposableEffect(schoolClassResource) {
+        // Observe deletion.
+        LaunchedEffect(isSchoolClassDeleted) {
+            if (isSchoolClassDeleted) {
+                navController.navigateUp()
+            }
+        }
+        // Add/remove action menu.
+        DisposableEffect(schoolClassViewModel, schoolClassViewModel::deleteSchoolClass) {
             val menuItems = listOf(
                 ActionMenuItem(
                     name = "",
                     imageVector = Icons.Default.Delete,
                     contentDescription = null,
-                    onClick = {},
+                    onClick = schoolClassViewModel::deleteSchoolClass,
                 ),
             )
 
@@ -119,6 +127,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
             isSchoolYearExpanded = schoolClassViewModel.isSchoolYearExpanded,
             isStudentsExpanded = schoolClassViewModel.isStudentsExpanded,
             isLessonsExpanded = schoolClassViewModel.isLessonsExpanded,
+            isSchoolClassDeleted = isSchoolClassDeleted,
         )
     }
 

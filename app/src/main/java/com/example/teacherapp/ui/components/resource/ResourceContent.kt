@@ -9,9 +9,16 @@ import com.example.teacherapp.data.models.Resource
 fun <T> ResourceContent(
     resource: Resource<T>,
     modifier: Modifier = Modifier,
+    isDeleted: Boolean = false,
+    deletedMessage: String = "Usunięto dane",
     content: @Composable (T) -> Unit,
 ) {
     Box(modifier = modifier) {
+        if (isDeleted) {
+            DeletedScreen(label = deletedMessage)
+            return
+        }
+
         when (resource) {
             Resource.Loading -> LoadingScreen()
             is Resource.Error -> ErrorScreen()
