@@ -9,7 +9,9 @@ data class Student(
     val phone: String?,
     val schoolClass: BasicSchoolClass,
     val grades: List<Grade>,
-)
+) {
+    val fullName = "$name $surname"
+}
 
 data class BasicStudent(
     val id: Long,
@@ -19,7 +21,9 @@ data class BasicStudent(
     val surname: String,
     val email: String?,
     val phone: String?,
-)
+) {
+    val fullName = "$name $surname"
+}
 
 fun Student.toBasicStudent() = BasicStudent(
     id = id,

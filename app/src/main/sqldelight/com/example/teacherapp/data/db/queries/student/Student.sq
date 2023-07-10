@@ -39,3 +39,7 @@ SET
     phone = :phone,
     order_in_class = :order_in_class
 WHERE id = :id;
+
+deleteStudentById:
+DELETE FROM student
+WHERE id = :id;

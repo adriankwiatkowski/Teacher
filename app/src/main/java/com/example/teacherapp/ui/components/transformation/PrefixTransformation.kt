@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.components.utils
+package com.example.teacherapp.ui.components.transformation
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle

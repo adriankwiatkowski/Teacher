@@ -87,4 +87,8 @@ class StudentDataSourceImpl(
             )
         }
     }
+
+    override suspend fun deleteStudentById(id: Long): Unit = withContext(dispatchers.io) {
+        queries.deleteStudentById(id)
+    }
 }

@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.entities.BasicLesson
-import com.example.teacherapp.ui.components.utils.expandableItems
+import com.example.teacherapp.ui.components.expandablelist.expandableItems
 import com.example.teacherapp.ui.screens.paramproviders.BasicLessonsPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 

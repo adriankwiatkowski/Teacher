@@ -47,7 +47,11 @@ fun TeacherNavGraph(
         )
         addStudentRouteGraph(
             navController = navController,
+            navActions = navActions,
             setTitle = setTitle,
+            showSnackbar = showSnackbar,
+            addActionMenuItems = addActionMenuItems,
+            removeActionMenuItems = removeActionMenuItems,
         )
         addLessonGraph(
             navController = navController,

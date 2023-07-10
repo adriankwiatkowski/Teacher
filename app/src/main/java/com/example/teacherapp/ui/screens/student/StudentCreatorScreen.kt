@@ -6,7 +6,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -22,6 +21,7 @@ import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -51,7 +51,6 @@ fun StudentCreatorScreen(
     phone: InputField<String?>,
     onPhoneChange: (phone: String) -> Unit,
     isValid: Boolean,
-    schoolClassName: String,
     onAddStudent: () -> Unit,
     onStudentAdd: () -> Unit,
     modifier: Modifier = Modifier,
@@ -83,7 +82,6 @@ fun StudentCreatorScreen(
                 phone = phone,
                 onPhoneChange = onPhoneChange,
                 isSubmitEnabled = isValid,
-                schoolClassName = schoolClassName,
                 submitText = if (student == null) "Dodaj studenta" else "Edytuj studenta",
                 onAddStudent = onAddStudent,
             )
@@ -102,7 +100,6 @@ private fun Content(
     phone: InputField<String?>,
     onPhoneChange: (phone: String) -> Unit,
     isSubmitEnabled: Boolean,
-    schoolClassName: String,
     submitText: String,
     onAddStudent: () -> Unit,
     modifier: Modifier = Modifier,
@@ -111,8 +108,6 @@ private fun Content(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(text = "Klasa $schoolClassName", style = MaterialTheme.typography.h4)
-
         val focusManager = LocalFocusManager.current
         val movePrev = { focusManager.moveFocus(FocusDirection.Up) }
         val moveNext = { focusManager.moveFocus(FocusDirection.Down) }
@@ -133,6 +128,9 @@ private fun Content(
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Text,
         )
+        val nameKeyboardOptions = commonKeyboardOptions.copy(
+            capitalization = KeyboardCapitalization.Words,
+        )
         val commonKeyboardActions = KeyboardActions(onNext = { moveNext() })
 
         FormOutlinedTextField(
@@ -141,7 +139,7 @@ private fun Content(
             onValueChange = { onNameChange(it) },
             label = "Imię",
             leadingIcon = Icons.Default.Person,
-            keyboardOptions = commonKeyboardOptions,
+            keyboardOptions = nameKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
 
@@ -151,7 +149,7 @@ private fun Content(
             onValueChange = { onSurnameChange(it) },
             label = "Nazwisko",
             leadingIcon = Icons.Default.Person,
-            keyboardOptions = commonKeyboardOptions,
+            keyboardOptions = nameKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
 
@@ -216,7 +214,6 @@ private fun StudentCreatorScreenPreview(
                 phone = form.phone,
                 onPhoneChange = {},
                 isValid = form.isValid,
-                schoolClassName = student.schoolClass.name,
                 onAddStudent = {},
                 onStudentAdd = {},
             )

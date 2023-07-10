@@ -58,7 +58,7 @@ object TeacherDestinations {
 
     const val SCHOOL_YEAR_CREATOR_ROUTE = SCHOOL_YEAR_CREATOR_SCREEN
 
-    const val STUDENT_ROUTE = "${STUDENT_SCREEN}/{$STUDENT_ID_ARG}"
+    const val STUDENT_ROUTE = "${STUDENT_SCREEN}/{$SCHOOL_CLASS_ID_ARG}/{$STUDENT_ID_ARG}"
     const val STUDENT_CREATOR_ROUTE =
         "${STUDENT_CREATOR_SCREEN}/{$SCHOOL_CLASS_ID_ARG}?$STUDENT_ID_ARG={$STUDENT_ID_ARG}"
 
@@ -90,8 +90,8 @@ class TeacherNavigationActions(private val navController: NavController) {
         navController.navigate(TeacherDestinations.SCHOOL_YEAR_CREATOR_ROUTE)
     }
 
-    fun navigateToStudentRoute(studentId: Long) {
-        navController.navigate("$STUDENT_SCREEN/$studentId")
+    fun navigateToStudentRoute(schoolClassId: Long, studentId: Long) {
+        navController.navigate("$STUDENT_SCREEN/$schoolClassId/$studentId")
     }
 
     fun navigateToStudentCreatorRoute(schoolClassId: Long, studentId: Long?) {

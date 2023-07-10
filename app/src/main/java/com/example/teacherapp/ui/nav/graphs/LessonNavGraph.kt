@@ -36,7 +36,8 @@ fun NavGraphBuilder.addLessonGraph(
         val schoolClassName by viewModel.schoolClassName.collectAsStateWithLifecycle()
 
         LaunchedEffect(schoolClassName) {
-            setTitle("Klasa ${schoolClassName ?: ""}")
+            val name = schoolClassName.orEmpty()
+            setTitle("Klasa $name")
         }
 
         LessonCreatorScreen(

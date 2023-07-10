@@ -56,7 +56,7 @@ class SchoolClassDataSourceImpl(
             .mapToList()
     }
 
-    override suspend fun insertSchoolClass(schoolYearId: Long, name: String) {
+    override suspend fun insertSchoolClass(schoolYearId: Long, name: String): Unit =
         withContext(dispatchers.io) {
             schoolClassQueries.insertSchoolClass(
                 id = null,
@@ -64,11 +64,8 @@ class SchoolClassDataSourceImpl(
                 name = name,
             )
         }
-    }
 
-    override suspend fun deleteSchoolClassById(id: Long) {
-        withContext(dispatchers.io) {
-            schoolClassQueries.deleteSchoolClassById(id)
-        }
+    override suspend fun deleteSchoolClassById(id: Long): Unit = withContext(dispatchers.io) {
+        schoolClassQueries.deleteSchoolClassById(id)
     }
 }

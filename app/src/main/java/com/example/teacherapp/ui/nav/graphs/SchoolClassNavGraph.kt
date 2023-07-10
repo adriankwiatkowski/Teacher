@@ -65,6 +65,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
         ),
     ) { backStackEntry ->
         val schoolClassViewModel = hiltViewModel<SchoolClassViewModel>()
+
         val schoolClassResource by schoolClassViewModel.uiState.collectAsStateWithLifecycle()
         val schoolClassId =
             backStackEntry.arguments!!.getLong(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG)
@@ -73,7 +74,8 @@ fun NavGraphBuilder.addSchoolClassGraph(
         // Set title.
         LaunchedEffect(schoolClassResource) {
             val schoolClass = schoolClassResource as? Resource.Success
-            val title = "Klasa ${schoolClass?.data?.name ?: ""}"
+            val name = schoolClass?.data?.name.orEmpty()
+            val title = "Klasa $name"
             setTitle(title)
         }
         // Observe deletion.
@@ -105,6 +107,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
             schoolClassResource = schoolClassResource,
             onStudentClick = { studentId ->
                 navActions.navigateToStudentRoute(
+                    schoolClassId = schoolClassId,
                     studentId = studentId,
                 )
             },

@@ -21,4 +21,6 @@ interface StudentDataSource {
         email: String?,
         phone: String?,
     )
+
+    suspend fun deleteStudentById(id: Long)
 }

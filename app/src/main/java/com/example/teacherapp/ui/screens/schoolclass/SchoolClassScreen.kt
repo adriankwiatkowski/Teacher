@@ -1,11 +1,8 @@
 package com.example.teacherapp.ui.screens.schoolclass
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -18,10 +15,11 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.SchoolClass
 import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.screens.paramproviders.SchoolClassPreviewParameterProvider
-import com.example.teacherapp.ui.screens.schoolclass.components.*
+import com.example.teacherapp.ui.screens.schoolclass.components.lessons
+import com.example.teacherapp.ui.screens.schoolclass.components.schoolYearExpandable
+import com.example.teacherapp.ui.screens.schoolclass.components.students
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SchoolClassScreen(
     schoolClassResource: Resource<SchoolClass>,
@@ -45,11 +43,6 @@ fun SchoolClassScreen(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(8.dp),
         ) {
-            stickyHeader {
-                Text("Klasa ${schoolClass.name}", style = MaterialTheme.typography.h4)
-                Spacer(modifier = Modifier.padding(8.dp))
-            }
-
             schoolYearExpandable(
                 schoolYear = schoolClass.schoolYear,
                 expanded = isSchoolYearExpanded,

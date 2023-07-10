@@ -18,7 +18,7 @@ import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.utils.PrefixTransformation
+import com.example.teacherapp.ui.components.transformation.PrefixTransformation
 import com.example.teacherapp.ui.screens.paramproviders.SchoolYearsPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.SchoolYearInput
 import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassFormProvider
