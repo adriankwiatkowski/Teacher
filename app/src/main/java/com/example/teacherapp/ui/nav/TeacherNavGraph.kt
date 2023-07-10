@@ -31,6 +31,7 @@ fun TeacherNavGraph(
         startDestination = startDestination
     ) {
         addScheduleGraph()
+
         addSchoolClassGraph(
             navController = navController,
             navActions = navActions,
@@ -45,6 +46,7 @@ fun TeacherNavGraph(
             navController = navController,
             setTitle = setTitle,
         )
+
         addStudentRouteGraph(
             navController = navController,
             navActions = navActions,
@@ -53,10 +55,20 @@ fun TeacherNavGraph(
             addActionMenuItems = addActionMenuItems,
             removeActionMenuItems = removeActionMenuItems,
         )
+        addStudentNoteRouteGraph(
+            navController = navController,
+            navActions = navActions,
+            setTitle = setTitle,
+            showSnackbar = showSnackbar,
+            addActionMenuItems = addActionMenuItems,
+            removeActionMenuItems = removeActionMenuItems,
+        )
+
         addLessonGraph(
             navController = navController,
             setTitle = setTitle,
         )
+
         addSettingsGraph()
     }
 }

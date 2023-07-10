@@ -102,7 +102,12 @@ fun NavGraphBuilder.addStudentRouteGraph(
             onGradeClick = {},
             onAddGradeClick = {},
             onNoteClick = {},
-            onAddNoteClick = {},
+            onAddNoteClick = {
+                navActions.navigateToStudentNoteFormRoute(
+                    studentId = studentId,
+                    studentNoteId = null,
+                )
+            },
             isGradesExpanded = viewModel.isGradesExpanded,
             isNotesExpanded = viewModel.isNotesExpanded,
             isStudentDeleted = viewModel.isStudentDeleted,

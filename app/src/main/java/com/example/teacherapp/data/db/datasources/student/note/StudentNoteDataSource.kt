@@ -10,6 +10,8 @@ interface StudentNoteDataSource {
 
     fun getStudentNoteById(id: Long): Flow<StudentNote?>
 
+    fun getStudentFullNameNameById(studentId: Long): Flow<String?>
+
     suspend fun insertOrUpdateStudentNote(
         id: Long?,
         studentId: Long,

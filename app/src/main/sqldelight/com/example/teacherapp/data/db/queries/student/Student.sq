@@ -25,6 +25,13 @@ FROM student s
 INNER JOIN school_class sc ON s.school_class_id = sc.id
 WHERE sc.id = :id;
 
+getStudentNameById:
+SELECT
+    s.name,
+    s.surname
+FROM student s
+WHERE s.id = :id;
+
 insertStudent:
 INSERT OR FAIL
 INTO student

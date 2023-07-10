@@ -31,8 +31,10 @@ VALUES (?, ?, ?, ?, ?);
 updateStudentNote:
 UPDATE student_note
 SET
+    student_id = :student_id,
     title = :title,
-    description = :description
+    description = :description,
+    is_negative = :is_negative
 WHERE id = :id;
 
 deleteStudentNoteById:

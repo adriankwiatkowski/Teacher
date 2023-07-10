@@ -18,10 +18,11 @@ class StudentNoteDataSourceImpl(
     private val dispatchers: DispatcherProvider,
 ) : StudentNoteDataSource {
 
-    private val queries = db.studentNoteQueries
+    private val studentNoteQueries = db.studentNoteQueries
+    private val studentQueries = db.studentQueries
 
     override fun getStudentNotesByStudentId(studentId: Long): Flow<List<BasicStudentNote>> {
-        return queries
+        return studentNoteQueries
             .getStudentNotesByStudentId(studentId)
             .asFlow()
             .mapToList()
@@ -31,11 +32,23 @@ class StudentNoteDataSourceImpl(
     }
 
     override fun getStudentNoteById(id: Long): Flow<StudentNote?> {
-        return queries
+        return studentNoteQueries
             .getStudentNoteById(id)
             .asFlow()
             .mapToOneOrNull()
             .map { data -> data.mapToNote() }
+    }
+
+    override fun getStudentFullNameNameById(studentId: Long): Flow<String?> {
+        return studentQueries.getStudentNameById(studentId)
+            .asFlow()
+            .mapToOneOrNull()
+            .map { data ->
+                if (data == null) {
+                    return@map null
+                }
+                "${data.name} ${data.surname}"
+            }
     }
 
     override suspend fun insertOrUpdateStudentNote(
@@ -46,7 +59,7 @@ class StudentNoteDataSourceImpl(
         isNegative: Boolean
     ): Unit = withContext(dispatchers.io) {
         if (id == null) {
-            queries.insertStudentNote(
+            studentNoteQueries.insertStudentNote(
                 id = null,
                 student_id = studentId,
                 title = title,
@@ -54,15 +67,17 @@ class StudentNoteDataSourceImpl(
                 is_negative = isNegative,
             )
         } else {
-            queries.updateStudentNote(
+            studentNoteQueries.updateStudentNote(
                 id = id,
+                student_id = studentId,
                 title = title,
                 description = description,
+                is_negative = isNegative,
             )
         }
     }
 
     override suspend fun deleteStudentNoteById(id: Long): Unit = withContext(dispatchers.io) {
-        queries.deleteStudentNoteById(id)
+        studentNoteQueries.deleteStudentNoteById(id)
     }
 }
