@@ -9,6 +9,8 @@ import com.example.teacherapp.data.db.datasources.schoolyear.SchoolYearDataSourc
 import com.example.teacherapp.data.db.datasources.schoolyear.SchoolYearDataSourceImpl
 import com.example.teacherapp.data.db.datasources.student.StudentDataSource
 import com.example.teacherapp.data.db.datasources.student.StudentDataSourceImpl
+import com.example.teacherapp.data.db.datasources.student.note.StudentNoteDataSource
+import com.example.teacherapp.data.db.datasources.student.note.StudentNoteDataSourceImpl
 import com.example.teacherapp.data.di.DispatcherProvider
 import dagger.Module
 import dagger.Provides
@@ -45,6 +47,15 @@ object DataSourceModule {
         dispatchers: DispatcherProvider,
     ): StudentDataSource {
         return StudentDataSourceImpl(db, dispatchers)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStudentNoteDataSource(
+        db: TeacherDatabase,
+        dispatchers: DispatcherProvider,
+    ): StudentNoteDataSource {
+        return StudentNoteDataSourceImpl(db, dispatchers)
     }
 
     @Provides

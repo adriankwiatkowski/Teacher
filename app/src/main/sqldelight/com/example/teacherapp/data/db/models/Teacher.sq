@@ -5,10 +5,10 @@ import kotlin.Boolean;
 
 CREATE TABLE term
 (
-    id         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    name       TEXT    NOT NULL,
-    start_date TEXT AS LocalDate NOT NULL,
-    end_date   TEXT AS LocalDate NOT NULL
+    id         INTEGER              NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name       TEXT                 NOT NULL,
+    start_date TEXT AS LocalDate    NOT NULL,
+    end_date   TEXT AS LocalDate    NOT NULL
 );
 
 CREATE TABLE school_year
@@ -42,12 +42,12 @@ CREATE TABLE lesson
 
 CREATE TABLE lesson_calendar
 (
-    id         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    lesson_id  INTEGER NOT NULL,
-    `date`     TEXT AS LocalDate NOT NULL,
-    start_time TEXT AS LocalTime NOT NULL,
-    end_time   TEXT AS LocalTime NOT NULL,
-    is_valid   INTEGER AS Boolean NOT NULL,
+    id         INTEGER              NOT NULL PRIMARY KEY AUTOINCREMENT,
+    lesson_id  INTEGER              NOT NULL,
+    `date`     TEXT AS LocalDate    NOT NULL,
+    start_time TEXT AS LocalTime    NOT NULL,
+    end_time   TEXT AS LocalTime    NOT NULL,
+    is_valid   INTEGER AS Boolean   NOT NULL,
 
     FOREIGN KEY (lesson_id) REFERENCES lesson (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -65,50 +65,37 @@ CREATE TABLE student
     FOREIGN KEY (school_class_id) REFERENCES school_class (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- Uwaga
+-- Uwaga/notatka
 CREATE TABLE student_note
 (
-    id          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    student_id  INTEGER NOT NULL,
-    lesson_id   INTEGER NOT NULL,
-    title       TEXT    NOT NULL,
-    description TEXT    NOT NULL,
-    positive    INTEGER NOT NULL,
-
-    FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (lesson_id) REFERENCES lesson (id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- Notatka
-CREATE TABLE student_personal_note
-(
-    id          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    student_id  INTEGER NOT NULL,
-    title       TEXT    NOT NULL,
-    description TEXT    NOT NULL,
+    id          INTEGER             NOT NULL PRIMARY KEY AUTOINCREMENT,
+    student_id  INTEGER             NOT NULL,
+    title       TEXT                NOT NULL,
+    description TEXT                NOT NULL,
+    is_negative INTEGER AS Boolean  NOT NULL, -- Czy uwaga
 
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE grade_lesson
 (
-    id          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    lesson_id   INTEGER NOT NULL,
-    name        TEXT    NOT NULL,
+    id          INTEGER             NOT NULL PRIMARY KEY AUTOINCREMENT,
+    lesson_id   INTEGER             NOT NULL,
+    name        TEXT                NOT NULL,
     description TEXT,
-    `date`      TEXT AS LocalDate NOT NULL,
-    weight      INTEGER NOT NULL,
+    `date`      TEXT AS LocalDate   NOT NULL,
+    weight      INTEGER             NOT NULL,
 
     FOREIGN KEY (lesson_id) REFERENCES lesson (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE grade
 (
-    id              INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    student_id      INTEGER NOT NULL,
-    grade_lesson_id INTEGER NOT NULL,
-    grade           TEXT AS BigDecimal NOT NULL,
-    `date`          TEXT AS LocalDate NOT NULL,
+    id              INTEGER             NOT NULL PRIMARY KEY AUTOINCREMENT,
+    student_id      INTEGER             NOT NULL,
+    grade_lesson_id INTEGER             NOT NULL,
+    grade           TEXT AS BigDecimal  NOT NULL,
+    `date`          TEXT AS LocalDate   NOT NULL,
 
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (grade_lesson_id) REFERENCES grade_lesson (id) ON DELETE CASCADE ON UPDATE CASCADE

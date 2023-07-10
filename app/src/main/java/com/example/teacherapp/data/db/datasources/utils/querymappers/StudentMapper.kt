@@ -2,7 +2,7 @@ package com.example.teacherapp.data.db.datasources.utils.querymappers
 
 import com.example.teacherapp.data.models.entities.BasicStudent
 
-object StudentClassMapper {
+object StudentMapper {
 
     fun mapBasicStudent(
         id: Long,

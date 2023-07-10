@@ -1,0 +1,40 @@
+getStudentNotesByStudentId:
+SELECT
+    sn.id,
+    sn.student_id,
+    sn.title,
+    sn.is_negative,
+    s.name AS 'student_name',
+    s.surname AS 'student_surname'
+FROM student_note sn
+INNER JOIN student s ON sn.student_id = s.id
+WHERE s.id = :student_id;
+
+getStudentNoteById:
+SELECT
+    sn.id,
+    sn.student_id,
+    sn.title,
+    sn.description,
+    sn.is_negative,
+    s.name AS 'student_name',
+    s.surname AS 'student_surname'
+FROM student_note sn
+INNER JOIN student s ON sn.student_id = s.id
+WHERE sn.id = :id;
+
+insertStudentNote:
+INSERT OR FAIL
+INTO student_note
+VALUES (?, ?, ?, ?, ?);
+
+updateStudentNote:
+UPDATE student_note
+SET
+    title = :title,
+    description = :description
+WHERE id = :id;
+
+deleteStudentNoteById:
+DELETE FROM student_note
+WHERE id = :id;

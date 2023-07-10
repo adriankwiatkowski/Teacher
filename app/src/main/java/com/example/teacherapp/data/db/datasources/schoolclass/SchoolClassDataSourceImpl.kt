@@ -3,7 +3,7 @@ package com.example.teacherapp.data.db.datasources.schoolclass
 import com.example.teacherapp.data.db.TeacherDatabase
 import com.example.teacherapp.data.db.datasources.utils.querymappers.LessonMapper
 import com.example.teacherapp.data.db.datasources.utils.querymappers.SchoolClassMapper
-import com.example.teacherapp.data.db.datasources.utils.querymappers.StudentClassMapper
+import com.example.teacherapp.data.db.datasources.utils.querymappers.StudentMapper
 import com.example.teacherapp.data.di.DispatcherProvider
 import com.example.teacherapp.data.models.entities.BasicSchoolClass
 import com.example.teacherapp.data.models.entities.SchoolClass
@@ -29,7 +29,7 @@ class SchoolClassDataSourceImpl(
             .asFlow()
             .mapToOneOrNull()
         val studentsFlow = studentQueries
-            .getStudentsBySchoolClassId(id, StudentClassMapper::mapBasicStudent)
+            .getStudentsBySchoolClassId(id, StudentMapper::mapBasicStudent)
             .asFlow()
             .mapToList()
         val lessonsFlow = lessonQueries

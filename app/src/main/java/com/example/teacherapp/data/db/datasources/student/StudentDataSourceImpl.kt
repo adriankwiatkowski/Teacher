@@ -2,7 +2,7 @@ package com.example.teacherapp.data.db.datasources.student
 
 import com.example.teacherapp.data.db.TeacherDatabase
 import com.example.teacherapp.data.db.datasources.utils.querymappers.SchoolClassMapper
-import com.example.teacherapp.data.db.datasources.utils.querymappers.StudentClassMapper
+import com.example.teacherapp.data.db.datasources.utils.querymappers.StudentMapper
 import com.example.teacherapp.data.di.DispatcherProvider
 import com.example.teacherapp.data.models.entities.BasicStudent
 import com.example.teacherapp.data.models.entities.Student
@@ -44,7 +44,7 @@ class StudentDataSourceImpl(
 
     override fun getStudentsBySchoolClassId(schoolClassId: Long): Flow<List<BasicStudent>> {
         return queries
-            .getStudentsBySchoolClassId(schoolClassId, StudentClassMapper::mapBasicStudent)
+            .getStudentsBySchoolClassId(schoolClassId, StudentMapper::mapBasicStudent)
             .asFlow()
             .mapToList()
     }
