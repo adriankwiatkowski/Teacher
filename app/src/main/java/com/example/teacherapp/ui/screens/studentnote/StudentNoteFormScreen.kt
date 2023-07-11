@@ -33,7 +33,6 @@ import com.example.teacherapp.ui.screens.paramproviders.StudentNotePreviewParame
 import com.example.teacherapp.ui.screens.studentnote.data.StudentNoteFormProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
-
 @Composable
 fun StudentNoteFormScreen(
     studentNoteResource: Resource<StudentNote?>,

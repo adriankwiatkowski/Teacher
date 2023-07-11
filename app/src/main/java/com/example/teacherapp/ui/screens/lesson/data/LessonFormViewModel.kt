@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LessonCreatorViewModel @Inject constructor(
+class LessonFormViewModel @Inject constructor(
     private val lessonDataSource: LessonDataSource,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {

@@ -11,15 +11,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
-import com.example.teacherapp.ui.screens.lesson.LessonCreatorScreen
-import com.example.teacherapp.ui.screens.lesson.data.LessonCreatorViewModel
+import com.example.teacherapp.ui.screens.lesson.LessonFormScreen
+import com.example.teacherapp.ui.screens.lesson.data.LessonFormViewModel
 
 fun NavGraphBuilder.addLessonGraph(
     navController: NavController,
     setTitle: (String) -> Unit,
 ) {
     composable(
-        TeacherDestinations.LESSON_CREATOR_ROUTE,
+        TeacherDestinations.LESSON_FORM_ROUTE,
         arguments = listOf(
             navArgument(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG) {
                 type = NavType.LongType
@@ -30,7 +30,7 @@ fun NavGraphBuilder.addLessonGraph(
             },
         ),
     ) {
-        val viewModel: LessonCreatorViewModel = hiltViewModel()
+        val viewModel: LessonFormViewModel = hiltViewModel()
         val lessonResource by viewModel.lessonResource.collectAsStateWithLifecycle()
         val form = viewModel.form
         val schoolClassName by viewModel.schoolClassName.collectAsStateWithLifecycle()
@@ -40,7 +40,7 @@ fun NavGraphBuilder.addLessonGraph(
             setTitle("Klasa $name")
         }
 
-        LessonCreatorScreen(
+        LessonFormScreen(
             lessonResource = lessonResource,
             formStatus = form.status,
             name = form.name,

@@ -39,7 +39,7 @@ import com.example.teacherapp.ui.screens.student.data.StudentFormProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
 @Composable
-fun StudentCreatorScreen(
+fun StudentFormScreen(
     studentResource: Resource<Student?>,
     formStatus: FormStatus,
     name: InputField<String>,
@@ -189,7 +189,7 @@ private fun Content(
 
 @Preview
 @Composable
-private fun StudentCreatorScreenPreview(
+private fun StudentFormScreenPreview(
     @PreviewParameter(StudentPreviewParameterProvider::class, limit = 1) student: Student,
 ) {
     TeacherAppTheme {
@@ -202,7 +202,7 @@ private fun StudentCreatorScreenPreview(
                 phone = student.phone,
             )
 
-            StudentCreatorScreen(
+            StudentFormScreen(
                 studentResource = Resource.Success(student),
                 formStatus = form.status,
                 name = form.name,

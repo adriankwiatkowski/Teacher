@@ -18,10 +18,10 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
-import com.example.teacherapp.ui.screens.schoolclass.SchoolClassCreatorScreen
+import com.example.teacherapp.ui.screens.schoolclass.SchoolClassFormScreen
 import com.example.teacherapp.ui.screens.schoolclass.SchoolClassScreen
 import com.example.teacherapp.ui.screens.schoolclass.SchoolClassesScreen
-import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassCreatorViewModel
+import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassFormViewModel
 import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassViewModel
 import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassesViewModel
 
@@ -42,7 +42,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
         SchoolClassesScreen(
             classes = schoolClasses,
             onAddSchoolClassClick = {
-                navActions.navigateToSchoolClassCreatorRoute()
+                navActions.navigateToSchoolClassFormRoute()
             },
             onClassClick = { schoolClassId ->
                 navActions.navigateToSchoolClassRoute(schoolClassId = schoolClassId)
@@ -112,19 +112,19 @@ fun NavGraphBuilder.addSchoolClassGraph(
                 )
             },
             onAddStudentClick = {
-                navActions.navigateToStudentCreatorRoute(
+                navActions.navigateToStudentFormRoute(
                     schoolClassId = schoolClassId,
                     studentId = null,
                 )
             },
             onLessonClick = { lessonId ->
-                navActions.navigateToLessonCreatorRoute(
+                navActions.navigateToLessonFormRoute(
                     schoolClassId = schoolClassId,
                     lessonId = lessonId,
                 )
             },
             onAddLessonClick = {
-                navActions.navigateToLessonCreatorRoute(
+                navActions.navigateToLessonFormRoute(
                     schoolClassId = schoolClassId,
                     lessonId = null,
                 )
@@ -136,15 +136,15 @@ fun NavGraphBuilder.addSchoolClassGraph(
         )
     }
 
-    composable(TeacherDestinations.SCHOOL_CLASS_CREATOR_ROUTE) {
-        val viewModel = hiltViewModel<SchoolClassCreatorViewModel>()
+    composable(TeacherDestinations.SCHOOL_CLASS_FORM_ROUTE) {
+        val viewModel = hiltViewModel<SchoolClassFormViewModel>()
         val schoolYears by viewModel.schoolYears.collectAsStateWithLifecycle()
 
         LaunchedEffect(Unit) {
             setTitle("Stwórz nową klasę")
         }
 
-        SchoolClassCreatorScreen(
+        SchoolClassFormScreen(
             schoolClassName = viewModel.schoolClassName,
             onSchoolClassNameChange = viewModel::onSchoolClassNameChange,
             schoolYears = schoolYears,
@@ -154,7 +154,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
             isValid = viewModel.isValid,
             onAddSchoolClass = viewModel::onSubmit,
             onAddSchoolYear = {
-                navActions.navigateToSchoolYearCreatorRoute()
+                navActions.navigateToSchoolYearFormRoute()
             },
             onSchoolClassAdd = {
                 navController.popBackStack()

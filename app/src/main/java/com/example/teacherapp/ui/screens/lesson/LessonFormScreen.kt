@@ -39,7 +39,7 @@ import com.example.teacherapp.ui.screens.paramproviders.LessonPreviewParameterPr
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
 @Composable
-fun LessonCreatorScreen(
+fun LessonFormScreen(
     lessonResource: Resource<Lesson?>,
     formStatus: FormStatus,
     name: InputField<String>,
@@ -136,7 +136,7 @@ private fun Content(
 
 @Preview
 @Composable
-private fun LessonCreatorScreenPreview(
+private fun LessonFormScreenPreview(
     @PreviewParameter(LessonPreviewParameterProvider::class, limit = 2) lesson: Lesson,
 ) {
     TeacherAppTheme {
@@ -147,7 +147,7 @@ private fun LessonCreatorScreenPreview(
                 status = FormStatus.Idle,
             )
 
-            LessonCreatorScreen(
+            LessonFormScreen(
                 lessonResource = Resource.Success(lesson),
                 formStatus = form.status,
                 name = form.name,

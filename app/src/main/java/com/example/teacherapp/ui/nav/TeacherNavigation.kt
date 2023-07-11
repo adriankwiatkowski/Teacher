@@ -11,14 +11,14 @@ import com.example.teacherapp.ui.nav.TeacherDestinationsArgs.LESSON_ID_ARG
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs.STUDENT_ID_ARG
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs.STUDENT_NOTE_ID_ARG
-import com.example.teacherapp.ui.nav.TeacherScreens.LESSON_CREATOR_SCREEN
+import com.example.teacherapp.ui.nav.TeacherScreens.LESSON_FORM_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHEDULE_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASSES_SCREEN
-import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASS_CREATOR_SCREEN
+import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASS_FORM_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASS_SCREEN
-import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_YEAR_CREATOR_SCREEN
+import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_YEAR_FORM_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SETTINGS_SCREEN
-import com.example.teacherapp.ui.nav.TeacherScreens.STUDENT_CREATOR_SCREEN
+import com.example.teacherapp.ui.nav.TeacherScreens.STUDENT_FORM_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.STUDENT_NOTE_FORM_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.STUDENT_SCREEN
 
@@ -32,18 +32,18 @@ private object TeacherScreens {
 
     const val SCHEDULE_SCREEN = "schedule"
 
-    const val SCHOOL_CLASSES_SCREEN = "schoolClasses"
-    const val SCHOOL_CLASS_SCREEN = "schoolClass"
-    const val SCHOOL_CLASS_CREATOR_SCREEN = "schoolClassCreator"
+    const val SCHOOL_CLASSES_SCREEN = "school-classes"
+    const val SCHOOL_CLASS_SCREEN = "school-class"
+    const val SCHOOL_CLASS_FORM_SCREEN = "school-class-form"
 
-    const val SCHOOL_YEAR_CREATOR_SCREEN = "schoolYearCreator"
+    const val SCHOOL_YEAR_FORM_SCREEN = "school-year-form"
 
     const val STUDENT_SCREEN = "student"
-    const val STUDENT_CREATOR_SCREEN = "student-creator"
+    const val STUDENT_FORM_SCREEN = "student-form"
 
     const val STUDENT_NOTE_FORM_SCREEN = "student-note-form"
 
-    const val LESSON_CREATOR_SCREEN = "lesson-creator"
+    const val LESSON_FORM_SCREEN = "lesson-form"
 
     const val SETTINGS_SCREEN = "settings"
 }
@@ -65,19 +65,19 @@ object TeacherDestinations {
 
     const val SCHOOL_CLASSES_ROUTE = SCHOOL_CLASSES_SCREEN
     const val SCHOOL_CLASS_ROUTE = "$SCHOOL_CLASS_SCREEN/{$SCHOOL_CLASS_ID_ARG}"
-    const val SCHOOL_CLASS_CREATOR_ROUTE = SCHOOL_CLASS_CREATOR_SCREEN
+    const val SCHOOL_CLASS_FORM_ROUTE = SCHOOL_CLASS_FORM_SCREEN
 
-    const val SCHOOL_YEAR_CREATOR_ROUTE = SCHOOL_YEAR_CREATOR_SCREEN
+    const val SCHOOL_YEAR_FORM_ROUTE = SCHOOL_YEAR_FORM_SCREEN
 
     const val STUDENT_ROUTE = "$STUDENT_SCREEN/{$SCHOOL_CLASS_ID_ARG}/{$STUDENT_ID_ARG}"
-    const val STUDENT_CREATOR_ROUTE =
-        "$STUDENT_CREATOR_SCREEN/{$SCHOOL_CLASS_ID_ARG}?$STUDENT_ID_ARG={$STUDENT_ID_ARG}"
+    const val STUDENT_FORM_ROUTE =
+        "$STUDENT_FORM_SCREEN/{$SCHOOL_CLASS_ID_ARG}?$STUDENT_ID_ARG={$STUDENT_ID_ARG}"
 
     const val STUDENT_NOTE_FORM_ROUTE =
         "$STUDENT_NOTE_FORM_SCREEN/{$STUDENT_ID_ARG}?$STUDENT_NOTE_ID_ARG={$STUDENT_NOTE_ID_ARG}"
 
-    const val LESSON_CREATOR_ROUTE =
-        "$LESSON_CREATOR_SCREEN/{$SCHOOL_CLASS_ID_ARG}?$LESSON_ID_ARG={$LESSON_ID_ARG}"
+    const val LESSON_FORM_ROUTE =
+        "$LESSON_FORM_SCREEN/{$SCHOOL_CLASS_ID_ARG}?$LESSON_ID_ARG={$LESSON_ID_ARG}"
 
     const val SETTINGS_ROUTE = SETTINGS_SCREEN
 }
@@ -96,21 +96,21 @@ class TeacherNavigationActions(private val navController: NavController) {
         navController.navigate("$SCHOOL_CLASS_SCREEN/$schoolClassId")
     }
 
-    fun navigateToSchoolClassCreatorRoute() {
-        navController.navigate(TeacherDestinations.SCHOOL_CLASS_CREATOR_ROUTE)
+    fun navigateToSchoolClassFormRoute() {
+        navController.navigate(TeacherDestinations.SCHOOL_CLASS_FORM_ROUTE)
     }
 
-    fun navigateToSchoolYearCreatorRoute() {
-        navController.navigate(TeacherDestinations.SCHOOL_YEAR_CREATOR_ROUTE)
+    fun navigateToSchoolYearFormRoute() {
+        navController.navigate(TeacherDestinations.SCHOOL_YEAR_FORM_ROUTE)
     }
 
     fun navigateToStudentRoute(schoolClassId: Long, studentId: Long) {
         navController.navigate("$STUDENT_SCREEN/$schoolClassId/$studentId")
     }
 
-    fun navigateToStudentCreatorRoute(schoolClassId: Long, studentId: Long?) {
+    fun navigateToStudentFormRoute(schoolClassId: Long, studentId: Long?) {
         val query = if (studentId != null) "?$STUDENT_ID_ARG=$studentId" else ""
-        navController.navigate("$STUDENT_CREATOR_SCREEN/$schoolClassId$query")
+        navController.navigate("$STUDENT_FORM_SCREEN/$schoolClassId$query")
     }
 
     fun navigateToStudentNoteFormRoute(studentId: Long, studentNoteId: Long?) {
@@ -118,9 +118,9 @@ class TeacherNavigationActions(private val navController: NavController) {
         navController.navigate("$STUDENT_NOTE_FORM_SCREEN/$studentId$query")
     }
 
-    fun navigateToLessonCreatorRoute(schoolClassId: Long, lessonId: Long?) {
+    fun navigateToLessonFormRoute(schoolClassId: Long, lessonId: Long?) {
         val query = if (lessonId != null) "?$LESSON_ID_ARG=$lessonId" else ""
-        navController.navigate("$LESSON_CREATOR_SCREEN/$schoolClassId$query")
+        navController.navigate("$LESSON_FORM_SCREEN/$schoolClassId$query")
     }
 
     fun navigateToSettingsRoute() {

@@ -16,14 +16,14 @@ import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.screens.schoolyear.components.TermCreator
+import com.example.teacherapp.ui.screens.schoolyear.components.TermForm
 import com.example.teacherapp.ui.screens.schoolyear.data.SchoolYearFormProvider
 import com.example.teacherapp.ui.screens.schoolyear.data.TermForm
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import java.time.LocalDate
 
 @Composable
-fun SchoolYearCreatorScreen(
+fun SchoolYearFormScreen(
     termForms: List<TermForm>,
     schoolYearName: InputField<String>,
     onSchoolYearNameChange: (String) -> Unit,
@@ -66,7 +66,7 @@ fun SchoolYearCreatorScreen(
                     termForms,
                     key = { _, item -> item.formId },
                 ) { index, termForm ->
-                    TeamCreatorItem(
+                    TeamFormItem(
                         modifier = Modifier.fillMaxWidth(),
                         title = "Semestr ${index + 1}",
                         namePrefix = "(${schoolYearName.value}) ",
@@ -118,7 +118,7 @@ private fun SchoolYearNameInput(
 }
 
 @Composable
-private fun TeamCreatorItem(
+private fun TeamFormItem(
     title: String,
     namePrefix: String,
     nameInput: InputField<String>,
@@ -138,7 +138,7 @@ private fun TeamCreatorItem(
                 style = MaterialTheme.typography.h5,
             )
 
-            TermCreator(
+            TermForm(
                 namePrefix = namePrefix,
                 nameInput = nameInput,
                 onNameChange = onNameChange,
@@ -153,12 +153,12 @@ private fun TeamCreatorItem(
 
 @Preview
 @Composable
-private fun SchoolYearCreatorScreenPreview() {
+private fun SchoolYearFormScreenPreview() {
     TeacherAppTheme {
         Surface {
             val form = SchoolYearFormProvider.createDefaultForm()
 
-            SchoolYearCreatorScreen(
+            SchoolYearFormScreen(
                 modifier = Modifier.fillMaxSize(),
                 termForms = form.termForms,
                 schoolYearName = form.schoolYearName,

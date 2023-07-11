@@ -18,9 +18,9 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
-import com.example.teacherapp.ui.screens.student.StudentCreatorScreen
+import com.example.teacherapp.ui.screens.student.StudentFormScreen
 import com.example.teacherapp.ui.screens.student.StudentScreen
-import com.example.teacherapp.ui.screens.student.data.StudentCreatorViewModel
+import com.example.teacherapp.ui.screens.student.data.StudentFormViewModel
 import com.example.teacherapp.ui.screens.student.data.StudentViewModel
 
 fun NavGraphBuilder.addStudentRouteGraph(
@@ -72,7 +72,7 @@ fun NavGraphBuilder.addStudentRouteGraph(
                     imageVector = Icons.Default.Edit,
                     contentDescription = null,
                     onClick = {
-                        navActions.navigateToStudentCreatorRoute(
+                        navActions.navigateToStudentFormRoute(
                             schoolClassId = schoolClassId,
                             studentId = studentId
                         )
@@ -115,7 +115,7 @@ fun NavGraphBuilder.addStudentRouteGraph(
     }
 
     composable(
-        TeacherDestinations.STUDENT_CREATOR_ROUTE,
+        TeacherDestinations.STUDENT_FORM_ROUTE,
         arguments = listOf(
             navArgument(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG) {
                 type = NavType.LongType
@@ -126,7 +126,7 @@ fun NavGraphBuilder.addStudentRouteGraph(
             },
         ),
     ) {
-        val viewModel: StudentCreatorViewModel = hiltViewModel()
+        val viewModel: StudentFormViewModel = hiltViewModel()
         val studentResource by viewModel.studentResource.collectAsStateWithLifecycle()
         val form = viewModel.form
         val schoolClassName by viewModel.schoolClassName.collectAsStateWithLifecycle()
@@ -136,7 +136,7 @@ fun NavGraphBuilder.addStudentRouteGraph(
             setTitle("Klasa $name")
         }
 
-        StudentCreatorScreen(
+        StudentFormScreen(
             studentResource = studentResource,
             formStatus = form.status,
             name = form.name,

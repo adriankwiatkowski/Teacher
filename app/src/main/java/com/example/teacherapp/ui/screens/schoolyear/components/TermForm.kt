@@ -18,7 +18,7 @@ import com.example.teacherapp.utils.format
 import java.time.LocalDate
 
 @Composable
-fun TermCreator(
+fun TermForm(
     namePrefix: String,
     nameInput: InputField<String>,
     onNameChange: (name: String) -> Unit,
@@ -81,7 +81,7 @@ private fun TermDatePicker(
 
 @Preview
 @Composable
-private fun TermScreenPreview() {
+private fun TermFormPreview() {
     TeacherAppTheme {
         Surface {
             val startDate = LocalDate.now()
@@ -91,7 +91,7 @@ private fun TermScreenPreview() {
             val endYear = startYear + 1
             val name = "Rok $startYear/$endYear I"
 
-            TermCreator(
+            TermForm(
                 namePrefix = "",
                 nameInput = InputField(name),
                 onNameChange = {},

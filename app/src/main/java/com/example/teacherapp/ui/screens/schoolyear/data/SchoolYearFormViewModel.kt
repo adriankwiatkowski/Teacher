@@ -15,7 +15,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
-class SchoolYearCreatorViewModel @Inject constructor(
+class SchoolYearFormViewModel @Inject constructor(
     private val schoolYearDataSource: SchoolYearDataSource,
 ) : ViewModel() {
 

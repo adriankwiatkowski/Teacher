@@ -25,7 +25,7 @@ import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassFormProvide
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
 @Composable
-fun SchoolClassCreatorScreen(
+fun SchoolClassFormScreen(
     schoolClassName: InputField<String>,
     onSchoolClassNameChange: (String) -> Unit,
     schoolYears: List<SchoolYear>,
@@ -88,13 +88,13 @@ private fun ClassNameInput(
 
 @Preview
 @Composable
-private fun SchoolClassCreatorScreenPreview(
+private fun SchoolClassFormScreenPreview(
     @PreviewParameter(SchoolYearsPreviewParameterProvider::class) schoolYears: List<SchoolYear>,
 ) {
     TeacherAppTheme {
         Surface {
             val form = SchoolClassFormProvider.createDefaultForm()
-            SchoolClassCreatorScreen(
+            SchoolClassFormScreen(
                 modifier = Modifier.fillMaxSize(),
                 schoolClassName = form.schoolClassName,
                 onSchoolClassNameChange = {},

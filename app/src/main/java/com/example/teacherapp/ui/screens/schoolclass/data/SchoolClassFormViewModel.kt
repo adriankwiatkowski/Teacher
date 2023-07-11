@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SchoolClassCreatorViewModel @Inject constructor(
+class SchoolClassFormViewModel @Inject constructor(
     schoolYearDataSource: SchoolYearDataSource,
     private val schoolClassDataSource: SchoolClassDataSource,
 ) : ViewModel() {
