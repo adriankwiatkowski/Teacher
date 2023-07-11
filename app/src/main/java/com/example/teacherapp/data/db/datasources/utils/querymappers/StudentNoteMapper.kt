@@ -10,8 +10,6 @@ object StudentNoteMapper {
     fun GetStudentNotesByStudentId.mapToBasicNote() = BasicStudentNote(
         id = id,
         studentId = student_id,
-        studentName = student_name,
-        studentSurname = student_surname,
         title = title,
         isNegative = is_negative,
     )

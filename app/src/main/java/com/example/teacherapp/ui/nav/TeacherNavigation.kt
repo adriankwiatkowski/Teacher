@@ -50,13 +50,13 @@ private object TeacherScreens {
 
 object TeacherDestinationsArgs {
 
-    const val SCHOOL_CLASS_ID_ARG = "schoolClassId"
+    const val SCHOOL_CLASS_ID_ARG = "school-class-id"
 
-    const val STUDENT_ID_ARG = "studentId"
+    const val STUDENT_ID_ARG = "student-id"
 
-    const val STUDENT_NOTE_ID_ARG = "studentId"
+    const val STUDENT_NOTE_ID_ARG = "student-note-id"
 
-    const val LESSON_ID_ARG = "lessonId"
+    const val LESSON_ID_ARG = "lesson-id"
 }
 
 object TeacherDestinations {

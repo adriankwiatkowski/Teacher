@@ -8,8 +8,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.data.db.datasources.student.StudentDataSource
+import com.example.teacherapp.data.db.datasources.student.note.StudentNoteDataSource
 import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.ResourceStatus
+import com.example.teacherapp.data.models.entities.BasicStudentNote
 import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,10 +23,13 @@ import javax.inject.Inject
 @HiltViewModel
 class StudentViewModel @Inject constructor(
     private val studentDataSource: StudentDataSource,
+    private val studentNoteDataSource: StudentNoteDataSource,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val resourceStatus = MutableStateFlow<ResourceStatus>(ResourceStatus.Loading)
+    private val studentNotesResourceStatus =
+        MutableStateFlow<ResourceStatus>(ResourceStatus.Loading)
 
     private val studentId = savedStateHandle.getStateFlow(STUDENT_ID_KEY, 0L)
 
@@ -44,7 +49,23 @@ class StudentViewModel @Inject constructor(
             resourceStatus.value = ResourceStatus.Error
         }
 
-    val uiState: StateFlow<Resource<Student>> =
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val studentNotes: Flow<List<BasicStudentNote>> = studentId
+        .flatMapLatest { id ->
+            studentNotesResourceStatus.value = ResourceStatus.Loading
+            studentNoteDataSource.getStudentNotesByStudentId(id).also {
+                studentNotesResourceStatus.value = ResourceStatus.Success
+            }
+        }
+        .catch { e ->
+            if (e !is SQLiteException) {
+                throw e
+            }
+
+            studentNotesResourceStatus.value = ResourceStatus.Error
+        }
+
+    val studentResource: StateFlow<Resource<Student>> =
         combine(resourceStatus, student) { status, student ->
             when (status) {
                 ResourceStatus.Loading -> Resource.Loading
@@ -56,6 +77,19 @@ class StudentViewModel @Inject constructor(
                         Resource.Error(NoSuchElementException())
                     }
                 }
+            }
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = Resource.Loading,
+        )
+
+    val studentNotesResource: StateFlow<Resource<List<BasicStudentNote>>> =
+        combine(resourceStatus, studentNotes) { status, studentNotes ->
+            when (status) {
+                ResourceStatus.Loading -> Resource.Loading
+                ResourceStatus.Error -> Resource.Error(NoSuchElementException())
+                ResourceStatus.Success -> Resource.Success(studentNotes)
             }
         }.stateIn(
             scope = viewModelScope,

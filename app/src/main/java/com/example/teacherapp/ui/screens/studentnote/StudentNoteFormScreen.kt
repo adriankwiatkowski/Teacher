@@ -136,7 +136,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = description,
             onValueChange = { onDescriptionChange(it) },
-            label = "Telefon",
+            label = "Opis",
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )

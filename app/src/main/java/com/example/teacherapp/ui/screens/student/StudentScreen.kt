@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.data.models.entities.BasicStudentNote
 import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.screens.paramproviders.StudentPreviewParameterProvider
@@ -28,11 +29,12 @@ import com.example.teacherapp.ui.theme.TeacherAppTheme
 @Composable
 fun StudentScreen(
     studentResource: Resource<Student>,
+    studentNotesResource: Resource<List<BasicStudentNote>>,
     onEmailClick: (email: String) -> Unit,
     onPhoneClick: (phone: String) -> Unit,
     onGradeClick: () -> Unit,
     onAddGradeClick: () -> Unit,
-    onNoteClick: () -> Unit,
+    onNoteClick: (noteId: Long) -> Unit,
     onAddNoteClick: () -> Unit,
     isGradesExpanded: MutableState<Boolean>,
     isNotesExpanded: MutableState<Boolean>,
@@ -68,6 +70,7 @@ fun StudentScreen(
             toggleGradesExpanded = { isGradesExpanded.value = !isGradesExpanded.value },
             onGradeClick = onGradeClick,
             onAddGradeClick = onAddGradeClick,
+            studentNotes = (studentNotesResource as? Resource.Success)?.data ?: emptyList(),
             isNotesExpanded = isNotesExpanded.value,
             toggleNotesExpanded = { isNotesExpanded.value = !isNotesExpanded.value },
             onNoteClick = onNoteClick,
@@ -87,15 +90,16 @@ private fun MainScreen(
     toggleGradesExpanded: () -> Unit,
     onGradeClick: () -> Unit,
     onAddGradeClick: () -> Unit,
+    studentNotes: List<BasicStudentNote>,
     isNotesExpanded: Boolean,
     toggleNotesExpanded: () -> Unit,
-    onNoteClick: () -> Unit,
+    onNoteClick: (noteId: Long) -> Unit,
     onAddNoteClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(8.dp)
+        contentPadding = PaddingValues(8.dp),
     ) {
         item {
             Text(studentName)
@@ -115,6 +119,7 @@ private fun MainScreen(
         )
 
         notes(
+            studentNotes = studentNotes,
             expanded = isNotesExpanded,
             toggleExpanded = toggleNotesExpanded,
             onNoteClick = onNoteClick,
@@ -160,6 +165,7 @@ private fun StudentScreenPreview(
         Surface {
             StudentScreen(
                 studentResource = Resource.Success(student),
+                studentNotesResource = Resource.Loading,
                 onEmailClick = {},
                 onPhoneClick = {},
                 onGradeClick = {},
@@ -184,6 +190,7 @@ private fun StudentScreenDeletedPreview() {
         Surface {
             StudentScreen(
                 studentResource = Resource.Loading,
+                studentNotesResource = Resource.Loading,
                 onEmailClick = {},
                 onPhoneClick = {},
                 onGradeClick = {},

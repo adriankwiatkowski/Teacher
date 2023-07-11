@@ -148,7 +148,7 @@ class StudentNoteFormViewModel @Inject constructor(
     }
 
     companion object {
-        private const val STUDENT_NOTE_ID_KEY = TeacherDestinationsArgs.STUDENT_NOTE_ID_ARG
         private const val STUDENT_ID_KEY = TeacherDestinationsArgs.STUDENT_ID_ARG
+        private const val STUDENT_NOTE_ID_KEY = TeacherDestinationsArgs.STUDENT_NOTE_ID_ARG
     }
 }

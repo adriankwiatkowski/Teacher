@@ -43,7 +43,8 @@ fun NavGraphBuilder.addStudentRouteGraph(
         ),
     ) { backStackEntry ->
         val viewModel = hiltViewModel<StudentViewModel>()
-        val studentResource by viewModel.uiState.collectAsStateWithLifecycle()
+        val studentResource by viewModel.studentResource.collectAsStateWithLifecycle()
+        val studentNotesResource by viewModel.studentNotesResource.collectAsStateWithLifecycle()
 
         val args = backStackEntry.arguments!!
         val schoolClassId = args.getLong(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG)
@@ -97,11 +98,17 @@ fun NavGraphBuilder.addStudentRouteGraph(
 
         StudentScreen(
             studentResource = studentResource,
+            studentNotesResource = studentNotesResource,
             onEmailClick = {},
             onPhoneClick = {},
             onGradeClick = {},
             onAddGradeClick = {},
-            onNoteClick = {},
+            onNoteClick = { studentNoteId ->
+                navActions.navigateToStudentNoteFormRoute(
+                    studentId = studentId,
+                    studentNoteId = studentNoteId,
+                )
+            },
             onAddNoteClick = {
                 navActions.navigateToStudentNoteFormRoute(
                     studentId = studentId,

@@ -3,9 +3,7 @@ SELECT
     sn.id,
     sn.student_id,
     sn.title,
-    sn.is_negative,
-    s.name AS 'student_name',
-    s.surname AS 'student_surname'
+    sn.is_negative
 FROM student_note sn
 INNER JOIN student s ON sn.student_id = s.id
 WHERE s.id = :student_id;

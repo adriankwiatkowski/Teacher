@@ -23,8 +23,6 @@ class BasicStudentNotePreviewParameterProvider : PreviewParameterProvider<BasicS
         BasicStudentNote(
             id = 1L,
             studentId = 1L,
-            studentName = "Jan",
-            studentSurname = "Kowalski",
             title = "Przeszkadzanie na zajęciach",
             isNegative = true,
         )
