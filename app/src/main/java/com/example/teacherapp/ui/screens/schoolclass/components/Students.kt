@@ -1,5 +1,6 @@
 package com.example.teacherapp.ui.screens.schoolclass.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -42,18 +43,17 @@ fun LazyListScope.students(
             }
         },
     ) { contentPadding, student ->
-        Card(Modifier.fillMaxWidth()) {
-            StudentItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(contentPadding),
-                name = student.name,
-                surname = student.surname,
-                email = student.email,
-                phone = student.phone,
-                onClick = { onStudentClick(student.id) }
-            )
-        }
+        StudentItem(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = { onStudentClick(student.id) })
+                .padding(contentPadding)
+                .minimumInteractiveComponentSize(),
+            name = student.name,
+            surname = student.surname,
+            email = student.email,
+            phone = student.phone,
+        )
     }
 
 //    item {

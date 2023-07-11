@@ -1,7 +1,10 @@
 package com.example.teacherapp.ui.components.expandablelist
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -19,30 +22,27 @@ fun ExpandableLabel(
     contentDescription: String?,
     modifier: Modifier = Modifier,
 ) {
-    Card(modifier = modifier) {
-        Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = toggleExpanded)
-                    .padding(vertical = 8.dp, horizontal = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                    Icon(
-                        icon,
-                        contentDescription = contentDescription,
-                    )
-                }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = toggleExpanded)
+            .padding(vertical = 8.dp, horizontal = 4.dp)
+            .minimumInteractiveComponentSize(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            Icon(
+                icon,
+                contentDescription = contentDescription,
+            )
+        }
 
-                Text(text = label)
+        Text(text = label)
 
-                Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.weight(1f))
 
-                if (additionalIcon != null) {
-                    additionalIcon()
-                }
-            }
+        if (additionalIcon != null) {
+            additionalIcon()
         }
     }
 }

@@ -34,25 +34,29 @@ fun LazyListScope.grades(
             }
         }
     ) { contentPadding ->
-        Column(modifier = Modifier.padding(contentPadding)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(contentPadding),
+        ) {
             ExpandableItem(
                 label = "Matematyka (4,50)",
                 expanded = true,
                 toggleExpanded = {},
             ) { contentPadding ->
-                Card(modifier = Modifier.fillMaxWidth()) {
-                    FlowRow(
-                        modifier = Modifier.padding(contentPadding),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        GradeBox(grade = "3", onClick = onGradeClick)
-                        GradeBox(grade = "4", onClick = onGradeClick)
-                        GradeBox(grade = "5", onClick = onGradeClick)
-                        GradeBox(grade = "6", onClick = onGradeClick)
-                        GradeBox(grade = "3+", onClick = onGradeClick)
-                        GradeBox(grade = "4+", onClick = onGradeClick)
-                        GradeBox(grade = "6-", onClick = onGradeClick)
-                    }
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(contentPadding),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    GradeBox(grade = "3", onClick = onGradeClick)
+                    GradeBox(grade = "4", onClick = onGradeClick)
+                    GradeBox(grade = "5", onClick = onGradeClick)
+                    GradeBox(grade = "6", onClick = onGradeClick)
+                    GradeBox(grade = "3+", onClick = onGradeClick)
+                    GradeBox(grade = "4+", onClick = onGradeClick)
+                    GradeBox(grade = "6-", onClick = onGradeClick)
                 }
             }
             ExpandableItem(

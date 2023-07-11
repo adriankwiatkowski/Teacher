@@ -1,10 +1,12 @@
 package com.example.teacherapp.ui.screens.student
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,12 +27,14 @@ fun StudentsScreen(
     ) {
         items(students, key = { it.id }) { student ->
             StudentItem(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { onStudentClick(student.id) })
+                    .minimumInteractiveComponentSize(),
                 name = student.name,
                 surname = student.surname,
                 email = student.email,
                 phone = student.phone,
-                onClick = { onStudentClick(student.id) }
             )
         }
     }

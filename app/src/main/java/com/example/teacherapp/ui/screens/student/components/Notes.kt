@@ -1,18 +1,20 @@
 package com.example.teacherapp.ui.screens.student.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.ui.Modifier
 import com.example.teacherapp.data.models.entities.BasicStudentNote
 import com.example.teacherapp.ui.components.expandablelist.expandableItems
 
-@OptIn(ExperimentalMaterialApi::class)
 fun LazyListScope.notes(
     studentNotes: List<BasicStudentNote>,
     expanded: Boolean,
@@ -37,17 +39,14 @@ fun LazyListScope.notes(
         items = studentNotes,
         key = { studentNote -> studentNote.id },
     ) { contentPadding, studentNote ->
-        Card(
-            modifier = Modifier.fillMaxSize(),
-            onClick = { onNoteClick(studentNote.id) },
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = { onNoteClick(studentNote.id) })
+                .padding(contentPadding)
+                .minimumInteractiveComponentSize(),
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(contentPadding),
-            ) {
-                Text(text = studentNote.title)
-            }
+            Text(text = studentNote.title)
         }
     }
 }

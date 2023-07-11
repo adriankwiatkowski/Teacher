@@ -1,5 +1,6 @@
 package com.example.teacherapp.ui.screens.schoolclass.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.entities.BasicLesson
 import com.example.teacherapp.ui.components.expandablelist.expandableItems
 import com.example.teacherapp.ui.screens.paramproviders.BasicLessonsPreviewParameterProvider
@@ -43,32 +43,24 @@ fun LazyListScope.lessons(
             }
         },
     ) { contentPadding, lesson ->
-        Card(Modifier.fillMaxWidth()) {
-            LessonItem(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(contentPadding),
-                name = lesson.name,
-                onLessonClick = { onLessonClick(lesson.id) },
-            )
-        }
+        LessonItem(
+            modifier = modifier
+                .fillMaxWidth()
+                .clickable(onClick = { onLessonClick(lesson.id) })
+                .padding(contentPadding)
+                .minimumInteractiveComponentSize(),
+            name = lesson.name,
+        )
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun LessonItem(
     name: String,
-    onLessonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
-        modifier = modifier,
-        onClick = onLessonClick,
-    ) {
-        Box(Modifier.padding(8.dp)) {
-            Text(text = name)
-        }
+    Box(modifier = modifier) {
+        Text(text = name)
     }
 }
 
@@ -83,6 +75,7 @@ private fun LessonItemPreview(
     TeacherAppTheme {
         Surface {
             val expanded = remember { mutableStateOf(true) }
+
             LazyColumn {
                 lessons(
                     lessons = lessons,

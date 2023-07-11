@@ -1,7 +1,9 @@
 package com.example.teacherapp.ui.components.student
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
@@ -11,29 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun StudentItem(
-    name: String,
-    surname: String,
-    email: String?,
-    phone: String?,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Card(modifier = modifier, onClick = onClick) {
-        StudentItemInner(
-            modifier = Modifier.padding(8.dp),
-            name = name,
-            surname = surname,
-            email = email,
-            phone = phone,
-        )
-    }
-}
-
-@Composable
-private fun StudentItemInner(
     name: String,
     surname: String,
     email: String?,
@@ -75,7 +56,6 @@ private fun StudentItemPreview() {
                 surname = "Kowalski",
                 email = "jan.kowalski@domain.com",
                 phone = "123456789",
-                onClick = {},
             )
         }
     }

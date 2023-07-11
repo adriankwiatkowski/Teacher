@@ -3,7 +3,6 @@ package com.example.teacherapp.ui.screens.schoolclass.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -31,32 +30,26 @@ fun LazyListScope.schoolYearExpandable(
         label = schoolYear.name,
         expanded = expanded,
     ) { contentPadding ->
-        Card(Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier
-                    .padding(contentPadding)
-                    .padding(vertical = 8.dp),
-            ) {
-                Text(text = schoolYear.name)
+        Column(modifier = Modifier.padding(contentPadding)) {
+            Text(text = schoolYear.name)
 
-                Spacer(Modifier.padding(8.dp))
+            Spacer(Modifier.padding(8.dp))
 
-                val firstTerm = schoolYear.firstTerm
-                TermItem(
-                    name = firstTerm.name,
-                    startDate = firstTerm.startDate,
-                    endDate = firstTerm.endDate,
-                )
+            val firstTerm = schoolYear.firstTerm
+            TermItem(
+                name = firstTerm.name,
+                startDate = firstTerm.startDate,
+                endDate = firstTerm.endDate,
+            )
 
-                Spacer(Modifier.padding(8.dp))
+            Spacer(Modifier.padding(8.dp))
 
-                val secondTerm = schoolYear.secondTerm
-                TermItem(
-                    name = secondTerm.name,
-                    startDate = secondTerm.startDate,
-                    endDate = secondTerm.endDate,
-                )
-            }
+            val secondTerm = schoolYear.secondTerm
+            TermItem(
+                name = secondTerm.name,
+                startDate = secondTerm.startDate,
+                endDate = secondTerm.endDate,
+            )
         }
     }
 }
