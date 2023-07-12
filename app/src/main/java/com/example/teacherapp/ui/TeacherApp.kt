@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens
+package com.example.teacherapp.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FabPosition
@@ -8,25 +8,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.FabAction
-import com.example.teacherapp.ui.components.TeacherBottomBar
+import com.example.teacherapp.ui.components.TeacherBottomNav
 import com.example.teacherapp.ui.components.TeacherFab
 import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
-import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherNavGraph
-import com.example.teacherapp.ui.nav.TeacherNavigationActions
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen(
+fun TeacherApp(
     title: String,
     setTitle: (String) -> Unit,
     menuItems: List<ActionMenuItem>,
@@ -36,61 +33,16 @@ fun MainScreen(
     addFabAction: (fabAction: FabAction) -> Unit,
     removeFabAction: (fabAction: FabAction) -> Unit,
     modifier: Modifier = Modifier,
+    appState: TeacherAppState = rememberTeacherAppState(),
 ) {
-    val navController = rememberNavController()
-    val navActions: TeacherNavigationActions =
-        remember(navController) { TeacherNavigationActions(navController) }
     val scaffoldState = rememberScaffoldState()
-    val coroutineScope = rememberCoroutineScope()
 
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-    val screens = remember { TeacherBottomNavScreen.values().toList() }
-//    val selected: TeacherBottomNavScreen? = screens.firstOrNull { screen ->
-//        currentDestination?.hierarchy?.any { it.route == screen.route } ?: false
-//    }
+    val selectedBottomNavItem = appState.selectedBottomNavigationItem
+    val bottomNavScreens = remember { TeacherBottomNavScreen.values().toList() }
 
-    val selected: TeacherBottomNavScreen? = remember(currentDestination) {
-        val route = currentDestination?.route ?: return@remember null
-        when (route) {
-            TeacherDestinations.SCHEDULE_ROUTE -> TeacherBottomNavScreen.Calendar
-            TeacherDestinations.SCHOOL_CLASSES_ROUTE,
-            TeacherDestinations.SCHOOL_CLASS_ROUTE,
-            TeacherDestinations.STUDENT_ROUTE -> TeacherBottomNavScreen.SchoolClasses
-            TeacherDestinations.SETTINGS_ROUTE -> TeacherBottomNavScreen.Settings
-            else -> null
-        }
-    }
-
-    val showBottomBar by remember(currentDestination) {
-        derivedStateOf {
-            // selected != null
-            val route = currentDestination?.route ?: return@derivedStateOf true
-            when (route) {
-                TeacherDestinations.SCHEDULE_ROUTE,
-                TeacherDestinations.SCHOOL_CLASSES_ROUTE,
-                TeacherDestinations.STUDENT_ROUTE,
-                TeacherDestinations.SETTINGS_ROUTE,
-                TeacherDestinations.SCHOOL_CLASS_ROUTE -> true
-                else -> false
-            }
-        }
-    }
-    val showTopBar by remember(currentDestination) {
-        derivedStateOf {
-            val route = currentDestination?.route ?: return@derivedStateOf true
-            when (route) {
-                TeacherDestinations.SCHEDULE_ROUTE,
-                TeacherDestinations.SCHOOL_CLASSES_ROUTE,
-                TeacherDestinations.SETTINGS_ROUTE -> false
-                else -> true
-            }
-        }
-    }
-
-    val showSnackbar: ((message: String) -> Unit) = remember(scaffoldState) {
+    val onShowSnackbar: ((message: String) -> Unit) = remember(scaffoldState) {
         { message ->
-            coroutineScope.launch {
+            appState.coroutineScope.launch {
                 scaffoldState.snackbarHostState.showSnackbar(message = message)
             }
         }
@@ -104,10 +56,8 @@ fun MainScreen(
                 title = title,
                 menuItems = menuItems,
                 showNavigationIcon = true,
-                onNavigationIconClick = {
-                    navController.navigateUp()
-                },
-                visible = showTopBar,
+                onNavigationIconClick = appState.navController::navigateUp,
+                visible = appState.shouldShowTopBar,
             )
         },
         floatingActionButton = {
@@ -115,11 +65,12 @@ fun MainScreen(
         },
         floatingActionButtonPosition = FabPosition.End,
         bottomBar = {
-            TeacherBottomBar(
-                screens = screens,
-                selected = selected,
-                visible = showBottomBar,
+            TeacherBottomNav(
+                screens = bottomNavScreens,
+                selected = selectedBottomNavItem,
+                visible = appState.shouldShowBottomBar,
                 onClick = { screen ->
+                    val navActions = appState.navActions
                     when (screen) {
                         TeacherBottomNavScreen.Calendar -> navActions.navigateToCalendarRoute()
                         TeacherBottomNavScreen.SchoolClasses -> navActions.navigateToSchoolClassesRoute()
@@ -131,10 +82,9 @@ fun MainScreen(
     ) { innerPadding ->
         TeacherNavGraph(
             modifier = Modifier.padding(innerPadding),
-            navController = navController,
-            navActions = navActions,
+            appState = appState,
             setTitle = setTitle,
-            showSnackbar = showSnackbar,
+            onShowSnackbar = onShowSnackbar,
             addActionMenuItems = addActionMenuItems,
             removeActionMenuItems = removeActionMenuItems,
             addFabAction = addFabAction,
@@ -148,7 +98,7 @@ fun MainScreen(
 private fun MainScreenPreview() {
     TeacherAppTheme {
         Surface {
-            MainScreen(
+            TeacherApp(
                 title = "",
                 setTitle = {},
                 menuItems = listOf(
@@ -178,7 +128,7 @@ private fun MainScreenPreview() {
 private fun MainScreenDarkPreview() {
     TeacherAppTheme {
         Surface {
-            MainScreen(
+            TeacherApp(
                 title = "",
                 setTitle = {},
                 menuItems = listOf(

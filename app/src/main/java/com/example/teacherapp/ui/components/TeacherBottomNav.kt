@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 
 @Composable
-fun TeacherBottomBar(
+fun TeacherBottomNav(
     screens: List<TeacherBottomNavScreen>,
     selected: TeacherBottomNavScreen?,
     visible: Boolean,

@@ -4,6 +4,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -80,6 +82,13 @@ object TeacherDestinations {
         "$LESSON_FORM_SCREEN/{$SCHOOL_CLASS_ID_ARG}?$LESSON_ID_ARG={$LESSON_ID_ARG}"
 
     const val SETTINGS_ROUTE = SETTINGS_SCREEN
+}
+
+@Composable
+fun rememberNavActions(navController: NavController): TeacherNavigationActions {
+    return remember(navController) {
+        TeacherNavigationActions(navController = navController)
+    }
 }
 
 class TeacherNavigationActions(private val navController: NavController) {

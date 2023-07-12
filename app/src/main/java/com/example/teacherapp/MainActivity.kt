@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.teacherapp.data.models.FabAction
-import com.example.teacherapp.ui.screens.MainScreen
-import com.example.teacherapp.ui.screens.MainScreenViewModel
+import com.example.teacherapp.ui.TeacherApp
+import com.example.teacherapp.ui.TeacherAppViewModel
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,9 +28,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val viewModel: MainScreenViewModel = hiltViewModel()
+                    val viewModel: TeacherAppViewModel = hiltViewModel()
 
-                    MainScreen(
+                    TeacherApp(
                         title = viewModel.title,
                         setTitle = { title -> viewModel.title = title },
                         menuItems = viewModel.actionMenuItems,
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun DefaultPreview() {
     TeacherAppTheme {
-        MainScreen(
+        TeacherApp(
             title = "",
             setTitle = {},
             menuItems = listOf(),

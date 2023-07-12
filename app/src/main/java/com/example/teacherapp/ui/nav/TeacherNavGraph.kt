@@ -1,30 +1,28 @@
 package com.example.teacherapp.ui.nav
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.FabAction
+import com.example.teacherapp.ui.TeacherAppState
 import com.example.teacherapp.ui.nav.graphs.*
 
 @Composable
 fun TeacherNavGraph(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
-    startDestination: String = TeacherDestinations.SCHOOL_CLASSES_ROUTE,
+    appState: TeacherAppState,
     setTitle: (String) -> Unit,
-    showSnackbar: (message: String) -> Unit,
+    onShowSnackbar: (message: String) -> Unit,
     addActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     addFabAction: (fabAction: FabAction) -> Unit,
     removeFabAction: (fabAction: FabAction) -> Unit,
-    navActions: TeacherNavigationActions = remember(navController) {
-        TeacherNavigationActions(navController)
-    },
+    modifier: Modifier = Modifier,
+    startDestination: String = TeacherDestinations.SCHOOL_CLASSES_ROUTE,
 ) {
+    val navController = appState.navController
+    val navActions = appState.navActions
+
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -36,7 +34,7 @@ fun TeacherNavGraph(
             navController = navController,
             navActions = navActions,
             setTitle = setTitle,
-            showSnackbar = showSnackbar,
+            showSnackbar = onShowSnackbar,
             addActionMenuItems = addActionMenuItems,
             removeActionMenuItems = removeActionMenuItems,
             addFabAction = addFabAction,
@@ -51,7 +49,7 @@ fun TeacherNavGraph(
             navController = navController,
             navActions = navActions,
             setTitle = setTitle,
-            showSnackbar = showSnackbar,
+            showSnackbar = onShowSnackbar,
             addActionMenuItems = addActionMenuItems,
             removeActionMenuItems = removeActionMenuItems,
         )
@@ -59,7 +57,7 @@ fun TeacherNavGraph(
             navController = navController,
             navActions = navActions,
             setTitle = setTitle,
-            showSnackbar = showSnackbar,
+            showSnackbar = onShowSnackbar,
             addActionMenuItems = addActionMenuItems,
             removeActionMenuItems = removeActionMenuItems,
         )

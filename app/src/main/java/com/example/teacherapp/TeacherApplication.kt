@@ -6,4 +6,4 @@ import dagger.hilt.android.HiltAndroidApp
 // TODO: Add global scope to run mutable queries on database.
 
 @HiltAndroidApp
-class TeacherApp : Application()
+class TeacherApplication : Application()
