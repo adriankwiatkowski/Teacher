@@ -13,8 +13,8 @@ internal const val schoolClassIdArg = "school-class-id"
 internal const val studentIdArg = "student-id"
 internal const val studentNoteIdArg = "student-note-id"
 
-private const val studentScreen = "student"
-internal const val studentRoute = "$studentScreen/{$schoolClassIdArg}/{${studentIdArg}}"
+private const val studentDetailScreen = "student"
+internal const val studentDetailRoute = "$studentDetailScreen/{$schoolClassIdArg}/{${studentIdArg}}"
 
 private const val studentFormScreen = "student-form"
 private const val studentFormRoute =
@@ -29,7 +29,7 @@ fun NavController.navigateToStudentGraph(
     studentId: Long,
     navOptions: NavOptions? = null,
 ) {
-    this.navigate("$studentScreen/$schoolClassId/$studentId", navOptions)
+    this.navigate("$studentDetailScreen/$schoolClassId/$studentId", navOptions)
 }
 
 fun NavController.navigateToStudentFormRoute(
@@ -58,11 +58,11 @@ fun NavGraphBuilder.studentGraph(
     removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
 ) {
     navigation(
-        startDestination = studentRoute,
+        startDestination = studentDetailRoute,
         route = studentGraphRoute,
     ) {
         composable(
-            studentRoute,
+            studentDetailRoute,
             arguments = listOf(
                 navArgument(schoolClassIdArg) {
                     type = NavType.LongType

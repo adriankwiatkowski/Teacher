@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.data.models.entities.BasicStudent
-import com.example.teacherapp.ui.components.student.StudentItem
+import com.example.teacherapp.ui.screens.student.components.StudentItem
 import com.example.teacherapp.ui.components.expandablelist.expandableItems
 import com.example.teacherapp.ui.screens.paramproviders.BasicStudentsPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme

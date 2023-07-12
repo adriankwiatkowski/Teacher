@@ -1,8 +1,5 @@
 package com.example.teacherapp.ui.nav.graphs.student.route
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.screens.student.StudentScreen
 import com.example.teacherapp.ui.screens.student.data.StudentViewModel
 
@@ -48,20 +46,8 @@ internal fun StudentRoute(
     // Add/remove action menu.
     DisposableEffect(Unit) {
         val menuItems = listOf(
-            ActionMenuItem(
-                name = "",
-                imageVector = Icons.Default.Edit,
-                contentDescription = null,
-                onClick = onEditClick,
-            ),
-            ActionMenuItem(
-                name = "",
-                imageVector = Icons.Default.Delete,
-                contentDescription = null,
-                onClick = {
-                    viewModel.deleteStudent()
-                },
-            ),
+            ActionMenuItemProvider.edit(onClick = onEditClick),
+            ActionMenuItemProvider.delete(onClick = viewModel::deleteStudent),
         )
 
         addActionMenuItems(menuItems)

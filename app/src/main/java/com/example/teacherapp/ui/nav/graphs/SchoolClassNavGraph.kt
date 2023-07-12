@@ -1,7 +1,5 @@
 package com.example.teacherapp.ui.nav.graphs
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,6 +13,7 @@ import androidx.navigation.navArgument
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
@@ -90,12 +89,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
         // Add/remove action menu.
         DisposableEffect(schoolClassViewModel, schoolClassViewModel::deleteSchoolClass) {
             val menuItems = listOf(
-                ActionMenuItem(
-                    name = "",
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = null,
-                    onClick = schoolClassViewModel::deleteSchoolClass,
-                ),
+                ActionMenuItemProvider.delete(onClick = schoolClassViewModel::deleteSchoolClass),
             )
 
             addActionMenuItems(menuItems)

@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.components.student
+package com.example.teacherapp.ui.screens.student.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

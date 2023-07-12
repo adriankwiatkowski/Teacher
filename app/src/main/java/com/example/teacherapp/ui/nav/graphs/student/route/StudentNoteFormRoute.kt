@@ -1,7 +1,5 @@
 package com.example.teacherapp.ui.nav.graphs.student.route
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -11,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.screens.studentnote.StudentNoteFormScreen
 import com.example.teacherapp.ui.screens.studentnote.data.StudentNoteFormViewModel
 
@@ -45,14 +44,8 @@ internal fun StudentNoteFormRoute(
         val resource = studentNoteResource as? Resource.Success
         resource?.data ?: return@DisposableEffect onDispose {}
 
-        val menuItems = listOf(
-            ActionMenuItem(
-                name = "",
-                imageVector = Icons.Default.Delete,
-                contentDescription = null,
-                onClick = viewModel::onDeleteStudentNote,
-            ),
-        )
+        val menuItems =
+            listOf(ActionMenuItemProvider.delete(onClick = viewModel::onDeleteStudentNote))
 
         addActionMenuItems(menuItems)
 
