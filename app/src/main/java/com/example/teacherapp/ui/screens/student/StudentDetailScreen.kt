@@ -28,7 +28,7 @@ import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 
 @Composable
-fun StudentScreen(
+fun StudentDetailScreen(
     studentResource: Resource<Student>,
     studentNotesResource: Resource<List<BasicStudentNote>>,
     onEmailClick: (email: String) -> Unit,
@@ -153,7 +153,7 @@ private fun CopyableText(
 
 @Preview
 @Composable
-private fun StudentScreenPreview(
+private fun StudentDetailScreenPreview(
     @PreviewParameter(
         StudentPreviewParameterProvider::class,
         limit = 1,
@@ -164,7 +164,7 @@ private fun StudentScreenPreview(
 
     TeacherAppTheme {
         Surface {
-            StudentScreen(
+            StudentDetailScreen(
                 studentResource = Resource.Success(student),
                 studentNotesResource = Resource.Loading,
                 onEmailClick = {},
@@ -183,13 +183,13 @@ private fun StudentScreenPreview(
 
 @Preview
 @Composable
-private fun StudentScreenDeletedPreview() {
+private fun StudentDetailScreenDeletedPreview() {
     val isGradesExpanded = remember { mutableStateOf(false) }
     val isNotesExpanded = remember { mutableStateOf(false) }
 
     TeacherAppTheme {
         Surface {
-            StudentScreen(
+            StudentDetailScreen(
                 studentResource = Resource.Loading,
                 studentNotesResource = Resource.Loading,
                 onEmailClick = {},

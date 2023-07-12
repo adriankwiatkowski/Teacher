@@ -11,7 +11,7 @@ import com.example.teacherapp.ui.theme.TeacherAppTheme
 @Composable
 fun StudentTabRow(
     selectedTab: StudentTab,
-    onStudentTabClick: (studentTab: StudentTab) -> Unit,
+    onTabClick: (studentTab: StudentTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
@@ -27,7 +27,7 @@ fun StudentTabRow(
                 StudentTab(
                     text = studentTab.title,
                     selected = studentTab == selectedTab,
-                    onClick = { onStudentTabClick(studentTab) },
+                    onClick = { onTabClick(studentTab) },
                 )
             }
         }
@@ -58,7 +58,7 @@ private fun StudentTabBarPreview() {
 
             StudentTabRow(
                 selectedTab = selectedTab,
-                onStudentTabClick = { selectedTab = it }
+                onTabClick = { selectedTab = it }
             )
         }
     }

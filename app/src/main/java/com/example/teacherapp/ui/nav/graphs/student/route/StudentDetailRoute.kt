@@ -10,11 +10,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
-import com.example.teacherapp.ui.screens.student.StudentScreen
-import com.example.teacherapp.ui.screens.student.data.StudentViewModel
+import com.example.teacherapp.ui.screens.student.StudentDetailScreen
+import com.example.teacherapp.ui.screens.student.data.StudentDetailViewModel
 
 @Composable
-internal fun StudentRoute(
+internal fun StudentDetailRoute(
     onEditClick: () -> Unit,
     onNoteClick: (noteId: Long) -> Unit,
     onAddNoteClick: () -> Unit,
@@ -24,7 +24,7 @@ internal fun StudentRoute(
     addActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: StudentViewModel = hiltViewModel(),
+    viewModel: StudentDetailViewModel = hiltViewModel(),
 ) {
     val studentResource by viewModel.studentResource.collectAsStateWithLifecycle()
     val studentNotesResource by viewModel.studentNotesResource.collectAsStateWithLifecycle()
@@ -57,7 +57,7 @@ internal fun StudentRoute(
         }
     }
 
-    StudentScreen(
+    StudentDetailScreen(
         modifier = modifier,
         studentResource = studentResource,
         studentNotesResource = studentNotesResource,

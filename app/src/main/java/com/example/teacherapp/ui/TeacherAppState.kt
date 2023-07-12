@@ -12,6 +12,8 @@ import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
 import com.example.teacherapp.ui.nav.graphs.student.studentDetailRoute
+import com.example.teacherapp.ui.nav.graphs.student.studentGradesRoute
+import com.example.teacherapp.ui.nav.graphs.student.studentNotesRoute
 import com.example.teacherapp.ui.nav.rememberNavActions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -74,7 +76,11 @@ class TeacherAppState(
         @Composable get() = when (currentDestination?.route) {
             TeacherDestinations.SCHEDULE_ROUTE,
             TeacherDestinations.SCHOOL_CLASSES_ROUTE,
-            TeacherDestinations.SETTINGS_ROUTE -> false
+            TeacherDestinations.SETTINGS_ROUTE,
+            studentDetailRoute,
+            studentGradesRoute,
+            studentNotesRoute,
+            -> false
             else -> true
         }
 }
