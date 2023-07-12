@@ -41,6 +41,14 @@ fun NavController.navigateToStudentFormRoute(
     this.navigate("$studentFormScreen/$schoolClassId$query", navOptions)
 }
 
+private fun NavController.navigateToStudentDetailRoute(
+    schoolClassId: Long,
+    studentId: Long,
+    navOptions: NavOptions? = null,
+) {
+    this.navigate("$studentDetailScreen/$schoolClassId/$studentId", navOptions)
+}
+
 private fun NavController.navigateToStudentNoteFormRoute(
     studentId: Long,
     studentNoteId: Long?,
