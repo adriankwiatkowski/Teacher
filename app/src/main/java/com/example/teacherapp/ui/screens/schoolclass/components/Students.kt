@@ -55,19 +55,6 @@ fun LazyListScope.students(
             phone = student.phone,
         )
     }
-
-//    item {
-//        Card {
-//            TeacherOutlinedButton(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(8.dp),
-//                onClick = onAddStudentClick,
-//            ) {
-//                Text(text = "Dodaj ucznia")
-//            }
-//        }
-//    }
 }
 
 @Preview

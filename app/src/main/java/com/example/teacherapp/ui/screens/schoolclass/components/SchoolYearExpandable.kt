@@ -3,6 +3,7 @@ package com.example.teacherapp.ui.screens.schoolclass.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,11 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.entities.SchoolYear
 import com.example.teacherapp.ui.components.expandablelist.expandableItem
 import com.example.teacherapp.ui.screens.paramproviders.SchoolYearPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 import com.example.teacherapp.utils.format
 import java.time.LocalDate
 
@@ -33,7 +34,7 @@ fun LazyListScope.schoolYearExpandable(
         Column(modifier = Modifier.padding(contentPadding)) {
             Text(text = schoolYear.name)
 
-            Spacer(Modifier.padding(8.dp))
+            Spacer(Modifier.padding(MaterialTheme.spacing.small))
 
             val firstTerm = schoolYear.firstTerm
             TermItem(
@@ -42,7 +43,7 @@ fun LazyListScope.schoolYearExpandable(
                 endDate = firstTerm.endDate,
             )
 
-            Spacer(Modifier.padding(8.dp))
+            Spacer(Modifier.padding(MaterialTheme.spacing.small))
 
             val secondTerm = schoolYear.secondTerm
             TermItem(

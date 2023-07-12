@@ -39,6 +39,15 @@ fun LazyListScope.notes(
         items = studentNotes,
         key = { studentNote -> studentNote.id },
     ) { contentPadding, studentNote ->
+        // TODO: Consider replacing custom component with built-in ListItem.
+//        ListItem(
+//            modifier = Modifier
+//                .clickable(onClick = { onNoteClick(studentNote.id) })
+//                .padding(contentPadding),
+//            text = {
+//                Text(text = studentNote.title)
+//            },
+//        )
         Box(
             modifier = Modifier
                 .fillMaxWidth()

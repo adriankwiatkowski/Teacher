@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.ui.components.pickers.DatePicker
 import com.example.teacherapp.ui.components.pickers.TimePicker
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -31,18 +31,18 @@ fun LessonPlanningScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(16.dp)
+            .padding(MaterialTheme.spacing.large)
     ) {
         Text(
             text = "Lesson Planning",
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.h4
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         ) {
             LessonDatePicker(
                 date = lessonDate,
@@ -60,7 +60,7 @@ fun LessonPlanningScreen() {
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
         LessonForm(
             lessonDate = lessonDate,
@@ -70,7 +70,7 @@ fun LessonPlanningScreen() {
             }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
         LessonList(lessons = lessons, dateFormat = dateFormat, timeFormat = timeFormat)
     }
@@ -89,28 +89,28 @@ private fun LessonForm(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.LightGray)
-            .padding(16.dp)
+            .padding(MaterialTheme.spacing.large)
     ) {
         Text(
             text = "Add Lesson",
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.h5
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
 
         OutlinedTextField(
             value = title.value,
             onValueChange = { title.value = it },
             label = { Text("Title") }
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
 
         OutlinedTextField(
             value = description.value,
             onValueChange = { description.value = it },
             label = { Text("Description") }
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
 
         Button(
             onClick = {
@@ -159,17 +159,17 @@ private fun LessonItem(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .padding(vertical = MaterialTheme.spacing.small)
     ) {
         Text(
             text = lesson.title,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.h6
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraSmall))
 
         Text(text = lesson.description)
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraSmall))
 
         Text(
             text = "${lesson.date.format(dateFormat)} at ${lesson.time.format(timeFormat)}",
@@ -185,7 +185,7 @@ private fun LessonDatePicker(
     dateFormat: DateTimeFormatter,
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text = "Date:")
@@ -195,7 +195,7 @@ private fun LessonDatePicker(
             onDateSelected = onDateSelected,
             label = {
                 Card {
-                    Text(modifier = Modifier.padding(8.dp), text = "Pick date")
+                    Text(modifier = Modifier.padding(MaterialTheme.spacing.small), text = "Pick date")
                 }
             },
         )
@@ -209,14 +209,14 @@ private fun LessonTimePicker(
     timeFormat: DateTimeFormatter,
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text = "Time:")
         Text(text = time.format(timeFormat))
         TimePicker(time = time, onTimeSelected = onTimeSelected, label = {
             Card {
-                Text(modifier = Modifier.padding(8.dp), text = "Pick time")
+                Text(modifier = Modifier.padding(MaterialTheme.spacing.small), text = "Pick time")
             }
         })
     }

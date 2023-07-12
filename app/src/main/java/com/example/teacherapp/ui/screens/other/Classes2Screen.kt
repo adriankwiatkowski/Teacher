@@ -14,8 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun Classes2Screen(
@@ -26,7 +26,7 @@ fun Classes2Screen(
             ClassItem(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(MaterialTheme.spacing.small),
                 subject = "Fizyka",
                 className = "2A",
                 classSize = 24,
@@ -45,18 +45,18 @@ private fun ClassItem(
     isAdvanced: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    Card(elevation = 8.dp, modifier = modifier) {
+    Card(elevation = MaterialTheme.spacing.small, modifier = modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 4.dp),
+                .padding(horizontal = MaterialTheme.spacing.extraSmall),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
         ) {
             FlowRow(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val textPadding = 4.dp
+                val textPadding = MaterialTheme.spacing.extraSmall
 
                 Text(
                     modifier = Modifier.padding(horizontal = textPadding),

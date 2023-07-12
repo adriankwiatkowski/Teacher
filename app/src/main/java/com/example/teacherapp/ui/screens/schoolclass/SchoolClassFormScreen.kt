@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.entities.SchoolYear
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
@@ -23,6 +23,7 @@ import com.example.teacherapp.ui.screens.paramproviders.SchoolYearsPreviewParame
 import com.example.teacherapp.ui.screens.schoolclass.components.SchoolYearInput
 import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassFormProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun SchoolClassFormScreen(
@@ -44,7 +45,7 @@ fun SchoolClassFormScreen(
         }
     }
 
-    Column(modifier = modifier.padding(8.dp)) {
+    Column(modifier = modifier.padding(MaterialTheme.spacing.small)) {
         ClassNameInput(
             modifier = Modifier.fillMaxWidth(),
             schoolClassName = schoolClassName,

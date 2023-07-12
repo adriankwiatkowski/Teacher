@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.teacherapp.ui.components.expandablelist.ExpandableItem
 import com.example.teacherapp.ui.components.expandablelist.expandableItem
+import com.example.teacherapp.ui.theme.spacing
 
 @OptIn(ExperimentalLayoutApi::class)
 fun LazyListScope.grades(
@@ -48,7 +49,7 @@ fun LazyListScope.grades(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(contentPadding),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
                 ) {
                     GradeBox(grade = "3", onClick = onGradeClick)
                     GradeBox(grade = "4", onClick = onGradeClick)

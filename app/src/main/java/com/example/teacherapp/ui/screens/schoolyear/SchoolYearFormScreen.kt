@@ -3,23 +3,26 @@ package com.example.teacherapp.ui.screens.schoolyear
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputDate
 import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
+import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.screens.schoolyear.components.TermForm
 import com.example.teacherapp.ui.screens.schoolyear.data.SchoolYearFormProvider
 import com.example.teacherapp.ui.screens.schoolyear.data.TermForm
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 import java.time.LocalDate
 
 @Composable
@@ -52,8 +55,8 @@ fun SchoolYearFormScreen(
         Column(modifier = modifier) {
             LazyColumn(
                 modifier = modifier,
-                contentPadding = PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(MaterialTheme.spacing.small),
+                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
             ) {
                 item {
                     SchoolYearNameInput(
@@ -130,7 +133,7 @@ private fun TeamFormItem(
     modifier: Modifier = Modifier,
 ) {
     Card(modifier = modifier) {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier.padding(MaterialTheme.spacing.small)) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = title,

@@ -25,18 +25,18 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.Lesson
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.ui.components.form.FormStatusContent
-import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
+import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
+import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.screens.lesson.data.LessonFormProvider
 import com.example.teacherapp.ui.screens.paramproviders.LessonPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun LessonFormScreen(
@@ -59,7 +59,7 @@ fun LessonFormScreen(
     ResourceContent(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .padding(8.dp),
+            .padding(MaterialTheme.spacing.small),
         resource = lessonResource,
     ) { lesson ->
         FormStatusContent(

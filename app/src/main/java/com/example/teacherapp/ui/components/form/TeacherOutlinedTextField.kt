@@ -19,7 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun TeacherOutlinedTextField(
@@ -58,7 +58,7 @@ fun TeacherOutlinedTextField(
 
             Icon(
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(MaterialTheme.spacing.small)
                     .then(clickModifier),
                 imageVector = leadingIcon,
                 contentDescription = null,
@@ -79,7 +79,7 @@ fun TeacherOutlinedTextField(
 
                 Icon(
                     modifier = clickModifier
-                        .padding(8.dp),
+                        .padding(MaterialTheme.spacing.small),
                     imageVector = Icons.Default.Info,
                     contentDescription = null,
                     tint = MaterialTheme.colors.error,
@@ -96,7 +96,7 @@ fun TeacherOutlinedTextField(
 
                 Icon(
                     modifier = clickModifier
-                        .padding(8.dp),
+                        .padding(MaterialTheme.spacing.small),
                     imageVector = trailingIcon,
                     contentDescription = null,
                 )
@@ -208,7 +208,7 @@ fun TeacherOutlinedTextField(
                 Text(
                     modifier = Modifier
                         .weight(3f)
-                        .padding(start = 16.dp),
+                        .padding(start = MaterialTheme.spacing.large),
                     text = supportingText,
                     color = textColor,
                     textAlign = TextAlign.Start,
@@ -220,7 +220,7 @@ fun TeacherOutlinedTextField(
                 Text(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = 16.dp),
+                        .padding(end = MaterialTheme.spacing.large),
                     text = "${counter.first}/${counter.second}",
                     color = textColor,
                     textAlign = TextAlign.End,

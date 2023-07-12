@@ -10,7 +10,8 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun LessonScheduleScreen() {
@@ -37,8 +39,6 @@ fun LessonScheduleScreen() {
         )
     }
 
-    var headerHeight by remember { mutableStateOf(24.dp) }
-
     Column(
         Modifier
             .fillMaxSize()
@@ -47,12 +47,15 @@ fun LessonScheduleScreen() {
         Row(
             Modifier
                 .fillMaxSize()
-                .padding(8.dp)
+                .padding(MaterialTheme.spacing.small)
         ) {
             Column(
                 Modifier
                     .fillMaxHeight()
-                    .padding(top = headerHeight, end = 8.dp)
+                    .padding(
+                        top = MaterialTheme.spacing.extraLarge,
+                        end = MaterialTheme.spacing.small,
+                    )
             ) {
                 for (time in startTime..endTime) {
                     Hour(modifier = Modifier.weight(1f), time = "$time:00")
@@ -69,8 +72,6 @@ fun LessonScheduleScreen() {
                                 isFirst = day == daysOfWeek.first(),
                                 isLast = day == daysOfWeek.last(),
                             )
-
-//                        headerHeight = this.maxHeight
                         }
 
                         Lessons(
@@ -84,7 +85,7 @@ fun LessonScheduleScreen() {
 
                     Column(
                         Modifier
-                            .padding(top = 28.dp)
+                            .padding(top = MaterialTheme.spacing.extraLarge)
                             .fillMaxSize()
                     ) {
                         repeat(endTime - startTime + 1) {
@@ -176,8 +177,8 @@ private fun Header(
                 1.dp,
                 Color.Gray,
                 RoundedCornerShape(
-                    topStart = if (isFirst) 8.dp else 0.dp,
-                    topEnd = if (isLast) 8.dp else 0.dp
+                    topStart = if (isFirst) MaterialTheme.spacing.small else 0.dp,
+                    topEnd = if (isLast) MaterialTheme.spacing.small else 0.dp
                 )
             )
             .padding(4.dp)
@@ -220,7 +221,11 @@ private fun LessonScheduleScreen2() {
                     Box(
                         Modifier
                             .weight(1f)
-                            .border(1.dp, Color.Gray, RoundedCornerShape(topStart = 8.dp))
+                            .border(
+                                1.dp,
+                                Color.Gray,
+                                RoundedCornerShape(topStart = MaterialTheme.spacing.small)
+                            )
                             .padding(4.dp)
                     ) {
                         Text(
@@ -238,8 +243,8 @@ private fun LessonScheduleScreen2() {
                                     1.dp,
                                     Color.Gray,
                                     RoundedCornerShape(
-                                        topEnd = if (day == daysOfWeek.last()) 8.dp else 0.dp,
-                                        topStart = if (day == daysOfWeek.first()) 8.dp else 0.dp
+                                        topEnd = if (day == daysOfWeek.last()) MaterialTheme.spacing.small else 0.dp,
+                                        topStart = if (day == daysOfWeek.first()) MaterialTheme.spacing.small else 0.dp
                                     )
                                 )
                                 .padding(4.dp)
@@ -267,7 +272,7 @@ private fun LessonScheduleScreen2() {
                                     1.dp,
                                     Color.Gray,
                                     RoundedCornerShape(
-                                        bottomStart = if (time == startTime) 8.dp else 0.dp
+                                        bottomStart = if (time == startTime) MaterialTheme.spacing.small else 0.dp
                                     )
                                 )
                                 .padding(4.dp)
@@ -288,7 +293,7 @@ private fun LessonScheduleScreen2() {
                                         1.dp,
                                         Color.Gray,
                                         RoundedCornerShape(
-                                            bottomEnd = if (time == endTime) 8.dp else 0.dp
+                                            bottomEnd = if (time == endTime) MaterialTheme.spacing.small else 0.dp
                                         )
                                     )
                                     .padding(4.dp)

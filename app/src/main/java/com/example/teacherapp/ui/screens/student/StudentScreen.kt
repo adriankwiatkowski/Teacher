@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -16,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.BasicStudentNote
 import com.example.teacherapp.data.models.entities.Student
@@ -25,6 +25,7 @@ import com.example.teacherapp.ui.screens.paramproviders.StudentPreviewParameterP
 import com.example.teacherapp.ui.screens.student.components.grades
 import com.example.teacherapp.ui.screens.student.components.notes
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun StudentScreen(
@@ -50,7 +51,7 @@ fun StudentScreen(
         MainScreen(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
+                .padding(MaterialTheme.spacing.small),
             studentName = student.fullName,
             email = student.email,
             onEmailClick = {
@@ -99,7 +100,7 @@ private fun MainScreen(
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(8.dp),
+        contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
         item {
             Text(studentName)
@@ -143,7 +144,7 @@ private fun CopyableText(
         modifier = modifier
             .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
     ) {
         Text("$label: $text")
         Icon(Icons.Default.CopyAll, contentDescription = null)

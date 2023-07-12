@@ -9,10 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.entities.Lesson
 import com.example.teacherapp.ui.screens.paramproviders.LessonsPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -24,8 +24,8 @@ fun LessonsScreen(
 ) {
     LazyColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+        contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
         items(lessons, key = { it.id }) { lesson ->
             LessonItem(
@@ -42,7 +42,7 @@ fun LessonsScreen(
                 onClick = onAddLessonClick
             ) {
                 Column(
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(MaterialTheme.spacing.small),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(text = "Dodaj przedmiot")
@@ -63,7 +63,7 @@ private fun LessonItem(
         modifier = modifier,
         onClick = onClick,
     ) {
-        Column(Modifier.padding(8.dp)) {
+        Column(Modifier.padding(MaterialTheme.spacing.small)) {
             Text(name)
         }
     }

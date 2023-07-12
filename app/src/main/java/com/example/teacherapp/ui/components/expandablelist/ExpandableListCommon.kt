@@ -11,7 +11,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
+import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun ExpandableLabel(
@@ -26,7 +26,10 @@ fun ExpandableLabel(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = toggleExpanded)
-            .padding(vertical = 8.dp, horizontal = 4.dp)
+            .padding(
+                vertical = MaterialTheme.spacing.small,
+                horizontal = MaterialTheme.spacing.extraSmall,
+            )
             .minimumInteractiveComponentSize(),
         verticalAlignment = Alignment.CenterVertically,
     ) {

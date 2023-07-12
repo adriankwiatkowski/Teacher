@@ -15,12 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.data.models.entities.BasicSchoolClass
 import com.example.teacherapp.ui.components.form.TeacherChip
 import com.example.teacherapp.ui.screens.paramproviders.BasicSchoolClassesPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 import com.example.teacherapp.ui.theme.warning
 
 @Composable
@@ -49,8 +49,8 @@ fun SchoolClassesScreen(
 
     LazyColumn(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+        contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
         items(classes, key = { it.id }) { schoolClass ->
             ClassItem(
@@ -81,8 +81,8 @@ fun SchoolClassesScreen(
 //) {
 //    LazyColumn(
 //        modifier = modifier,
-//        verticalArrangement = Arrangement.spacedBy(8.dp),
-//        contentPadding = PaddingValues(8.dp),
+//        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+//        contentPadding = PaddingValues(MaterialTheme.spacing.small),
 //    ) {
 //        if (classes.isNotEmpty()) {
 //            for ((year, expandableClasses) in classes) {
@@ -136,14 +136,14 @@ private fun ClassItem(
         onClick = onClick,
     ) {
         FlowRow(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(MaterialTheme.spacing.small),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(text = "Klasa: $name")
 
             val chipModifier = Modifier
                 .weight(1f)
-                .padding(8.dp)
+                .padding(MaterialTheme.spacing.small)
 
             Row {
                 TeacherChip(

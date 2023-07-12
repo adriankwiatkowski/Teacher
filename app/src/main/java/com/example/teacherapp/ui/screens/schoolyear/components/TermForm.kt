@@ -1,19 +1,20 @@
 package com.example.teacherapp.ui.screens.schoolyear.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.input.InputDate
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.pickers.DatePicker
 import com.example.teacherapp.ui.components.transformation.PrefixTransformation
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 import com.example.teacherapp.utils.format
 import java.time.LocalDate
 
@@ -30,7 +31,7 @@ fun TermForm(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
         FormOutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -64,7 +65,7 @@ private fun TermDatePicker(
     onDateSelected: (LocalDate) -> Unit,
 ) {
     FlowRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text = label)
@@ -73,7 +74,10 @@ private fun TermDatePicker(
             date = date,
             onDateSelected = onDateSelected,
             label = {
-                Text(modifier = Modifier.padding(8.dp), text = "Wybierz datę")
+                Text(
+                    modifier = Modifier.padding(MaterialTheme.spacing.small),
+                    text = "Wybierz datę",
+                )
             },
         )
     }

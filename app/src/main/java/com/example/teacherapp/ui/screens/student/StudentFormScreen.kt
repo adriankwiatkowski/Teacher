@@ -6,6 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -25,18 +26,18 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.ui.components.form.FormStatusContent
-import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
+import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
+import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.screens.paramproviders.StudentPreviewParameterProvider
 import com.example.teacherapp.ui.screens.student.data.StudentFormProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun StudentFormScreen(
@@ -64,7 +65,7 @@ fun StudentFormScreen(
     ResourceContent(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .padding(8.dp),
+            .padding(MaterialTheme.spacing.small),
         resource = studentResource,
     ) { student ->
         FormStatusContent(
@@ -106,7 +107,7 @@ private fun Content(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
         val focusManager = LocalFocusManager.current
         val movePrev = { focusManager.moveFocus(FocusDirection.Up) }
