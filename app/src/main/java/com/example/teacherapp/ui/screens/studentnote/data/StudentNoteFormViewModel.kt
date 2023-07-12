@@ -12,7 +12,8 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.ResourceStatus
 import com.example.teacherapp.data.models.entities.StudentNote
 import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
+import com.example.teacherapp.ui.nav.graphs.student.studentIdArg
+import com.example.teacherapp.ui.nav.graphs.student.studentNoteIdArg
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -73,7 +74,7 @@ class StudentNoteFormViewModel @Inject constructor(
         initialValue = null
     )
 
-    var isStudentDeleted by mutableStateOf(false)
+    var isStudentNoteDeleted by mutableStateOf(false)
 
     init {
         studentNote
@@ -139,16 +140,16 @@ class StudentNoteFormViewModel @Inject constructor(
 
     fun onDeleteStudentNote() {
         viewModelScope.launch {
-            isStudentDeleted = false
+            isStudentNoteDeleted = false
 
             studentNoteDataSource.deleteStudentNoteById(studentNoteId.value)
 
-            isStudentDeleted = true
+            isStudentNoteDeleted = true
         }
     }
 
     companion object {
-        private const val STUDENT_ID_KEY = TeacherDestinationsArgs.STUDENT_ID_ARG
-        private const val STUDENT_NOTE_ID_KEY = TeacherDestinationsArgs.STUDENT_NOTE_ID_ARG
+        private const val STUDENT_ID_KEY = studentIdArg
+        private const val STUDENT_NOTE_ID_KEY = studentNoteIdArg
     }
 }

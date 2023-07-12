@@ -11,7 +11,8 @@ import com.example.teacherapp.data.db.datasources.student.StudentDataSource
 import com.example.teacherapp.data.models.*
 import com.example.teacherapp.data.models.entities.*
 import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
+import com.example.teacherapp.ui.nav.graphs.student.schoolClassIdArg
+import com.example.teacherapp.ui.nav.graphs.student.studentIdArg
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -148,7 +149,7 @@ class StudentFormViewModel @Inject constructor(
     }
 
     companion object {
-        private const val STUDENT_ID_KEY = TeacherDestinationsArgs.STUDENT_ID_ARG
-        private const val SCHOOL_CLASS_ID_KEY = TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG
+        private const val STUDENT_ID_KEY = studentIdArg
+        private const val SCHOOL_CLASS_ID_KEY = schoolClassIdArg
     }
 }

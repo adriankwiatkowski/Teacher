@@ -18,6 +18,8 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
+import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentFormRoute
+import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentGraph
 import com.example.teacherapp.ui.screens.schoolclass.SchoolClassFormScreen
 import com.example.teacherapp.ui.screens.schoolclass.SchoolClassScreen
 import com.example.teacherapp.ui.screens.schoolclass.SchoolClassesScreen
@@ -106,13 +108,13 @@ fun NavGraphBuilder.addSchoolClassGraph(
         SchoolClassScreen(
             schoolClassResource = schoolClassResource,
             onStudentClick = { studentId ->
-                navActions.navigateToStudentRoute(
+                navController.navigateToStudentGraph(
                     schoolClassId = schoolClassId,
                     studentId = studentId,
                 )
             },
             onAddStudentClick = {
-                navActions.navigateToStudentFormRoute(
+                navController.navigateToStudentFormRoute(
                     schoolClassId = schoolClassId,
                     studentId = null,
                 )

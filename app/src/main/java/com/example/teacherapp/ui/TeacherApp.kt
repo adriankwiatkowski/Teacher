@@ -9,9 +9,11 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.components.TeacherBottomNav
@@ -37,7 +39,8 @@ fun TeacherApp(
 ) {
     val scaffoldState = rememberScaffoldState()
 
-    val selectedBottomNavItem = appState.selectedBottomNavigationItem
+    val selectedBottomNavItem by appState.selectedBottomNavigationItem.collectAsStateWithLifecycle()
+    val shouldShowBottomBar by appState.shouldShowBottomBar.collectAsStateWithLifecycle()
     val bottomNavScreens = remember { TeacherBottomNavScreen.values().toList() }
 
     val onShowSnackbar: ((message: String) -> Unit) = remember(scaffoldState) {
@@ -68,7 +71,7 @@ fun TeacherApp(
             TeacherBottomNav(
                 screens = bottomNavScreens,
                 selected = selectedBottomNavItem,
-                visible = appState.shouldShowBottomBar,
+                visible = shouldShowBottomBar,
                 onClick = { screen ->
                     val navActions = appState.navActions
                     when (screen) {

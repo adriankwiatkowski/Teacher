@@ -7,6 +7,7 @@ import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.TeacherAppState
 import com.example.teacherapp.ui.nav.graphs.*
+import com.example.teacherapp.ui.nav.graphs.student.studentGraph
 
 @Composable
 fun TeacherNavGraph(
@@ -45,19 +46,10 @@ fun TeacherNavGraph(
             setTitle = setTitle,
         )
 
-        addStudentRouteGraph(
+        studentGraph(
             navController = navController,
-            navActions = navActions,
             setTitle = setTitle,
-            showSnackbar = onShowSnackbar,
-            addActionMenuItems = addActionMenuItems,
-            removeActionMenuItems = removeActionMenuItems,
-        )
-        addStudentNoteRouteGraph(
-            navController = navController,
-            navActions = navActions,
-            setTitle = setTitle,
-            showSnackbar = onShowSnackbar,
+            onShowSnackbar = onShowSnackbar,
             addActionMenuItems = addActionMenuItems,
             removeActionMenuItems = removeActionMenuItems,
         )

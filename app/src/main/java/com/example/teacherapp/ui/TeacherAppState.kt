@@ -11,8 +11,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
+import com.example.teacherapp.ui.nav.graphs.student.studentRoute
 import com.example.teacherapp.ui.nav.rememberNavActions
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 
 @Composable
 fun rememberTeacherAppState(
@@ -40,26 +43,32 @@ class TeacherAppState(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    // Consider adding cache.
-    val selectedBottomNavigationItem: TeacherBottomNavScreen?
-        @Composable get() = when (currentDestination?.route) {
-            TeacherDestinations.SCHEDULE_ROUTE -> TeacherBottomNavScreen.Calendar
-            TeacherDestinations.SCHOOL_CLASSES_ROUTE,
-            TeacherDestinations.SCHOOL_CLASS_ROUTE,
-            TeacherDestinations.STUDENT_ROUTE -> TeacherBottomNavScreen.SchoolClasses
-            TeacherDestinations.SETTINGS_ROUTE -> TeacherBottomNavScreen.Settings
-            else -> null
-        }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val selectedBottomNavigationItem: StateFlow<TeacherBottomNavScreen?> =
+        navController.currentBackStackEntryFlow
+            .mapLatest { backStackEntry ->
+                when (backStackEntry.destination.route) {
+                    TeacherDestinations.SCHEDULE_ROUTE -> TeacherBottomNavScreen.Calendar
+                    TeacherDestinations.SCHOOL_CLASSES_ROUTE,
+                    TeacherDestinations.SCHOOL_CLASS_ROUTE,
+                    studentRoute -> TeacherBottomNavScreen.SchoolClasses
+                    TeacherDestinations.SETTINGS_ROUTE -> TeacherBottomNavScreen.Settings
+                    else -> null
+                }
+            }
+            .stateIn(
+                scope = coroutineScope,
+                started = SharingStarted.WhileSubscribed(5000L),
+                initialValue = null,
+            )
 
-    val shouldShowBottomBar: Boolean
-        @Composable get() = when (currentDestination?.route) {
-            TeacherDestinations.SCHEDULE_ROUTE,
-            TeacherDestinations.SCHOOL_CLASSES_ROUTE,
-            TeacherDestinations.STUDENT_ROUTE,
-            TeacherDestinations.SETTINGS_ROUTE,
-            TeacherDestinations.SCHOOL_CLASS_ROUTE -> true
-            else -> false
-        }
+    val shouldShowBottomBar: StateFlow<Boolean> = selectedBottomNavigationItem
+        .map { it != null }
+        .stateIn(
+            scope = coroutineScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = false,
+        )
 
     val shouldShowTopBar: Boolean
         @Composable get() = when (currentDestination?.route) {
