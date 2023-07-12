@@ -164,7 +164,7 @@ private fun ClassItem(
                     }
                 ) {
                     // TODO: Add lesson count.
-                    Text("Zajęcia")
+                    Text("Zajęcia (0)")
                 }
             }
         }
