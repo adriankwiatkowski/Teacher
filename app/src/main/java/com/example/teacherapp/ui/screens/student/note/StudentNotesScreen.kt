@@ -1,6 +1,8 @@
 package com.example.teacherapp.ui.screens.student.note
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,6 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -62,6 +65,11 @@ private fun MainScreen(
     onNoteClick: (noteId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    if (notes.isEmpty()) {
+        EmptyState(modifier = modifier)
+        return
+    }
+
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
@@ -74,6 +82,30 @@ private fun MainScreen(
             if (index != notes.lastIndex) {
                 Divider()
             }
+        }
+    }
+}
+
+@Composable
+private fun EmptyState(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = "Uczeń nie ma żadnej uwagi",
+            style = MaterialTheme.typography.h4
+        )
+    }
+}
+
+@Preview
+@Composable
+fun EmptyStatePreview() {
+    TeacherAppTheme {
+        Surface {
+            EmptyState()
         }
     }
 }
