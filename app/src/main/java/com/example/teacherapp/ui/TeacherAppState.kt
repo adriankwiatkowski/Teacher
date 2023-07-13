@@ -11,9 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
-import com.example.teacherapp.ui.nav.graphs.student.studentDetailRoute
-import com.example.teacherapp.ui.nav.graphs.student.studentGradesRoute
-import com.example.teacherapp.ui.nav.graphs.student.studentNotesRoute
+import com.example.teacherapp.ui.nav.graphs.student.studentRoute
 import com.example.teacherapp.ui.nav.rememberNavActions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -53,7 +51,7 @@ class TeacherAppState(
                     TeacherDestinations.SCHEDULE_ROUTE -> TeacherBottomNavScreen.Calendar
                     TeacherDestinations.SCHOOL_CLASSES_ROUTE,
                     TeacherDestinations.SCHOOL_CLASS_ROUTE,
-                    studentDetailRoute -> TeacherBottomNavScreen.SchoolClasses
+                    studentRoute -> TeacherBottomNavScreen.SchoolClasses
                     TeacherDestinations.SETTINGS_ROUTE -> TeacherBottomNavScreen.Settings
                     else -> null
                 }
@@ -77,9 +75,7 @@ class TeacherAppState(
             TeacherDestinations.SCHEDULE_ROUTE,
             TeacherDestinations.SCHOOL_CLASSES_ROUTE,
             TeacherDestinations.SETTINGS_ROUTE,
-            studentDetailRoute,
-            studentGradesRoute,
-            studentNotesRoute,
+            studentRoute,
             -> false
             else -> true
         }

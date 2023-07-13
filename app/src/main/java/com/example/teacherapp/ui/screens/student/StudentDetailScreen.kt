@@ -39,14 +39,11 @@ fun StudentDetailScreen(
     onAddNoteClick: () -> Unit,
     isGradesExpanded: MutableState<Boolean>,
     isNotesExpanded: MutableState<Boolean>,
-    isStudentDeleted: Boolean,
     modifier: Modifier = Modifier,
 ) {
     ResourceContent(
         modifier = modifier,
         resource = studentResource,
-        isDeleted = isStudentDeleted,
-        deletedMessage = "Usunięto pomyślnie dane ucznia."
     ) { student ->
         MainScreen(
             modifier = Modifier
@@ -175,7 +172,6 @@ private fun StudentDetailScreenPreview(
                 onAddNoteClick = {},
                 isGradesExpanded = isGradesExpanded,
                 isNotesExpanded = isNotesExpanded,
-                isStudentDeleted = false,
             )
         }
     }
@@ -200,7 +196,6 @@ private fun StudentDetailScreenDeletedPreview() {
                 onAddNoteClick = {},
                 isGradesExpanded = isGradesExpanded,
                 isNotesExpanded = isNotesExpanded,
-                isStudentDeleted = true,
             )
         }
     }

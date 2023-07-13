@@ -1,5 +1,6 @@
 package com.example.teacherapp.ui.screens.student.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -14,7 +15,8 @@ import com.example.teacherapp.ui.nav.graphs.student.tab.StudentTab
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
 @Composable
-fun StudentContent(
+fun StudentScaffold(
+    isScaffoldVisible: Boolean,
     title: String,
     menuItems: List<ActionMenuItem>,
     showNavigationIcon: Boolean,
@@ -24,6 +26,13 @@ fun StudentContent(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
+    if (!isScaffoldVisible) {
+        Box(modifier = modifier) {
+            content()
+        }
+        return
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -51,12 +60,13 @@ fun StudentContent(
 
 @Preview
 @Composable
-private fun StudentContentPreview() {
+private fun StudentScaffoldPreview() {
     TeacherAppTheme {
         Surface {
             var selectedTab by remember { mutableStateOf(StudentTab.Detail) }
 
-            StudentContent(
+            StudentScaffold(
+                isScaffoldVisible = true,
                 title = "Klasa 3A",
                 menuItems = listOf(),
                 showNavigationIcon = true,

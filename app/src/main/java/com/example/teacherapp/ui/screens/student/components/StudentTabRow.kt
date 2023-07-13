@@ -16,7 +16,7 @@ fun StudentTabRow(
 ) {
     Column(modifier = modifier) {
         val tabs = remember {
-            listOf(StudentTab.Detail, StudentTab.Grades, StudentTab.Notes)
+            listOf(StudentTab.Grades, StudentTab.Detail, StudentTab.Notes)
         }
         val selectedTabIndex = remember(selectedTab) {
             tabs.indexOf(selectedTab)
