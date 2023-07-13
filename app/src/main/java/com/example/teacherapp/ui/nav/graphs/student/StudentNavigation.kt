@@ -6,10 +6,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
-import com.example.teacherapp.ui.nav.graphs.student.route.StudentDetailRoute
-import com.example.teacherapp.ui.nav.graphs.student.route.StudentFormRoute
-import com.example.teacherapp.ui.nav.graphs.student.route.StudentNoteFormRoute
-import com.example.teacherapp.ui.nav.graphs.student.route.StudentScaffoldWrapper
+import com.example.teacherapp.ui.nav.graphs.student.route.*
 import com.example.teacherapp.ui.nav.graphs.student.tab.StudentTab
 import com.example.teacherapp.ui.screens.student.data.StudentScaffoldViewModel
 
@@ -102,7 +99,13 @@ fun NavGraphBuilder.studentGraph(
             ) { selectedTab, student ->
                 when (selectedTab) {
                     StudentTab.Detail -> {
-                        StudentDetailRoute(
+                        StudentDetailRoute(student = student)
+                    }
+                    StudentTab.Grades -> {
+                        Text("Grades")
+                    }
+                    StudentTab.Notes -> {
+                        StudentNotesRoute(
                             onNoteClick = { studentNoteId ->
                                 navController.navigateToStudentNoteFormRoute(
                                     studentId = studentId,
@@ -116,12 +119,6 @@ fun NavGraphBuilder.studentGraph(
                                 )
                             },
                         )
-                    }
-                    StudentTab.Grades -> {
-                        Text("Grades")
-                    }
-                    StudentTab.Notes -> {
-                        Text("Notes")
                     }
                 }
             }

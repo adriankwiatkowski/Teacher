@@ -18,13 +18,15 @@ class StudentNotePreviewParameterProvider : PreviewParameterProvider<StudentNote
     )
 }
 
-class BasicStudentNotePreviewParameterProvider : PreviewParameterProvider<BasicStudentNote> {
-    override val values: Sequence<BasicStudentNote> = sequenceOf(
-        BasicStudentNote(
-            id = 1L,
-            studentId = 1L,
-            title = "Przeszkadzanie na zajęciach",
-            isNegative = true,
+class BasicStudentNotesPreviewParameterProvider : PreviewParameterProvider<List<BasicStudentNote>> {
+    override val values: Sequence<List<BasicStudentNote>> = sequenceOf(
+        listOf(
+            BasicStudentNote(
+                id = 1L,
+                studentId = 1L,
+                title = "Przeszkadzanie na zajęciach",
+                isNegative = true,
+            )
         )
     )
 }

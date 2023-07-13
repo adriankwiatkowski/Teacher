@@ -1,34 +1,26 @@
 package com.example.teacherapp.ui.nav.graphs.student.route
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.ui.screens.student.StudentDetailScreen
-import com.example.teacherapp.ui.screens.student.data.StudentDetailViewModel
 
 @Composable
 internal fun StudentDetailRoute(
-    onNoteClick: (noteId: Long) -> Unit,
-    onAddNoteClick: () -> Unit,
+    student: Student,
     modifier: Modifier = Modifier,
-    viewModel: StudentDetailViewModel = hiltViewModel(),
 ) {
-    val studentResource by viewModel.studentResource.collectAsStateWithLifecycle()
-    val studentNotesResource by viewModel.studentNotesResource.collectAsStateWithLifecycle()
+    val isGradesExpanded = remember { mutableStateOf(true) }
 
     StudentDetailScreen(
         modifier = modifier,
-        studentResource = studentResource,
-        studentNotesResource = studentNotesResource,
+        student = student,
         onEmailClick = {},
         onPhoneClick = {},
         onGradeClick = {},
         onAddGradeClick = {},
-        onNoteClick = onNoteClick,
-        onAddNoteClick = onAddNoteClick,
-        isGradesExpanded = viewModel.isGradesExpanded,
-        isNotesExpanded = viewModel.isNotesExpanded,
+        isGradesExpanded = isGradesExpanded,
     )
 }

@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.studentnote
+package com.example.teacherapp.ui.screens.student.note
 
 import android.view.KeyEvent
 import androidx.compose.foundation.layout.*
@@ -30,7 +30,7 @@ import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.screens.paramproviders.StudentNotePreviewParameterProvider
-import com.example.teacherapp.ui.screens.studentnote.data.StudentNoteFormProvider
+import com.example.teacherapp.ui.screens.student.note.data.StudentNoteFormProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 

@@ -7,6 +7,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.teacherapp.data.models.FabAction
 
 @Composable
@@ -24,11 +25,22 @@ fun TeacherFab(
             return@AnimatedVisibility
         }
 
-        FloatingActionButton(onClick = fabAction.onClick) {
-            Icon(
-                imageVector = fabAction.imageVector,
-                contentDescription = fabAction.contentDescription,
-            )
-        }
+        TeacherFab(
+            imageVector = fabAction.imageVector,
+            contentDescription = fabAction.contentDescription,
+            onClick = fabAction.onClick,
+        )
+    }
+}
+
+@Composable
+fun TeacherFab(
+    imageVector: ImageVector,
+    contentDescription: String?,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    FloatingActionButton(modifier = modifier, onClick = onClick) {
+        Icon(imageVector = imageVector, contentDescription = contentDescription)
     }
 }

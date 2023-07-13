@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.studentnote.data
+package com.example.teacherapp.ui.screens.student.note.data
 
 import android.database.sqlite.SQLiteException
 import androidx.compose.runtime.getValue

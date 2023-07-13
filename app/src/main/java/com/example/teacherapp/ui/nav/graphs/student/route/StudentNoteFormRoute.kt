@@ -10,8 +10,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
-import com.example.teacherapp.ui.screens.studentnote.StudentNoteFormScreen
-import com.example.teacherapp.ui.screens.studentnote.data.StudentNoteFormViewModel
+import com.example.teacherapp.ui.screens.student.note.StudentNoteFormScreen
+import com.example.teacherapp.ui.screens.student.note.data.StudentNoteFormViewModel
 
 @Composable
 internal fun StudentNoteFormRoute(

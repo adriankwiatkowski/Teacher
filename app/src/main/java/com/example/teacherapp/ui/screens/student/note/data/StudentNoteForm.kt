@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.studentnote.data
+package com.example.teacherapp.ui.screens.student.note.data
 
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
