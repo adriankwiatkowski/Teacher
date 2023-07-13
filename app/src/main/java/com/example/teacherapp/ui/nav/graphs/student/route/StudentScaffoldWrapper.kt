@@ -37,7 +37,6 @@ internal fun StudentScaffoldWrapper(
         }
     }
 
-
     val coroutineScope = rememberCoroutineScope()
 
     // Observe deletion.
