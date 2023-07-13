@@ -29,14 +29,16 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val viewModel: TeacherAppViewModel = hiltViewModel()
+                    val menuItems = viewModel.actionMenuItems
+                    val fabAction = viewModel.fabAction
 
                     TeacherApp(
                         title = viewModel.title,
                         setTitle = { title -> viewModel.title = title },
-                        menuItems = viewModel.actionMenuItems,
+                        menuItems = menuItems,
                         addActionMenuItems = viewModel::addActionMenuItems,
                         removeActionMenuItems = viewModel::removeActionMenuItems,
-                        fabAction = viewModel.fabAction,
+                        fabAction = fabAction,
                         addFabAction = viewModel::addFabAction,
                         removeFabAction = viewModel::removeFabAction,
                     )

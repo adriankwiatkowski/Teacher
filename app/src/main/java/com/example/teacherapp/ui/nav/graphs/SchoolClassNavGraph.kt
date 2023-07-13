@@ -42,9 +42,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
 
         SchoolClassesScreen(
             classes = schoolClasses,
-            onAddSchoolClassClick = {
-                navActions.navigateToSchoolClassFormRoute()
-            },
+            onAddSchoolClassClick = navActions::navigateToSchoolClassFormRoute,
             onClassClick = { schoolClassId ->
                 navActions.navigateToSchoolClassRoute(schoolClassId = schoolClassId)
             },
