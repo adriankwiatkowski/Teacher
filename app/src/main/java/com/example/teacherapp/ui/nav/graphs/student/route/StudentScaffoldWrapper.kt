@@ -65,14 +65,14 @@ internal fun StudentScaffoldWrapper(
             }
         },
         pagerState = pagerState,
-    ) {
+    ) { pagerTab ->
         ResourceContent(
             modifier = modifier,
             resource = studentResource,
             isDeleted = isStudentDeleted,
             deletedMessage = "Usunięto pomyślnie dane ucznia."
         ) { student ->
-            content(selectedTab = selectedTab, student = student)
+            content(selectedTab = pagerTab, student = student)
         }
     }
 }
