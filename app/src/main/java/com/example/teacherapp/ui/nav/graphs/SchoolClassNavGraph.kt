@@ -17,6 +17,7 @@ import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
+import com.example.teacherapp.ui.nav.graphs.lesson.navigateToLessonFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentGraph
 import com.example.teacherapp.ui.screens.schoolclass.SchoolClassFormScreen
@@ -30,7 +31,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
     navController: NavController,
     navActions: TeacherNavigationActions,
     setTitle: (String) -> Unit,
-    showSnackbar: (message: String) -> Unit,
+    onShowSnackbar: (message: String) -> Unit,
     addActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     addFabAction: (fabAction: FabAction) -> Unit,
@@ -80,7 +81,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
         // Observe deletion.
         LaunchedEffect(isSchoolClassDeleted) {
             if (isSchoolClassDeleted) {
-                showSnackbar("Usunięto klasę")
+                onShowSnackbar("Usunięto klasę")
                 navController.navigateUp()
             }
         }
@@ -112,13 +113,13 @@ fun NavGraphBuilder.addSchoolClassGraph(
                 )
             },
             onLessonClick = { lessonId ->
-                navActions.navigateToLessonFormRoute(
+                navController.navigateToLessonFormRoute(
                     schoolClassId = schoolClassId,
                     lessonId = lessonId,
                 )
             },
             onAddLessonClick = {
-                navActions.navigateToLessonFormRoute(
+                navController.navigateToLessonFormRoute(
                     schoolClassId = schoolClassId,
                     lessonId = null,
                 )

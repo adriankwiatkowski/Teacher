@@ -8,7 +8,7 @@ import com.example.teacherapp.data.db.datasources.student.note.StudentNoteDataSo
 import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.ResourceStatus
 import com.example.teacherapp.data.models.entities.BasicStudentNote
-import com.example.teacherapp.ui.nav.graphs.student.studentIdArg
+import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -53,6 +53,6 @@ class StudentNotesViewModel @Inject constructor(
         )
 
     companion object {
-        private const val STUDENT_ID_KEY = studentIdArg
+        private const val STUDENT_ID_KEY = StudentNavigation.studentIdArg
     }
 }

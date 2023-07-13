@@ -12,8 +12,7 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.ResourceStatus
 import com.example.teacherapp.data.models.entities.StudentNote
 import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.ui.nav.graphs.student.studentIdArg
-import com.example.teacherapp.ui.nav.graphs.student.studentNoteIdArg
+import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -149,7 +148,7 @@ class StudentNoteFormViewModel @Inject constructor(
     }
 
     companion object {
-        private const val STUDENT_ID_KEY = studentIdArg
-        private const val STUDENT_NOTE_ID_KEY = studentNoteIdArg
+        private const val STUDENT_ID_KEY = StudentNavigation.studentIdArg
+        private const val STUDENT_NOTE_ID_KEY = StudentNavigation.studentNoteIdArg
     }
 }

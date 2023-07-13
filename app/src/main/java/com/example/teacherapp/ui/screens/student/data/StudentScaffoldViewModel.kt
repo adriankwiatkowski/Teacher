@@ -8,7 +8,7 @@ import com.example.teacherapp.data.db.datasources.student.StudentDataSource
 import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.ResourceStatus
 import com.example.teacherapp.data.models.entities.Student
-import com.example.teacherapp.ui.nav.graphs.student.studentIdArg
+import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -73,7 +73,7 @@ class StudentScaffoldViewModel @Inject constructor(
     }
 
     companion object {
-        private const val STUDENT_ID_KEY = studentIdArg
+        private const val STUDENT_ID_KEY = StudentNavigation.studentIdArg
         private const val IS_STUDENT_DELETED_KEY = "is-student-deleted"
     }
 }

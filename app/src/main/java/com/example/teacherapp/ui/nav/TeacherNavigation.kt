@@ -9,9 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.teacherapp.ui.nav.TeacherDestinationsArgs.LESSON_ID_ARG
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG
-import com.example.teacherapp.ui.nav.TeacherScreens.LESSON_FORM_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHEDULE_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASSES_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASS_FORM_SCREEN
@@ -35,16 +33,11 @@ private object TeacherScreens {
 
     const val SCHOOL_YEAR_FORM_SCREEN = "school-year-form"
 
-    const val LESSON_FORM_SCREEN = "lesson-form"
-
     const val SETTINGS_SCREEN = "settings"
 }
 
 object TeacherDestinationsArgs {
-
     const val SCHOOL_CLASS_ID_ARG = "school-class-id"
-
-    const val LESSON_ID_ARG = "lesson-id"
 }
 
 object TeacherDestinations {
@@ -56,9 +49,6 @@ object TeacherDestinations {
     const val SCHOOL_CLASS_FORM_ROUTE = SCHOOL_CLASS_FORM_SCREEN
 
     const val SCHOOL_YEAR_FORM_ROUTE = SCHOOL_YEAR_FORM_SCREEN
-
-    const val LESSON_FORM_ROUTE =
-        "$LESSON_FORM_SCREEN/{$SCHOOL_CLASS_ID_ARG}?$LESSON_ID_ARG={$LESSON_ID_ARG}"
 
     const val SETTINGS_ROUTE = SETTINGS_SCREEN
 }
@@ -90,11 +80,6 @@ class TeacherNavigationActions(private val navController: NavController) {
 
     fun navigateToSchoolYearFormRoute() {
         navController.navigate(TeacherDestinations.SCHOOL_YEAR_FORM_ROUTE)
-    }
-
-    fun navigateToLessonFormRoute(schoolClassId: Long, lessonId: Long?) {
-        val query = if (lessonId != null) "?$LESSON_ID_ARG=$lessonId" else ""
-        navController.navigate("$LESSON_FORM_SCREEN/$schoolClassId$query")
     }
 
     fun navigateToSettingsRoute() {

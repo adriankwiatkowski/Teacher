@@ -31,7 +31,7 @@ fun NavGraphBuilder.addSchoolYearGraph(
             status = form.status,
             isValid = form.isValid,
             onAddSchoolYear = viewModel::onAddSchoolYear,
-            onSchoolYearAdd = { navController.popBackStack() }
+            onSchoolYearAdd = navController::popBackStack,
         )
     }
 }

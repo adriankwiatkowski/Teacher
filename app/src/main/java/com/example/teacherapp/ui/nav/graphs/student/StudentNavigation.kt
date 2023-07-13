@@ -2,22 +2,38 @@ package com.example.teacherapp.ui.nav.graphs.student
 
 import androidx.compose.material.Text
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.*
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
-import com.example.teacherapp.ui.nav.graphs.student.route.*
+import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.schoolClassIdArg
+import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentIdArg
+import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentNoteIdArg
+import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentRoute
+import com.example.teacherapp.ui.nav.graphs.student.route.StudentDetailRoute
+import com.example.teacherapp.ui.nav.graphs.student.route.StudentFormRoute
+import com.example.teacherapp.ui.nav.graphs.student.route.StudentNoteFormRoute
+import com.example.teacherapp.ui.nav.graphs.student.route.StudentNotesRoute
+import com.example.teacherapp.ui.nav.graphs.student.route.StudentScaffoldWrapper
 import com.example.teacherapp.ui.nav.graphs.student.tab.StudentTab
 import com.example.teacherapp.ui.screens.student.data.StudentScaffoldViewModel
 
 private const val studentGraphRoute = "student"
 
-internal const val schoolClassIdArg = "school-class-id"
-internal const val studentIdArg = "student-id"
-internal const val studentNoteIdArg = "student-note-id"
-
 private const val studentScreen = "student"
-internal const val studentRoute = "$studentScreen/{$schoolClassIdArg}/{${studentIdArg}}"
+
+internal object StudentNavigation {
+    internal const val schoolClassIdArg = "school-class-id"
+    internal const val studentIdArg = "student-id"
+    internal const val studentNoteIdArg = "student-note-id"
+
+    internal const val studentRoute = "$studentScreen/{$schoolClassIdArg}/{${studentIdArg}}"
+}
 
 private const val studentFormScreen = "student-form"
 private const val studentFormRoute =
@@ -101,9 +117,11 @@ fun NavGraphBuilder.studentGraph(
                     StudentTab.Detail -> {
                         StudentDetailRoute(student = student)
                     }
+
                     StudentTab.Grades -> {
                         Text("Grades")
                     }
+
                     StudentTab.Notes -> {
                         StudentNotesRoute(
                             onNoteClick = { studentNoteId ->

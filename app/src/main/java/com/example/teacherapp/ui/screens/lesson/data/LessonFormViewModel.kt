@@ -12,7 +12,7 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.ResourceStatus
 import com.example.teacherapp.data.models.entities.Lesson
 import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
+import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -125,7 +125,7 @@ class LessonFormViewModel @Inject constructor(
     }
 
     companion object {
-        private const val LESSON_ID_KEY = TeacherDestinationsArgs.LESSON_ID_ARG
-        private const val SCHOOL_CLASS_ID_KEY = TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG
+        private const val LESSON_ID_KEY = LessonNavigation.lessonIdArg
+        private const val SCHOOL_CLASS_ID_KEY = LessonNavigation.schoolClassIdArg
     }
 }
