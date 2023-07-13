@@ -9,7 +9,6 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.ResourceStatus
 import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.ui.nav.graphs.student.studentIdArg
-import com.example.teacherapp.ui.nav.graphs.student.tab.StudentTab
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -25,7 +24,6 @@ class StudentScaffoldViewModel @Inject constructor(
     private val resourceStatus = MutableStateFlow<ResourceStatus>(ResourceStatus.Loading)
 
     private val studentId = savedStateHandle.getStateFlow(STUDENT_ID_KEY, 0L)
-    val selectedTab = savedStateHandle.getStateFlow(SELECTED_STUDENT_TAB_KEY, StudentTab.Detail)
     val isStudentDeleted = savedStateHandle.getStateFlow(IS_STUDENT_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -74,13 +72,8 @@ class StudentScaffoldViewModel @Inject constructor(
         }
     }
 
-    fun onSelectTab(selectedTab: StudentTab) {
-        savedStateHandle[SELECTED_STUDENT_TAB_KEY] = selectedTab
-    }
-
     companion object {
         private const val STUDENT_ID_KEY = studentIdArg
-        private const val SELECTED_STUDENT_TAB_KEY = "selected-student-tab"
         private const val IS_STUDENT_DELETED_KEY = "is-student-deleted"
     }
 }

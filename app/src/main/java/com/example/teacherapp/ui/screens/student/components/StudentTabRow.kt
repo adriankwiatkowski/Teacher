@@ -10,18 +10,13 @@ import com.example.teacherapp.ui.theme.TeacherAppTheme
 
 @Composable
 fun StudentTabRow(
+    tabs: List<StudentTab>,
     selectedTab: StudentTab,
+    selectedTabIndex: Int,
     onTabClick: (studentTab: StudentTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        val tabs = remember {
-            listOf(StudentTab.Grades, StudentTab.Detail, StudentTab.Notes)
-        }
-        val selectedTabIndex = remember(selectedTab) {
-            tabs.indexOf(selectedTab)
-        }
-
         TabRow(selectedTabIndex = selectedTabIndex) {
             tabs.forEach { studentTab ->
                 StudentTab(
@@ -54,10 +49,16 @@ private fun StudentTab(
 private fun StudentTabBarPreview() {
     TeacherAppTheme {
         Surface {
+            val tabs = remember { listOf(StudentTab.Grades, StudentTab.Detail, StudentTab.Notes) }
             var selectedTab by remember { mutableStateOf(StudentTab.Detail) }
+            val selectedTabIndex = remember(selectedTab) {
+                tabs.indexOf(selectedTab)
+            }
 
             StudentTabRow(
+                tabs = tabs,
                 selectedTab = selectedTab,
+                selectedTabIndex = selectedTabIndex,
                 onTabClick = { selectedTab = it }
             )
         }
