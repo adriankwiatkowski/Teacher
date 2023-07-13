@@ -9,10 +9,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Subject
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,6 +32,8 @@ import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.Lesson
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
+import com.example.teacherapp.ui.components.TeacherFab
+import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
@@ -46,35 +51,57 @@ fun LessonFormScreen(
     onNameChange: (name: String) -> Unit,
     isValid: Boolean,
     schoolClassName: String,
-    onAddLesson: () -> Unit,
-    onLessonAdd: () -> Unit,
+    onAddLessonClick: () -> Unit,
+    onLessonAdded: () -> Unit,
+    onNavBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(formStatus) {
         if (formStatus == FormStatus.Success) {
-            onLessonAdd()
+            onLessonAdded()
         }
     }
 
-    ResourceContent(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
-            .padding(MaterialTheme.spacing.small),
-        resource = lessonResource,
-    ) { lesson ->
-        FormStatusContent(
-            formStatus = formStatus,
-            savingText = "Zapisywanie przedmiotu...",
-        ) {
-            Content(
-                modifier = modifier.fillMaxSize(),
-                schoolClassName = schoolClassName,
-                name = name,
-                onNameChange = onNameChange,
-                onAddLesson = onAddLesson,
-                isSubmitEnabled = isValid,
-                submitText = if (lesson == null) "Dodaj przedmiot" else "Edytuj przedmiot",
-            )
+    FormStatusContent(
+        modifier = modifier,
+        formStatus = formStatus,
+        savingText = "Zapisywanie przedmiotu...",
+    ) {
+        Scaffold(
+            topBar = {
+                TeacherTopBar(
+                    title = "Klasa $schoolClassName",
+                    showNavigationIcon = true,
+                    onNavigationIconClick = onNavBack,
+                )
+            },
+            floatingActionButton = {
+                TeacherFab(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                    onClick = onAddLessonClick,
+                    visible = isValid,
+                )
+            },
+            floatingActionButtonPosition = FabPosition.End,
+        ) { innerPadding ->
+            ResourceContent(
+                modifier = Modifier.padding(innerPadding),
+                resource = lessonResource,
+            ) { lesson ->
+                Content(
+                    modifier = Modifier
+                        .padding(MaterialTheme.spacing.small)
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    schoolClassName = schoolClassName,
+                    name = name,
+                    onNameChange = onNameChange,
+                    onAddLesson = onAddLessonClick,
+                    isSubmitEnabled = isValid,
+                    submitText = if (lesson == null) "Dodaj przedmiot" else "Edytuj przedmiot",
+                )
+            }
         }
     }
 }
@@ -105,6 +132,7 @@ private fun Content(
                         if (keyEvent.isShiftPressed) movePrev() else moveNext()
                         true
                     }
+
                     else -> false
                 }
             }
@@ -154,8 +182,9 @@ private fun LessonFormScreenPreview(
                 onNameChange = {},
                 isValid = form.isValid,
                 schoolClassName = lesson.basicSchoolClass.name,
-                onAddLesson = {},
-                onLessonAdd = {}
+                onAddLessonClick = {},
+                onLessonAdded = {},
+                onNavBack = {},
             )
         }
     }

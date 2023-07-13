@@ -6,7 +6,10 @@ import androidx.navigation.compose.NavHost
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.TeacherAppState
-import com.example.teacherapp.ui.nav.graphs.*
+import com.example.teacherapp.ui.nav.graphs.addScheduleGraph
+import com.example.teacherapp.ui.nav.graphs.addSchoolClassGraph
+import com.example.teacherapp.ui.nav.graphs.addSchoolYearGraph
+import com.example.teacherapp.ui.nav.graphs.addSettingsGraph
 import com.example.teacherapp.ui.nav.graphs.lesson.lessonGraph
 import com.example.teacherapp.ui.nav.graphs.student.studentGraph
 
@@ -55,10 +58,7 @@ fun TeacherNavGraph(
             removeActionMenuItems = removeActionMenuItems,
         )
 
-        lessonGraph(
-            navController = navController,
-            setTitle = setTitle,
-        )
+        lessonGraph(navController = navController)
 
         addSettingsGraph()
     }

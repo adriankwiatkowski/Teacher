@@ -29,10 +29,7 @@ fun NavController.navigateToLessonFormRoute(
     this.navigate("$lessonFormScreen/$schoolClassId$query", navOptions)
 }
 
-fun NavGraphBuilder.lessonGraph(
-    navController: NavController,
-    setTitle: (String) -> Unit,
-) {
+fun NavGraphBuilder.lessonGraph(navController: NavController) {
     composable(
         lessonFormRoute,
         arguments = listOf(
@@ -45,9 +42,6 @@ fun NavGraphBuilder.lessonGraph(
             },
         ),
     ) {
-        LessonFormRoute(
-            onNavBack = navController::popBackStack,
-            setTitle = setTitle,
-        )
+        LessonFormRoute(onNavBack = navController::popBackStack)
     }
 }

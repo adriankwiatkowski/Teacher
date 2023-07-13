@@ -13,11 +13,11 @@ import com.example.teacherapp.data.models.ActionMenuItem
 @Composable
 fun TeacherTopBar(
     title: String,
-    menuItems: List<ActionMenuItem>,
     showNavigationIcon: Boolean,
     onNavigationIconClick: () -> Unit,
-    visible: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    visible: Boolean = true,
+    menuItems: List<ActionMenuItem> = emptyList(),
 ) {
 //    AnimatedVisibility(
 //        modifier = modifier,

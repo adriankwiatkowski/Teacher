@@ -12,7 +12,9 @@ import androidx.navigation.navigation
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.schoolClassIdArg
+import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentIdArg
+import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentNoteFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentNoteIdArg
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentRoute
 import com.example.teacherapp.ui.nav.graphs.student.route.StudentDetailRoute
@@ -26,6 +28,8 @@ import com.example.teacherapp.ui.screens.student.data.StudentScaffoldViewModel
 private const val studentGraphRoute = "student"
 
 private const val studentScreen = "student"
+private const val studentFormScreen = "student-form"
+private const val studentNoteFormScreen = "student-note-form"
 
 internal object StudentNavigation {
     internal const val schoolClassIdArg = "school-class-id"
@@ -33,15 +37,12 @@ internal object StudentNavigation {
     internal const val studentNoteIdArg = "student-note-id"
 
     internal const val studentRoute = "$studentScreen/{$schoolClassIdArg}/{${studentIdArg}}"
+    internal const val studentFormRoute =
+        "$studentFormScreen/{$schoolClassIdArg}?$studentIdArg={$studentIdArg}"
+
+    internal const val studentNoteFormRoute =
+        "$studentNoteFormScreen/{$studentIdArg}?$studentNoteIdArg={$studentNoteIdArg}"
 }
-
-private const val studentFormScreen = "student-form"
-private const val studentFormRoute =
-    "$studentFormScreen/{$schoolClassIdArg}?$studentIdArg={$studentIdArg}"
-
-private const val studentNoteFormScreen = "student-note-form"
-private const val studentNoteFormRoute =
-    "$studentNoteFormScreen/{$studentIdArg}?$studentNoteIdArg={$studentNoteIdArg}"
 
 fun NavController.navigateToStudentGraph(
     schoolClassId: Long,

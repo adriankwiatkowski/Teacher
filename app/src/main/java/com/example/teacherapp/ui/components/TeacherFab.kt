@@ -13,11 +13,13 @@ import com.example.teacherapp.data.models.FabAction
 @Composable
 fun TeacherFab(
     fabAction: FabAction?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
+    val visible = fabAction != null
+
     AnimatedVisibility(
         modifier = modifier,
-        visible = fabAction != null,
+        visible = visible,
         enter = fadeIn(),
         exit = fadeOut(),
     ) {
@@ -29,6 +31,7 @@ fun TeacherFab(
             imageVector = fabAction.imageVector,
             contentDescription = fabAction.contentDescription,
             onClick = fabAction.onClick,
+            visible = true,
         )
     }
 }
@@ -39,7 +42,12 @@ fun TeacherFab(
     contentDescription: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    visible: Boolean = true,
 ) {
+    if (!visible) {
+        return
+    }
+
     FloatingActionButton(modifier = modifier, onClick = onClick) {
         Icon(imageVector = imageVector, contentDescription = contentDescription)
     }
