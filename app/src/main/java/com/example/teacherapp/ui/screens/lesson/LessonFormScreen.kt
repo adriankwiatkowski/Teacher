@@ -30,7 +30,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
-import com.example.teacherapp.data.models.entities.Lesson
+import com.example.teacherapp.core.model.data.Lesson
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.TeacherFab

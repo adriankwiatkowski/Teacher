@@ -1,6 +1,10 @@
 package com.example.teacherapp.ui.screens.schoolclass
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -12,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
-import com.example.teacherapp.data.models.entities.SchoolClass
+import com.example.teacherapp.core.model.data.SchoolClass
 import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.SchoolClassPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.lessons

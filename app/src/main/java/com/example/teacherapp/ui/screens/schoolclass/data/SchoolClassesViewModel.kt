@@ -3,8 +3,8 @@ package com.example.teacherapp.ui.screens.schoolclass.data
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.model.data.BasicSchoolClass
 import com.example.teacherapp.data.db.repository.SchoolClassRepository
-import com.example.teacherapp.data.models.entities.BasicSchoolClass
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

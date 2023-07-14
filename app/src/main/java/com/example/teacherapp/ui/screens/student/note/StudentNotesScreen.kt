@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
-import com.example.teacherapp.data.models.entities.BasicStudentNote
+import com.example.teacherapp.core.model.data.BasicStudentNote
 import com.example.teacherapp.ui.components.TeacherFab
 import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.BasicStudentNotesPreviewParameterProvider

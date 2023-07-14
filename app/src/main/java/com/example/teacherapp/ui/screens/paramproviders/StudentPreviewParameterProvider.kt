@@ -1,10 +1,10 @@
 package com.example.teacherapp.ui.screens.paramproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.teacherapp.data.models.entities.BasicStudent
-import com.example.teacherapp.data.models.entities.Grade
-import com.example.teacherapp.data.models.entities.Lesson
-import com.example.teacherapp.data.models.entities.Student
+import com.example.teacherapp.core.model.data.BasicStudent
+import com.example.teacherapp.core.model.data.Grade
+import com.example.teacherapp.core.model.data.Lesson
+import com.example.teacherapp.core.model.data.Student
 import java.math.BigDecimal
 import java.time.LocalDate
 

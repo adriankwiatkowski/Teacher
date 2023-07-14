@@ -4,10 +4,10 @@ import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.result.asResult
 import com.example.teacherapp.core.common.result.asResultNotNull
-import com.example.teacherapp.data.db.datasources.schoolclass.SchoolClassDataSource
-import com.example.teacherapp.data.models.entities.BasicSchoolClass
-import com.example.teacherapp.data.models.entities.SchoolClass
-import com.example.teacherapp.data.models.entities.SchoolYear
+import com.example.teacherapp.core.database.datasource.schoolclass.SchoolClassDataSource
+import com.example.teacherapp.core.model.data.BasicSchoolClass
+import com.example.teacherapp.core.model.data.SchoolClass
+import com.example.teacherapp.core.model.data.SchoolYear
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

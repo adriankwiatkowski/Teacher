@@ -1,8 +1,8 @@
 package com.example.teacherapp.ui.screens.paramproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.teacherapp.data.models.entities.SchoolYear
-import com.example.teacherapp.data.models.entities.Term
+import com.example.teacherapp.core.model.data.SchoolYear
+import com.example.teacherapp.core.model.data.Term
 import java.time.LocalDate
 
 class SchoolYearsPreviewParameterProvider : PreviewParameterProvider<List<SchoolYear>> {

@@ -4,9 +4,9 @@ import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.result.asResult
 import com.example.teacherapp.core.common.result.asResultNotNull
-import com.example.teacherapp.data.db.datasources.student.note.StudentNoteDataSource
-import com.example.teacherapp.data.models.entities.BasicStudentNote
-import com.example.teacherapp.data.models.entities.StudentNote
+import com.example.teacherapp.core.database.datasource.studentnote.StudentNoteDataSource
+import com.example.teacherapp.core.model.data.BasicStudentNote
+import com.example.teacherapp.core.model.data.StudentNote
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

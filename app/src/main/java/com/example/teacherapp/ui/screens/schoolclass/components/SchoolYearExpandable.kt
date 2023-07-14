@@ -13,7 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.example.teacherapp.data.models.entities.SchoolYear
+import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.ui.components.expandablelist.expandableItem
 import com.example.teacherapp.ui.screens.paramproviders.SchoolYearPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme

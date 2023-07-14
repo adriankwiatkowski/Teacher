@@ -3,8 +3,8 @@ package com.example.teacherapp.data.db.repository
 import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.result.asResult
-import com.example.teacherapp.data.db.datasources.schoolyear.SchoolYearDataSource
-import com.example.teacherapp.data.models.entities.SchoolYear
+import com.example.teacherapp.core.database.datasource.schoolyear.SchoolYearDataSource
+import com.example.teacherapp.core.model.data.SchoolYear
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

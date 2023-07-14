@@ -12,7 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.minimumInteractiveComponentSize
 import androidx.compose.ui.Modifier
-import com.example.teacherapp.data.models.entities.BasicStudentNote
+import com.example.teacherapp.core.model.data.BasicStudentNote
 import com.example.teacherapp.ui.components.expandablelist.expandableItems
 
 fun LazyListScope.notes(

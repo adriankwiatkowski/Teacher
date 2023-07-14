@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.example.teacherapp.data.models.entities.Student
+import com.example.teacherapp.core.model.data.Student
 import com.example.teacherapp.ui.screens.student.StudentDetailScreen
 
 @Composable

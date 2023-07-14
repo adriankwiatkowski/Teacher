@@ -4,8 +4,8 @@ import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.result.asResult
-import com.example.teacherapp.data.db.datasources.lesson.LessonDataSource
-import com.example.teacherapp.data.models.entities.Lesson
+import com.example.teacherapp.core.database.datasource.lesson.LessonDataSource
+import com.example.teacherapp.core.model.data.Lesson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

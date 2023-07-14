@@ -1,6 +1,6 @@
 package com.example.teacherapp.ui.screens.schoolclass.data
 
-import com.example.teacherapp.data.models.entities.SchoolYear
+import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
 

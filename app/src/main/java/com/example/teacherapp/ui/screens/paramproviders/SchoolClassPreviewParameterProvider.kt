@@ -1,12 +1,8 @@
 package com.example.teacherapp.ui.screens.paramproviders
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.teacherapp.data.models.entities.BasicSchoolClass
-import com.example.teacherapp.data.models.entities.ExpandableBasicSchoolClasses
-import com.example.teacherapp.data.models.entities.SchoolClass
-import com.example.teacherapp.data.models.entities.SchoolYear
+import com.example.teacherapp.core.model.data.BasicSchoolClass
+import com.example.teacherapp.core.model.data.SchoolClass
 
 class SchoolClassPreviewParameterProvider : PreviewParameterProvider<SchoolClass> {
     override val values: Sequence<SchoolClass> = BasicSchoolClassPreviewParameterProvider()
@@ -24,26 +20,6 @@ class SchoolClassPreviewParameterProvider : PreviewParameterProvider<SchoolClass
     private val schoolYear = SchoolYearPreviewParameterProvider().values.first()
     private val lessons = BasicLessonPreviewParameterProvider().values.toList()
     private val students = BasicStudentPreviewParameterProvider().values.toList()
-}
-
-class ExpandableBasicSchoolClassesMapPreviewParameterProvider :
-    PreviewParameterProvider<Map<SchoolYear, ExpandableBasicSchoolClasses>> {
-    override val values: Sequence<Map<SchoolYear, ExpandableBasicSchoolClasses>> = sequenceOf(
-        SchoolClassPreviewParameterProvider().values
-            .groupBy { it.schoolYear }
-            .mapValues { (_, schoolClasses) ->
-                ExpandableBasicSchoolClasses(
-                    expanded = mutableStateOf(false),
-                    schoolClasses = schoolClasses.map { schoolClass ->
-                        BasicSchoolClass(
-                            id = schoolClass.id,
-                            name = schoolClass.name,
-                            studentCount = schoolClass.students.size,
-                        )
-                    }
-                )
-            }
-    )
 }
 
 class BasicSchoolClassesPreviewParameterProvider :

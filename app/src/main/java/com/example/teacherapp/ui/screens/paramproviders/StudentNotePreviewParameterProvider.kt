@@ -1,8 +1,8 @@
 package com.example.teacherapp.ui.screens.paramproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.teacherapp.data.models.entities.BasicStudentNote
-import com.example.teacherapp.data.models.entities.StudentNote
+import com.example.teacherapp.core.model.data.BasicStudentNote
+import com.example.teacherapp.core.model.data.StudentNote
 
 class StudentNotePreviewParameterProvider : PreviewParameterProvider<StudentNote> {
     override val values: Sequence<StudentNote> = sequenceOf(

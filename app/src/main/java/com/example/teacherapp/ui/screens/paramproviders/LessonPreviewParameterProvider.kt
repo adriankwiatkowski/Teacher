@@ -1,9 +1,9 @@
 package com.example.teacherapp.ui.screens.paramproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.teacherapp.data.models.entities.BasicLesson
-import com.example.teacherapp.data.models.entities.BasicSchoolClass
-import com.example.teacherapp.data.models.entities.Lesson
+import com.example.teacherapp.core.model.data.BasicLesson
+import com.example.teacherapp.core.model.data.BasicSchoolClass
+import com.example.teacherapp.core.model.data.Lesson
 
 class LessonsPreviewParameterProvider : PreviewParameterProvider<List<Lesson>> {
     override val values: Sequence<List<Lesson>> = sequenceOf(

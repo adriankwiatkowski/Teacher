@@ -4,8 +4,8 @@ import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.result.asResult
 import com.example.teacherapp.core.common.result.asResultNotNull
-import com.example.teacherapp.data.db.datasources.student.StudentDataSource
-import com.example.teacherapp.data.models.entities.Student
+import com.example.teacherapp.core.database.datasource.student.StudentDataSource
+import com.example.teacherapp.core.model.data.Student
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
