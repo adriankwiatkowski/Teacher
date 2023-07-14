@@ -63,10 +63,7 @@ class LessonFormViewModel @Inject constructor(
     }
 
     fun onSubmit() {
-        if (!form.isValid) {
-            return
-        }
-        if (form.status == FormStatus.Saving || form.status == FormStatus.Success) {
+        if (!form.canSubmit) {
             return
         }
 
