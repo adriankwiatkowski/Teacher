@@ -3,25 +3,26 @@ package com.example.teacherapp.data.db.datasources.student
 import com.example.teacherapp.data.db.TeacherDatabase
 import com.example.teacherapp.data.db.datasources.utils.querymappers.SchoolClassMapper
 import com.example.teacherapp.data.db.datasources.utils.querymappers.StudentMapper
-import com.example.teacherapp.data.di.DispatcherProvider
+import com.example.teacherapp.data.di.DefaultDispatcher
 import com.example.teacherapp.data.models.entities.BasicStudent
 import com.example.teacherapp.data.models.entities.Student
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class StudentDataSourceImpl(
     db: TeacherDatabase,
-    private val dispatchers: DispatcherProvider,
+    @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
 ) : StudentDataSource {
 
     private val queries = db.studentQueries
     private val schoolClassQueries = db.schoolClassQueries
 
-    override fun getStudentById(id: Long): Flow<Student?> {
-        return queries
+    override fun getStudentById(id: Long): Flow<Student?> =
+        queries
             .getStudentById(id) { _, orderInClass, schoolClassId, name, surname, email, phone, schoolClassName ->
                 val schoolClass = SchoolClassMapper.mapBasicSchoolClass(
                     id = schoolClassId,
@@ -40,20 +41,17 @@ class StudentDataSourceImpl(
             }
             .asFlow()
             .mapToOneOrNull()
-    }
 
-    override fun getStudentsBySchoolClassId(schoolClassId: Long): Flow<List<BasicStudent>> {
-        return queries
+    override fun getStudentsBySchoolClassId(schoolClassId: Long): Flow<List<BasicStudent>> =
+        queries
             .getStudentsBySchoolClassId(schoolClassId, StudentMapper::mapBasicStudent)
             .asFlow()
             .mapToList()
-    }
 
-    override fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> {
-        return schoolClassQueries.getSchoolClassNameById(schoolClassId)
+    override fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> =
+        schoolClassQueries.getSchoolClassNameById(schoolClassId)
             .asFlow()
             .mapToOneOrNull()
-    }
 
     override suspend fun insertOrUpdateStudent(
         id: Long?,
@@ -63,7 +61,7 @@ class StudentDataSourceImpl(
         surname: String,
         email: String?,
         phone: String?,
-    ): Unit = withContext(dispatchers.io) {
+    ): Unit = withContext(dispatcher) {
         val defaultOrderInClass = 1L
 
         if (id == null) {
@@ -88,7 +86,7 @@ class StudentDataSourceImpl(
         }
     }
 
-    override suspend fun deleteStudentById(id: Long): Unit = withContext(dispatchers.io) {
+    override suspend fun deleteStudentById(id: Long): Unit = withContext(dispatcher) {
         queries.deleteStudentById(id)
     }
 }

@@ -11,11 +11,12 @@ import com.example.teacherapp.data.db.datasources.student.StudentDataSource
 import com.example.teacherapp.data.db.datasources.student.StudentDataSourceImpl
 import com.example.teacherapp.data.db.datasources.student.note.StudentNoteDataSource
 import com.example.teacherapp.data.db.datasources.student.note.StudentNoteDataSourceImpl
-import com.example.teacherapp.data.di.DispatcherProvider
+import com.example.teacherapp.data.di.DefaultDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -26,44 +27,44 @@ object DataSourceModule {
     @Singleton
     fun provideSchoolYearDataSource(
         db: TeacherDatabase,
-        dispatchers: DispatcherProvider,
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): SchoolYearDataSource {
-        return SchoolYearDataSourceImpl(db, dispatchers)
+        return SchoolYearDataSourceImpl(db, dispatcher)
     }
 
     @Provides
     @Singleton
     fun provideSchoolClassDataSource(
         db: TeacherDatabase,
-        dispatchers: DispatcherProvider,
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): SchoolClassDataSource {
-        return SchoolClassDataSourceImpl(db, dispatchers)
+        return SchoolClassDataSourceImpl(db, dispatcher)
     }
 
     @Provides
     @Singleton
     fun provideStudentDataSource(
         db: TeacherDatabase,
-        dispatchers: DispatcherProvider,
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): StudentDataSource {
-        return StudentDataSourceImpl(db, dispatchers)
+        return StudentDataSourceImpl(db, dispatcher)
     }
 
     @Provides
     @Singleton
     fun provideStudentNoteDataSource(
         db: TeacherDatabase,
-        dispatchers: DispatcherProvider,
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): StudentNoteDataSource {
-        return StudentNoteDataSourceImpl(db, dispatchers)
+        return StudentNoteDataSourceImpl(db, dispatcher)
     }
 
     @Provides
     @Singleton
     fun provideLessonDataSource(
         db: TeacherDatabase,
-        dispatchers: DispatcherProvider,
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): LessonDataSource {
-        return LessonDataSourceImpl(db, dispatchers)
+        return LessonDataSourceImpl(db, dispatcher)
     }
 }
