@@ -16,4 +16,7 @@ data class SchoolYearForm(
 
         isSchoolYearNameValid && isTermFormsValid
     }
+
+    val canSubmit: Boolean
+        get() = isValid && status != FormStatus.Saving && status != FormStatus.Success
 }

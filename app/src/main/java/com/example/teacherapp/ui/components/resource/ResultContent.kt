@@ -6,11 +6,13 @@ import androidx.compose.ui.Modifier
 import com.example.teacherapp.core.common.result.Result
 
 @Composable
-fun <T> ResourceContent(
-    resource: Result<T>,
+fun <T> ResultContent(
+    result: Result<T>,
     modifier: Modifier = Modifier,
     isDeleted: Boolean = false,
     deletedMessage: String = "Usunięto dane",
+    loadingContent: @Composable (() -> Unit)? = null,
+    errorContent: @Composable (() -> Unit)? = null,
     content: @Composable (T) -> Unit,
 ) {
     Box(modifier = modifier) {
@@ -19,10 +21,10 @@ fun <T> ResourceContent(
             return
         }
 
-        when (resource) {
-            Result.Loading -> LoadingScreen()
-            is Result.Error -> ErrorScreen()
-            is Result.Success -> content(resource.data)
+        when (result) {
+            Result.Loading -> if (loadingContent != null) loadingContent() else LoadingScreen()
+            is Result.Error -> if (errorContent != null) errorContent() else ErrorScreen()
+            is Result.Success -> content(result.data)
         }
     }
 }

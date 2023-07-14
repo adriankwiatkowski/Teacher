@@ -39,10 +39,10 @@ fun NavGraphBuilder.addSchoolClassGraph(
 ) {
     composable(TeacherDestinations.SCHOOL_CLASSES_ROUTE) {
         val schoolClassesViewModel = hiltViewModel<SchoolClassesViewModel>()
-        val schoolClasses by schoolClassesViewModel.schoolClasses.collectAsStateWithLifecycle()
+        val schoolClassesResult by schoolClassesViewModel.schoolClassesResult.collectAsStateWithLifecycle()
 
         SchoolClassesScreen(
-            classes = schoolClasses,
+            schoolClassesResult = schoolClassesResult,
             onAddSchoolClassClick = navActions::navigateToSchoolClassFormRoute,
             onClassClick = { schoolClassId ->
                 navActions.navigateToSchoolClassRoute(schoolClassId = schoolClassId)
@@ -65,11 +65,11 @@ fun NavGraphBuilder.addSchoolClassGraph(
         ),
     ) { backStackEntry ->
         val schoolClassViewModel = hiltViewModel<SchoolClassViewModel>()
-
-        val schoolClassResult by schoolClassViewModel.schoolClassesResult.collectAsStateWithLifecycle()
-        val schoolClassId =
-            backStackEntry.arguments!!.getLong(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG)
+        val schoolClassResult by schoolClassViewModel.schoolClassResult.collectAsStateWithLifecycle()
         val isSchoolClassDeleted = schoolClassViewModel.isSchoolClassDeleted
+
+        val args = backStackEntry.arguments!!
+        val schoolClassId = args.getLong(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG)
 
         // Set title.
         LaunchedEffect(schoolClassResult) {

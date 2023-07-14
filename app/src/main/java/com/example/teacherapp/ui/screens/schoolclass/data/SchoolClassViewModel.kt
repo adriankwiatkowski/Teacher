@@ -1,6 +1,5 @@
 package com.example.teacherapp.ui.screens.schoolclass.data
 
-import android.database.sqlite.SQLiteException
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,8 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
-import com.example.teacherapp.data.db.datasources.schoolclass.SchoolClassDataSource
-import com.example.teacherapp.data.models.ResourceStatus
+import com.example.teacherapp.data.db.repository.SchoolClassRepository
 import com.example.teacherapp.data.models.entities.SchoolClass
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,44 +18,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SchoolClassViewModel @Inject constructor(
-    private val schoolClassDataSource: SchoolClassDataSource,
+    private val repository: SchoolClassRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
-    private val resourceStatus = MutableStateFlow<ResourceStatus>(ResourceStatus.Loading)
 
     private val schoolClassId = savedStateHandle.getStateFlow(SCHOOL_CLASS_ID_KEY, 0L)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val schoolClass: Flow<SchoolClass?> = schoolClassId
-        .flatMapLatest { id ->
-            resourceStatus.value = ResourceStatus.Loading
-            schoolClassDataSource.getSchoolClassById(id).also {
-                resourceStatus.value = ResourceStatus.Success
-            }
-        }
-        .catch { e ->
-            if (e !is SQLiteException) {
-                throw e
-            }
-
-            resourceStatus.value = ResourceStatus.Error
-        }
-
-    val schoolClassesResult: StateFlow<Result<SchoolClass>> =
-        combine(resourceStatus, schoolClass) { status, schoolClass ->
-            when (status) {
-                ResourceStatus.Loading -> Result.Loading
-                ResourceStatus.Error -> Result.Error(NoSuchElementException())
-                ResourceStatus.Success -> {
-                    if (schoolClass != null) {
-                        Result.Success(schoolClass)
-                    } else {
-                        Result.Error(NoSuchElementException())
-                    }
-                }
-            }
-        }.stateIn(
+    val schoolClassResult: StateFlow<Result<SchoolClass>> = schoolClassId
+        .flatMapLatest { id -> repository.getSchoolClassById(id) }
+        .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = Result.Loading,
@@ -72,9 +42,7 @@ class SchoolClassViewModel @Inject constructor(
     fun deleteSchoolClass() {
         viewModelScope.launch {
             isSchoolClassDeleted = false
-
-            schoolClassDataSource.deleteSchoolClassById(schoolClassId.value)
-
+            repository.deleteSchoolClassById(schoolClassId.value)
             isSchoolClassDeleted = true
         }
     }

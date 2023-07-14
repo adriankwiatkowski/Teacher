@@ -15,9 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.data.models.entities.BasicSchoolClass
 import com.example.teacherapp.ui.components.form.TeacherChip
+import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.BasicSchoolClassesPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
@@ -25,7 +27,7 @@ import com.example.teacherapp.ui.theme.warning
 
 @Composable
 fun SchoolClassesScreen(
-    classes: List<BasicSchoolClass>,
+    schoolClassesResult: Result<List<BasicSchoolClass>>,
     onAddSchoolClassClick: () -> Unit,
     onClassClick: (id: Long) -> Unit,
     onStudentsClick: (classId: Long) -> Unit,
@@ -47,12 +49,35 @@ fun SchoolClassesScreen(
         }
     }
 
+    ResultContent(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(MaterialTheme.spacing.small),
+        result = schoolClassesResult,
+    ) { schoolClasses ->
+        MainContent(
+            schoolClasses = schoolClasses,
+            onClassClick = onClassClick,
+            onStudentsClick = onStudentsClick,
+            onLessonsClick = onLessonsClick,
+        )
+    }
+}
+
+@Composable
+private fun MainContent(
+    schoolClasses: List<BasicSchoolClass>,
+    onClassClick: (id: Long) -> Unit,
+    onStudentsClick: (classId: Long) -> Unit,
+    onLessonsClick: (classId: Long) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        items(classes, key = { it.id }) { schoolClass ->
+        items(schoolClasses, key = { it.id }) { schoolClass ->
             ClassItem(
                 name = schoolClass.name,
                 studentCount = schoolClass.studentCount,
@@ -62,64 +87,13 @@ fun SchoolClassesScreen(
             )
         }
 
-        if (classes.isEmpty()) {
+        if (schoolClasses.isEmpty()) {
             item {
                 EmptyClasses(Modifier.fillMaxWidth())
             }
         }
     }
 }
-
-//@Composable
-//fun SchoolClassesScreen(
-//    classes: Map<SchoolYear, ExpandableBasicSchoolClasses>,
-//    onAddSchoolClassClick: () -> Unit,
-//    onClassClick: (id: Long) -> Unit,
-//    onStudentsClick: (classId: Long) -> Unit,
-//    onLessonsClick: (classId: Long) -> Unit,
-//    modifier: Modifier = Modifier,
-//) {
-//    LazyColumn(
-//        modifier = modifier,
-//        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
-//        contentPadding = PaddingValues(MaterialTheme.spacing.small),
-//    ) {
-//        if (classes.isNotEmpty()) {
-//            for ((year, expandableClasses) in classes) {
-//                expandableLazyItem(
-//                    label = year.name,
-//                    expanded = expandableClasses.expanded,
-//                ) { contentPadding ->
-//                    items(expandableClasses.schoolClasses, key = { it.id }) { schoolClass ->
-//                        ClassItem(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(contentPadding),
-//                            name = schoolClass.name,
-//                            studentCount = schoolClass.studentCount,
-//                            onClick = { onClassClick(schoolClass.id) },
-//                            onStudentsClick = { onStudentsClick(schoolClass.id) },
-//                            onLessonsClick = { onLessonsClick(schoolClass.id) },
-//                        )
-//                    }
-//                }
-//            }
-//        } else {
-//            item {
-//                EmptyClasses(Modifier.fillMaxWidth())
-//            }
-//        }
-//
-//        item {
-//            TeacherOutlinedButton(
-//                modifier = Modifier.fillMaxWidth(),
-//                onClick = { onAddSchoolClassClick() },
-//            ) {
-//                Text(text = "Dodaj klasę")
-//            }
-//        }
-//    }
-//}
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterialApi::class)
 @Composable
@@ -203,7 +177,7 @@ private fun SchoolClassesScreenPreview(
         Surface {
             SchoolClassesScreen(
                 modifier = Modifier.fillMaxSize(),
-                classes = basicSchoolClasses,
+                schoolClassesResult = Result.Success(basicSchoolClasses),
                 onAddSchoolClassClick = {},
                 onClassClick = {},
                 onStudentsClick = {},

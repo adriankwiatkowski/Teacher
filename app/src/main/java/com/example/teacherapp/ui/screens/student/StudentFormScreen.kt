@@ -33,7 +33,7 @@ import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.resource.ResourceContent
+import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.StudentPreviewParameterProvider
 import com.example.teacherapp.ui.screens.student.data.StudentFormProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
@@ -62,11 +62,11 @@ fun StudentFormScreen(
         }
     }
 
-    ResourceContent(
+    ResultContent(
         modifier = modifier
             .verticalScroll(rememberScrollState())
             .padding(MaterialTheme.spacing.small),
-        resource = studentResult,
+        result = studentResult,
     ) { student ->
         FormStatusContent(
             formStatus = formStatus,

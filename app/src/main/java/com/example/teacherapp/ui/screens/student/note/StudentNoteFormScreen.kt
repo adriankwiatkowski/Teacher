@@ -28,7 +28,7 @@ import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.resource.ResourceContent
+import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.StudentNotePreviewParameterProvider
 import com.example.teacherapp.ui.screens.student.note.data.StudentNoteFormProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
@@ -55,12 +55,12 @@ fun StudentNoteFormScreen(
         }
     }
 
-    ResourceContent(
+    ResultContent(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(MaterialTheme.spacing.small),
-        resource = studentNoteResult,
+        result = studentNoteResult,
         isDeleted = isStudentNoteDeleted,
         deletedMessage = "Usunięto uwagę",
     ) { studentNote ->

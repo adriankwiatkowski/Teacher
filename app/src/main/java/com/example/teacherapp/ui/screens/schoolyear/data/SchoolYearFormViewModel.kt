@@ -1,22 +1,21 @@
 package com.example.teacherapp.ui.screens.schoolyear.data
 
-import android.database.sqlite.SQLiteConstraintException
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.teacherapp.data.db.datasources.schoolyear.SchoolYearDataSource
+import com.example.teacherapp.data.db.repository.SchoolYearRepository
 import com.example.teacherapp.data.models.input.FormStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class SchoolYearFormViewModel @Inject constructor(
-    private val schoolYearDataSource: SchoolYearDataSource,
+    private val repository: SchoolYearRepository,
 ) : ViewModel() {
 
     var form by mutableStateOf(SchoolYearFormProvider.createDefaultForm())
@@ -55,28 +54,17 @@ class SchoolYearFormViewModel @Inject constructor(
     }
 
     fun onAddSchoolYear() {
-        if (!form.isValid) {
+        if (!form.canSubmit) {
             return
         }
 
-        val handler = CoroutineExceptionHandler { _, exception ->
-            form = form.copy(status = FormStatus.Error)
-            if (exception !is SQLiteConstraintException) {
-                throw exception
-            }
-        }
-        viewModelScope.launch(handler) {
-            if (form.status == FormStatus.Saving || form.status == FormStatus.Success) {
-                return@launch
-            }
-
+        form = form.copy(status = FormStatus.Saving)
+        viewModelScope.launch {
             val firstTerm = form.termForms[0]
             val secondTerm = form.termForms[1]
             val schoolYearName = form.schoolYearName.value
 
-            form = form.copy(status = FormStatus.Saving)
-
-            schoolYearDataSource.insertSchoolYear(
+            repository.insertSchoolYear(
                 schoolYearName = schoolYearName,
                 termFirstName = firstTerm.name.value,
                 termFirstStartDate = firstTerm.startDate.date,
@@ -86,7 +74,9 @@ class SchoolYearFormViewModel @Inject constructor(
                 termSecondEndDate = secondTerm.endDate.date,
             )
 
-            form = form.copy(status = FormStatus.Success)
+            if (isActive) {
+                form = form.copy(status = FormStatus.Success)
+            }
         }
     }
 

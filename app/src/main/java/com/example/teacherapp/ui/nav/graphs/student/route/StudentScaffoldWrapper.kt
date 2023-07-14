@@ -9,7 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.entities.Student
-import com.example.teacherapp.ui.components.resource.ResourceContent
+import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.nav.graphs.student.tab.StudentTab
 import com.example.teacherapp.ui.screens.student.components.StudentScaffold
 import com.example.teacherapp.ui.screens.student.data.StudentScaffoldViewModel
@@ -66,9 +66,9 @@ internal fun StudentScaffoldWrapper(
         },
         pagerState = pagerState,
     ) { pagerTab ->
-        ResourceContent(
+        ResultContent(
             modifier = modifier,
-            resource = studentResult,
+            result = studentResult,
             isDeleted = isStudentDeleted,
             deletedMessage = "Usunięto pomyślnie dane ucznia."
         ) { student ->

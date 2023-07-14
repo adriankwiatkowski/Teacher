@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.entities.SchoolClass
-import com.example.teacherapp.ui.components.resource.ResourceContent
+import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.SchoolClassPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.lessons
 import com.example.teacherapp.ui.screens.schoolclass.components.schoolYearExpandable
@@ -34,9 +34,9 @@ fun SchoolClassScreen(
     isSchoolClassDeleted: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    ResourceContent(
+    ResultContent(
         modifier = modifier,
-        resource = schoolClassResult,
+        result = schoolClassResult,
         isDeleted = isSchoolClassDeleted,
         deletedMessage = "Usunięto pomyślnie klasę."
     ) { schoolClass ->

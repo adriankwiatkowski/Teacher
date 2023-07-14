@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.entities.BasicStudentNote
 import com.example.teacherapp.ui.components.TeacherFab
-import com.example.teacherapp.ui.components.resource.ResourceContent
+import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.BasicStudentNotesPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
@@ -31,9 +31,9 @@ fun StudentNotesScreen(
     onAddNoteClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ResourceContent(
+    ResultContent(
         modifier = modifier,
-        resource = studentNotesResult,
+        result = studentNotesResult,
     ) { studentNotes ->
         Scaffold(
             modifier = Modifier.fillMaxSize(),

@@ -38,7 +38,7 @@ import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.resource.ResourceContent
+import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.lesson.data.LessonFormProvider
 import com.example.teacherapp.ui.screens.paramproviders.LessonPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
@@ -102,7 +102,7 @@ fun LessonFormScreen(
                         submitText = if (lessonResult.data == null) "Dodaj przedmiot" else "Edytuj przedmiot",
                     )
                 } else {
-                    ResourceContent(resource = lessonResult) { lesson ->
+                    ResultContent(result = lessonResult) { lesson ->
                         Content(
                             modifier = Modifier
                                 .padding(MaterialTheme.spacing.small)
