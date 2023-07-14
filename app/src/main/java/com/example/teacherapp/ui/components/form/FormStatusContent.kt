@@ -12,7 +12,7 @@ fun FormStatusContent(
     formStatus: FormStatus,
     modifier: Modifier = Modifier,
     savingText: String = "Zapisywanie...",
-    errorText: String = "",
+    errorText: String = "Wystąpił nieoczekiwany błąd podczas zapisywania",
     successContent: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {

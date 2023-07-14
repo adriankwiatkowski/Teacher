@@ -5,8 +5,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Qualifier
+import javax.inject.Singleton
 
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
@@ -27,6 +30,10 @@ annotation class DefaultDispatcher
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
 annotation class UnconfinedDispatcher
+
+@Retention(AnnotationRetention.BINARY)
+@Qualifier
+annotation class ApplicationScope
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -51,6 +58,13 @@ object CoroutineScopeModule {
     @UnconfinedDispatcher
     @Provides
     fun providesUnconfinedDispatcher(): CoroutineDispatcher = Dispatchers.Unconfined
+
+    @Provides
+    @Singleton
+    @ApplicationScope
+    fun providesApplicationScope(
+        @DefaultDispatcher dispatcher: CoroutineDispatcher
+    ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 
 //    @Provides
 //    @Singleton

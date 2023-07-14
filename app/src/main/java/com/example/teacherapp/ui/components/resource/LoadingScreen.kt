@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun LoadingScreen(
     modifier: Modifier = Modifier,
-    label: String = "Wczytywnanie...",
+    label: String = "Wczytywanie...",
 ) {
     LoadingScreen(
         modifier = modifier,

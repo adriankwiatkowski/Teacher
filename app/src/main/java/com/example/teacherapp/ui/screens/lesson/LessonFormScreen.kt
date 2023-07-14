@@ -1,6 +1,7 @@
 package com.example.teacherapp.ui.screens.lesson
 
 import android.view.KeyEvent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -85,22 +86,37 @@ fun LessonFormScreen(
             },
             floatingActionButtonPosition = FabPosition.End,
         ) { innerPadding ->
-            ResourceContent(
-                modifier = Modifier.padding(innerPadding),
-                resource = lessonResource,
-            ) { lesson ->
-                Content(
-                    modifier = Modifier
-                        .padding(MaterialTheme.spacing.small)
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState()),
-                    schoolClassName = schoolClassName,
-                    name = name,
-                    onNameChange = onNameChange,
-                    onAddLesson = onAddLessonClick,
-                    isSubmitEnabled = isValid,
-                    submitText = if (lesson == null) "Dodaj przedmiot" else "Edytuj przedmiot",
-                )
+            // TODO: For some reason, sometimes ResourceContent doesn't get updated on Resource.Success.
+            Box(Modifier.padding(innerPadding)) {
+                if (lessonResource is Resource.Success) {
+                    Content(
+                        modifier = Modifier
+                            .padding(MaterialTheme.spacing.small)
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState()),
+                        schoolClassName = schoolClassName,
+                        name = name,
+                        onNameChange = onNameChange,
+                        onAddLesson = onAddLessonClick,
+                        isSubmitEnabled = isValid,
+                        submitText = if (lessonResource.data == null) "Dodaj przedmiot" else "Edytuj przedmiot",
+                    )
+                } else {
+                    ResourceContent(resource = lessonResource) { lesson ->
+                        Content(
+                            modifier = Modifier
+                                .padding(MaterialTheme.spacing.small)
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState()),
+                            schoolClassName = schoolClassName,
+                            name = name,
+                            onNameChange = onNameChange,
+                            onAddLesson = onAddLessonClick,
+                            isSubmitEnabled = isValid,
+                            submitText = if (lesson == null) "Dodaj przedmiot" else "Edytuj przedmiot",
+                        )
+                    }
+                }
             }
         }
     }
