@@ -1,4 +1,4 @@
-package com.example.teacherapp.utils
+package com.example.teacherapp.core.common.utils
 
 import java.time.LocalDate
 import java.time.LocalTime
