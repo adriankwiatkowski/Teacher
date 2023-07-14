@@ -13,4 +13,7 @@ data class StudentForm(
 ) {
     val isValid: Boolean
         get() = name.isValid && surname.isValid && email.isValid && phone.isValid
+
+    val canSubmit: Boolean
+        get() = isValid && status != FormStatus.Saving && status != FormStatus.Success
 }

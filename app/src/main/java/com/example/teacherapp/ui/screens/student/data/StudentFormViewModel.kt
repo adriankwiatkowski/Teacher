@@ -1,27 +1,26 @@
 package com.example.teacherapp.ui.screens.student.data
 
-import android.database.sqlite.SQLiteException
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.teacherapp.data.db.datasources.student.StudentDataSource
+import com.example.teacherapp.data.db.repository.StudentRepository
 import com.example.teacherapp.data.models.*
 import com.example.teacherapp.data.models.entities.*
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class StudentFormViewModel @Inject constructor(
-    private val studentDataSource: StudentDataSource,
+    private val repository: StudentRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -29,53 +28,23 @@ class StudentFormViewModel @Inject constructor(
     private val schoolClassId: StateFlow<Long> =
         savedStateHandle.getStateFlow(SCHOOL_CLASS_ID_KEY, 0L)
 
-    private val resourceStatus = MutableStateFlow<ResourceStatus>(ResourceStatus.Loading)
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val student: Flow<Student?> = studentId
-        .flatMapLatest { id ->
-            resourceStatus.value = ResourceStatus.Loading
-            val result = studentDataSource.getStudentById(id)
-            resourceStatus.value = ResourceStatus.Success
-            result
-        }
-        .distinctUntilChanged()
-        .catch { e ->
-            if (e !is SQLiteException) {
-                throw e
-            }
-
-            resourceStatus.value = ResourceStatus.Error
-        }
-
     var form by mutableStateOf(StudentFormProvider.createDefaultForm())
         private set
 
-    val studentResource: StateFlow<Resource<Student?>> =
-        combine(resourceStatus, student) { status, student ->
-            when (status) {
-                ResourceStatus.Loading -> Resource.Loading
-                ResourceStatus.Error -> Resource.Error(NoSuchElementException())
-                ResourceStatus.Success -> Resource.Success(student)
-            }
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = Resource.Loading,
-        )
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val studentResource: StateFlow<Resource<Student?>> = studentId
+        .flatMapLatest { studentId -> repository.getStudentByIdOrNull(studentId) }
+        .stateIn(initialValue = Resource.Loading)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val schoolClassName: StateFlow<String?> = schoolClassId.flatMapLatest { schoolClassId ->
-        studentDataSource.getStudentSchoolClassNameById(schoolClassId = schoolClassId)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = null
-    )
+    val schoolClassName: StateFlow<String?> = schoolClassId
+        .flatMapLatest { schoolClassId -> repository.getStudentSchoolClassNameById(schoolClassId) }
+        .stateIn(initialValue = null)
 
     init {
-        student
-            .onEach { student ->
+        studentResource
+            .onEach { studentResource ->
+                val student = (studentResource as? Resource.Success)?.data
                 if (student == null) {
                     form = StudentFormProvider.createDefaultForm(status = FormStatus.Idle)
                     return@onEach
@@ -110,42 +79,33 @@ class StudentFormViewModel @Inject constructor(
     }
 
     fun onSubmit() {
-        if (!form.isValid) {
+        if (!form.canSubmit) {
             return
         }
 
-        val handler = CoroutineExceptionHandler { _, exception ->
-            form = form.copy(status = FormStatus.Error)
-            if (exception !is SQLiteException) {
-                throw exception
-            }
-        }
-        viewModelScope.launch(handler) {
-            if (form.status == FormStatus.Saving || form.status == FormStatus.Success) {
-                return@launch
-            }
-
-            val id = form.id
-            val name = form.name.value.trim()
-            val surname = form.surname.value.trim()
-            val email = form.email.value?.trim()
-            val phone = form.phone.value?.trim()
-
-            form = form.copy(status = FormStatus.Saving)
-
-            studentDataSource.insertOrUpdateStudent(
-                id = id,
+        form = form.copy(status = FormStatus.Saving)
+        viewModelScope.launch {
+            repository.insertOrUpdateStudent(
+                id = form.id,
                 schoolClassId = schoolClassId.value,
                 orderInClass = null,
-                name = name,
-                surname = surname,
-                email = email,
-                phone = phone,
+                name = form.name.value.trim(),
+                surname = form.surname.value.trim(),
+                email = form.email.value?.trim(),
+                phone = form.phone.value?.trim(),
             )
 
-            form = form.copy(status = FormStatus.Success)
+            if (isActive) {
+                form = form.copy(status = FormStatus.Success)
+            }
         }
     }
+
+    private fun <T> Flow<T>.stateIn(initialValue: T): StateFlow<T> = stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = initialValue,
+    )
 
     companion object {
         private const val STUDENT_ID_KEY = StudentNavigation.studentIdArg
