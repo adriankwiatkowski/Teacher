@@ -21,7 +21,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.entities.StudentNote
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
@@ -36,7 +36,7 @@ import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun StudentNoteFormScreen(
-    studentNoteResource: Resource<StudentNote?>,
+    studentNoteResult: Result<StudentNote?>,
     formStatus: FormStatus,
     studentFullName: String,
     title: InputField<String>,
@@ -60,7 +60,7 @@ fun StudentNoteFormScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(MaterialTheme.spacing.small),
-        resource = studentNoteResource,
+        resource = studentNoteResult,
         isDeleted = isStudentNoteDeleted,
         deletedMessage = "Usunięto uwagę",
     ) { studentNote ->
@@ -168,7 +168,7 @@ private fun StudentNoteFormScreenPreview(
             )
 
             StudentNoteFormScreen(
-                studentNoteResource = Resource.Success(studentNote),
+                studentNoteResult = Result.Success(studentNote),
                 formStatus = form.status,
                 studentFullName = "Jan Kowalski",
                 title = form.title,
@@ -195,7 +195,7 @@ private fun StudentNoteFormScreenDeletedPreview() {
             )
 
             StudentNoteFormScreen(
-                studentNoteResource = Resource.Loading,
+                studentNoteResult = Result.Loading,
                 formStatus = form.status,
                 studentFullName = "Jan Kowalski",
                 title = form.title,

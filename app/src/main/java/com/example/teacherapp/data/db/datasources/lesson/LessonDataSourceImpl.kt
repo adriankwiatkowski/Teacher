@@ -1,8 +1,8 @@
 package com.example.teacherapp.data.db.datasources.lesson
 
+import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.data.db.TeacherDatabase
 import com.example.teacherapp.data.db.datasources.utils.querymappers.LessonMapper
-import com.example.teacherapp.data.di.DefaultDispatcher
 import com.example.teacherapp.data.models.entities.BasicLesson
 import com.example.teacherapp.data.models.entities.Lesson
 import com.squareup.sqldelight.runtime.coroutines.asFlow

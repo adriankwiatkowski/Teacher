@@ -12,12 +12,12 @@ internal fun LessonFormRoute(
     onNavBack: () -> Unit,
     viewModel: LessonFormViewModel = hiltViewModel(),
 ) {
-    val lessonResource by viewModel.lessonResource.collectAsStateWithLifecycle()
+    val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
     val schoolClassName by viewModel.schoolClassName.collectAsStateWithLifecycle()
     val form = viewModel.form
 
     LessonFormScreen(
-        lessonResource = lessonResource,
+        lessonResult = lessonResult,
         formStatus = form.status,
         name = form.name,
         onNameChange = viewModel::onNameChange,

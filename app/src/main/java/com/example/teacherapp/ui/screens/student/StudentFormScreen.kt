@@ -26,7 +26,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
@@ -41,7 +41,7 @@ import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun StudentFormScreen(
-    studentResource: Resource<Student?>,
+    studentResult: Result<Student?>,
     formStatus: FormStatus,
     name: InputField<String>,
     onNameChange: (name: String) -> Unit,
@@ -66,7 +66,7 @@ fun StudentFormScreen(
         modifier = modifier
             .verticalScroll(rememberScrollState())
             .padding(MaterialTheme.spacing.small),
-        resource = studentResource,
+        resource = studentResult,
     ) { student ->
         FormStatusContent(
             formStatus = formStatus,
@@ -204,7 +204,7 @@ private fun StudentFormScreenPreview(
             )
 
             StudentFormScreen(
-                studentResource = Resource.Success(student),
+                studentResult = Result.Success(student),
                 formStatus = form.status,
                 name = form.name,
                 onNameChange = {},

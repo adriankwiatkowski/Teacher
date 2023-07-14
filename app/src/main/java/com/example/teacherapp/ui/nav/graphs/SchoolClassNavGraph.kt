@@ -10,9 +10,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.FabAction
-import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
@@ -66,14 +66,14 @@ fun NavGraphBuilder.addSchoolClassGraph(
     ) { backStackEntry ->
         val schoolClassViewModel = hiltViewModel<SchoolClassViewModel>()
 
-        val schoolClassResource by schoolClassViewModel.uiState.collectAsStateWithLifecycle()
+        val schoolClassResult by schoolClassViewModel.schoolClassesResult.collectAsStateWithLifecycle()
         val schoolClassId =
             backStackEntry.arguments!!.getLong(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG)
         val isSchoolClassDeleted = schoolClassViewModel.isSchoolClassDeleted
 
         // Set title.
-        LaunchedEffect(schoolClassResource) {
-            val schoolClass = schoolClassResource as? Resource.Success
+        LaunchedEffect(schoolClassResult) {
+            val schoolClass = schoolClassResult as? Result.Success
             val name = schoolClass?.data?.name.orEmpty()
             val title = "Klasa $name"
             setTitle(title)
@@ -99,7 +99,7 @@ fun NavGraphBuilder.addSchoolClassGraph(
         }
 
         SchoolClassScreen(
-            schoolClassResource = schoolClassResource,
+            schoolClassResult = schoolClassResult,
             onStudentClick = { studentId ->
                 navController.navigateToStudentGraph(
                     schoolClassId = schoolClassId,

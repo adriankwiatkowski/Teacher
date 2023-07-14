@@ -1,9 +1,9 @@
 package com.example.teacherapp.data.db.datasources.student
 
+import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.data.db.TeacherDatabase
 import com.example.teacherapp.data.db.datasources.utils.querymappers.SchoolClassMapper
 import com.example.teacherapp.data.db.datasources.utils.querymappers.StudentMapper
-import com.example.teacherapp.data.di.DefaultDispatcher
 import com.example.teacherapp.data.models.entities.BasicStudent
 import com.example.teacherapp.data.models.entities.Student
 import com.squareup.sqldelight.runtime.coroutines.asFlow

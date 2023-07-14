@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.db.repository.LessonRepository
-import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.Lesson
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation
@@ -32,9 +32,9 @@ class LessonFormViewModel @Inject constructor(
         private set
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lessonResource: StateFlow<Resource<Lesson?>> = lessonId
+    val lessonResult: StateFlow<Result<Lesson?>> = lessonId
         .flatMapLatest { lessonId -> lessonRepository.getLessonById(lessonId) }
-        .stateIn(initialValue = Resource.Loading)
+        .stateIn(initialValue = Result.Loading)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val schoolClassName: StateFlow<String?> = schoolClassId
@@ -42,13 +42,9 @@ class LessonFormViewModel @Inject constructor(
         .stateIn(initialValue = null)
 
     init {
-        lessonResource
+        lessonResult
             .onEach { lessonResource ->
-                if (lessonResource !is Resource.Success || lessonResource.data == null) {
-                    return@onEach
-                }
-
-                val lesson = lessonResource.data
+                val lesson = (lessonResource as? Result.Success)?.data ?: return@onEach
                 form = form.copy(
                     id = lesson.id,
                     name = LessonFormProvider.validateName(lesson.name),

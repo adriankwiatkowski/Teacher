@@ -1,9 +1,9 @@
 package com.example.teacherapp.data.db.datasources.student.note
 
+import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.data.db.TeacherDatabase
 import com.example.teacherapp.data.db.datasources.utils.querymappers.StudentNoteMapper.mapToBasicNote
 import com.example.teacherapp.data.db.datasources.utils.querymappers.StudentNoteMapper.mapToNote
-import com.example.teacherapp.data.di.DefaultDispatcher
 import com.example.teacherapp.data.models.entities.BasicStudentNote
 import com.example.teacherapp.data.models.entities.StudentNote
 import com.squareup.sqldelight.runtime.coroutines.asFlow

@@ -6,8 +6,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.ActionMenuItem
-import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.nav.graphs.student.tab.StudentTab
@@ -26,7 +26,7 @@ internal fun StudentScaffoldWrapper(
     viewModel: StudentScaffoldViewModel = hiltViewModel(),
     content: @Composable (selectedTab: StudentTab, student: Student) -> Unit,
 ) {
-    val studentResource by viewModel.studentResource.collectAsStateWithLifecycle()
+    val studentResult by viewModel.studentResult.collectAsStateWithLifecycle()
     val isStudentDeleted by viewModel.isStudentDeleted.collectAsStateWithLifecycle()
 
     val tabs = remember { listOf(StudentTab.Grades, StudentTab.Detail, StudentTab.Notes) }
@@ -47,8 +47,8 @@ internal fun StudentScaffoldWrapper(
         }
     }
 
-    val schoolClassName = remember(studentResource) {
-        (studentResource as? Resource.Success)?.data?.schoolClass?.name.orEmpty()
+    val schoolClassName = remember(studentResult) {
+        (studentResult as? Result.Success)?.data?.schoolClass?.name.orEmpty()
     }
 
     StudentScaffold(
@@ -68,7 +68,7 @@ internal fun StudentScaffoldWrapper(
     ) { pagerTab ->
         ResourceContent(
             modifier = modifier,
-            resource = studentResource,
+            resource = studentResult,
             isDeleted = isStudentDeleted,
             deletedMessage = "Usunięto pomyślnie dane ucznia."
         ) { student ->

@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.entities.BasicStudentNote
 import com.example.teacherapp.ui.components.TeacherFab
 import com.example.teacherapp.ui.components.resource.ResourceContent
@@ -26,14 +26,14 @@ import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun StudentNotesScreen(
-    studentNotesResource: Resource<List<BasicStudentNote>>,
+    studentNotesResult: Result<List<BasicStudentNote>>,
     onNoteClick: (noteId: Long) -> Unit,
     onAddNoteClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ResourceContent(
         modifier = modifier,
-        resource = studentNotesResource,
+        resource = studentNotesResult,
     ) { studentNotes ->
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -118,7 +118,7 @@ private fun StudentNotesScreenPreview(
     TeacherAppTheme {
         Surface {
             StudentNotesScreen(
-                studentNotesResource = Resource.Success(studentNotes),
+                studentNotesResult = Result.Success(studentNotes),
                 onNoteClick = {},
                 onAddNoteClick = {},
             )

@@ -158,7 +158,7 @@ fun NavGraphBuilder.studentGraph(
             StudentNoteFormRoute(
                 onNavBack = navController::popBackStack,
                 setTitle = setTitle,
-                showSnackbar = onShowSnackbar,
+                onShowSnackbar = onShowSnackbar,
                 addActionMenuItems = addActionMenuItems,
                 removeActionMenuItems = removeActionMenuItems,
             )

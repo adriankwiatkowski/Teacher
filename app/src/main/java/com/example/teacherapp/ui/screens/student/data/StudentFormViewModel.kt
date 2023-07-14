@@ -6,14 +6,20 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.db.repository.StudentRepository
-import com.example.teacherapp.data.models.*
-import com.example.teacherapp.data.models.entities.*
+import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,9 +38,9 @@ class StudentFormViewModel @Inject constructor(
         private set
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val studentResource: StateFlow<Resource<Student?>> = studentId
+    val studentResult: StateFlow<Result<Student?>> = studentId
         .flatMapLatest { studentId -> repository.getStudentByIdOrNull(studentId) }
-        .stateIn(initialValue = Resource.Loading)
+        .stateIn(initialValue = Result.Loading)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val schoolClassName: StateFlow<String?> = schoolClassId
@@ -42,9 +48,9 @@ class StudentFormViewModel @Inject constructor(
         .stateIn(initialValue = null)
 
     init {
-        studentResource
-            .onEach { studentResource ->
-                val student = (studentResource as? Resource.Success)?.data
+        studentResult
+            .onEach { studentResult ->
+                val student = (studentResult as? Result.Success)?.data
                 if (student == null) {
                     form = StudentFormProvider.createDefaultForm(status = FormStatus.Idle)
                     return@onEach

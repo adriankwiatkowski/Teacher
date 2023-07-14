@@ -16,9 +16,9 @@ internal fun StudentFormRoute(
     modifier: Modifier = Modifier,
     viewModel: StudentFormViewModel = hiltViewModel(),
 ) {
-    val studentResource by viewModel.studentResource.collectAsStateWithLifecycle()
-    val form = viewModel.form
+    val studentResult by viewModel.studentResult.collectAsStateWithLifecycle()
     val schoolClassName by viewModel.schoolClassName.collectAsStateWithLifecycle()
+    val form = viewModel.form
 
     LaunchedEffect(schoolClassName) {
         val name = schoolClassName.orEmpty()
@@ -27,7 +27,7 @@ internal fun StudentFormRoute(
 
     StudentFormScreen(
         modifier = modifier,
-        studentResource = studentResource,
+        studentResult = studentResult,
         formStatus = form.status,
         name = form.name,
         onNameChange = viewModel::onNameChange,

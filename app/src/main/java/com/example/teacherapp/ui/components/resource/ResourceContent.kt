@@ -3,11 +3,11 @@ package com.example.teacherapp.ui.components.resource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.core.common.result.Result
 
 @Composable
 fun <T> ResourceContent(
-    resource: Resource<T>,
+    resource: Result<T>,
     modifier: Modifier = Modifier,
     isDeleted: Boolean = false,
     deletedMessage: String = "Usunięto dane",
@@ -20,9 +20,9 @@ fun <T> ResourceContent(
         }
 
         when (resource) {
-            Resource.Loading -> LoadingScreen()
-            is Resource.Error -> ErrorScreen()
-            is Resource.Success -> content(resource.data)
+            Result.Loading -> LoadingScreen()
+            is Result.Error -> ErrorScreen()
+            is Result.Success -> content(resource.data)
         }
     }
 }

@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.db.repository.StudentNoteRepository
-import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.StudentNote
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
@@ -28,9 +28,9 @@ class StudentNoteFormViewModel @Inject constructor(
     private val studentNoteId = savedStateHandle.getStateFlow(STUDENT_NOTE_ID_KEY, 0L)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val studentNoteResource: StateFlow<Resource<StudentNote?>> = studentNoteId
+    val studentNoteResult: StateFlow<Result<StudentNote?>> = studentNoteId
         .flatMapLatest { studentNoteId -> repository.getStudentNoteByIdOrNull(studentNoteId) }
-        .stateIn(initialValue = Resource.Loading)
+        .stateIn(initialValue = Result.Loading)
 
     var form by mutableStateOf(StudentNoteFormProvider.createDefaultForm())
         private set
@@ -43,9 +43,9 @@ class StudentNoteFormViewModel @Inject constructor(
     var isStudentNoteDeleted by mutableStateOf(false)
 
     init {
-        studentNoteResource
+        studentNoteResult
             .onEach { studentNoteResource ->
-                val studentNote = (studentNoteResource as? Resource.Success)?.data
+                val studentNote = (studentNoteResource as? Result.Success)?.data
                 if (studentNote == null) {
                     form = StudentNoteFormProvider.createDefaultForm(status = FormStatus.Idle)
                     return@onEach

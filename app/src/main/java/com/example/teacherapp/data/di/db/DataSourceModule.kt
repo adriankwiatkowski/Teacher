@@ -1,5 +1,6 @@
 package com.example.teacherapp.data.di.db
 
+import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.data.db.TeacherDatabase
 import com.example.teacherapp.data.db.datasources.lesson.LessonDataSource
 import com.example.teacherapp.data.db.datasources.lesson.LessonDataSourceImpl
@@ -11,7 +12,6 @@ import com.example.teacherapp.data.db.datasources.student.StudentDataSource
 import com.example.teacherapp.data.db.datasources.student.StudentDataSourceImpl
 import com.example.teacherapp.data.db.datasources.student.note.StudentNoteDataSource
 import com.example.teacherapp.data.db.datasources.student.note.StudentNoteDataSourceImpl
-import com.example.teacherapp.data.di.DefaultDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

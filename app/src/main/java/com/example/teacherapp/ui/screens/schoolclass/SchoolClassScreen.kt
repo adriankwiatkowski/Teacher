@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.entities.SchoolClass
 import com.example.teacherapp.ui.components.resource.ResourceContent
 import com.example.teacherapp.ui.screens.paramproviders.SchoolClassPreviewParameterProvider
@@ -23,7 +23,7 @@ import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun SchoolClassScreen(
-    schoolClassResource: Resource<SchoolClass>,
+    schoolClassResult: Result<SchoolClass>,
     onStudentClick: (id: Long) -> Unit,
     onAddStudentClick: () -> Unit,
     onLessonClick: (id: Long) -> Unit,
@@ -36,7 +36,7 @@ fun SchoolClassScreen(
 ) {
     ResourceContent(
         modifier = modifier,
-        resource = schoolClassResource,
+        resource = schoolClassResult,
         isDeleted = isSchoolClassDeleted,
         deletedMessage = "Usunięto pomyślnie klasę."
     ) { schoolClass ->
@@ -90,7 +90,7 @@ private fun SchoolClassScreenPreview(
         Surface {
             SchoolClassScreen(
                 modifier = Modifier.fillMaxSize(),
-                schoolClassResource = Resource.Success(schoolClass),
+                schoolClassResult = Result.Success(schoolClass),
                 onStudentClick = {},
                 onAddStudentClick = {},
                 onLessonClick = {},
@@ -115,7 +115,7 @@ private fun SchoolClassScreenDeletedPreview() {
         Surface {
             SchoolClassScreen(
                 modifier = Modifier.fillMaxSize(),
-                schoolClassResource = Resource.Loading,
+                schoolClassResult = Result.Loading,
                 onStudentClick = {},
                 onAddStudentClick = {},
                 onLessonClick = {},

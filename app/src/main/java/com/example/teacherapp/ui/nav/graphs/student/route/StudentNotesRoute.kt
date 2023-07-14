@@ -15,11 +15,11 @@ internal fun StudentNotesRoute(
     modifier: Modifier = Modifier,
     viewModel: StudentNotesViewModel = hiltViewModel(),
 ) {
-    val studentNotesResource by viewModel.studentNotesResource.collectAsStateWithLifecycle()
+    val studentNotesResult by viewModel.studentNotesResult.collectAsStateWithLifecycle()
 
     StudentNotesScreen(
         modifier = modifier,
-        studentNotesResource = studentNotesResource,
+        studentNotesResult = studentNotesResult,
         onNoteClick = onNoteClick,
         onAddNoteClick = onAddNoteClick,
     )

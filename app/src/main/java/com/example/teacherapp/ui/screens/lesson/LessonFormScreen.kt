@@ -29,7 +29,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.example.teacherapp.data.models.Resource
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.entities.Lesson
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
@@ -46,7 +46,7 @@ import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun LessonFormScreen(
-    lessonResource: Resource<Lesson?>,
+    lessonResult: Result<Lesson?>,
     formStatus: FormStatus,
     name: InputField<String>,
     onNameChange: (name: String) -> Unit,
@@ -88,7 +88,7 @@ fun LessonFormScreen(
         ) { innerPadding ->
             // TODO: For some reason, sometimes ResourceContent doesn't get updated on Resource.Success.
             Box(Modifier.padding(innerPadding)) {
-                if (lessonResource is Resource.Success) {
+                if (lessonResult is Result.Success) {
                     Content(
                         modifier = Modifier
                             .padding(MaterialTheme.spacing.small)
@@ -99,10 +99,10 @@ fun LessonFormScreen(
                         onNameChange = onNameChange,
                         onAddLesson = onAddLessonClick,
                         isSubmitEnabled = isValid,
-                        submitText = if (lessonResource.data == null) "Dodaj przedmiot" else "Edytuj przedmiot",
+                        submitText = if (lessonResult.data == null) "Dodaj przedmiot" else "Edytuj przedmiot",
                     )
                 } else {
-                    ResourceContent(resource = lessonResource) { lesson ->
+                    ResourceContent(resource = lessonResult) { lesson ->
                         Content(
                             modifier = Modifier
                                 .padding(MaterialTheme.spacing.small)
@@ -192,7 +192,7 @@ private fun LessonFormScreenPreview(
             )
 
             LessonFormScreen(
-                lessonResource = Resource.Success(lesson),
+                lessonResult = Result.Success(lesson),
                 formStatus = form.status,
                 name = form.name,
                 onNameChange = {},

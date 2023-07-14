@@ -7,8 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.db.datasources.schoolclass.SchoolClassDataSource
-import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.ResourceStatus
 import com.example.teacherapp.data.models.entities.SchoolClass
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
@@ -44,23 +44,23 @@ class SchoolClassViewModel @Inject constructor(
             resourceStatus.value = ResourceStatus.Error
         }
 
-    val uiState: StateFlow<Resource<SchoolClass>> =
+    val schoolClassesResult: StateFlow<Result<SchoolClass>> =
         combine(resourceStatus, schoolClass) { status, schoolClass ->
             when (status) {
-                ResourceStatus.Loading -> Resource.Loading
-                ResourceStatus.Error -> Resource.Error(NoSuchElementException())
+                ResourceStatus.Loading -> Result.Loading
+                ResourceStatus.Error -> Result.Error(NoSuchElementException())
                 ResourceStatus.Success -> {
                     if (schoolClass != null) {
-                        Resource.Success(schoolClass)
+                        Result.Success(schoolClass)
                     } else {
-                        Resource.Error(NoSuchElementException())
+                        Result.Error(NoSuchElementException())
                     }
                 }
             }
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = Resource.Loading,
+            initialValue = Result.Loading,
         )
 
     val isSchoolYearExpanded = mutableStateOf(false)

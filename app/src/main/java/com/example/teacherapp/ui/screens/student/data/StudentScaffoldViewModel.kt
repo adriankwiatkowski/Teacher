@@ -3,8 +3,8 @@ package com.example.teacherapp.ui.screens.student.data
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.db.repository.StudentRepository
-import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.models.entities.Student
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,12 +23,12 @@ class StudentScaffoldViewModel @Inject constructor(
     val isStudentDeleted = savedStateHandle.getStateFlow(IS_STUDENT_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val studentResource: StateFlow<Resource<Student>> = studentId
+    val studentResult: StateFlow<Result<Student>> = studentId
         .flatMapLatest { studentId -> repository.getStudentById(studentId) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = Resource.Loading,
+            initialValue = Result.Loading,
         )
 
     fun onDeleteStudent() {

@@ -1,43 +1,36 @@
-package com.example.teacherapp.data.di
+package com.example.teacherapp.core.common.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import javax.inject.Qualifier
-import javax.inject.Singleton
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class MainDispatcher
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class MainImmediateDispatcher
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class IoDispatcher
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class DefaultDispatcher
 
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 @Qualifier
 annotation class UnconfinedDispatcher
 
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class ApplicationScope
-
 @Module
 @InstallIn(SingletonComponent::class)
-object CoroutineScopeModule {
+object DispatchersModule {
 
     @Provides
     @MainDispatcher
@@ -58,21 +51,14 @@ object CoroutineScopeModule {
     @UnconfinedDispatcher
     @Provides
     fun providesUnconfinedDispatcher(): CoroutineDispatcher = Dispatchers.Unconfined
-
-    @Provides
-    @Singleton
-    @ApplicationScope
-    fun providesApplicationScope(
-        @DefaultDispatcher dispatcher: CoroutineDispatcher
-    ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
+}
 
 //    @Provides
 //    @Singleton
 //    fun provideDispatcherProvider(): DispatcherProvider {
 //        return DefaultDispatcherProvider()
 //    }
-}
-
+//
 //interface DispatcherProvider {
 //    val main: CoroutineDispatcher
 //    val immediate: CoroutineDispatcher

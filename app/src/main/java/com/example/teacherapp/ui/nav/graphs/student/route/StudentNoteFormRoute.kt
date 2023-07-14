@@ -7,8 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.data.models.ActionMenuItem
-import com.example.teacherapp.data.models.Resource
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.screens.student.note.StudentNoteFormScreen
 import com.example.teacherapp.ui.screens.student.note.data.StudentNoteFormViewModel
@@ -17,13 +17,13 @@ import com.example.teacherapp.ui.screens.student.note.data.StudentNoteFormViewMo
 internal fun StudentNoteFormRoute(
     onNavBack: () -> Unit,
     setTitle: (String) -> Unit,
-    showSnackbar: (message: String) -> Unit,
+    onShowSnackbar: (message: String) -> Unit,
     addActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StudentNoteFormViewModel = hiltViewModel(),
 ) {
-    val studentNoteResource by viewModel.studentNoteResource.collectAsStateWithLifecycle()
+    val studentNoteResult by viewModel.studentNoteResult.collectAsStateWithLifecycle()
     val studentFullName by viewModel.studentFullName.collectAsStateWithLifecycle()
     val isStudentDeleted = viewModel.isStudentNoteDeleted
     val form = viewModel.form
@@ -35,14 +35,13 @@ internal fun StudentNoteFormRoute(
     // Observe deletion.
     LaunchedEffect(isStudentDeleted) {
         if (isStudentDeleted) {
-            showSnackbar("Usunięto uwagę")
+            onShowSnackbar("Usunięto uwagę")
             onNavBack()
         }
     }
     // Add/remove action menu.
-    DisposableEffect(studentNoteResource, viewModel, viewModel::onDeleteStudentNote) {
-        val resource = studentNoteResource as? Resource.Success
-        resource?.data ?: return@DisposableEffect onDispose {}
+    DisposableEffect(studentNoteResult, viewModel, viewModel::onDeleteStudentNote) {
+        (studentNoteResult as? Result.Success)?.data ?: return@DisposableEffect onDispose {}
 
         val menuItems =
             listOf(ActionMenuItemProvider.delete(onClick = viewModel::onDeleteStudentNote))
@@ -56,7 +55,7 @@ internal fun StudentNoteFormRoute(
 
     StudentNoteFormScreen(
         modifier = modifier,
-        studentNoteResource = studentNoteResource,
+        studentNoteResult = studentNoteResult,
         formStatus = form.status,
         studentFullName = studentFullName.orEmpty(),
         title = form.title,
