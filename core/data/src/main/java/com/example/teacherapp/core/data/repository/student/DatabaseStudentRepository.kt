@@ -1,4 +1,4 @@
-package com.example.teacherapp.data.db.repository
+package com.example.teacherapp.core.data.repository.student
 
 import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.result.Result
@@ -11,23 +11,23 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class StudentRepository @Inject constructor(
+class DatabaseStudentRepository @Inject constructor(
     private val dataSource: StudentDataSource,
     @ApplicationScope private val scope: CoroutineScope,
-) {
+) : StudentRepository {
 
-    fun getStudentByIdOrNull(id: Long): Flow<Result<Student?>> = dataSource
+    override fun getStudentByIdOrNull(id: Long): Flow<Result<Student?>> = dataSource
         .getStudentById(id)
         .asResult()
 
-    fun getStudentById(id: Long): Flow<Result<Student>> = dataSource
+    override fun getStudentById(id: Long): Flow<Result<Student>> = dataSource
         .getStudentById(id)
         .asResultNotNull()
 
-    fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> = dataSource
+    override fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> = dataSource
         .getStudentSchoolClassNameById(schoolClassId)
 
-    suspend fun insertOrUpdateStudent(
+    override suspend fun insertOrUpdateStudent(
         id: Long?,
         schoolClassId: Long,
         orderInClass: Long?,
@@ -49,7 +49,7 @@ class StudentRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteStudentById(id: Long) {
+    override suspend fun deleteStudentById(id: Long) {
         scope.launch {
             dataSource.deleteStudentById(id)
         }

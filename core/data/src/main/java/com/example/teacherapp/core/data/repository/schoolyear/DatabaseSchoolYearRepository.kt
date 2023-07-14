@@ -1,4 +1,4 @@
-package com.example.teacherapp.data.db.repository
+package com.example.teacherapp.core.data.repository.schoolyear
 
 import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.result.Result
@@ -11,18 +11,18 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
-class SchoolYearRepository @Inject constructor(
+class DatabaseSchoolYearRepository @Inject constructor(
     private val dataSource: SchoolYearDataSource,
     @ApplicationScope private val scope: CoroutineScope,
-) {
+) : SchoolYearRepository {
 
-    suspend fun getSchoolYearById(id: Long): Flow<Result<SchoolYear?>> = dataSource
+    override suspend fun getSchoolYearById(id: Long): Flow<Result<SchoolYear?>> = dataSource
         .getSchoolYearById(id)
         .asResult()
 
-    fun getAllSchoolYears(): Flow<List<SchoolYear>> = dataSource.getAllSchoolYears()
+    override fun getAllSchoolYears(): Flow<List<SchoolYear>> = dataSource.getAllSchoolYears()
 
-    suspend fun insertSchoolYear(
+    override suspend fun insertSchoolYear(
         schoolYearName: String,
         termFirstName: String,
         termFirstStartDate: LocalDate,
@@ -44,7 +44,7 @@ class SchoolYearRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteSchoolYearById(id: Long) {
+    override suspend fun deleteSchoolYearById(id: Long) {
         scope.launch {
             dataSource.deleteSchoolYearById(id)
         }

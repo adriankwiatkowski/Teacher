@@ -7,8 +7,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.data.repository.studentnote.StudentNoteRepository
 import com.example.teacherapp.core.model.data.StudentNote
-import com.example.teacherapp.data.db.repository.StudentNoteRepository
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel

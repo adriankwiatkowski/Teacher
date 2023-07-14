@@ -53,7 +53,7 @@ android {
 dependencies {
     implementation project(path: ':core:common')
     implementation project(path: ':core:model')
-    implementation project(path: ':core:database')
+    implementation project(path: ':core:data')
 
     implementation "androidx.core:core-ktx:$android_core_ktx_version"
     implementation 'androidx.appcompat:appcompat:1.6.1'

@@ -1,4 +1,4 @@
-package com.example.teacherapp.data.db.repository
+package com.example.teacherapp.core.data.repository.lesson
 
 import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.di.DefaultDispatcher
@@ -13,20 +13,20 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
 
-class LessonRepository @Inject constructor(
+class DatabaseLessonRepository @Inject constructor(
     private val dataSource: LessonDataSource,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationScope private val scope: CoroutineScope,
-) {
+) : LessonRepository {
 
-    fun getLessonById(lessonId: Long): Flow<Result<Lesson?>> = dataSource
+    override fun getLessonById(lessonId: Long): Flow<Result<Lesson?>> = dataSource
         .getLessonById(lessonId)
         .asResult()
 
-    fun getSchoolClassNameById(schoolClassId: Long): Flow<String?> = dataSource
+    override fun getSchoolClassNameById(schoolClassId: Long): Flow<String?> = dataSource
         .getStudentSchoolClassNameById(schoolClassId)
 
-    suspend fun insertOrUpdateLesson(
+    override suspend fun insertOrUpdateLesson(
         id: Long?,
         schoolClassId: Long,
         name: String,
