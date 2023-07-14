@@ -2,7 +2,7 @@ package com.example.teacherapp.core.database.datasource.schoolyear
 
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.database.datasource.utils.insertAndGetId
-import com.example.teacherapp.core.database.datasource.utils.querymappers.SchoolYearMapper
+import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.SchoolYear
 import com.squareup.sqldelight.runtime.coroutines.asFlow
@@ -10,6 +10,8 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
@@ -23,15 +25,19 @@ internal class SchoolYearDataSourceImpl(
 
     override suspend fun getSchoolYearById(id: Long): Flow<SchoolYear?> =
         queries
-            .getSchoolYearById(id, SchoolYearMapper::mapSchoolYear)
+            .getSchoolYearById(id)
             .asFlow()
             .mapToOneOrNull()
+            .map(::toExternal)
+            .flowOn(dispatcher)
 
     override fun getAllSchoolYears(): Flow<List<SchoolYear>> =
         queries
-            .getAllSchoolYears(SchoolYearMapper::mapSchoolYear)
+            .getAllSchoolYears()
             .asFlow()
             .mapToList()
+            .map(::toExternal)
+            .flowOn(dispatcher)
 
     override suspend fun insertSchoolYear(
         schoolYearName: String,

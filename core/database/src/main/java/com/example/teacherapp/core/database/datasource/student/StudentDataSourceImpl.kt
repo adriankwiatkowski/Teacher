@@ -1,8 +1,7 @@
 package com.example.teacherapp.core.database.datasource.student
 
 import com.example.teacherapp.core.common.di.DefaultDispatcher
-import com.example.teacherapp.core.database.datasource.utils.querymappers.SchoolClassMapper
-import com.example.teacherapp.core.database.datasource.utils.querymappers.StudentMapper
+import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.BasicStudent
 import com.example.teacherapp.core.model.data.Student
@@ -11,6 +10,8 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 internal class StudentDataSourceImpl(
@@ -23,30 +24,19 @@ internal class StudentDataSourceImpl(
 
     override fun getStudentById(id: Long): Flow<Student?> =
         queries
-            .getStudentById(id) { _, orderInClass, schoolClassId, name, surname, email, phone, schoolClassName ->
-                val schoolClass = SchoolClassMapper.mapBasicSchoolClass(
-                    id = schoolClassId,
-                    name = schoolClassName,
-                )
-                Student(
-                    id = id,
-                    name = name,
-                    orderInClass = orderInClass,
-                    surname = surname,
-                    email = email,
-                    phone = phone,
-                    schoolClass = schoolClass,
-                    grades = emptyList(),
-                )
-            }
+            .getStudentById(id)
             .asFlow()
             .mapToOneOrNull()
+            .map(::toExternal)
+            .flowOn(dispatcher)
 
     override fun getStudentsBySchoolClassId(schoolClassId: Long): Flow<List<BasicStudent>> =
         queries
-            .getStudentsBySchoolClassId(schoolClassId, StudentMapper::mapBasicStudent)
+            .getStudentsBySchoolClassId(schoolClassId)
             .asFlow()
             .mapToList()
+            .map(::toExternal)
+            .flowOn(dispatcher)
 
     override fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> =
         schoolClassQueries.getSchoolClassNameById(schoolClassId)

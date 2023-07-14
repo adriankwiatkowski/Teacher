@@ -1,9 +1,7 @@
 package com.example.teacherapp.core.database.datasource.schoolclass
 
 import com.example.teacherapp.core.common.di.DefaultDispatcher
-import com.example.teacherapp.core.database.datasource.utils.querymappers.LessonMapper
-import com.example.teacherapp.core.database.datasource.utils.querymappers.SchoolClassMapper
-import com.example.teacherapp.core.database.datasource.utils.querymappers.StudentMapper
+import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.BasicSchoolClass
 import com.example.teacherapp.core.model.data.SchoolClass
@@ -13,6 +11,8 @@ import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 internal class SchoolClassDataSourceImpl(
@@ -26,15 +26,15 @@ internal class SchoolClassDataSourceImpl(
 
     override fun getSchoolClassById(id: Long): Flow<SchoolClass?> {
         val schoolClassFlow = schoolClassQueries
-            .getSchoolClassById(id, SchoolClassMapper::mapSchoolClass)
+            .getSchoolClassById(id)
             .asFlow()
             .mapToOneOrNull()
         val studentsFlow = studentQueries
-            .getStudentsBySchoolClassId(id, StudentMapper::mapBasicStudent)
+            .getStudentsBySchoolClassId(id)
             .asFlow()
             .mapToList()
         val lessonsFlow = lessonQueries
-            .getLessonsBySchoolClassId(id, LessonMapper::mapBasicLesson)
+            .getLessonsBySchoolClassId(id)
             .asFlow()
             .mapToList()
 
@@ -42,19 +42,17 @@ internal class SchoolClassDataSourceImpl(
             schoolClassFlow,
             studentsFlow,
             lessonsFlow,
-        ) { schoolClass, students, lessons ->
-            schoolClass?.copy(
-                students = students,
-                lessons = lessons,
-            )
-        }
+            ::toExternal,
+        ).flowOn(dispatcher)
     }
 
     override fun getAllSchoolClasses(): Flow<List<BasicSchoolClass>> =
         schoolClassQueries
-            .getAllSchoolClasses(SchoolClassMapper::mapBasicSchoolClass)
+            .getAllSchoolClasses()
             .asFlow()
             .mapToList()
+            .map(::toExternal)
+            .flowOn(dispatcher)
 
     override suspend fun insertSchoolClass(
         schoolYearId: Long,
