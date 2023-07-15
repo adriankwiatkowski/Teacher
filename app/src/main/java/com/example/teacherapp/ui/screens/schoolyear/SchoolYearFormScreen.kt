@@ -1,10 +1,16 @@
 package com.example.teacherapp.ui.screens.schoolyear
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputDate
 import com.example.teacherapp.data.models.input.InputField
+import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
@@ -28,6 +35,8 @@ import java.time.LocalDate
 @Composable
 fun SchoolYearFormScreen(
     termForms: List<TermForm>,
+    showNavigationIcon: Boolean,
+    onNavBack: () -> Unit,
     schoolYearName: InputField<String>,
     onSchoolYearNameChange: (String) -> Unit,
     onTermNameChange: (index: Int, name: String) -> Unit,
@@ -36,65 +45,99 @@ fun SchoolYearFormScreen(
     status: FormStatus,
     isValid: Boolean,
     onAddSchoolYear: () -> Unit,
-    onSchoolYearAdd: () -> Unit,
+    onSchoolYearAdded: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(status) {
         if (status == FormStatus.Success) {
-            onSchoolYearAdd()
+            onSchoolYearAdded()
         }
     }
 
     val isSubmitEnabled = isValid && status != FormStatus.Saving
 
-    FormStatusContent(
+    Scaffold(
         modifier = modifier,
-        formStatus = status,
-        savingText = "Dodawanie roku szkolnego...",
+        topBar = {
+            TeacherTopBar(
+                title = "Stwórz nowy rok szkolny",
+                showNavigationIcon = showNavigationIcon,
+                onNavigationIconClick = onNavBack,
+            )
+        },
+    ) { innerPadding ->
+        FormStatusContent(
+            modifier = Modifier.padding(innerPadding),
+            formStatus = status,
+            savingText = "Dodawanie roku szkolnego...",
+        ) {
+            MainContent(
+                termForms = termForms,
+                schoolYearName = schoolYearName,
+                onSchoolYearNameChange = onSchoolYearNameChange,
+                onTermNameChange = onTermNameChange,
+                onStartDateChange = onStartDateChange,
+                onEndDateChange = onEndDateChange,
+                isSubmitEnabled = isSubmitEnabled,
+                onSubmit = onAddSchoolYear
+            )
+        }
+    }
+}
+
+@Composable
+private fun MainContent(
+    termForms: List<TermForm>,
+    schoolYearName: InputField<String>,
+    onSchoolYearNameChange: (String) -> Unit,
+    onTermNameChange: (index: Int, name: String) -> Unit,
+    onStartDateChange: (index: Int, date: LocalDate) -> Unit,
+    onEndDateChange: (index: Int, date: LocalDate) -> Unit,
+    isSubmitEnabled: Boolean,
+    onSubmit: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(MaterialTheme.spacing.small),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
-        Column(modifier = modifier) {
-            LazyColumn(
-                modifier = modifier,
-                contentPadding = PaddingValues(MaterialTheme.spacing.small),
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+        item {
+            SchoolYearNameInput(
+                schoolYearNameInput = schoolYearName,
+                onSchoolYearNameChange = onSchoolYearNameChange,
+            )
+        }
+
+        itemsIndexed(
+            termForms,
+            key = { _, item -> item.formId },
+        ) { index, termForm ->
+            TeamFormItem(
+                modifier = Modifier.fillMaxWidth(),
+                title = "Semestr ${index + 1}",
+                namePrefix = "(${schoolYearName.value}) ",
+                nameInput = termForm.name,
+                onNameChange = { onTermNameChange(index, it) },
+                startDate = termForm.startDate,
+                onStartDateSelected = { onStartDateChange(index, it) },
+                endDate = termForm.endDate,
+                onEndDateSelected = { onEndDateChange(index, it) },
+            )
+        }
+
+        item {
+            TeacherOutlinedButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onSubmit,
+                enabled = isSubmitEnabled,
             ) {
-                item {
-                    SchoolYearNameInput(
-                        schoolYearNameInput = schoolYearName,
-                        onSchoolYearNameChange = onSchoolYearNameChange,
-                    )
-                }
-
-                itemsIndexed(
-                    termForms,
-                    key = { _, item -> item.formId },
-                ) { index, termForm ->
-                    TeamFormItem(
-                        modifier = Modifier.fillMaxWidth(),
-                        title = "Semestr ${index + 1}",
-                        namePrefix = "(${schoolYearName.value}) ",
-                        nameInput = termForm.name,
-                        onNameChange = { onTermNameChange(index, it) },
-                        startDate = termForm.startDate,
-                        onStartDateSelected = { onStartDateChange(index, it) },
-                        endDate = termForm.endDate,
-                        onEndDateSelected = { onEndDateChange(index, it) },
-                    )
-                }
-
-                item {
-                    TeacherOutlinedButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = onAddSchoolYear,
-                        enabled = isSubmitEnabled,
-                    ) {
-                        Text(text = "Dodaj rok szkolny")
-                    }
-                }
+                Text(text = "Dodaj rok szkolny")
             }
         }
     }
 }
+
 
 @Composable
 private fun SchoolYearNameInput(
@@ -164,6 +207,8 @@ private fun SchoolYearFormScreenPreview() {
             SchoolYearFormScreen(
                 modifier = Modifier.fillMaxSize(),
                 termForms = form.termForms,
+                showNavigationIcon = true,
+                onNavBack = {},
                 schoolYearName = form.schoolYearName,
                 onSchoolYearNameChange = {},
                 onTermNameChange = { _, _ -> },
@@ -172,7 +217,7 @@ private fun SchoolYearFormScreenPreview() {
                 status = form.status,
                 isValid = form.isValid,
                 onAddSchoolYear = {},
-                onSchoolYearAdd = {},
+                onSchoolYearAdded = {},
             )
         }
     }

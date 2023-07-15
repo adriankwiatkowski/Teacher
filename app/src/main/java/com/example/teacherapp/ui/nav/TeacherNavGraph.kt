@@ -8,9 +8,9 @@ import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.TeacherAppState
 import com.example.teacherapp.ui.nav.graphs.addScheduleGraph
 import com.example.teacherapp.ui.nav.graphs.addSchoolClassGraph
-import com.example.teacherapp.ui.nav.graphs.addSchoolYearGraph
 import com.example.teacherapp.ui.nav.graphs.addSettingsGraph
 import com.example.teacherapp.ui.nav.graphs.lesson.lessonGraph
+import com.example.teacherapp.ui.nav.graphs.schoolyear.schoolYearGraph
 import com.example.teacherapp.ui.nav.graphs.student.studentGraph
 
 @Composable
@@ -45,10 +45,7 @@ fun TeacherNavGraph(
             addFabAction = addFabAction,
             removeFabAction = removeFabAction,
         )
-        addSchoolYearGraph(
-            navController = navController,
-            setTitle = setTitle,
-        )
+        schoolYearGraph(navController = navController)
 
         studentGraph(navController = navController, onShowSnackbar = onShowSnackbar)
 

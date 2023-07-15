@@ -14,7 +14,6 @@ import com.example.teacherapp.ui.nav.TeacherScreens.SCHEDULE_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASSES_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASS_FORM_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_CLASS_SCREEN
-import com.example.teacherapp.ui.nav.TeacherScreens.SCHOOL_YEAR_FORM_SCREEN
 import com.example.teacherapp.ui.nav.TeacherScreens.SETTINGS_SCREEN
 
 enum class TeacherBottomNavScreen(val route: String, val title: String, val icon: ImageVector) {
@@ -31,8 +30,6 @@ private object TeacherScreens {
     const val SCHOOL_CLASS_SCREEN = "school-class"
     const val SCHOOL_CLASS_FORM_SCREEN = "school-class-form"
 
-    const val SCHOOL_YEAR_FORM_SCREEN = "school-year-form"
-
     const val SETTINGS_SCREEN = "settings"
 }
 
@@ -47,8 +44,6 @@ object TeacherDestinations {
     const val SCHOOL_CLASSES_ROUTE = SCHOOL_CLASSES_SCREEN
     const val SCHOOL_CLASS_ROUTE = "$SCHOOL_CLASS_SCREEN/{$SCHOOL_CLASS_ID_ARG}"
     const val SCHOOL_CLASS_FORM_ROUTE = SCHOOL_CLASS_FORM_SCREEN
-
-    const val SCHOOL_YEAR_FORM_ROUTE = SCHOOL_YEAR_FORM_SCREEN
 
     const val SETTINGS_ROUTE = SETTINGS_SCREEN
 }
@@ -76,10 +71,6 @@ class TeacherNavigationActions(private val navController: NavController) {
 
     fun navigateToSchoolClassFormRoute() {
         navController.navigate(TeacherDestinations.SCHOOL_CLASS_FORM_ROUTE)
-    }
-
-    fun navigateToSchoolYearFormRoute() {
-        navController.navigate(TeacherDestinations.SCHOOL_YEAR_FORM_ROUTE)
     }
 
     fun navigateToSettingsRoute() {

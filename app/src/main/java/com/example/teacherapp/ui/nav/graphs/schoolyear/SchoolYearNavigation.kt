@@ -1,28 +1,29 @@
-package com.example.teacherapp.ui.nav.graphs
+package com.example.teacherapp.ui.nav.graphs.schoolyear
 
-import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.screens.schoolyear.SchoolYearFormScreen
 import com.example.teacherapp.ui.screens.schoolyear.data.SchoolYearFormViewModel
 
-fun NavGraphBuilder.addSchoolYearGraph(
-    navController: NavController,
-    setTitle: (String) -> Unit,
-) {
-    composable(TeacherDestinations.SCHOOL_YEAR_FORM_ROUTE) {
+private const val schoolYearFormScreen = "school-year-form"
+private const val schoolYearFormRoute = schoolYearFormScreen
+
+fun NavController.navigateToSchoolYearFormRoute(navOptions: NavOptions? = null) {
+    this.navigate(schoolYearFormScreen, navOptions)
+}
+
+fun NavGraphBuilder.schoolYearGraph(navController: NavController) {
+    composable(schoolYearFormRoute) {
         val viewModel = hiltViewModel<SchoolYearFormViewModel>()
         val form = viewModel.form
 
-        LaunchedEffect(Unit) {
-            setTitle("Stwórz nowy rok szkolny")
-        }
-
         SchoolYearFormScreen(
             termForms = form.termForms,
+            showNavigationIcon = true,
+            onNavBack = navController::popBackStack,
             schoolYearName = form.schoolYearName,
             onSchoolYearNameChange = viewModel::onSchoolYearNameChange,
             onTermNameChange = viewModel::onTermNameChange,
@@ -31,7 +32,7 @@ fun NavGraphBuilder.addSchoolYearGraph(
             status = form.status,
             isValid = form.isValid,
             onAddSchoolYear = viewModel::onAddSchoolYear,
-            onSchoolYearAdd = navController::popBackStack,
+            onSchoolYearAdded = navController::popBackStack,
         )
     }
 }

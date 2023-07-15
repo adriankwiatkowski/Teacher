@@ -62,12 +62,12 @@ fun StudentFormScreen(
     onPhoneChange: (phone: String) -> Unit,
     isValid: Boolean,
     onAddStudent: () -> Unit,
-    onStudentAdd: () -> Unit,
+    onStudentAdded: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(formStatus) {
         if (formStatus == FormStatus.Success) {
-            onStudentAdd()
+            onStudentAdded()
         }
     }
 
@@ -243,7 +243,7 @@ private fun StudentFormScreenPreview(
                 onPhoneChange = {},
                 isValid = form.isValid,
                 onAddStudent = {},
-                onStudentAdd = {},
+                onStudentAdded = {},
             )
         }
     }

@@ -19,6 +19,7 @@ import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
 import com.example.teacherapp.ui.nav.graphs.lesson.navigateToLessonFormRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.navigateToLessonGraph
+import com.example.teacherapp.ui.nav.graphs.schoolyear.navigateToSchoolYearFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentGraph
 import com.example.teacherapp.ui.screens.schoolclass.SchoolClassFormScreen
@@ -149,12 +150,8 @@ fun NavGraphBuilder.addSchoolClassGraph(
             status = viewModel.status,
             isValid = viewModel.isValid,
             onAddSchoolClass = viewModel::onSubmit,
-            onAddSchoolYear = {
-                navActions.navigateToSchoolYearFormRoute()
-            },
-            onSchoolClassAdd = {
-                navController.popBackStack()
-            }
+            onAddSchoolYear = navController::navigateToSchoolYearFormRoute,
+            onSchoolClassAdd = navController::popBackStack,
         )
     }
 }
