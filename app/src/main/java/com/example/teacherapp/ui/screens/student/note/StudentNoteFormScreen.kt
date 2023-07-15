@@ -6,11 +6,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +28,8 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.StudentNote
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
+import com.example.teacherapp.data.provider.ActionMenuItemProvider
+import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
@@ -41,6 +42,9 @@ import com.example.teacherapp.ui.theme.spacing
 @Composable
 fun StudentNoteFormScreen(
     studentNoteResult: Result<StudentNote?>,
+    showNavigationIcon: Boolean,
+    onNavBack: () -> Unit,
+    onDeleteStudentNoteClick: () -> Unit,
     formStatus: FormStatus,
     studentFullName: String,
     title: InputField<String>,
@@ -59,30 +63,46 @@ fun StudentNoteFormScreen(
         }
     }
 
-    ResultContent(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(MaterialTheme.spacing.small),
-        result = studentNoteResult,
-        isDeleted = isStudentNoteDeleted,
-        deletedMessage = "Usunięto uwagę",
-    ) { studentNote ->
-        FormStatusContent(
-            formStatus = formStatus,
-            savingText = "Zapisywanie uwagi...",
-        ) {
-            Content(
-                modifier = Modifier.fillMaxSize(),
-                studentFullName = studentFullName,
-                title = title,
-                onTitleChange = onTitleChange,
-                description = description,
-                onDescriptionChange = onDescriptionChange,
-                isSubmitEnabled = isValid,
-                submitText = if (studentNote == null) "Dodaj uwagę" else "Edytuj uwagę",
-                onSubmit = onAddStudentNote,
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TeacherTopBar(
+                title = "Uwaga",
+                showNavigationIcon = showNavigationIcon,
+                onNavigationIconClick = onNavBack,
+                menuItems = if (!isStudentNoteDeleted) {
+                    listOf(ActionMenuItemProvider.delete(onDeleteStudentNoteClick))
+                } else {
+                    emptyList()
+                },
             )
+        }
+    ) { innerPadding ->
+        ResultContent(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(MaterialTheme.spacing.small),
+            result = studentNoteResult,
+            isDeleted = isStudentNoteDeleted,
+            deletedMessage = "Usunięto uwagę",
+        ) { studentNote ->
+            FormStatusContent(
+                formStatus = formStatus,
+                savingText = "Zapisywanie uwagi...",
+            ) {
+                Content(
+                    modifier = Modifier.fillMaxSize(),
+                    studentFullName = studentFullName,
+                    title = title,
+                    onTitleChange = onTitleChange,
+                    description = description,
+                    onDescriptionChange = onDescriptionChange,
+                    isSubmitEnabled = isValid,
+                    submitText = if (studentNote == null) "Dodaj uwagę" else "Edytuj uwagę",
+                    onSubmit = onAddStudentNote,
+                )
+            }
         }
     }
 }
@@ -116,6 +136,7 @@ private fun Content(
                         if (keyEvent.isShiftPressed) movePrev() else moveNext()
                         true
                     }
+
                     else -> false
                 }
             }
@@ -173,6 +194,9 @@ private fun StudentNoteFormScreenPreview(
 
             StudentNoteFormScreen(
                 studentNoteResult = Result.Success(studentNote),
+                showNavigationIcon = true,
+                onNavBack = {},
+                onDeleteStudentNoteClick = {},
                 formStatus = form.status,
                 studentFullName = "Jan Kowalski",
                 title = form.title,
@@ -200,6 +224,9 @@ private fun StudentNoteFormScreenDeletedPreview() {
 
             StudentNoteFormScreen(
                 studentNoteResult = Result.Loading,
+                showNavigationIcon = true,
+                onNavBack = {},
+                onDeleteStudentNoteClick = {},
                 formStatus = form.status,
                 studentFullName = "Jan Kowalski",
                 title = form.title,

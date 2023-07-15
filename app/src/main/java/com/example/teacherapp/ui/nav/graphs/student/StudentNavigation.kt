@@ -9,12 +9,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.schoolClassIdArg
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentIdArg
-import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentNoteFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentNoteIdArg
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentRoute
 import com.example.teacherapp.ui.nav.graphs.student.route.StudentDetailRoute
@@ -39,10 +37,10 @@ internal object StudentNavigation {
     internal const val studentRoute = "$studentScreen/{$schoolClassIdArg}/{${studentIdArg}}"
     internal const val studentFormRoute =
         "$studentFormScreen/{$schoolClassIdArg}?$studentIdArg={$studentIdArg}"
-
-    internal const val studentNoteFormRoute =
-        "$studentNoteFormScreen/{$studentIdArg}?$studentNoteIdArg={$studentNoteIdArg}"
 }
+
+const val studentNoteFormRoute =
+    "$studentNoteFormScreen/{$studentIdArg}?$studentNoteIdArg={$studentNoteIdArg}"
 
 fun NavController.navigateToStudentGraph(
     schoolClassId: Long,
@@ -74,8 +72,6 @@ fun NavGraphBuilder.studentGraph(
     navController: NavController,
     setTitle: (String) -> Unit,
     onShowSnackbar: (message: String) -> Unit,
-    addActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
-    removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
 ) {
     navigation(
         startDestination = studentRoute,
@@ -157,10 +153,7 @@ fun NavGraphBuilder.studentGraph(
         ) {
             StudentNoteFormRoute(
                 onNavBack = navController::popBackStack,
-                setTitle = setTitle,
                 onShowSnackbar = onShowSnackbar,
-                addActionMenuItems = addActionMenuItems,
-                removeActionMenuItems = removeActionMenuItems,
             )
         }
     }

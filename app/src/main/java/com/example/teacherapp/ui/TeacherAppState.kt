@@ -76,8 +76,7 @@ class TeacherAppState(
             TeacherDestinations.SCHOOL_CLASS_ROUTE,
             TeacherDestinations.SCHOOL_CLASS_FORM_ROUTE,
             TeacherDestinations.SCHOOL_YEAR_FORM_ROUTE,
-            StudentNavigation.studentFormRoute,
-            StudentNavigation.studentNoteFormRoute -> true
+            StudentNavigation.studentFormRoute -> true
 
             else -> false
         }
