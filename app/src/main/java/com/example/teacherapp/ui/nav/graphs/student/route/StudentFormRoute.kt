@@ -10,6 +10,7 @@ import com.example.teacherapp.ui.screens.student.data.StudentFormViewModel
 
 @Composable
 internal fun StudentFormRoute(
+    showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StudentFormViewModel = hiltViewModel(),
@@ -21,7 +22,7 @@ internal fun StudentFormRoute(
     StudentFormScreen(
         modifier = modifier,
         studentResult = studentResult,
-        showNavigationIcon = true,
+        showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         schoolClassName = schoolClassName.orEmpty(),
         formStatus = form.status,

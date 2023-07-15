@@ -24,6 +24,7 @@ private const val lessonFormScreen = "lesson-form"
 private const val lessonScreen = "lesson"
 
 internal object LessonNavigation {
+    internal const val gradeTemplateIdArg = "grade-template-id"
     internal const val schoolClassIdArg = "school-class-id"
     internal const val lessonIdArg = "lesson-id"
 

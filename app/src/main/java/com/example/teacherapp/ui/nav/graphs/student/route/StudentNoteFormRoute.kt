@@ -3,7 +3,6 @@ package com.example.teacherapp.ui.nav.graphs.student.route
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.ui.screens.student.note.StudentNoteFormScreen
@@ -11,9 +10,9 @@ import com.example.teacherapp.ui.screens.student.note.data.StudentNoteFormViewMo
 
 @Composable
 internal fun StudentNoteFormRoute(
+    showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onShowSnackbar: (message: String) -> Unit,
-    modifier: Modifier = Modifier,
     viewModel: StudentNoteFormViewModel = hiltViewModel(),
 ) {
     val studentNoteResult by viewModel.studentNoteResult.collectAsStateWithLifecycle()
@@ -30,9 +29,8 @@ internal fun StudentNoteFormRoute(
     }
 
     StudentNoteFormScreen(
-        modifier = modifier,
         studentNoteResult = studentNoteResult,
-        showNavigationIcon = true,
+        showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         onDeleteStudentNoteClick = viewModel::onDeleteStudentNote,
         formStatus = form.status,
