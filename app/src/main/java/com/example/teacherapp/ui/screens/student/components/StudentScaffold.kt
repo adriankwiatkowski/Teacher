@@ -35,7 +35,6 @@ fun StudentScaffold(
     modifier: Modifier = Modifier,
     content: @Composable (studentTab: StudentTab) -> Unit,
 ) {
-
     if (!isScaffoldVisible) {
         Box(modifier = modifier) {
             content(selectedTab)
