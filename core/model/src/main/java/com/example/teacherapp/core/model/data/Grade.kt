@@ -5,15 +5,35 @@ import java.time.LocalDate
 
 data class Grade(
     val id: Long,
+    val grade: BigDecimal,
+    val date: LocalDate,
 
     val studentId: Long,
     val lesson: Lesson,
 
-    val name: String,
-    val description: String?,
+    val gradeTemplate: GradeTemplate,
+)
 
+data class BasicGrade(
+    val id: Long,
     val grade: BigDecimal,
-    val weight: Int,
-
     val date: LocalDate,
+
+    val studentId: Long,
+    val lessonId: Long,
+
+    val name: String,
+    val weight: Int,
+)
+
+data class BasicGradeForTemplate(
+    val id: Long?,
+    val grade: BigDecimal?,
+    val date: LocalDate?,
+
+    val studentId: Long,
+    val studentFullName: String,
+
+    val gradeName: String,
+    val gradeWeight: Int,
 )

@@ -1,5 +1,7 @@
 package com.example.teacherapp.core.data.di
 
+import com.example.teacherapp.core.data.repository.grade.DatabaseGradeRepository
+import com.example.teacherapp.core.data.repository.grade.GradeRepository
 import com.example.teacherapp.core.data.repository.gradetemplate.DatabaseGradeTemplateRepository
 import com.example.teacherapp.core.data.repository.gradetemplate.GradeTemplateRepository
 import com.example.teacherapp.core.data.repository.lesson.DatabaseLessonRepository
@@ -50,4 +52,9 @@ interface DataModule {
     fun bindsGradeTemplateRepository(
         gradeTemplateRepository: DatabaseGradeTemplateRepository,
     ): GradeTemplateRepository
+
+    @Binds
+    fun bindsGradeRepository(
+        gradeTemplateRepository: DatabaseGradeRepository,
+    ): GradeRepository
 }

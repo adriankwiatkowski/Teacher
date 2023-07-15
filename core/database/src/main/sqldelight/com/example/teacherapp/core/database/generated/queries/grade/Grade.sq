@@ -1,0 +1,17 @@
+getGradesByGradeTemplateId:
+SELECT
+    g.id,
+    s.id AS 'student_id',
+    s.name AS 'student_name',
+    s.surname AS 'student_surname',
+    l.id AS 'lesson_id',
+    gt.name AS 'grade_template_name',
+    gt.weight AS 'grade_template_weight',
+    g.grade,
+    g.date
+FROM student s
+INNER JOIN school_class sc ON sc.id = s.school_class_id
+INNER JOIN lesson l ON l.school_class_id = sc.id
+INNER JOIN grade_template gt ON gt.lesson_id = l.id
+LEFT JOIN grade g ON g.grade_template_id = gt.id
+WHERE gt.id = :id;
