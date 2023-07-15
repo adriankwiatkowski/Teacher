@@ -70,10 +70,4 @@ class TeacherAppState(
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = false,
         )
-
-    val shouldShowTopBar: Boolean
-        @Composable get() = when (currentDestination?.route) {
-            TeacherDestinations.SCHOOL_CLASS_FORM_ROUTE -> true
-            else -> false
-        }
 }

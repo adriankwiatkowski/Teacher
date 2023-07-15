@@ -15,7 +15,6 @@ import com.example.teacherapp.ui.nav.graphs.student.studentGraph
 @Composable
 fun TeacherNavGraph(
     appState: TeacherAppState,
-    setTitle: (String) -> Unit,
     onShowSnackbar: (message: String) -> Unit,
     addFabAction: (fabAction: FabAction) -> Unit,
     removeFabAction: (fabAction: FabAction) -> Unit,
@@ -35,7 +34,6 @@ fun TeacherNavGraph(
         addSchoolClassGraph(
             navController = navController,
             navActions = navActions,
-            setTitle = setTitle,
             onShowSnackbar = onShowSnackbar,
             addFabAction = addFabAction,
             removeFabAction = removeFabAction,

@@ -35,6 +35,7 @@ class SchoolClassFormViewModel @Inject constructor(
     val schoolClassName get() = form.schoolClassName
     val schoolYear get() = form.schoolYear
     val isValid get() = form.isValid
+    val canSubmit get() = form.canSubmit
     val status get() = form.status
 
     init {

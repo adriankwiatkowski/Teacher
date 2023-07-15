@@ -28,7 +28,6 @@ import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassesViewModel
 fun NavGraphBuilder.addSchoolClassGraph(
     navController: NavController,
     navActions: TeacherNavigationActions,
-    setTitle: (String) -> Unit,
     onShowSnackbar: (message: String) -> Unit,
     addFabAction: (fabAction: FabAction) -> Unit,
     removeFabAction: (fabAction: FabAction) -> Unit,
@@ -115,10 +114,6 @@ fun NavGraphBuilder.addSchoolClassGraph(
         val viewModel = hiltViewModel<SchoolClassFormViewModel>()
         val schoolYears by viewModel.schoolYears.collectAsStateWithLifecycle()
 
-        LaunchedEffect(Unit) {
-            setTitle("Stwórz nową klasę")
-        }
-
         SchoolClassFormScreen(
             schoolClassName = viewModel.schoolClassName,
             onSchoolClassNameChange = viewModel::onSchoolClassNameChange,
@@ -126,10 +121,12 @@ fun NavGraphBuilder.addSchoolClassGraph(
             schoolYear = viewModel.schoolYear,
             onSchoolYearChange = viewModel::onSchoolYearChange,
             status = viewModel.status,
-            isValid = viewModel.isValid,
+            canSubmit = viewModel.canSubmit,
             onAddSchoolClass = viewModel::onSubmit,
             onAddSchoolYear = navController::navigateToSchoolYearFormRoute,
-            onSchoolClassAdd = navController::popBackStack,
+            onSchoolClassAdded = navController::popBackStack,
+            showNavigationIcon = true,
+            onNavBack = navController::popBackStack,
         )
     }
 }

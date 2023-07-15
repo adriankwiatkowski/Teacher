@@ -1,11 +1,13 @@
 package com.example.teacherapp.ui.screens.schoolclass
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +18,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
+import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.components.transformation.PrefixTransformation
@@ -33,41 +36,91 @@ fun SchoolClassFormScreen(
     schoolYear: InputField<SchoolYear?>,
     onSchoolYearChange: (SchoolYear?) -> Unit,
     status: FormStatus,
-    isValid: Boolean,
+    canSubmit: Boolean,
     onAddSchoolYear: () -> Unit,
     onAddSchoolClass: () -> Unit,
-    onSchoolClassAdd: () -> Unit,
+    onSchoolClassAdded: () -> Unit,
+    showNavigationIcon: Boolean,
+    onNavBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(status) {
         if (status is FormStatus.Success) {
-            onSchoolClassAdd()
+            onSchoolClassAdded()
         }
     }
 
-    Column(modifier = modifier.padding(MaterialTheme.spacing.small)) {
-        ClassNameInput(
-            modifier = Modifier.fillMaxWidth(),
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TeacherTopBar(
+                title = "Stwórz nową klasę",
+                showNavigationIcon = showNavigationIcon,
+                onNavigationIconClick = onNavBack,
+            )
+        }
+    ) { innerPadding ->
+        MainContent(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(MaterialTheme.spacing.small),
             schoolClassName = schoolClassName,
             onSchoolClassNameChange = onSchoolClassNameChange,
+            schoolYears = schoolYears,
+            schoolYear = schoolYear,
+            onSchoolYearChange = onSchoolYearChange,
+            canSubmit = canSubmit,
+            onSubmit = onAddSchoolClass,
+            onAddSchoolYear = onAddSchoolYear,
         )
+    }
+}
 
-        Card {
-            SchoolYearInput(
+@Composable
+private fun MainContent(
+    schoolClassName: InputField<String>,
+    onSchoolClassNameChange: (String) -> Unit,
+    schoolYears: List<SchoolYear>,
+    schoolYear: InputField<SchoolYear?>,
+    onSchoolYearChange: (SchoolYear?) -> Unit,
+    canSubmit: Boolean,
+    onSubmit: () -> Unit,
+    onAddSchoolYear: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(MaterialTheme.spacing.small),
+    ) {
+        item {
+            ClassNameInput(
                 modifier = Modifier.fillMaxWidth(),
-                schoolYears = schoolYears,
-                schoolYear = schoolYear,
-                onSchoolYearChange = onSchoolYearChange,
-                onAddSchoolYear = onAddSchoolYear,
+                schoolClassName = schoolClassName,
+                onSchoolClassNameChange = onSchoolClassNameChange,
             )
         }
 
-        TeacherOutlinedButton(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = onAddSchoolClass,
-            enabled = isValid,
-        ) {
-            Text(text = "Dodaj klasę")
+        item {
+            Card {
+                SchoolYearInput(
+                    modifier = Modifier.fillMaxWidth(),
+                    schoolYears = schoolYears,
+                    schoolYear = schoolYear,
+                    onSchoolYearChange = onSchoolYearChange,
+                    onAddSchoolYear = onAddSchoolYear,
+                )
+            }
+        }
+
+        item {
+            TeacherOutlinedButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onSubmit,
+                enabled = canSubmit,
+            ) {
+                Text(text = "Dodaj klasę")
+            }
         }
     }
 }
@@ -103,10 +156,12 @@ private fun SchoolClassFormScreenPreview(
                 schoolYear = form.schoolYear,
                 onSchoolYearChange = {},
                 status = form.status,
-                isValid = form.isValid,
+                canSubmit = form.canSubmit,
                 onAddSchoolYear = {},
                 onAddSchoolClass = {},
-                onSchoolClassAdd = {},
+                onSchoolClassAdded = {},
+                showNavigationIcon = true,
+                onNavBack = {},
             )
         }
     }

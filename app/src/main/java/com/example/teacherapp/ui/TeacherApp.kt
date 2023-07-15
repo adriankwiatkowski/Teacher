@@ -16,7 +16,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.components.TeacherBottomNav
 import com.example.teacherapp.ui.components.TeacherFab
-import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherNavGraph
 import com.example.teacherapp.ui.theme.TeacherAppTheme
@@ -24,8 +23,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun TeacherApp(
-    title: String,
-    setTitle: (String) -> Unit,
     fabAction: FabAction?,
     addFabAction: (fabAction: FabAction) -> Unit,
     removeFabAction: (fabAction: FabAction) -> Unit,
@@ -49,15 +46,6 @@ fun TeacherApp(
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
-        topBar = {
-            TeacherTopBar(
-                title = title,
-                menuItems = emptyList(),
-                showNavigationIcon = true,
-                onNavigationIconClick = appState.navController::navigateUp,
-                visible = appState.shouldShowTopBar,
-            )
-        },
         floatingActionButton = {
             TeacherFab(fabAction = fabAction)
         },
@@ -81,7 +69,6 @@ fun TeacherApp(
         TeacherNavGraph(
             modifier = Modifier.padding(innerPadding),
             appState = appState,
-            setTitle = setTitle,
             onShowSnackbar = onShowSnackbar,
             addFabAction = addFabAction,
             removeFabAction = removeFabAction,
@@ -95,8 +82,6 @@ private fun MainScreenPreview() {
     TeacherAppTheme {
         Surface {
             TeacherApp(
-                title = "",
-                setTitle = {},
                 fabAction = FabAction(
                     onClick = {},
                     imageVector = Icons.Default.AddCircle,
@@ -115,8 +100,6 @@ private fun MainScreenDarkPreview() {
     TeacherAppTheme {
         Surface {
             TeacherApp(
-                title = "",
-                setTitle = {},
                 fabAction = FabAction(
                     onClick = {},
                     imageVector = Icons.Default.AddCircle,

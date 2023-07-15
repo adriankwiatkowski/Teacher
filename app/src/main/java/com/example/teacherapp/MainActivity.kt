@@ -32,8 +32,6 @@ class MainActivity : ComponentActivity() {
                     val fabAction = viewModel.fabAction
 
                     TeacherApp(
-                        title = viewModel.title,
-                        setTitle = { title -> viewModel.title = title },
                         fabAction = fabAction,
                         addFabAction = viewModel::addFabAction,
                         removeFabAction = viewModel::removeFabAction,
@@ -49,8 +47,6 @@ class MainActivity : ComponentActivity() {
 private fun DefaultPreview() {
     TeacherAppTheme {
         TeacherApp(
-            title = "",
-            setTitle = {},
             fabAction = FabAction(
                 onClick = {},
                 imageVector = Icons.Default.AddCircle,
