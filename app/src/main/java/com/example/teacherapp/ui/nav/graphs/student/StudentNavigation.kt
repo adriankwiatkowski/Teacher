@@ -11,7 +11,6 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.schoolClassIdArg
-import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentIdArg
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentNoteIdArg
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentRoute
@@ -35,11 +34,12 @@ internal object StudentNavigation {
     internal const val studentNoteIdArg = "student-note-id"
 
     internal const val studentRoute = "$studentScreen/{$schoolClassIdArg}/{${studentIdArg}}"
-    internal const val studentFormRoute =
-        "$studentFormScreen/{$schoolClassIdArg}?$studentIdArg={$studentIdArg}"
 }
 
-const val studentNoteFormRoute =
+private const val studentFormRoute =
+    "$studentFormScreen/{$schoolClassIdArg}?$studentIdArg={$studentIdArg}"
+
+private const val studentNoteFormRoute =
     "$studentNoteFormScreen/{$studentIdArg}?$studentNoteIdArg={$studentNoteIdArg}"
 
 fun NavController.navigateToStudentGraph(
@@ -70,7 +70,6 @@ private fun NavController.navigateToStudentNoteFormRoute(
 
 fun NavGraphBuilder.studentGraph(
     navController: NavController,
-    setTitle: (String) -> Unit,
     onShowSnackbar: (message: String) -> Unit,
 ) {
     navigation(
@@ -170,9 +169,6 @@ fun NavGraphBuilder.studentGraph(
             },
         ),
     ) {
-        StudentFormRoute(
-            onNavBack = navController::popBackStack,
-            setTitle = setTitle,
-        )
+        StudentFormRoute(onNavBack = navController::popBackStack)
     }
 }

@@ -50,11 +50,7 @@ fun TeacherNavGraph(
             setTitle = setTitle,
         )
 
-        studentGraph(
-            navController = navController,
-            setTitle = setTitle,
-            onShowSnackbar = onShowSnackbar,
-        )
+        studentGraph(navController = navController, onShowSnackbar = onShowSnackbar)
 
         lessonGraph(navController = navController, onShowSnackbar = onShowSnackbar)
 

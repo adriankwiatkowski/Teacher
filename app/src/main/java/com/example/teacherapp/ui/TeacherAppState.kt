@@ -75,8 +75,7 @@ class TeacherAppState(
         @Composable get() = when (currentDestination?.route) {
             TeacherDestinations.SCHOOL_CLASS_ROUTE,
             TeacherDestinations.SCHOOL_CLASS_FORM_ROUTE,
-            TeacherDestinations.SCHOOL_YEAR_FORM_ROUTE,
-            StudentNavigation.studentFormRoute -> true
+            TeacherDestinations.SCHOOL_YEAR_FORM_ROUTE -> true
 
             else -> false
         }

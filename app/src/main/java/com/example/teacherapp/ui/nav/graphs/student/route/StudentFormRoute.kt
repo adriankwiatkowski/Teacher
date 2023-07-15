@@ -1,7 +1,6 @@
 package com.example.teacherapp.ui.nav.graphs.student.route
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -12,7 +11,6 @@ import com.example.teacherapp.ui.screens.student.data.StudentFormViewModel
 @Composable
 internal fun StudentFormRoute(
     onNavBack: () -> Unit,
-    setTitle: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: StudentFormViewModel = hiltViewModel(),
 ) {
@@ -20,14 +18,12 @@ internal fun StudentFormRoute(
     val schoolClassName by viewModel.schoolClassName.collectAsStateWithLifecycle()
     val form = viewModel.form
 
-    LaunchedEffect(schoolClassName) {
-        val name = schoolClassName.orEmpty()
-        setTitle("Klasa $name")
-    }
-
     StudentFormScreen(
         modifier = modifier,
         studentResult = studentResult,
+        showNavigationIcon = true,
+        onNavBack = onNavBack,
+        schoolClassName = schoolClassName.orEmpty(),
         formStatus = form.status,
         name = form.name,
         onNameChange = viewModel::onNameChange,

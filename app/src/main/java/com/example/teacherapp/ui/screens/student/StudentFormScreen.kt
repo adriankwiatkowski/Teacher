@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -34,6 +35,7 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.Student
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
+import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
@@ -46,6 +48,9 @@ import com.example.teacherapp.ui.theme.spacing
 @Composable
 fun StudentFormScreen(
     studentResult: Result<Student?>,
+    showNavigationIcon: Boolean,
+    onNavBack: () -> Unit,
+    schoolClassName: String,
     formStatus: FormStatus,
     name: InputField<String>,
     onNameChange: (name: String) -> Unit,
@@ -66,30 +71,44 @@ fun StudentFormScreen(
         }
     }
 
-    ResultContent(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
-            .padding(MaterialTheme.spacing.small),
-        result = studentResult,
-    ) { student ->
-        FormStatusContent(
-            formStatus = formStatus,
-            savingText = "Zapisywanie studenta...",
-        ) {
-            Content(
-                modifier = Modifier.fillMaxSize(),
-                name = name,
-                onNameChange = onNameChange,
-                surname = surname,
-                onSurnameChange = onSurnameChange,
-                email = email,
-                onEmailChange = onEmailChange,
-                phone = phone,
-                onPhoneChange = onPhoneChange,
-                isSubmitEnabled = isValid,
-                submitText = if (student == null) "Dodaj studenta" else "Edytuj studenta",
-                onAddStudent = onAddStudent,
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TeacherTopBar(
+                title = "Klasa $schoolClassName",
+                showNavigationIcon = showNavigationIcon,
+                onNavigationIconClick = onNavBack,
             )
+        }
+    ) { innerPadding ->
+        ResultContent(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(MaterialTheme.spacing.small),
+            result = studentResult,
+        ) { student ->
+            FormStatusContent(
+                formStatus = formStatus,
+                savingText = "Zapisywanie studenta...",
+            ) {
+                Content(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    name = name,
+                    onNameChange = onNameChange,
+                    surname = surname,
+                    onSurnameChange = onSurnameChange,
+                    email = email,
+                    onEmailChange = onEmailChange,
+                    phone = phone,
+                    onPhoneChange = onPhoneChange,
+                    isSubmitEnabled = isValid,
+                    submitText = if (student == null) "Dodaj studenta" else "Edytuj studenta",
+                    onAddStudent = onAddStudent,
+                )
+            }
         }
     }
 }
@@ -126,6 +145,7 @@ private fun Content(
                         if (keyEvent.isShiftPressed) movePrev() else moveNext()
                         true
                     }
+
                     else -> false
                 }
             }
@@ -209,6 +229,9 @@ private fun StudentFormScreenPreview(
 
             StudentFormScreen(
                 studentResult = Result.Success(student),
+                showNavigationIcon = true,
+                onNavBack = {},
+                schoolClassName = "1A",
                 formStatus = form.status,
                 name = form.name,
                 onNameChange = {},
