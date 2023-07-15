@@ -77,7 +77,7 @@ CREATE TABLE student_note
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE grade_lesson
+CREATE TABLE grade_template
 (
     id          INTEGER             NOT NULL PRIMARY KEY AUTOINCREMENT,
     lesson_id   INTEGER             NOT NULL,
@@ -91,14 +91,14 @@ CREATE TABLE grade_lesson
 
 CREATE TABLE grade
 (
-    id              INTEGER             NOT NULL PRIMARY KEY AUTOINCREMENT,
-    student_id      INTEGER             NOT NULL,
-    grade_lesson_id INTEGER             NOT NULL,
-    grade           TEXT AS BigDecimal  NOT NULL,
-    `date`          TEXT AS LocalDate   NOT NULL,
+    id                  INTEGER             NOT NULL PRIMARY KEY AUTOINCREMENT,
+    student_id          INTEGER             NOT NULL,
+    grade_template_id   INTEGER             NOT NULL,
+    grade               TEXT AS BigDecimal  NOT NULL,
+    `date`              TEXT AS LocalDate   NOT NULL,
 
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (grade_lesson_id) REFERENCES grade_lesson (id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (grade_template_id) REFERENCES grade_template (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Obecność

@@ -47,7 +47,7 @@ object GradeTemplateFormProvider {
     fun createDefaultForm(
         name: String = "",
         description: String? = null,
-        weight: String = "",
+        weight: String = "3",
         isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): GradeTemplateForm {

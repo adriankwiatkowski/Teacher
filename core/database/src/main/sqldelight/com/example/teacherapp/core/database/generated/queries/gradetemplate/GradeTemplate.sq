@@ -1,0 +1,37 @@
+getGradeTemplateById:
+SELECT
+    gt.id,
+    gt.lesson_id,
+    gt.name,
+    gt.description,
+    gt.weight
+FROM grade_template gt
+WHERE gt.id = :id;
+
+getGradeTemplatesByLessonId:
+SELECT
+    gt.id,
+    gt.lesson_id,
+    gt.name,
+    gt.weight
+FROM grade_template gt
+INNER JOIN lesson l ON l.id = gt.lesson_id
+WHERE l.id = :id;
+
+insertGradeTemplate:
+INSERT OR FAIL
+INTO grade_template
+VALUES (?, ?, ?, ?, ?, ?);
+
+updateGradeTemplate:
+UPDATE grade_template
+SET name = :name,
+    description = :description,
+    lesson_id = :lesson_id,
+    date = :date,
+    weight = :weight
+WHERE id = :id;
+
+deleteGradeTemplateById:
+DELETE FROM grade_template
+WHERE id = :id;

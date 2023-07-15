@@ -1,6 +1,8 @@
 package com.example.teacherapp.core.database.di
 
 import com.example.teacherapp.core.common.di.DefaultDispatcher
+import com.example.teacherapp.core.database.datasource.gradetemplate.GradeTemplateDataSource
+import com.example.teacherapp.core.database.datasource.gradetemplate.GradeTemplateDataSourceImpl
 import com.example.teacherapp.core.database.datasource.lesson.LessonDataSource
 import com.example.teacherapp.core.database.datasource.lesson.LessonDataSourceImpl
 import com.example.teacherapp.core.database.datasource.schoolclass.SchoolClassDataSource
@@ -66,5 +68,14 @@ object DataSourceModule {
         @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): LessonDataSource {
         return LessonDataSourceImpl(db, dispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGradeTemplateDataSource(
+        db: TeacherDatabase,
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
+    ): GradeTemplateDataSource {
+        return GradeTemplateDataSourceImpl(db, dispatcher)
     }
 }

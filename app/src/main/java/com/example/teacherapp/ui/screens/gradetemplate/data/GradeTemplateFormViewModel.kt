@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.data.repository.gradetemplate.GradeTemplateRepository
 import com.example.teacherapp.core.model.data.GradeTemplate
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation
@@ -16,7 +17,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -24,22 +26,41 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GradeTemplateFormViewModel @Inject constructor(
+    private val repository: GradeTemplateRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val lessonId = savedStateHandle.getStateFlow(LESSON_ID_KEY, 0L)
     private val gradeTemplateId = savedStateHandle.getStateFlow(GRADE_TEMPLATE_ID_KEY, 0L)
 
-    // TODO: Actually fetch from repository.
     @OptIn(ExperimentalCoroutinesApi::class)
     val gradeTemplateResult: StateFlow<Result<GradeTemplate?>> = gradeTemplateId
-        .flatMapLatest { gradeTemplateId -> flowOf(Result.Success(null)) }
+        .flatMapLatest { gradeTemplateId -> repository.getGradeTemplateOrNullById(gradeTemplateId) }
         .stateIn(initialValue = Result.Loading)
 
     var form by mutableStateOf(GradeTemplateFormProvider.createDefaultForm())
         private set
 
     var isDeleted by mutableStateOf(false)
+
+    init {
+        gradeTemplateResult
+            .onEach { gradeTemplateResult ->
+                val grade = (gradeTemplateResult as? Result.Success)?.data
+                if (grade == null) {
+                    form = GradeTemplateFormProvider.createDefaultForm(status = FormStatus.Idle)
+                    return@onEach
+                }
+
+                form = form.copy(
+                    name = GradeTemplateFormProvider.validateName(grade.name),
+                    description = GradeTemplateFormProvider.validateDescription(grade.description),
+                    weight = GradeTemplateFormProvider.validateWeight(grade.weight.toString()),
+                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                )
+            }
+            .launchIn(viewModelScope)
+    }
 
     fun onNameChange(name: String) {
         form = form.copy(name = GradeTemplateFormProvider.validateName(name))
@@ -60,14 +81,13 @@ class GradeTemplateFormViewModel @Inject constructor(
 
         form = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-            // TODO: Insert.
-//            repository.insertOrUpdateGradeTemplate(
-//                id = gradeTemplateId.value.let { id -> if (id != 0L) id else null },
-//                lessonId = lessonId.value,
-//                name = form.name.value.trim(),
-//                description = form.description.value?.trim().orEmpty(),
-//                weight = form.weight.toInt(),
-//            )
+            repository.insertOrUpdateGradeTemplate(
+                id = gradeTemplateId.value.let { id -> if (id != 0L) id else null },
+                lessonId = lessonId.value,
+                name = form.name.value.trim(),
+                description = form.description.value?.trim().orEmpty(),
+                weight = form.weight.value.trim().toInt(),
+            )
 
             if (isActive) {
                 form = form.copy(status = FormStatus.Success)
@@ -78,8 +98,7 @@ class GradeTemplateFormViewModel @Inject constructor(
     fun onDelete() {
         viewModelScope.launch {
             isDeleted = false
-            // TODO: Delete.
-//            repository.deleteGradleTemplateById(gradeTemplateId.value)
+            repository.deleteGradeTemplateById(gradeTemplateId.value)
             isDeleted = true
         }
     }

@@ -8,6 +8,7 @@ class GradeTemplatePreviewParameterProvider : PreviewParameterProvider<GradeTemp
     override val values: Sequence<GradeTemplate> = sequenceOf(
         GradeTemplate(
             id = 1L,
+            lessonId = 1L,
             name = "Dodawanie",
             description = "Sprawdzian z dodawania",
             weight = 1,
@@ -26,11 +27,13 @@ class BasicGradeTemplatePreviewParameterProvider : PreviewParameterProvider<Basi
     override val values: Sequence<BasicGradeTemplate> = sequenceOf(
         BasicGradeTemplate(
             id = 1L,
+            lessonId = 1L,
             name = "Dodawanie",
             weight = 1,
         ),
         BasicGradeTemplate(
             id = 2L,
+            lessonId = 1L,
             name = "Odejmowanie",
             weight = 2,
         ),

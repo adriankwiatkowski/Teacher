@@ -7,7 +7,7 @@ import com.example.teacherapp.core.database.adapter.DateColumnAdapter
 import com.example.teacherapp.core.database.adapter.TimeColumnAdapter
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.database.generated.model.Grade
-import com.example.teacherapp.core.database.generated.model.Grade_lesson
+import com.example.teacherapp.core.database.generated.model.Grade_template
 import com.example.teacherapp.core.database.generated.model.Lesson_calendar
 import com.example.teacherapp.core.database.generated.model.Term
 import com.squareup.sqldelight.android.AndroidSqliteDriver
@@ -51,7 +51,7 @@ object DatabaseModule {
                 gradeAdapter = bigDecimalAdapter,
                 dateAdapter = dateAdapter,
             ),
-            grade_lessonAdapter = Grade_lesson.Adapter(
+            grade_templateAdapter = Grade_template.Adapter(
                 dateAdapter = dateAdapter,
             ),
             lesson_calendarAdapter = Lesson_calendar.Adapter(
