@@ -149,11 +149,15 @@ fun NavGraphBuilder.studentGraph(
                     defaultValue = 0L
                 },
             ),
-        ) {
+        ) { backStackEntry ->
+            val args = backStackEntry.arguments!!
+            val isEditMode = args.getLong(studentNoteIdArg) != 0L
+
             StudentNoteFormRoute(
                 showNavigationIcon = true,
                 onNavBack = navController::popBackStack,
                 onShowSnackbar = onShowSnackbar,
+                isEditMode = isEditMode,
             )
         }
     }

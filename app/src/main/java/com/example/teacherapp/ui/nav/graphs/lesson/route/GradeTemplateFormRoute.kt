@@ -14,6 +14,7 @@ internal fun GradeTemplateFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onShowSnackbar: (message: String) -> Unit,
+    isEditMode: Boolean,
     viewModel: GradeTemplateFormViewModel = hiltViewModel(),
 ) {
     val gradeTemplateResult by viewModel.gradeTemplateResult.collectAsStateWithLifecycle()
@@ -23,7 +24,7 @@ internal fun GradeTemplateFormRoute(
     // Observe save.
     LaunchedEffect(form.status) {
         if (form.status == FormStatus.Success) {
-            onShowSnackbar("Dodano ocenę")
+            onShowSnackbar("Zapisano ocenę")
             onNavBack()
         }
     }
@@ -48,6 +49,7 @@ internal fun GradeTemplateFormRoute(
         onWeightChange = viewModel::onWeightChange,
         isSubmitEnabled = form.isSubmitEnabled,
         onAddGrade = viewModel::onSubmit,
+        isEditMode = isEditMode,
         isDeleted = isDeleted,
         onDeleteClick = viewModel::onDelete,
     )

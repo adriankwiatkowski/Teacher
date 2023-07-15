@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.ui.screens.student.note.StudentNoteFormScreen
 import com.example.teacherapp.ui.screens.student.note.data.StudentNoteFormViewModel
 
@@ -13,6 +14,7 @@ internal fun StudentNoteFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onShowSnackbar: (message: String) -> Unit,
+    isEditMode: Boolean,
     viewModel: StudentNoteFormViewModel = hiltViewModel(),
 ) {
     val studentNoteResult by viewModel.studentNoteResult.collectAsStateWithLifecycle()
@@ -20,8 +22,15 @@ internal fun StudentNoteFormRoute(
     val isStudentDeleted = viewModel.isStudentNoteDeleted
     val form = viewModel.form
 
+    // Observe save.
+    LaunchedEffect(form.status, onNavBack) {
+        if (form.status == FormStatus.Success) {
+            onShowSnackbar("Zapisano uwagę")
+            onNavBack()
+        }
+    }
     // Observe deletion.
-    LaunchedEffect(isStudentDeleted) {
+    LaunchedEffect(isStudentDeleted, onShowSnackbar, onNavBack) {
         if (isStudentDeleted) {
             onShowSnackbar("Usunięto uwagę")
             onNavBack()
@@ -41,7 +50,7 @@ internal fun StudentNoteFormRoute(
         onDescriptionChange = viewModel::onDescriptionChange,
         isSubmitEnabled = form.isSubmitEnabled,
         onAddStudentNote = viewModel::onSubmit,
-        onStudentNoteAdded = onNavBack,
+        isEditMode = isEditMode,
         isStudentNoteDeleted = viewModel.isStudentNoteDeleted,
     )
 }

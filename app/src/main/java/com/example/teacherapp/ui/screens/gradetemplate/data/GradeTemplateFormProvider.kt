@@ -47,7 +47,7 @@ object GradeTemplateFormProvider {
     fun createDefaultForm(
         name: String = "",
         description: String? = null,
-        weight: String = "3",
+        weight: String = DefaultWeight,
         isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): GradeTemplateForm {
@@ -59,3 +59,5 @@ object GradeTemplateFormProvider {
         )
     }
 }
+
+private const val DefaultWeight = "3"

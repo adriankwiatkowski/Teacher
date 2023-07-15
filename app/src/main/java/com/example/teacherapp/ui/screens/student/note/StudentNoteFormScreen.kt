@@ -15,7 +15,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.key.isShiftPressed
@@ -55,16 +54,10 @@ fun StudentNoteFormScreen(
     onDescriptionChange: (description: String) -> Unit,
     isSubmitEnabled: Boolean,
     onAddStudentNote: () -> Unit,
-    onStudentNoteAdded: () -> Unit,
+    isEditMode: Boolean,
     isStudentNoteDeleted: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    LaunchedEffect(formStatus) {
-        if (formStatus == FormStatus.Success) {
-            onStudentNoteAdded()
-        }
-    }
-
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -72,7 +65,7 @@ fun StudentNoteFormScreen(
                 title = "Uwaga",
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
-                menuItems = if (!isStudentNoteDeleted) {
+                menuItems = if (isEditMode) {
                     listOf(ActionMenuItemProvider.delete(onDeleteStudentNoteClick))
                 } else {
                     emptyList()
@@ -88,7 +81,7 @@ fun StudentNoteFormScreen(
             result = studentNoteResult,
             isDeleted = isStudentNoteDeleted,
             deletedMessage = "Usunięto uwagę",
-        ) { studentNote ->
+        ) {
             FormStatusContent(
                 formStatus = formStatus,
                 savingText = "Zapisywanie uwagi...",
@@ -103,7 +96,7 @@ fun StudentNoteFormScreen(
                     description = description,
                     onDescriptionChange = onDescriptionChange,
                     isSubmitEnabled = isSubmitEnabled,
-                    submitText = if (studentNote == null) "Dodaj uwagę" else "Edytuj uwagę",
+                    submitText = if (isEditMode) "Edytuj uwagę" else "Dodaj uwagę",
                     onSubmit = onAddStudentNote,
                 )
             }
@@ -209,7 +202,7 @@ private fun StudentNoteFormScreenPreview(
                 onDescriptionChange = {},
                 isSubmitEnabled = form.isValid,
                 onAddStudentNote = {},
-                onStudentNoteAdded = {},
+                isEditMode = true,
                 isStudentNoteDeleted = false,
             )
         }
@@ -239,7 +232,7 @@ private fun StudentNoteFormScreenDeletedPreview() {
                 onDescriptionChange = {},
                 isSubmitEnabled = form.isValid,
                 onAddStudentNote = {},
-                onStudentNoteAdded = {},
+                isEditMode = true,
                 isStudentNoteDeleted = true,
             )
         }

@@ -56,6 +56,7 @@ fun GradeTemplateFormScreen(
     onWeightChange: (weight: String) -> Unit,
     isSubmitEnabled: Boolean,
     onAddGrade: () -> Unit,
+    isEditMode: Boolean,
     isDeleted: Boolean,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -67,7 +68,11 @@ fun GradeTemplateFormScreen(
                 title = "Ocena",
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
-                menuItems = listOf(ActionMenuItemProvider.delete(onDeleteClick))
+                menuItems = if (isEditMode) {
+                    listOf(ActionMenuItemProvider.delete(onDeleteClick))
+                } else {
+                    emptyList()
+                }
             )
         },
     ) { innerPadding ->
@@ -78,7 +83,7 @@ fun GradeTemplateFormScreen(
             result = gradeTemplateResult,
             isDeleted = isDeleted,
             deletedMessage = "Usunięto ocenę",
-        ) { gradeTemplate ->
+        ) {
             FormStatusContent(
                 formStatus = formStatus,
                 savingText = "Zapisywanie oceny...",
@@ -93,7 +98,7 @@ fun GradeTemplateFormScreen(
                     onDescriptionChange = onDescriptionChange,
                     weight = weight,
                     onWeightChange = onWeightChange,
-                    submitText = if (gradeTemplate != null) "Edytuj ocenę" else "Dodaj ocenę",
+                    submitText = if (isEditMode) "Edytuj ocenę" else "Dodaj ocenę",
                     isSubmitEnabled = isSubmitEnabled,
                     onSubmit = onAddGrade,
                 )
@@ -209,6 +214,7 @@ private fun GradeTemplateFormScreenPreview() {
                 },
                 isSubmitEnabled = form.isSubmitEnabled,
                 onAddGrade = {},
+                isEditMode = true,
                 isDeleted = false,
                 onDeleteClick = {},
             )
