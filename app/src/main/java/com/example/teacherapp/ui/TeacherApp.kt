@@ -6,7 +6,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.components.TeacherBottomNav
 import com.example.teacherapp.ui.components.TeacherFab
@@ -28,9 +26,6 @@ import kotlinx.coroutines.launch
 fun TeacherApp(
     title: String,
     setTitle: (String) -> Unit,
-    menuItems: List<ActionMenuItem>,
-    addActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
-    removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     fabAction: FabAction?,
     addFabAction: (fabAction: FabAction) -> Unit,
     removeFabAction: (fabAction: FabAction) -> Unit,
@@ -57,7 +52,7 @@ fun TeacherApp(
         topBar = {
             TeacherTopBar(
                 title = title,
-                menuItems = menuItems,
+                menuItems = emptyList(),
                 showNavigationIcon = true,
                 onNavigationIconClick = appState.navController::navigateUp,
                 visible = appState.shouldShowTopBar,
@@ -88,8 +83,6 @@ fun TeacherApp(
             appState = appState,
             setTitle = setTitle,
             onShowSnackbar = onShowSnackbar,
-            addActionMenuItems = addActionMenuItems,
-            removeActionMenuItems = removeActionMenuItems,
             addFabAction = addFabAction,
             removeFabAction = removeFabAction,
         )
@@ -104,16 +97,6 @@ private fun MainScreenPreview() {
             TeacherApp(
                 title = "",
                 setTitle = {},
-                menuItems = listOf(
-                    ActionMenuItem(
-                        name = "Name",
-                        imageVector = Icons.Default.Favorite,
-                        contentDescription = null,
-                        onClick = {},
-                    ),
-                ),
-                addActionMenuItems = {},
-                removeActionMenuItems = {},
                 fabAction = FabAction(
                     onClick = {},
                     imageVector = Icons.Default.AddCircle,
@@ -134,16 +117,6 @@ private fun MainScreenDarkPreview() {
             TeacherApp(
                 title = "",
                 setTitle = {},
-                menuItems = listOf(
-                    ActionMenuItem(
-                        name = "Name",
-                        imageVector = Icons.Default.Favorite,
-                        contentDescription = null,
-                        onClick = {},
-                    ),
-                ),
-                addActionMenuItems = {},
-                removeActionMenuItems = {},
                 fabAction = FabAction(
                     onClick = {},
                     imageVector = Icons.Default.AddCircle,

@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -17,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.SchoolClass
+import com.example.teacherapp.data.provider.ActionMenuItemProvider
+import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.SchoolClassPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.lessons
@@ -28,6 +32,8 @@ import com.example.teacherapp.ui.theme.spacing
 @Composable
 fun SchoolClassScreen(
     schoolClassResult: Result<SchoolClass>,
+    showNavigationIcon: Boolean,
+    onNavBack: () -> Unit,
     onStudentClick: (id: Long) -> Unit,
     onAddStudentClick: () -> Unit,
     onLessonClick: (id: Long) -> Unit,
@@ -36,45 +42,88 @@ fun SchoolClassScreen(
     isStudentsExpanded: MutableState<Boolean>,
     isLessonsExpanded: MutableState<Boolean>,
     isSchoolClassDeleted: Boolean,
+    onDeleteSchoolClassClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ResultContent(
+    val schoolClassName = remember(schoolClassResult) {
+        (schoolClassResult as? Result.Success)?.data?.name.orEmpty()
+    }
+
+    Scaffold(
         modifier = modifier,
-        result = schoolClassResult,
-        isDeleted = isSchoolClassDeleted,
-        deletedMessage = "Usunięto pomyślnie klasę."
-    ) { schoolClass ->
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(MaterialTheme.spacing.small),
-        ) {
-            schoolYearExpandable(
-                schoolYear = schoolClass.schoolYear,
-                expanded = isSchoolYearExpanded,
-            )
-
-            item {
-                Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
-            }
-
-            students(
-                students = schoolClass.students,
-                onStudentClick = onStudentClick,
-                onAddStudentClick = onAddStudentClick,
-                expanded = isStudentsExpanded,
-            )
-
-            item {
-                Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
-            }
-
-            lessons(
-                lessons = schoolClass.lessons,
-                onLessonClick = onLessonClick,
-                onAddLessonClick = onAddLessonClick,
-                expanded = isLessonsExpanded,
+        topBar = {
+            TeacherTopBar(
+                title = "Klasa $schoolClassName",
+                showNavigationIcon = showNavigationIcon,
+                onNavigationIconClick = onNavBack,
+                menuItems = listOf(
+                    ActionMenuItemProvider.delete(onDeleteSchoolClassClick)
+                ),
             )
         }
+    ) { innerPadding ->
+        ResultContent(
+            modifier = Modifier.padding(innerPadding),
+            result = schoolClassResult,
+            isDeleted = isSchoolClassDeleted,
+            deletedMessage = "Usunięto pomyślnie klasę."
+        ) { schoolClass ->
+            MainContent(
+                schoolClass = schoolClass,
+                onStudentClick = onStudentClick,
+                onAddStudentClick = onAddStudentClick,
+                onLessonClick = onLessonClick,
+                onAddLessonClick = onAddLessonClick,
+                isSchoolYearExpanded = isSchoolYearExpanded,
+                isStudentsExpanded = isStudentsExpanded,
+                isLessonsExpanded = isLessonsExpanded,
+            )
+        }
+    }
+}
+
+@Composable
+private fun MainContent(
+    schoolClass: SchoolClass,
+    onStudentClick: (id: Long) -> Unit,
+    onAddStudentClick: () -> Unit,
+    onLessonClick: (id: Long) -> Unit,
+    onAddLessonClick: () -> Unit,
+    isSchoolYearExpanded: MutableState<Boolean>,
+    isStudentsExpanded: MutableState<Boolean>,
+    isLessonsExpanded: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(MaterialTheme.spacing.small),
+    ) {
+        schoolYearExpandable(
+            schoolYear = schoolClass.schoolYear,
+            expanded = isSchoolYearExpanded,
+        )
+
+        item {
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
+        }
+
+        students(
+            students = schoolClass.students,
+            onStudentClick = onStudentClick,
+            onAddStudentClick = onAddStudentClick,
+            expanded = isStudentsExpanded,
+        )
+
+        item {
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
+        }
+
+        lessons(
+            lessons = schoolClass.lessons,
+            onLessonClick = onLessonClick,
+            onAddLessonClick = onAddLessonClick,
+            expanded = isLessonsExpanded,
+        )
     }
 }
 
@@ -95,6 +144,8 @@ private fun SchoolClassScreenPreview(
             SchoolClassScreen(
                 modifier = Modifier.fillMaxSize(),
                 schoolClassResult = Result.Success(schoolClass),
+                showNavigationIcon = true,
+                onNavBack = {},
                 onStudentClick = {},
                 onAddStudentClick = {},
                 onLessonClick = {},
@@ -102,7 +153,8 @@ private fun SchoolClassScreenPreview(
                 isSchoolYearExpanded = isSchoolYearExpanded,
                 isStudentsExpanded = isStudentsExpanded,
                 isLessonsExpanded = isLessonsExpanded,
-                isSchoolClassDeleted = false
+                isSchoolClassDeleted = false,
+                onDeleteSchoolClassClick = {},
             )
         }
     }
@@ -120,6 +172,8 @@ private fun SchoolClassScreenDeletedPreview() {
             SchoolClassScreen(
                 modifier = Modifier.fillMaxSize(),
                 schoolClassResult = Result.Loading,
+                showNavigationIcon = true,
+                onNavBack = {},
                 onStudentClick = {},
                 onAddStudentClick = {},
                 onLessonClick = {},
@@ -128,6 +182,7 @@ private fun SchoolClassScreenDeletedPreview() {
                 isStudentsExpanded = isStudentsExpanded,
                 isLessonsExpanded = isLessonsExpanded,
                 isSchoolClassDeleted = true,
+                onDeleteSchoolClassClick = {},
             )
         }
     }

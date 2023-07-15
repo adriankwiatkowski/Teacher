@@ -29,15 +29,11 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val viewModel: TeacherAppViewModel = hiltViewModel()
-                    val menuItems = viewModel.actionMenuItems
                     val fabAction = viewModel.fabAction
 
                     TeacherApp(
                         title = viewModel.title,
                         setTitle = { title -> viewModel.title = title },
-                        menuItems = menuItems,
-                        addActionMenuItems = viewModel::addActionMenuItems,
-                        removeActionMenuItems = viewModel::removeActionMenuItems,
                         fabAction = fabAction,
                         addFabAction = viewModel::addFabAction,
                         removeFabAction = viewModel::removeFabAction,
@@ -55,9 +51,6 @@ private fun DefaultPreview() {
         TeacherApp(
             title = "",
             setTitle = {},
-            menuItems = listOf(),
-            addActionMenuItems = {},
-            removeActionMenuItems = {},
             fabAction = FabAction(
                 onClick = {},
                 imageVector = Icons.Default.AddCircle,

@@ -39,7 +39,7 @@ class SchoolClassViewModel @Inject constructor(
 
     var isSchoolClassDeleted by mutableStateOf(false)
 
-    fun deleteSchoolClass() {
+    fun onDeleteSchoolClass() {
         viewModelScope.launch {
             isSchoolClassDeleted = false
             repository.deleteSchoolClassById(schoolClassId.value)

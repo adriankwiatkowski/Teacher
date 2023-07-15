@@ -1,6 +1,5 @@
 package com.example.teacherapp.ui.nav.graphs
 
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -10,10 +9,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.teacherapp.core.common.result.Result
-import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.data.models.FabAction
-import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
@@ -34,8 +30,6 @@ fun NavGraphBuilder.addSchoolClassGraph(
     navActions: TeacherNavigationActions,
     setTitle: (String) -> Unit,
     onShowSnackbar: (message: String) -> Unit,
-    addActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
-    removeActionMenuItems: (actionMenuItems: List<ActionMenuItem>) -> Unit,
     addFabAction: (fabAction: FabAction) -> Unit,
     removeFabAction: (fabAction: FabAction) -> Unit,
 ) {
@@ -66,20 +60,13 @@ fun NavGraphBuilder.addSchoolClassGraph(
             },
         ),
     ) { backStackEntry ->
-        val schoolClassViewModel = hiltViewModel<SchoolClassViewModel>()
-        val schoolClassResult by schoolClassViewModel.schoolClassResult.collectAsStateWithLifecycle()
-        val isSchoolClassDeleted = schoolClassViewModel.isSchoolClassDeleted
+        val viewModel = hiltViewModel<SchoolClassViewModel>()
+        val schoolClassResult by viewModel.schoolClassResult.collectAsStateWithLifecycle()
+        val isSchoolClassDeleted = viewModel.isSchoolClassDeleted
 
         val args = backStackEntry.arguments!!
         val schoolClassId = args.getLong(TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG)
 
-        // Set title.
-        LaunchedEffect(schoolClassResult) {
-            val schoolClass = schoolClassResult as? Result.Success
-            val name = schoolClass?.data?.name.orEmpty()
-            val title = "Klasa $name"
-            setTitle(title)
-        }
         // Observe deletion.
         LaunchedEffect(isSchoolClassDeleted) {
             if (isSchoolClassDeleted) {
@@ -87,21 +74,11 @@ fun NavGraphBuilder.addSchoolClassGraph(
                 navController.navigateUp()
             }
         }
-        // Add/remove action menu.
-        DisposableEffect(schoolClassViewModel, schoolClassViewModel::deleteSchoolClass) {
-            val menuItems = listOf(
-                ActionMenuItemProvider.delete(onClick = schoolClassViewModel::deleteSchoolClass),
-            )
-
-            addActionMenuItems(menuItems)
-
-            onDispose {
-                removeActionMenuItems(menuItems)
-            }
-        }
 
         SchoolClassScreen(
             schoolClassResult = schoolClassResult,
+            showNavigationIcon = true,
+            onNavBack = navController::popBackStack,
             onStudentClick = { studentId ->
                 navController.navigateToStudentGraph(
                     schoolClassId = schoolClassId,
@@ -126,10 +103,11 @@ fun NavGraphBuilder.addSchoolClassGraph(
                     lessonId = null,
                 )
             },
-            isSchoolYearExpanded = schoolClassViewModel.isSchoolYearExpanded,
-            isStudentsExpanded = schoolClassViewModel.isStudentsExpanded,
-            isLessonsExpanded = schoolClassViewModel.isLessonsExpanded,
+            isSchoolYearExpanded = viewModel.isSchoolYearExpanded,
+            isStudentsExpanded = viewModel.isStudentsExpanded,
+            isLessonsExpanded = viewModel.isLessonsExpanded,
             isSchoolClassDeleted = isSchoolClassDeleted,
+            onDeleteSchoolClassClick = viewModel::onDeleteSchoolClass,
         )
     }
 

@@ -73,9 +73,7 @@ class TeacherAppState(
 
     val shouldShowTopBar: Boolean
         @Composable get() = when (currentDestination?.route) {
-            TeacherDestinations.SCHOOL_CLASS_ROUTE,
             TeacherDestinations.SCHOOL_CLASS_FORM_ROUTE -> true
-
             else -> false
         }
 }
