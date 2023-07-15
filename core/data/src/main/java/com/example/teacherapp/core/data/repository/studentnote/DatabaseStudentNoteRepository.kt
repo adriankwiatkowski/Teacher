@@ -3,7 +3,6 @@ package com.example.teacherapp.core.data.repository.studentnote
 import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.result.asResult
-import com.example.teacherapp.core.common.result.asResultNotNull
 import com.example.teacherapp.core.database.datasource.studentnote.StudentNoteDataSource
 import com.example.teacherapp.core.model.data.BasicStudentNote
 import com.example.teacherapp.core.model.data.StudentNote
@@ -24,7 +23,7 @@ class DatabaseStudentNoteRepository @Inject constructor(
 
     override fun getStudentNoteOrNullById(id: Long): Flow<Result<StudentNote?>> = dataSource
         .getStudentNoteById(id)
-        .asResultNotNull()
+        .asResult()
 
     override fun getStudentFullNameNameById(studentId: Long): Flow<String?> =
         dataSource.getStudentFullNameNameById(studentId)
