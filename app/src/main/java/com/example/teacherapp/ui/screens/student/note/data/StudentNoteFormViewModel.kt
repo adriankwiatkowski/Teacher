@@ -69,7 +69,7 @@ class StudentNoteFormViewModel @Inject constructor(
     }
 
     fun onSubmit() {
-        if (!form.canSubmit) {
+        if (!form.isSubmitEnabled) {
             return
         }
 

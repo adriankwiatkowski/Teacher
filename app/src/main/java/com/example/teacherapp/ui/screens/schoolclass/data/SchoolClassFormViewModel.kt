@@ -32,12 +32,6 @@ class SchoolClassFormViewModel @Inject constructor(
             initialValue = emptyList(),
         )
 
-    val schoolClassName get() = form.schoolClassName
-    val schoolYear get() = form.schoolYear
-    val isValid get() = form.isValid
-    val canSubmit get() = form.canSubmit
-    val status get() = form.status
-
     init {
         schoolYears
             .onEach { schoolYears ->
@@ -56,15 +50,15 @@ class SchoolClassFormViewModel @Inject constructor(
     }
 
     fun onSubmit() {
-        if (!form.canSubmit) {
+        if (!form.isSubmitEnabled) {
             return
         }
 
         form = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
             repository.insertSchoolClass(
-                schoolYearId = schoolYear.value!!.id,
-                name = schoolClassName.value,
+                schoolYearId = form.schoolYear.value!!.id,
+                name = form.schoolClassName.value,
             )
 
             if (isActive) {

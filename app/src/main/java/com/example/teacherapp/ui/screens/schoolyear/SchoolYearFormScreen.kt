@@ -43,7 +43,7 @@ fun SchoolYearFormScreen(
     onStartDateChange: (index: Int, date: LocalDate) -> Unit,
     onEndDateChange: (index: Int, date: LocalDate) -> Unit,
     status: FormStatus,
-    isValid: Boolean,
+    isSubmitEnabled: Boolean,
     onAddSchoolYear: () -> Unit,
     onSchoolYearAdded: () -> Unit,
     modifier: Modifier = Modifier,
@@ -53,8 +53,6 @@ fun SchoolYearFormScreen(
             onSchoolYearAdded()
         }
     }
-
-    val isSubmitEnabled = isValid && status != FormStatus.Saving
 
     Scaffold(
         modifier = modifier,
@@ -215,7 +213,7 @@ private fun SchoolYearFormScreenPreview() {
                 onStartDateChange = { _, _ -> },
                 onEndDateChange = { _, _ -> },
                 status = form.status,
-                isValid = form.isValid,
+                isSubmitEnabled = form.isValid,
                 onAddSchoolYear = {},
                 onSchoolYearAdded = {},
             )

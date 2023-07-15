@@ -13,6 +13,6 @@ data class SchoolClassForm(
     val isValid: Boolean
         get() = schoolClassName.isValid && schoolYear.isValid
 
-    val canSubmit: Boolean
+    val isSubmitEnabled: Boolean
         get() = isValid && status != FormStatus.Saving && status != FormStatus.Success
 }

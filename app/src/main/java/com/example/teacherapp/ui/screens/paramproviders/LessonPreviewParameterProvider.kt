@@ -26,7 +26,7 @@ class LessonPreviewParameterProvider : PreviewParameterProvider<Lesson> {
 
     private val basicSchoolClass = BasicSchoolClass(
         id = 1L,
-        name = "Klasa 3A",
+        name = "3A",
         studentCount = 20,
     )
 }

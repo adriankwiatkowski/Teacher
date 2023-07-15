@@ -34,7 +34,7 @@ internal fun StudentFormRoute(
         onEmailChange = viewModel::onEmailChange,
         phone = form.phone,
         onPhoneChange = viewModel::onPhoneChange,
-        isValid = form.isValid,
+        isSubmitEnabled = form.isSubmitEnabled,
         onAddStudent = viewModel::onSubmit,
         onStudentAdded = onNavBack,
     )

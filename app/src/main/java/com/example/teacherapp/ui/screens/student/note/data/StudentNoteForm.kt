@@ -11,6 +11,6 @@ data class StudentNoteForm(
     val isValid: Boolean
         get() = title.isValid && description.isValid
 
-    val canSubmit: Boolean
+    val isSubmitEnabled: Boolean
         get() = isValid && status != FormStatus.Saving && status != FormStatus.Success
 }

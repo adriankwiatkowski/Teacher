@@ -15,15 +15,16 @@ internal fun SchoolClassFormRoute(
 ) {
     val viewModel = hiltViewModel<SchoolClassFormViewModel>()
     val schoolYears by viewModel.schoolYears.collectAsStateWithLifecycle()
+    val form = viewModel.form
 
     SchoolClassFormScreen(
-        schoolClassName = viewModel.schoolClassName,
+        schoolClassName = form.schoolClassName,
         onSchoolClassNameChange = viewModel::onSchoolClassNameChange,
         schoolYears = schoolYears,
-        schoolYear = viewModel.schoolYear,
+        schoolYear = form.schoolYear,
         onSchoolYearChange = viewModel::onSchoolYearChange,
-        status = viewModel.status,
-        canSubmit = viewModel.canSubmit,
+        status = form.status,
+        isSubmitEnabled = form.isSubmitEnabled,
         onAddSchoolClass = viewModel::onSubmit,
         onAddSchoolYear = onAddSchoolYear,
         onSchoolClassAdded = onNavBack,

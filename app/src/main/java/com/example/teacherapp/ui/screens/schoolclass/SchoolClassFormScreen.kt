@@ -36,7 +36,7 @@ fun SchoolClassFormScreen(
     schoolYear: InputField<SchoolYear?>,
     onSchoolYearChange: (SchoolYear?) -> Unit,
     status: FormStatus,
-    canSubmit: Boolean,
+    isSubmitEnabled: Boolean,
     onAddSchoolYear: () -> Unit,
     onAddSchoolClass: () -> Unit,
     onSchoolClassAdded: () -> Unit,
@@ -70,7 +70,7 @@ fun SchoolClassFormScreen(
             schoolYears = schoolYears,
             schoolYear = schoolYear,
             onSchoolYearChange = onSchoolYearChange,
-            canSubmit = canSubmit,
+            isSubmitEnabled = isSubmitEnabled,
             onSubmit = onAddSchoolClass,
             onAddSchoolYear = onAddSchoolYear,
         )
@@ -84,7 +84,7 @@ private fun MainContent(
     schoolYears: List<SchoolYear>,
     schoolYear: InputField<SchoolYear?>,
     onSchoolYearChange: (SchoolYear?) -> Unit,
-    canSubmit: Boolean,
+    isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
     onAddSchoolYear: () -> Unit,
     modifier: Modifier = Modifier,
@@ -117,7 +117,7 @@ private fun MainContent(
             TeacherOutlinedButton(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = onSubmit,
-                enabled = canSubmit,
+                enabled = isSubmitEnabled,
             ) {
                 Text(text = "Dodaj klasę")
             }
@@ -156,7 +156,7 @@ private fun SchoolClassFormScreenPreview(
                 schoolYear = form.schoolYear,
                 onSchoolYearChange = {},
                 status = form.status,
-                canSubmit = form.canSubmit,
+                isSubmitEnabled = form.isSubmitEnabled,
                 onAddSchoolYear = {},
                 onAddSchoolClass = {},
                 onSchoolClassAdded = {},

@@ -11,6 +11,6 @@ data class LessonForm(
     val isValid: Boolean
         get() = name.isValid
 
-    val canSubmit: Boolean
+    val isSubmitEnabled: Boolean
         get() = isValid && status != FormStatus.Saving && status != FormStatus.Success
 }

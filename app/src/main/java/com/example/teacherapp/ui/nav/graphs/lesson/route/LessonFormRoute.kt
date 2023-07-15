@@ -21,7 +21,7 @@ internal fun LessonFormRoute(
         formStatus = form.status,
         name = form.name,
         onNameChange = viewModel::onNameChange,
-        isValid = form.isValid,
+        isSubmitEnabled = form.isSubmitEnabled,
         schoolClassName = schoolClassName.orEmpty(),
         onAddLessonClick = viewModel::onSubmit,
         onNavBack = onNavBack,

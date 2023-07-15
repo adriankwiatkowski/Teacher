@@ -30,7 +30,7 @@ fun NavGraphBuilder.schoolYearGraph(navController: NavController) {
             onStartDateChange = viewModel::onStartDateChange,
             onEndDateChange = viewModel::onEndDateChange,
             status = form.status,
-            isValid = form.isValid,
+            isSubmitEnabled = form.isSubmitEnabled,
             onAddSchoolYear = viewModel::onAddSchoolYear,
             onSchoolYearAdded = navController::popBackStack,
         )

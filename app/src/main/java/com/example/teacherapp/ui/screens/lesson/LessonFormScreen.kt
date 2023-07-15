@@ -50,7 +50,7 @@ fun LessonFormScreen(
     formStatus: FormStatus,
     name: InputField<String>,
     onNameChange: (name: String) -> Unit,
-    isValid: Boolean,
+    isSubmitEnabled: Boolean,
     schoolClassName: String,
     onAddLessonClick: () -> Unit,
     onLessonAdded: () -> Unit,
@@ -81,7 +81,7 @@ fun LessonFormScreen(
                     imageVector = Icons.Default.Add,
                     contentDescription = null,
                     onClick = onAddLessonClick,
-                    visible = isValid,
+                    visible = isSubmitEnabled,
                 )
             },
             floatingActionButtonPosition = FabPosition.End,
@@ -97,8 +97,8 @@ fun LessonFormScreen(
                         schoolClassName = schoolClassName,
                         name = name,
                         onNameChange = onNameChange,
-                        onAddLesson = onAddLessonClick,
-                        isSubmitEnabled = isValid,
+                        onSubmit = onAddLessonClick,
+                        isSubmitEnabled = isSubmitEnabled,
                         submitText = if (lessonResult.data == null) "Dodaj przedmiot" else "Edytuj przedmiot",
                     )
                 } else {
@@ -111,9 +111,9 @@ fun LessonFormScreen(
                             schoolClassName = schoolClassName,
                             name = name,
                             onNameChange = onNameChange,
-                            onAddLesson = onAddLessonClick,
-                            isSubmitEnabled = isValid,
                             submitText = if (lesson == null) "Dodaj przedmiot" else "Edytuj przedmiot",
+                            isSubmitEnabled = isSubmitEnabled,
+                            onSubmit = onAddLessonClick,
                         )
                     }
                 }
@@ -127,9 +127,9 @@ private fun Content(
     schoolClassName: String,
     name: InputField<String>,
     onNameChange: (String) -> Unit,
-    onAddLesson: () -> Unit,
-    isSubmitEnabled: Boolean,
     submitText: String,
+    isSubmitEnabled: Boolean,
+    onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
@@ -170,7 +170,7 @@ private fun Content(
 
         TeacherOutlinedButton(
             modifier = Modifier.fillMaxWidth(),
-            onClick = onAddLesson,
+            onClick = onSubmit,
             enabled = isSubmitEnabled,
         ) {
             Text(text = submitText)
@@ -196,7 +196,7 @@ private fun LessonFormScreenPreview(
                 formStatus = form.status,
                 name = form.name,
                 onNameChange = {},
-                isValid = form.isValid,
+                isSubmitEnabled = form.isValid,
                 schoolClassName = lesson.schoolClass.name,
                 onAddLessonClick = {},
                 onLessonAdded = {},

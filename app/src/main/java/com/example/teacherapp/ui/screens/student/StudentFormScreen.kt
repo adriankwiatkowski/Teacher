@@ -60,7 +60,7 @@ fun StudentFormScreen(
     onEmailChange: (email: String) -> Unit,
     phone: InputField<String?>,
     onPhoneChange: (phone: String) -> Unit,
-    isValid: Boolean,
+    isSubmitEnabled: Boolean,
     onAddStudent: () -> Unit,
     onStudentAdded: () -> Unit,
     modifier: Modifier = Modifier,
@@ -104,9 +104,9 @@ fun StudentFormScreen(
                     onEmailChange = onEmailChange,
                     phone = phone,
                     onPhoneChange = onPhoneChange,
-                    isSubmitEnabled = isValid,
+                    isSubmitEnabled = isSubmitEnabled,
                     submitText = if (student == null) "Dodaj studenta" else "Edytuj studenta",
-                    onAddStudent = onAddStudent,
+                    onSubmit = onAddStudent,
                 )
             }
         }
@@ -125,7 +125,7 @@ private fun Content(
     onPhoneChange: (phone: String) -> Unit,
     isSubmitEnabled: Boolean,
     submitText: String,
-    onAddStudent: () -> Unit,
+    onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -204,7 +204,7 @@ private fun Content(
 
         TeacherOutlinedButton(
             modifier = Modifier.fillMaxWidth(),
-            onClick = onAddStudent,
+            onClick = onSubmit,
             enabled = isSubmitEnabled,
         ) {
             Text(text = submitText)
@@ -241,7 +241,7 @@ private fun StudentFormScreenPreview(
                 onEmailChange = {},
                 phone = form.phone,
                 onPhoneChange = {},
-                isValid = form.isValid,
+                isSubmitEnabled = form.isValid,
                 onAddStudent = {},
                 onStudentAdded = {},
             )

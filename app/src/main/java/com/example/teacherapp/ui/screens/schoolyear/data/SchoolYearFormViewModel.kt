@@ -54,7 +54,7 @@ class SchoolYearFormViewModel @Inject constructor(
     }
 
     fun onAddSchoolYear() {
-        if (!form.canSubmit) {
+        if (!form.isSubmitEnabled) {
             return
         }
 
