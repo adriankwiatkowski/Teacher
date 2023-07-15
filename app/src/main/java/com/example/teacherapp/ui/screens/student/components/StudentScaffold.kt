@@ -1,21 +1,17 @@
 package com.example.teacherapp.ui.screens.student.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.data.models.ActionMenuItem
-import com.example.teacherapp.ui.components.TeacherTopBar
+import com.example.teacherapp.ui.components.TeacherTopBarWithTabs
 import com.example.teacherapp.ui.nav.graphs.student.tab.StudentTab
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import kotlinx.coroutines.launch
@@ -35,42 +31,26 @@ fun StudentScaffold(
     modifier: Modifier = Modifier,
     content: @Composable (studentTab: StudentTab) -> Unit,
 ) {
-    if (!isScaffoldVisible) {
-        Box(modifier = modifier) {
-            content(selectedTab)
-        }
-        return
+    val stringTabs = remember(tabs) {
+        tabs.map { tab -> tab.title }
+    }
+    val selectedTabIndex = remember(tabs, selectedTab) {
+        tabs.indexOf(selectedTab)
     }
 
-    Scaffold(
+    TeacherTopBarWithTabs(
         modifier = modifier,
-        topBar = {
-            Column {
-                TeacherTopBar(
-                    title = title,
-                    menuItems = menuItems,
-                    showNavigationIcon = showNavigationIcon,
-                    onNavigationIconClick = onNavigationIconClick,
-                    visible = true
-                )
-
-                StudentTabRow(
-                    tabs = tabs,
-                    selectedTab = selectedTab,
-                    selectedTabIndex = pagerState.currentPage,
-                    onTabClick = onTabClick,
-                )
-            }
-        }
-    ) { innerPadding ->
-        HorizontalPager(
-            pageCount = tabs.size,
-            state = pagerState,
-        ) { page ->
-            Column(modifier = Modifier.padding(innerPadding)) {
-                content(studentTab = tabs[page])
-            }
-        }
+        title = title,
+        showNavigationIcon = showNavigationIcon,
+        onNavigationIconClick = onNavigationIconClick,
+        tabs = stringTabs,
+        selectedTabIndex = selectedTabIndex,
+        onTabClick = { index -> onTabClick(tabs[index]) },
+        pagerState = pagerState,
+        isTopBarVisible = isScaffoldVisible,
+        menuItems = menuItems,
+    ) { tabIndex ->
+        content(tabs[tabIndex])
     }
 }
 
