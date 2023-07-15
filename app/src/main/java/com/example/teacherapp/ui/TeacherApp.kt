@@ -1,11 +1,8 @@
 package com.example.teacherapp.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,9 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.components.TeacherBottomNav
-import com.example.teacherapp.ui.components.TeacherFab
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherNavGraph
 import com.example.teacherapp.ui.theme.TeacherAppTheme
@@ -23,9 +18,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun TeacherApp(
-    fabAction: FabAction?,
-    addFabAction: (fabAction: FabAction) -> Unit,
-    removeFabAction: (fabAction: FabAction) -> Unit,
     modifier: Modifier = Modifier,
     appState: TeacherAppState = rememberTeacherAppState(),
 ) {
@@ -46,10 +38,6 @@ fun TeacherApp(
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
-        floatingActionButton = {
-            TeacherFab(fabAction = fabAction)
-        },
-        floatingActionButtonPosition = FabPosition.End,
         bottomBar = {
             TeacherBottomNav(
                 screens = bottomNavScreens,
@@ -70,8 +58,6 @@ fun TeacherApp(
             modifier = Modifier.padding(innerPadding),
             appState = appState,
             onShowSnackbar = onShowSnackbar,
-            addFabAction = addFabAction,
-            removeFabAction = removeFabAction,
         )
     }
 }
@@ -81,33 +67,7 @@ fun TeacherApp(
 private fun MainScreenPreview() {
     TeacherAppTheme {
         Surface {
-            TeacherApp(
-                fabAction = FabAction(
-                    onClick = {},
-                    imageVector = Icons.Default.AddCircle,
-                    contentDescription = null,
-                ),
-                addFabAction = {},
-                removeFabAction = {},
-            )
-        }
-    }
-}
-
-@Preview(uiMode = android.content.res.Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun MainScreenDarkPreview() {
-    TeacherAppTheme {
-        Surface {
-            TeacherApp(
-                fabAction = FabAction(
-                    onClick = {},
-                    imageVector = Icons.Default.AddCircle,
-                    contentDescription = null,
-                ),
-                addFabAction = {},
-                removeFabAction = {},
-            )
+            TeacherApp()
         }
     }
 }

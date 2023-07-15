@@ -3,7 +3,6 @@ package com.example.teacherapp.ui.nav
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.TeacherAppState
 import com.example.teacherapp.ui.nav.graphs.addScheduleGraph
 import com.example.teacherapp.ui.nav.graphs.addSchoolClassGraph
@@ -16,8 +15,6 @@ import com.example.teacherapp.ui.nav.graphs.student.studentGraph
 fun TeacherNavGraph(
     appState: TeacherAppState,
     onShowSnackbar: (message: String) -> Unit,
-    addFabAction: (fabAction: FabAction) -> Unit,
-    removeFabAction: (fabAction: FabAction) -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = TeacherDestinations.SCHOOL_CLASSES_ROUTE,
 ) {
@@ -35,8 +32,6 @@ fun TeacherNavGraph(
             navController = navController,
             navActions = navActions,
             onShowSnackbar = onShowSnackbar,
-            addFabAction = addFabAction,
-            removeFabAction = removeFabAction,
         )
         schoolYearGraph(navController = navController)
 

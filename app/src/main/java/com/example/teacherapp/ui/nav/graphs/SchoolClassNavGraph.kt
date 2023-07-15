@@ -9,7 +9,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.teacherapp.data.models.FabAction
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
@@ -29,8 +28,6 @@ fun NavGraphBuilder.addSchoolClassGraph(
     navController: NavController,
     navActions: TeacherNavigationActions,
     onShowSnackbar: (message: String) -> Unit,
-    addFabAction: (fabAction: FabAction) -> Unit,
-    removeFabAction: (fabAction: FabAction) -> Unit,
 ) {
     composable(TeacherDestinations.SCHOOL_CLASSES_ROUTE) {
         val schoolClassesViewModel = hiltViewModel<SchoolClassesViewModel>()
@@ -46,8 +43,6 @@ fun NavGraphBuilder.addSchoolClassGraph(
             },
             onLessonsClick = { schoolClassId ->
             },
-            addFabAction = addFabAction,
-            removeFabAction = removeFabAction,
         )
     }
 

@@ -10,14 +10,13 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.BasicSchoolClass
-import com.example.teacherapp.data.models.FabAction
+import com.example.teacherapp.ui.components.TeacherFab
 import com.example.teacherapp.ui.components.form.TeacherChip
 import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.BasicSchoolClassesPreviewParameterProvider
@@ -32,35 +31,32 @@ fun SchoolClassesScreen(
     onClassClick: (id: Long) -> Unit,
     onStudentsClick: (classId: Long) -> Unit,
     onLessonsClick: (classId: Long) -> Unit,
-    addFabAction: (fabAction: FabAction) -> Unit,
-    removeFabAction: (fabAction: FabAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    DisposableEffect(onAddSchoolClassClick) {
-        val fabAction = FabAction(
-            imageVector = Icons.Default.Add,
-            contentDescription = null,
-            onClick = onAddSchoolClassClick,
-        )
-        addFabAction(fabAction)
-
-        onDispose {
-            removeFabAction(fabAction)
+    Scaffold(
+        modifier = modifier,
+        floatingActionButton = {
+            TeacherFab(
+                imageVector = Icons.Default.Add,
+                contentDescription = null,
+                onClick = onAddSchoolClassClick,
+            )
+        },
+        floatingActionButtonPosition = FabPosition.End,
+    ) { innerPadding ->
+        ResultContent(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(MaterialTheme.spacing.small),
+            result = schoolClassesResult,
+        ) { schoolClasses ->
+            MainContent(
+                schoolClasses = schoolClasses,
+                onClassClick = onClassClick,
+                onStudentsClick = onStudentsClick,
+                onLessonsClick = onLessonsClick,
+            )
         }
-    }
-
-    ResultContent(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(MaterialTheme.spacing.small),
-        result = schoolClassesResult,
-    ) { schoolClasses ->
-        MainContent(
-            schoolClasses = schoolClasses,
-            onClassClick = onClassClick,
-            onStudentsClick = onStudentsClick,
-            onLessonsClick = onLessonsClick,
-        )
     }
 }
 
@@ -182,8 +178,6 @@ private fun SchoolClassesScreenPreview(
                 onClassClick = {},
                 onStudentsClick = {},
                 onLessonsClick = {},
-                addFabAction = {},
-                removeFabAction = {},
             )
         }
     }
