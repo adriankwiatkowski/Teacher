@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.data.repository.schoolclass.SchoolClassRepository
 import com.example.teacherapp.core.model.data.SchoolClass
-import com.example.teacherapp.ui.nav.TeacherDestinationsArgs
+import com.example.teacherapp.ui.nav.graphs.schoolclass.SchoolClassNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -48,6 +48,6 @@ class SchoolClassViewModel @Inject constructor(
     }
 
     companion object {
-        private const val SCHOOL_CLASS_ID_KEY = TeacherDestinationsArgs.SCHOOL_CLASS_ID_ARG
+        private const val SCHOOL_CLASS_ID_KEY = SchoolClassNavigation.schoolClassIdArg
     }
 }

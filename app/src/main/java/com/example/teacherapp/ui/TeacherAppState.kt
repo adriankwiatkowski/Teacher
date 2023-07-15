@@ -11,6 +11,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
+import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation
+import com.example.teacherapp.ui.nav.graphs.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import com.example.teacherapp.ui.nav.rememberNavActions
 import kotlinx.coroutines.CoroutineScope
@@ -49,9 +51,11 @@ class TeacherAppState(
             .mapLatest { backStackEntry ->
                 when (backStackEntry.destination.route) {
                     TeacherDestinations.SCHEDULE_ROUTE -> TeacherBottomNavScreen.Calendar
-                    TeacherDestinations.SCHOOL_CLASSES_ROUTE,
-                    TeacherDestinations.SCHOOL_CLASS_ROUTE,
-                    StudentNavigation.studentRoute -> TeacherBottomNavScreen.SchoolClasses
+
+                    SchoolClassNavigation.schoolClassesRoute,
+                    SchoolClassNavigation.schoolClassRoute,
+                    StudentNavigation.studentRoute,
+                    LessonNavigation.lessonRoute -> TeacherBottomNavScreen.SchoolClasses
 
                     TeacherDestinations.SETTINGS_ROUTE -> TeacherBottomNavScreen.Settings
                     else -> null
