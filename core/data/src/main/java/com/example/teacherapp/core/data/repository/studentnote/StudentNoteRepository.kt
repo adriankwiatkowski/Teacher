@@ -9,7 +9,7 @@ interface StudentNoteRepository {
 
     fun getStudentNotesByStudentId(studentId: Long): Flow<Result<List<BasicStudentNote>>>
 
-    fun getStudentNoteByIdOrNull(id: Long): Flow<Result<StudentNote?>>
+    fun getStudentNoteOrNullById(id: Long): Flow<Result<StudentNote?>>
 
     fun getStudentFullNameNameById(studentId: Long): Flow<String?>
 

@@ -26,3 +26,7 @@ updateLesson:
 UPDATE lesson
 SET name = :name
 WHERE id = :id;
+
+deleteLessonById:
+DELETE FROM lesson
+WHERE id = :id;

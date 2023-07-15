@@ -39,7 +39,7 @@ class StudentFormViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val studentResult: StateFlow<Result<Student?>> = studentId
-        .flatMapLatest { studentId -> repository.getStudentByIdOrNull(studentId) }
+        .flatMapLatest { studentId -> repository.getStudentOrNullById(studentId) }
         .stateIn(initialValue = Result.Loading)
 
     @OptIn(ExperimentalCoroutinesApi::class)

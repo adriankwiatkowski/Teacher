@@ -33,7 +33,7 @@ class LessonFormViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val lessonResult: StateFlow<Result<Lesson?>> = lessonId
-        .flatMapLatest { lessonId -> lessonRepository.getLessonById(lessonId) }
+        .flatMapLatest { lessonId -> lessonRepository.getLessonOrNullById(lessonId) }
         .stateIn(initialValue = Result.Loading)
 
     @OptIn(ExperimentalCoroutinesApi::class)

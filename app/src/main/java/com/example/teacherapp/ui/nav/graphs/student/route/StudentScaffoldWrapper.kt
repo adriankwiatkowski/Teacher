@@ -52,6 +52,7 @@ internal fun StudentScaffoldWrapper(
     }
 
     StudentScaffold(
+        modifier = modifier,
         isScaffoldVisible = !isStudentDeleted,
         title = "Klasa $schoolClassName",
         menuItems = menuItems,
@@ -67,7 +68,6 @@ internal fun StudentScaffoldWrapper(
         pagerState = pagerState,
     ) { pagerTab ->
         ResultContent(
-            modifier = modifier,
             result = studentResult,
             isDeleted = isStudentDeleted,
             deletedMessage = "Usunięto pomyślnie dane ucznia."

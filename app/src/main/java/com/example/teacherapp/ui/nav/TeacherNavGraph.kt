@@ -58,7 +58,7 @@ fun TeacherNavGraph(
             removeActionMenuItems = removeActionMenuItems,
         )
 
-        lessonGraph(navController = navController)
+        lessonGraph(navController = navController, onShowSnackbar = onShowSnackbar)
 
         addSettingsGraph()
     }

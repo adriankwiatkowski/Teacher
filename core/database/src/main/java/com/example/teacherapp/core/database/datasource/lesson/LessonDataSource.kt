@@ -17,4 +17,6 @@ interface LessonDataSource {
         schoolClassId: Long,
         name: String,
     )
+
+    suspend fun deleteLessonById(id: Long)
 }

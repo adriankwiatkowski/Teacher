@@ -16,7 +16,7 @@ class DatabaseStudentRepository @Inject constructor(
     @ApplicationScope private val scope: CoroutineScope,
 ) : StudentRepository {
 
-    override fun getStudentByIdOrNull(id: Long): Flow<Result<Student?>> = dataSource
+    override fun getStudentOrNullById(id: Long): Flow<Result<Student?>> = dataSource
         .getStudentById(id)
         .asResult()
 

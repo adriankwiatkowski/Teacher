@@ -6,9 +6,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface LessonRepository {
 
-    fun getLessonById(lessonId: Long): Flow<Result<Lesson?>>
+    fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>>
+
+    fun getLessonById(lessonId: Long): Flow<Result<Lesson>>
 
     fun getSchoolClassNameById(schoolClassId: Long): Flow<String?>
 
     suspend fun insertOrUpdateLesson(id: Long?, schoolClassId: Long, name: String): Boolean
+
+    suspend fun deleteLessonById(id: Long)
 }

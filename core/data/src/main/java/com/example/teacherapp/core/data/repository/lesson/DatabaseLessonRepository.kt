@@ -4,11 +4,13 @@ import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.result.asResult
+import com.example.teacherapp.core.common.result.asResultNotNull
 import com.example.teacherapp.core.database.datasource.lesson.LessonDataSource
 import com.example.teacherapp.core.model.data.Lesson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
@@ -19,9 +21,13 @@ class DatabaseLessonRepository @Inject constructor(
     @ApplicationScope private val scope: CoroutineScope,
 ) : LessonRepository {
 
-    override fun getLessonById(lessonId: Long): Flow<Result<Lesson?>> = dataSource
+    override fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>> = dataSource
         .getLessonById(lessonId)
         .asResult()
+
+    override fun getLessonById(lessonId: Long): Flow<Result<Lesson>> = dataSource
+        .getLessonById(lessonId)
+        .asResultNotNull()
 
     override fun getSchoolClassNameById(schoolClassId: Long): Flow<String?> = dataSource
         .getStudentSchoolClassNameById(schoolClassId)
@@ -45,6 +51,12 @@ class DatabaseLessonRepository @Inject constructor(
                 }
                 false
             }
+        }
+    }
+
+    override suspend fun deleteLessonById(id: Long) {
+        scope.launch {
+            dataSource.deleteLessonById(id)
         }
     }
 }

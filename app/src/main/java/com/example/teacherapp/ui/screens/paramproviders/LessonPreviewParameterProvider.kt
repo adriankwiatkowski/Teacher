@@ -20,7 +20,7 @@ class LessonPreviewParameterProvider : PreviewParameterProvider<Lesson> {
             Lesson(
                 id = lesson.id,
                 name = lesson.name,
-                basicSchoolClass = basicSchoolClass,
+                schoolClass = basicSchoolClass,
             )
         }
 

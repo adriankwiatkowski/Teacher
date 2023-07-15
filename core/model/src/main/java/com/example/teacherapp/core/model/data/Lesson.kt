@@ -3,7 +3,7 @@ package com.example.teacherapp.core.model.data
 data class Lesson(
     val id: Long,
     val name: String,
-    val basicSchoolClass: BasicSchoolClass,
+    val schoolClass: BasicSchoolClass,
 )
 
 data class BasicLesson(

@@ -197,7 +197,7 @@ private fun LessonFormScreenPreview(
                 name = form.name,
                 onNameChange = {},
                 isValid = form.isValid,
-                schoolClassName = lesson.basicSchoolClass.name,
+                schoolClassName = lesson.schoolClass.name,
                 onAddLessonClick = {},
                 onLessonAdded = {},
                 onNavBack = {},

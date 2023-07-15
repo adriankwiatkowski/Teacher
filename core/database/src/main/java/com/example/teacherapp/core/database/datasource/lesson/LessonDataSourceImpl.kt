@@ -62,4 +62,8 @@ internal class LessonDataSourceImpl(
             )
         }
     }
+
+    override suspend fun deleteLessonById(id: Long): Unit = withContext(dispatcher) {
+        queries.deleteLessonById(id)
+    }
 }

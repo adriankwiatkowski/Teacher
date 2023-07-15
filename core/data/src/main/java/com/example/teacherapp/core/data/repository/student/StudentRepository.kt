@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface StudentRepository {
 
-    fun getStudentByIdOrNull(id: Long): Flow<Result<Student?>>
+    fun getStudentOrNullById(id: Long): Flow<Result<Student?>>
 
     fun getStudentById(id: Long): Flow<Result<Student>>
 

@@ -22,7 +22,7 @@ class DatabaseStudentNoteRepository @Inject constructor(
             .getStudentNotesByStudentId(studentId)
             .asResult()
 
-    override fun getStudentNoteByIdOrNull(id: Long): Flow<Result<StudentNote?>> = dataSource
+    override fun getStudentNoteOrNullById(id: Long): Flow<Result<StudentNote?>> = dataSource
         .getStudentNoteById(id)
         .asResultNotNull()
 

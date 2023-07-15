@@ -23,7 +23,7 @@ internal fun toExternal(lesson: GetLessonById?): Lesson? = run {
     Lesson(
         id = lesson.id,
         name = lesson.lesson_name,
-        basicSchoolClass = BasicSchoolClass(
+        schoolClass = BasicSchoolClass(
             id = lesson.school_class_id,
             name = lesson.school_class_name,
             studentCount = 0, // TODO: Query student count.
