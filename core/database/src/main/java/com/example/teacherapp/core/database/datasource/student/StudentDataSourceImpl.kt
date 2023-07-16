@@ -22,6 +22,14 @@ internal class StudentDataSourceImpl(
     private val queries = db.studentQueries
     private val schoolClassQueries = db.schoolClassQueries
 
+    override fun getBasicStudentById(id: Long): Flow<BasicStudent?> =
+        queries
+            .getBasicStudentById(id)
+            .asFlow()
+            .mapToOneOrNull()
+            .map(::toExternal)
+            .flowOn(dispatcher)
+
     override fun getStudentById(id: Long): Flow<Student?> =
         queries
             .getStudentById(id)

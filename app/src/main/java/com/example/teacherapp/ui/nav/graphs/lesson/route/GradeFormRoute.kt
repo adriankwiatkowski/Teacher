@@ -5,21 +5,29 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.teacherapp.ui.screens.grade.GradesScreen
-import com.example.teacherapp.ui.screens.grade.data.GradesViewModel
+import com.example.teacherapp.data.models.input.FormStatus
+import com.example.teacherapp.ui.screens.grade.GradeFormScreen
+import com.example.teacherapp.ui.screens.grade.data.GradeFormViewModel
 
 @Composable
-internal fun GradesRoute(
+internal fun GradeFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onShowSnackbar: (message: String) -> Unit,
-    onEditClick: () -> Unit,
-    onStudentClick: (studentId: Long, gradeId: Long?) -> Unit,
-    viewModel: GradesViewModel = hiltViewModel(),
+    isEditMode: Boolean,
+    viewModel: GradeFormViewModel = hiltViewModel(),
 ) {
     val uiStateResult by viewModel.uiState.collectAsStateWithLifecycle()
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
+    val form = viewModel.form
 
+    // Observe save.
+    LaunchedEffect(form.status) {
+        if (form.status == FormStatus.Success) {
+            onShowSnackbar("Zapisano ocenę")
+            onNavBack()
+        }
+    }
     // Observe deletion.
     LaunchedEffect(isDeleted) {
         if (isDeleted) {
@@ -28,13 +36,17 @@ internal fun GradesRoute(
         }
     }
 
-    GradesScreen(
+    GradeFormScreen(
         uiStateResult = uiStateResult,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
+        formStatus = form.status,
+        grade = form.grade.value,
+        onGradeChange = viewModel::onGradeChange,
+        isSubmitEnabled = form.isSubmitEnabled,
+        onSubmit = viewModel::onSubmit,
+        isEditMode = isEditMode,
         isDeleted = isDeleted,
         onDeleteClick = viewModel::onDelete,
-        onEditClick = onEditClick,
-        onStudentClick = onStudentClick,
     )
 }

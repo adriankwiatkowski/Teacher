@@ -33,6 +33,7 @@ import java.math.BigDecimal
 @Composable
 fun GradesScreen(
     uiStateResult: Result<GradesUiState>,
+    onStudentClick: (studentId: Long, gradeId: Long?) -> Unit,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onEditClick: () -> Unit,
@@ -70,6 +71,7 @@ fun GradesScreen(
                 modifier = Modifier.padding(MaterialTheme.spacing.small),
                 gradeName = uiState.gradeTemplateInfo.gradeName,
                 grades = uiState.grades,
+                onStudentClick = onStudentClick,
             )
         }
     }
@@ -80,6 +82,7 @@ fun GradesScreen(
 private fun MainContent(
     gradeName: String,
     grades: List<BasicGradeForTemplate>,
+    onStudentClick: (studentId: Long, gradeId: Long?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -94,7 +97,7 @@ private fun MainContent(
             GradeItem(
                 fullName = grade.studentFullName,
                 grade = gradeToName(grade.grade),
-                onClick = {},
+                onClick = { onStudentClick(grade.studentId, grade.id) },
             )
 
             if (index != grades.lastIndex) {
@@ -154,6 +157,7 @@ private fun GradesScreenPreview(
                 onEditClick = {},
                 onDeleteClick = {},
                 isDeleted = false,
+                onStudentClick = { _, _ ->}
             )
         }
     }

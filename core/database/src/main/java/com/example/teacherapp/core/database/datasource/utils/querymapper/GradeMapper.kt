@@ -1,9 +1,40 @@
 package com.example.teacherapp.core.database.datasource.utils.querymapper
 
+import com.example.teacherapp.core.database.generated.queries.grade.GetGradeById
 import com.example.teacherapp.core.database.generated.queries.grade.GetGradeTemplateInfoByGradeTemplateId
 import com.example.teacherapp.core.database.generated.queries.grade.GetGradesByGradeTemplateId
 import com.example.teacherapp.core.model.data.BasicGradeForTemplate
+import com.example.teacherapp.core.model.data.Grade
+import com.example.teacherapp.core.model.data.GradeTemplate
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
+
+
+internal fun toExternal(
+    grade: GetGradeById?
+): Grade? = run {
+    if (grade == null) {
+        return@run null
+    }
+
+    Grade(
+        id = grade.id,
+        grade = grade.grade,
+        date = grade.date,
+        studentId = grade.student_id,
+        studentFullName = "${grade.student_name} ${grade.student_surname}",
+        lessonId = grade.lesson_id,
+        lessonName = grade.lesson_name,
+        schoolClassId = grade.school_class_id,
+        schoolClassName = grade.school_class_name,
+        gradeTemplate = GradeTemplate(
+            id = grade.grade_template_id,
+            lessonId = grade.lesson_id,
+            name = grade.grade_template_name,
+            description = grade.grade_template_description,
+            weight = grade.grade_template_weight.toInt(),
+        ),
+    )
+}
 
 internal fun toExternal(
     grades: List<GetGradesByGradeTemplateId>

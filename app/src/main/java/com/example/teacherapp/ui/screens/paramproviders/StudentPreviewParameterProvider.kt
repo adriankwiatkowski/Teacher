@@ -4,7 +4,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.model.data.BasicStudent
 import com.example.teacherapp.core.model.data.Grade
 import com.example.teacherapp.core.model.data.GradeTemplate
-import com.example.teacherapp.core.model.data.Lesson
 import com.example.teacherapp.core.model.data.Student
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -27,7 +26,11 @@ class StudentPreviewParameterProvider : PreviewParameterProvider<Student> {
                         grade = BigDecimal.valueOf(4L),
                         date = LocalDate.now(),
                         studentId = basicStudent.id,
-                        lesson = Lesson(1L, "Matematyka", basicSchoolClass),
+                        studentFullName = "${basicStudent.name} ${basicStudent.surname}",
+                        lessonId = 1L,
+                        lessonName = "Matematyka",
+                        schoolClassId = basicSchoolClass.id,
+                        schoolClassName = basicSchoolClass.name,
                         gradeTemplate = GradeTemplate(
                             id = 1L,
                             name = "Sprawdzian",
@@ -35,7 +38,7 @@ class StudentPreviewParameterProvider : PreviewParameterProvider<Student> {
                             weight = 5,
                             lessonId = 1L,
                         ),
-                    )
+                    ),
                 ),
             )
         }

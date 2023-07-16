@@ -9,7 +9,13 @@ data class Grade(
     val date: LocalDate,
 
     val studentId: Long,
-    val lesson: Lesson,
+    val studentFullName: String,
+
+    val lessonId: Long,
+    val lessonName: String,
+
+    val schoolClassId: Long,
+    val schoolClassName: String,
 
     val gradeTemplate: GradeTemplate,
 )

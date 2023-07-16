@@ -4,8 +4,33 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.model.data.BasicGrade
 import com.example.teacherapp.core.model.data.BasicGradeForTemplate
 import com.example.teacherapp.core.model.data.Grade
+import com.example.teacherapp.core.model.data.GradeTemplateInfo
+import com.example.teacherapp.ui.screens.grade.data.GradeFormUiState
 import java.math.BigDecimal
 import java.time.LocalDate
+
+class GradeFormUiStatePreviewParameterProvider : PreviewParameterProvider<GradeFormUiState> {
+    override val values: Sequence<GradeFormUiState> = sequenceOf(
+        GradeFormUiState(
+            gradeTemplateInfo = GradeTemplateInfoPreviewParameterProvider().values.first(),
+            student = BasicStudentPreviewParameterProvider().values.first(),
+        )
+    )
+}
+
+class GradeTemplateInfoPreviewParameterProvider : PreviewParameterProvider<GradeTemplateInfo> {
+    override val values: Sequence<GradeTemplateInfo> = sequenceOf(
+        GradeTemplateInfo(
+            gradeTemplateId = 1L,
+            gradeName = "Dodawanie",
+            gradeWeight = 3,
+            lessonId = 1L,
+            lessonName = "Matematyka",
+            schoolClassId = 1L,
+            schoolClassName = "1A",
+        ),
+    )
+}
 
 class GradePreviewParameterProvider : PreviewParameterProvider<Grade> {
     override val values: Sequence<Grade> = sequenceOf(
@@ -14,7 +39,11 @@ class GradePreviewParameterProvider : PreviewParameterProvider<Grade> {
             grade = BigDecimal("4.75"),
             date = LocalDate.now(),
             studentId = 1L,
-            lesson = LessonPreviewParameterProvider().values.first(),
+            studentFullName = "Jan Kowalski",
+            lessonId = 1L,
+            lessonName = "Matematyka",
+            schoolClassId = 1L,
+            schoolClassName = "1A",
             gradeTemplate = GradeTemplatePreviewParameterProvider().values.first(),
         )
     )

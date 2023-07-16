@@ -69,7 +69,7 @@ private fun MainContent(
     ) {
         itemsIndexed(grades, key = { _, item -> item.id }) { index, grade ->
             ListItem(
-                modifier = Modifier.clickable { onGradeClick(grade.id) },
+                modifier = Modifier.clickable(onClick = {onGradeClick(grade.id) }),
                 text = { Text(grade.name) },
                 secondaryText = { Text("Waga ${grade.weight}") },
             )

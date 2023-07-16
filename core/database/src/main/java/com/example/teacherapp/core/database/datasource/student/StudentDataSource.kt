@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface StudentDataSource {
 
+    fun getBasicStudentById(id: Long): Flow<BasicStudent?>
+
     fun getStudentById(id: Long): Flow<Student?>
 
     fun getStudentsBySchoolClassId(schoolClassId: Long): Flow<List<BasicStudent>>

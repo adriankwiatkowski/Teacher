@@ -1,10 +1,27 @@
 package com.example.teacherapp.core.database.datasource.utils.querymapper
 
+import com.example.teacherapp.core.database.generated.queries.student.GetBasicStudentById
 import com.example.teacherapp.core.database.generated.queries.student.GetStudentById
 import com.example.teacherapp.core.database.generated.queries.student.GetStudentsBySchoolClassId
 import com.example.teacherapp.core.model.data.BasicSchoolClass
 import com.example.teacherapp.core.model.data.BasicStudent
 import com.example.teacherapp.core.model.data.Student
+
+internal fun toExternal(student: GetBasicStudentById?): BasicStudent? = run {
+    if (student == null) {
+        return@run null
+    }
+
+    BasicStudent(
+        id = student.id,
+        classId = student.school_class_id,
+        orderInClass = student.order_in_class,
+        name = student.name,
+        surname = student.surname,
+        email = student.email,
+        phone = student.phone,
+    )
+}
 
 internal fun toExternal(student: GetStudentById?): Student? = run {
     if (student == null) {

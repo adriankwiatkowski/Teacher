@@ -1,3 +1,15 @@
+getBasicStudentById:
+SELECT
+    s.id,
+    s.order_in_class,
+    s.school_class_id,
+    s.name,
+    s.surname,
+    s.email,
+    s.phone
+FROM student s
+WHERE s.id = :id;
+
 getStudentById:
 SELECT
     s.id,
