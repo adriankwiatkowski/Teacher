@@ -26,7 +26,7 @@ class GradesViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val gradeTemplateId = savedStateHandle.getStateFlow(GRADE_TEMPLATE_ID_KEY, 0L)
-    val isDeleted = savedStateHandle.getStateFlow(IS_GRADE_TEMPLATE_DELETED_KEY, false)
+    val isDeleted = savedStateHandle.getStateFlow(IS_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val gradesResult: StateFlow<Result<List<BasicGradeForTemplate>>> = gradeTemplateId
@@ -55,7 +55,7 @@ class GradesViewModel @Inject constructor(
 
         viewModelScope.launch {
             repository.deleteGradeTemplateById(gradeTemplateId.value)
-            savedStateHandle[IS_GRADE_TEMPLATE_DELETED_KEY] = true
+            savedStateHandle[IS_DELETED_KEY] = true
         }
     }
 
@@ -67,6 +67,6 @@ class GradesViewModel @Inject constructor(
 
     companion object {
         private const val GRADE_TEMPLATE_ID_KEY = LessonNavigation.gradeTemplateIdArg
-        private const val IS_GRADE_TEMPLATE_DELETED_KEY = "is-grade-template-deleted"
+        private const val IS_DELETED_KEY = "is-deleted"
     }
 }

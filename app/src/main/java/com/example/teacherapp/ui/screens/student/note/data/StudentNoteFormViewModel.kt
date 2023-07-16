@@ -21,11 +21,12 @@ import javax.inject.Inject
 @HiltViewModel
 class StudentNoteFormViewModel @Inject constructor(
     private val repository: StudentNoteRepository,
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val studentId = savedStateHandle.getStateFlow(STUDENT_ID_KEY, 0L)
     private val studentNoteId = savedStateHandle.getStateFlow(STUDENT_NOTE_ID_KEY, 0L)
+    val isStudentNoteDeleted = savedStateHandle.getStateFlow(IS_STUDENT_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val studentNoteResult: StateFlow<Result<StudentNote?>> = studentNoteId
@@ -39,8 +40,6 @@ class StudentNoteFormViewModel @Inject constructor(
     val studentFullName: StateFlow<String?> = studentId
         .flatMapLatest { studentId -> repository.getStudentFullNameNameById(studentId = studentId) }
         .stateIn(initialValue = null)
-
-    var isStudentNoteDeleted by mutableStateOf(false)
 
     init {
         studentNoteResult
@@ -91,9 +90,8 @@ class StudentNoteFormViewModel @Inject constructor(
 
     fun onDeleteStudentNote() {
         viewModelScope.launch {
-            isStudentNoteDeleted = false
             repository.deleteStudentNoteById(studentNoteId.value)
-            isStudentNoteDeleted = true
+            savedStateHandle[IS_STUDENT_DELETED_KEY] = true
         }
     }
 
@@ -106,5 +104,6 @@ class StudentNoteFormViewModel @Inject constructor(
     companion object {
         private const val STUDENT_ID_KEY = StudentNavigation.studentIdArg
         private const val STUDENT_NOTE_ID_KEY = StudentNavigation.studentNoteIdArg
+        private const val IS_STUDENT_DELETED_KEY = "is-student-deleted"
     }
 }

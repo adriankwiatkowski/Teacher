@@ -19,7 +19,7 @@ internal fun StudentNoteFormRoute(
 ) {
     val studentNoteResult by viewModel.studentNoteResult.collectAsStateWithLifecycle()
     val studentFullName by viewModel.studentFullName.collectAsStateWithLifecycle()
-    val isStudentDeleted = viewModel.isStudentNoteDeleted
+    val isStudentNoteDeleted by viewModel.isStudentNoteDeleted.collectAsStateWithLifecycle()
     val form = viewModel.form
 
     // Observe save.
@@ -30,8 +30,8 @@ internal fun StudentNoteFormRoute(
         }
     }
     // Observe deletion.
-    LaunchedEffect(isStudentDeleted, onShowSnackbar, onNavBack) {
-        if (isStudentDeleted) {
+    LaunchedEffect(isStudentNoteDeleted, onShowSnackbar, onNavBack) {
+        if (isStudentNoteDeleted) {
             onShowSnackbar("Usunięto uwagę")
             onNavBack()
         }
@@ -51,6 +51,6 @@ internal fun StudentNoteFormRoute(
         isSubmitEnabled = form.isSubmitEnabled,
         onAddStudentNote = viewModel::onSubmit,
         isEditMode = isEditMode,
-        isStudentNoteDeleted = viewModel.isStudentNoteDeleted,
+        isStudentNoteDeleted = isStudentNoteDeleted,
     )
 }

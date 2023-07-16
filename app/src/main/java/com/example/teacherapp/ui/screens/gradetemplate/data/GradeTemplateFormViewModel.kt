@@ -27,11 +27,12 @@ import javax.inject.Inject
 @HiltViewModel
 class GradeTemplateFormViewModel @Inject constructor(
     private val repository: GradeTemplateRepository,
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val lessonId = savedStateHandle.getStateFlow(LESSON_ID_KEY, 0L)
     private val gradeTemplateId = savedStateHandle.getStateFlow(GRADE_TEMPLATE_ID_KEY, 0L)
+    val isDeleted = savedStateHandle.getStateFlow(IS_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val gradeTemplateResult: StateFlow<Result<GradeTemplate?>> = gradeTemplateId
@@ -40,8 +41,6 @@ class GradeTemplateFormViewModel @Inject constructor(
 
     var form by mutableStateOf(GradeTemplateFormProvider.createDefaultForm())
         private set
-
-    var isDeleted by mutableStateOf(false)
 
     init {
         gradeTemplateResult
@@ -97,9 +96,8 @@ class GradeTemplateFormViewModel @Inject constructor(
 
     fun onDelete() {
         viewModelScope.launch {
-            isDeleted = false
             repository.deleteGradeTemplateById(gradeTemplateId.value)
-            isDeleted = true
+            savedStateHandle[IS_DELETED_KEY] = true
         }
     }
 
@@ -112,5 +110,6 @@ class GradeTemplateFormViewModel @Inject constructor(
     companion object {
         private const val LESSON_ID_KEY = LessonNavigation.lessonIdArg
         private const val GRADE_TEMPLATE_ID_KEY = LessonNavigation.gradeTemplateIdArg
+        private const val IS_DELETED_KEY = "is-deleted"
     }
 }

@@ -18,7 +18,7 @@ internal fun GradeTemplateFormRoute(
     viewModel: GradeTemplateFormViewModel = hiltViewModel(),
 ) {
     val gradeTemplateResult by viewModel.gradeTemplateResult.collectAsStateWithLifecycle()
-    val isDeleted = viewModel.isDeleted
+    val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
     val form = viewModel.form
 
     // Observe save.

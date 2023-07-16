@@ -1,8 +1,6 @@
 package com.example.teacherapp.ui.screens.schoolclass.data
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,10 +17,11 @@ import javax.inject.Inject
 @HiltViewModel
 class SchoolClassViewModel @Inject constructor(
     private val repository: SchoolClassRepository,
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val schoolClassId = savedStateHandle.getStateFlow(SCHOOL_CLASS_ID_KEY, 0L)
+    val isSchoolClassDeleted = savedStateHandle.getStateFlow(IS_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val schoolClassResult: StateFlow<Result<SchoolClass>> = schoolClassId
@@ -37,17 +36,15 @@ class SchoolClassViewModel @Inject constructor(
     val isStudentsExpanded = mutableStateOf(false)
     val isLessonsExpanded = mutableStateOf(false)
 
-    var isSchoolClassDeleted by mutableStateOf(false)
-
     fun onDeleteSchoolClass() {
         viewModelScope.launch {
-            isSchoolClassDeleted = false
             repository.deleteSchoolClassById(schoolClassId.value)
-            isSchoolClassDeleted = true
+            savedStateHandle[IS_DELETED_KEY] = true
         }
     }
 
     companion object {
         private const val SCHOOL_CLASS_ID_KEY = SchoolClassNavigation.schoolClassIdArg
+        private const val IS_DELETED_KEY = "is-deleted"
     }
 }
