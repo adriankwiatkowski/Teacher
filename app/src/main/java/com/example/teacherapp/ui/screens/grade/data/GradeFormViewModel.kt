@@ -127,7 +127,7 @@ class GradeFormViewModel @Inject constructor(
     companion object {
         private const val GRADE_TEMPLATE_ID_KEY = LessonNavigation.gradeTemplateIdArg
         private const val STUDENT_ID_KEY = LessonNavigation.studentIdArg
-        private const val GRADE_ID_KEY = LessonNavigation.gradeTemplateIdArg
+        private const val GRADE_ID_KEY = LessonNavigation.gradeIdArg
         private const val IS_DELETED_KEY = "is-deleted"
     }
 }

@@ -2,11 +2,15 @@ package com.example.teacherapp.ui.screens.grade
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -16,10 +20,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.model.data.BasicStudent
+import com.example.teacherapp.core.model.data.GradeTemplateInfo
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.components.TeacherTopBar
@@ -105,7 +112,13 @@ private fun MainContent(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
-        Text(text = "Main Content")
+        StudentInfo(student = uiState.student)
+        GradeInfo(
+            gradeInfo = uiState.gradeTemplateInfo,
+            initialGrade = grade,
+            inputGrade = grade,
+        )
+        GradeInputs(onGradeChange = onGradeChange)
 
         TeacherOutlinedButton(
             modifier = Modifier.fillMaxWidth(),
@@ -117,7 +130,85 @@ private fun MainContent(
     }
 }
 
-private fun gradeToName(grade: BigDecimal?): String = grade?.toString() ?: "brak oceny"
+@Composable
+private fun StudentInfo(
+    student: BasicStudent,
+    modifier: Modifier = Modifier,
+) {
+    Card(modifier = modifier) {
+        Text(text = student.fullName)
+    }
+}
+
+@Composable
+private fun GradeInfo(
+    gradeInfo: GradeTemplateInfo,
+    initialGrade: BigDecimal?,
+    inputGrade: BigDecimal?,
+    modifier: Modifier = Modifier,
+) {
+    Card(modifier = modifier) {
+        Column {
+            Text(gradeInfo.gradeName)
+            Text("Waga ${gradeInfo.gradeWeight}")
+            if (initialGrade != null) {
+                Text("Obecna ocena $initialGrade")
+            } else {
+                Text("Brak oceny")
+            }
+            Text("Nowa ocena: ${inputGrade?.toString() ?: "brak oceny"}")
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun GradeInputs(
+    onGradeChange: (grade: BigDecimal?) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        GradeInput(grade = "1", onClick = { onGradeChange(BigDecimal("1.00")) })
+
+        FlowRow {
+            GradeInput(grade = "2-", onClick = { onGradeChange(BigDecimal("1.75")) })
+            GradeInput(grade = "2", onClick = { onGradeChange(BigDecimal("2.00")) })
+            GradeInput(grade = "2+", onClick = { onGradeChange(BigDecimal("2.50")) })
+        }
+        FlowRow {
+            GradeInput(grade = "3-", onClick = { onGradeChange(BigDecimal("2.75")) })
+            GradeInput(grade = "3", onClick = { onGradeChange(BigDecimal("3.00")) })
+            GradeInput(grade = "3+", onClick = { onGradeChange(BigDecimal("3.50")) })
+        }
+        FlowRow {
+            GradeInput(grade = "4-", onClick = { onGradeChange(BigDecimal("3.75")) })
+            GradeInput(grade = "4", onClick = { onGradeChange(BigDecimal("4.00")) })
+            GradeInput(grade = "4+", onClick = { onGradeChange(BigDecimal("4.50")) })
+        }
+        FlowRow {
+            GradeInput(grade = "5-", onClick = { onGradeChange(BigDecimal("4.75")) })
+            GradeInput(grade = "5", onClick = { onGradeChange(BigDecimal("5.00")) })
+            GradeInput(grade = "5+", onClick = { onGradeChange(BigDecimal("5.50")) })
+        }
+
+        GradeInput(grade = "6", onClick = { onGradeChange(BigDecimal("6.00")) })
+    }
+}
+
+@Composable
+private fun GradeInput(
+    grade: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Button(modifier = modifier, onClick = onClick) {
+        Text(grade)
+    }
+}
 
 @Preview
 @Composable

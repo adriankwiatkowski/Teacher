@@ -38,7 +38,7 @@ FROM student s
 INNER JOIN school_class sc ON sc.id = s.school_class_id
 INNER JOIN lesson l ON l.school_class_id = sc.id
 INNER JOIN grade_template gt ON gt.lesson_id = l.id
-LEFT JOIN grade g ON g.grade_template_id = gt.id
+LEFT JOIN grade g ON g.student_id = s.id
 WHERE gt.id = :id;
 
 getGradeTemplateInfoByGradeTemplateId:
