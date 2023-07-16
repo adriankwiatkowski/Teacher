@@ -3,6 +3,7 @@ package com.example.teacherapp.ui.screens.paramproviders
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.model.data.BasicStudent
 import com.example.teacherapp.core.model.data.Grade
+import com.example.teacherapp.core.model.data.GradeTemplate
 import com.example.teacherapp.core.model.data.Lesson
 import com.example.teacherapp.core.model.data.Student
 import java.math.BigDecimal
@@ -23,13 +24,17 @@ class StudentPreviewParameterProvider : PreviewParameterProvider<Student> {
                 grades = listOf(
                     Grade(
                         id = 1L,
+                        grade = BigDecimal.valueOf(4L),
+                        date = LocalDate.now(),
                         studentId = basicStudent.id,
                         lesson = Lesson(1L, "Matematyka", basicSchoolClass),
-                        name = "Sprawdzian",
-                        description = "Trygonometria",
-                        grade = BigDecimal.valueOf(4L),
-                        weight = 5,
-                        date = LocalDate.now(),
+                        gradeTemplate = GradeTemplate(
+                            id = 1L,
+                            name = "Sprawdzian",
+                            description = "Trygonometria",
+                            weight = 5,
+                            lessonId = 1L,
+                        ),
                     )
                 ),
             )
