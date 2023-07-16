@@ -46,7 +46,8 @@ fun GradeFormScreen(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     formStatus: FormStatus,
-    grade: BigDecimal?,
+    initialGrade: BigDecimal?,
+    inputGrade: BigDecimal?,
     onGradeChange: (grade: BigDecimal?) -> Unit,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
@@ -87,7 +88,8 @@ fun GradeFormScreen(
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState()),
                     uiState = uiState,
-                    grade = grade,
+                    initialGrade = initialGrade,
+                    inputGrade = inputGrade,
                     onGradeChange = onGradeChange,
                     submitText = if (isEditMode) "Edytuj ocenę" else "Dodaj ocenę",
                     isSubmitEnabled = isSubmitEnabled,
@@ -101,7 +103,8 @@ fun GradeFormScreen(
 @Composable
 private fun MainContent(
     uiState: GradeFormUiState,
-    grade: BigDecimal?,
+    initialGrade: BigDecimal?,
+    inputGrade: BigDecimal?,
     onGradeChange: (grade: BigDecimal?) -> Unit,
     submitText: String,
     isSubmitEnabled: Boolean,
@@ -115,8 +118,8 @@ private fun MainContent(
         StudentInfo(student = uiState.student)
         GradeInfo(
             gradeInfo = uiState.gradeTemplateInfo,
-            initialGrade = grade,
-            inputGrade = grade,
+            initialGrade = initialGrade,
+            inputGrade = inputGrade,
         )
         GradeInputs(onGradeChange = onGradeChange)
 
@@ -153,8 +156,6 @@ private fun GradeInfo(
             Text("Waga ${gradeInfo.gradeWeight}")
             if (initialGrade != null) {
                 Text("Obecna ocena $initialGrade")
-            } else {
-                Text("Brak oceny")
             }
             Text("Nowa ocena: ${inputGrade?.toString() ?: "brak oceny"}")
         }
@@ -174,22 +175,24 @@ private fun GradeInputs(
     ) {
         GradeInput(grade = "1", onClick = { onGradeChange(BigDecimal("1.00")) })
 
-        FlowRow {
+        val rowArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
+
+        FlowRow(horizontalArrangement = rowArrangement) {
             GradeInput(grade = "2-", onClick = { onGradeChange(BigDecimal("1.75")) })
             GradeInput(grade = "2", onClick = { onGradeChange(BigDecimal("2.00")) })
             GradeInput(grade = "2+", onClick = { onGradeChange(BigDecimal("2.50")) })
         }
-        FlowRow {
+        FlowRow(horizontalArrangement = rowArrangement) {
             GradeInput(grade = "3-", onClick = { onGradeChange(BigDecimal("2.75")) })
             GradeInput(grade = "3", onClick = { onGradeChange(BigDecimal("3.00")) })
             GradeInput(grade = "3+", onClick = { onGradeChange(BigDecimal("3.50")) })
         }
-        FlowRow {
+        FlowRow(horizontalArrangement = rowArrangement) {
             GradeInput(grade = "4-", onClick = { onGradeChange(BigDecimal("3.75")) })
             GradeInput(grade = "4", onClick = { onGradeChange(BigDecimal("4.00")) })
             GradeInput(grade = "4+", onClick = { onGradeChange(BigDecimal("4.50")) })
         }
-        FlowRow {
+        FlowRow(horizontalArrangement = rowArrangement) {
             GradeInput(grade = "5-", onClick = { onGradeChange(BigDecimal("4.75")) })
             GradeInput(grade = "5", onClick = { onGradeChange(BigDecimal("5.00")) })
             GradeInput(grade = "5+", onClick = { onGradeChange(BigDecimal("5.50")) })
@@ -227,8 +230,9 @@ private fun GradeFormScreenPreview(
                 showNavigationIcon = true,
                 onNavBack = {},
                 formStatus = form.status,
-                grade = form.grade.value,
-                onGradeChange = { form = form.copy(GradeFormProvider.validateGrade(it)) },
+                initialGrade = null,
+                inputGrade = form.grade.value,
+                onGradeChange = { form = form.copy(grade = GradeFormProvider.validateGrade(it)) },
                 isSubmitEnabled = form.isSubmitEnabled,
                 onSubmit = {},
                 isEditMode = false,

@@ -18,6 +18,7 @@ internal fun GradeFormRoute(
     viewModel: GradeFormViewModel = hiltViewModel(),
 ) {
     val uiStateResult by viewModel.uiState.collectAsStateWithLifecycle()
+    val initialGrade by viewModel.initialGrade.collectAsStateWithLifecycle()
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
     val form = viewModel.form
 
@@ -41,7 +42,8 @@ internal fun GradeFormRoute(
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         formStatus = form.status,
-        grade = form.grade.value,
+        initialGrade = initialGrade,
+        inputGrade = form.grade.value,
         onGradeChange = viewModel::onGradeChange,
         isSubmitEnabled = form.isSubmitEnabled,
         onSubmit = viewModel::onSubmit,

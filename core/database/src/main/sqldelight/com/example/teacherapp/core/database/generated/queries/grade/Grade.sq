@@ -3,7 +3,6 @@ SELECT
     g.id,
     g.grade,
     g.date,
-    g.student_id,
     s.id AS 'student_id',
     s.name AS 'student_name',
     s.surname AS 'student_surname',
@@ -20,7 +19,7 @@ FROM grade g
 INNER JOIN grade_template gt ON gt.id = g.grade_template_id
 INNER JOIN lesson l ON l.id = gt.lesson_id
 INNER JOIN school_class sc ON sc.id = l.school_class_id
-INNER JOIN student s ON s.school_class_id = sc.id
+INNER JOIN student s ON s.id = g.student_id
 WHERE g.id = :id;
 
 getGradesByGradeTemplateId:

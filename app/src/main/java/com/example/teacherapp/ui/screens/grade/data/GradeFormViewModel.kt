@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
@@ -66,6 +67,13 @@ class GradeFormViewModel @Inject constructor(
     val gradeResult: StateFlow<Result<Grade?>> = gradeId
         .flatMapLatest { gradeId -> repository.getGradeOrNullById(gradeId) }
         .stateIn(initialValue = Result.Loading)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val initialGrade: StateFlow<BigDecimal?> = gradeResult
+        .mapLatest { gradeResult ->
+            (gradeResult as? Result.Success)?.data?.grade
+        }
+        .stateIn(initialValue = null)
 
     var form by mutableStateOf(GradeFormProvider.createDefaultForm())
         private set
