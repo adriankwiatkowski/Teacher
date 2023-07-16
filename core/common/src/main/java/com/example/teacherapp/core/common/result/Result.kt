@@ -2,6 +2,7 @@ package com.example.teacherapp.core.common.result
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
@@ -34,6 +35,23 @@ fun <T> Flow<Result<T>>.notNull(): Flow<Result<T & Any>> {
                 Result.Loading -> Result.Loading
             }
         }
+}
+
+fun <T1, T2, R> Flow<Result<T1>>.combineResult(
+    other: Flow<Result<T2>>,
+    transform: suspend (a: T1, b: T2) -> Result<R>,
+): Flow<Result<R>> = combine(this, other) { a, b ->
+    when (a) {
+        Result.Loading -> Result.Loading
+        is Result.Error -> Result.Error(a.exception)
+        is Result.Success -> {
+            when (b) {
+                Result.Loading -> Result.Loading
+                is Result.Error -> Result.Error(b.exception)
+                is Result.Success -> transform(a.data, b.data)
+            }
+        }
+    }
 }
 
 private fun <T> Result.Success<T>.mapNotNull(): Result<T & Any> {

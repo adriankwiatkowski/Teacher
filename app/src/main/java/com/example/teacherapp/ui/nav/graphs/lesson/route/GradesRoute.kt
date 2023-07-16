@@ -16,7 +16,7 @@ internal fun GradesRoute(
     onEditClick: () -> Unit,
     viewModel: GradesViewModel = hiltViewModel(),
 ) {
-    val gradesResult by viewModel.gradesResult.collectAsStateWithLifecycle()
+    val uiStateResult by viewModel.uiState.collectAsStateWithLifecycle()
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
 
     // Observe deletion.
@@ -28,7 +28,7 @@ internal fun GradesRoute(
     }
 
     GradesScreen(
-        gradesResult = gradesResult,
+        uiStateResult = uiStateResult,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         isDeleted = isDeleted,

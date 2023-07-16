@@ -4,11 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.common.result.combineResult
 import com.example.teacherapp.core.data.repository.grade.GradeRepository
 import com.example.teacherapp.core.model.data.BasicGradeForTemplate
+import com.example.teacherapp.core.model.data.GradeTemplateInfo
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -26,13 +29,24 @@ class GradesViewModel @Inject constructor(
     val isDeleted = savedStateHandle.getStateFlow(IS_GRADE_TEMPLATE_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val gradesResult: StateFlow<Result<List<BasicGradeForTemplate>>> = gradeTemplateId
+    private val gradesResult: StateFlow<Result<List<BasicGradeForTemplate>>> = gradeTemplateId
         .flatMapLatest { gradeTemplateId -> repository.getGradesByGradeTemplateId(gradeTemplateId) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = Result.Loading,
-        )
+        .stateIn(initialValue = Result.Loading)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val gradeTemplateInfoResult: StateFlow<Result<GradeTemplateInfo>> = gradeTemplateId
+        .flatMapLatest { gradeTemplateId ->
+            repository.getGradeTemplateInfoByGradeTemplateId(
+                gradeTemplateId
+            )
+        }
+        .stateIn(initialValue = Result.Loading)
+
+    val uiState: StateFlow<Result<GradesUiState>> = gradesResult
+        .combineResult(gradeTemplateInfoResult) { grades, gradeTemplateInfo ->
+            Result.Success(GradesUiState(grades = grades, gradeTemplateInfo = gradeTemplateInfo))
+        }
+        .stateIn(initialValue = Result.Loading)
 
     fun onDelete() {
         if (isDeleted.value) {
@@ -40,10 +54,16 @@ class GradesViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-//            repository.deleteStudentById(gradeTemplateId.value)
+            repository.deleteGradeTemplateById(gradeTemplateId.value)
             savedStateHandle[IS_GRADE_TEMPLATE_DELETED_KEY] = true
         }
     }
+
+    private fun <T> Flow<T>.stateIn(initialValue: T): StateFlow<T> = stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = initialValue,
+    )
 
     companion object {
         private const val GRADE_TEMPLATE_ID_KEY = LessonNavigation.gradeTemplateIdArg

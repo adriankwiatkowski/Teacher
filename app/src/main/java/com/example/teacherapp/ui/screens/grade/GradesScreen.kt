@@ -1,5 +1,7 @@
 package com.example.teacherapp.ui.screens.grade
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,14 +14,17 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.BasicGradeForTemplate
+import com.example.teacherapp.core.model.data.GradeTemplateInfo
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.resource.ResultContent
+import com.example.teacherapp.ui.screens.grade.data.GradesUiState
 import com.example.teacherapp.ui.screens.paramproviders.BasicGradesForTemplatePreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
@@ -27,7 +32,7 @@ import java.math.BigDecimal
 
 @Composable
 fun GradesScreen(
-    gradesResult: Result<List<BasicGradeForTemplate>>,
+    uiStateResult: Result<GradesUiState>,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onEditClick: () -> Unit,
@@ -35,11 +40,17 @@ fun GradesScreen(
     isDeleted: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val title = remember(uiStateResult) {
+        (uiStateResult as? Result.Success)?.data?.gradeTemplateInfo?.let { info ->
+            "${info.lessonName} ${info.schoolClassName}"
+        } ?: "Wystawienie ocen"
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
             TeacherTopBar(
-                title = "Polski 2A", // TODO: Set actual title.
+                title = title,
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = listOf(
@@ -51,20 +62,23 @@ fun GradesScreen(
     ) { innerPadding ->
         ResultContent(
             modifier = Modifier.padding(innerPadding),
-            result = gradesResult,
+            result = uiStateResult,
             isDeleted = isDeleted,
             deletedMessage = "Usunięto ocenę",
-        ) { grades ->
+        ) { uiState ->
             MainContent(
                 modifier = Modifier.padding(MaterialTheme.spacing.small),
-                grades = grades,
+                gradeName = uiState.gradeTemplateInfo.gradeName,
+                grades = uiState.grades,
             )
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainContent(
+    gradeName: String,
     grades: List<BasicGradeForTemplate>,
     modifier: Modifier = Modifier,
 ) {
@@ -72,8 +86,16 @@ private fun MainContent(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
+        stickyHeader {
+            Text(text = gradeName)
+        }
+
         itemsIndexed(grades, key = { _, grade -> grade.studentId }) { index, grade ->
-            GradeItem(fullName = grade.studentFullName, grade = gradeToName(grade.grade))
+            GradeItem(
+                fullName = grade.studentFullName,
+                grade = gradeToName(grade.grade),
+                onClick = {},
+            )
 
             if (index != grades.lastIndex) {
                 Divider()
@@ -87,10 +109,11 @@ private fun MainContent(
 private fun GradeItem(
     fullName: String,
     grade: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ListItem(
-        modifier = modifier,
+        modifier = modifier.clickable(onClick = onClick),
         text = { Text("$fullName ($grade)") }
 //        text = { Text(fullName) },
 //        secondaryText = { Text(grade) },
@@ -109,8 +132,23 @@ private fun GradesScreenPreview(
 ) {
     TeacherAppTheme {
         Surface {
+            val uiState = remember {
+                GradesUiState(
+                    grades = grades,
+                    gradeTemplateInfo = GradeTemplateInfo(
+                        gradeTemplateId = 1L,
+                        gradeName = "Dodawanie",
+                        gradeWeight = 3,
+                        lessonId = 1L,
+                        lessonName = "Matematyka",
+                        schoolClassId = 1L,
+                        schoolClassName = "1A",
+                    ),
+                )
+            }
+
             GradesScreen(
-                gradesResult = Result.Success(grades),
+                uiStateResult = Result.Success(uiState),
                 showNavigationIcon = true,
                 onNavBack = {},
                 onEditClick = {},

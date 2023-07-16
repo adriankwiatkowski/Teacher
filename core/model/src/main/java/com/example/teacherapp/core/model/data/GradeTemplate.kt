@@ -14,3 +14,13 @@ data class BasicGradeTemplate(
     val name: String,
     val weight: Int,
 )
+
+data class GradeTemplateInfo(
+    val gradeTemplateId: Long,
+    val gradeName: String,
+    val gradeWeight: Int,
+    val lessonId: Long,
+    val lessonName: String,
+    val schoolClassId: Long,
+    val schoolClassName: String,
+)
