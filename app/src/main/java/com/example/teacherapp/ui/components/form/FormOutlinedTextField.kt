@@ -51,11 +51,7 @@ fun <T> FormOutlinedTextField(
         enabled = enabled,
         readOnly = readOnly,
         textStyle = textStyle,
-        label = if (label != null) {
-            "$label${if (inputField.isRequired) "*" else ""}"
-        } else {
-            null
-        },
+        label = transformLabel(label, inputField),
         placeholder = placeholder,
         leadingIcon = leadingIcon,
         onLeadingIconClick = onLeadingIconClick,
@@ -66,7 +62,7 @@ fun <T> FormOutlinedTextField(
         },
         onTrailingIconClick = onTrailingIconClick,
         isError = inputField.shouldShowError,
-        supportingText = inputField.supportingText,
+        supportingText = transformSupportingText(inputField),
         counter = inputField.counter,
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
@@ -110,12 +106,12 @@ fun <T> FormOutlinedTextField(
         enabled = enabled,
         readOnly = readOnly,
         textStyle = textStyle,
-        label = label,
+        label = transformLabel(label, inputField),
         placeholder = placeholder,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         isError = inputField.shouldShowError,
-        supportingText = inputField.supportingText,
+        supportingText = transformSupportingText(inputField),
         counter = inputField.counter,
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
@@ -127,6 +123,21 @@ fun <T> FormOutlinedTextField(
         shape = shape,
         colors = colors,
     )
+}
+
+private fun <T> transformLabel(label: String?, inputField: InputField<T>): String? =
+    if (label != null) {
+        "$label${if (inputField.isRequired) "*" else ""}"
+    } else {
+        null
+    }
+
+private fun <T> transformSupportingText(
+    inputField: InputField<T>
+): String? = when {
+    inputField.supportingText != null -> inputField.supportingText
+    inputField.isRequired -> "Wymagane*"
+    else -> null
 }
 
 @Preview(showBackground = true)
