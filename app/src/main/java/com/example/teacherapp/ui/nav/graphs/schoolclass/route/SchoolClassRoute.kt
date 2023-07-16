@@ -20,7 +20,7 @@ internal fun SchoolClassRoute(
     viewModel: SchoolClassViewModel = hiltViewModel(),
 ) {
     val schoolClassResult by viewModel.schoolClassResult.collectAsStateWithLifecycle()
-    val isSchoolClassDeleted = viewModel.isSchoolClassDeleted
+    val isSchoolClassDeleted by viewModel.isSchoolClassDeleted.collectAsStateWithLifecycle()
 
     // Observe deletion.
     LaunchedEffect(isSchoolClassDeleted) {
