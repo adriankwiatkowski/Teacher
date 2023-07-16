@@ -34,7 +34,7 @@ class GradesViewModel @Inject constructor(
             initialValue = Result.Loading,
         )
 
-    fun onDeleteStudent() {
+    fun onDelete() {
         if (isDeleted.value) {
             return
         }

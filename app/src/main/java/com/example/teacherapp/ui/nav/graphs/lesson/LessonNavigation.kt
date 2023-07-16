@@ -11,11 +11,13 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation.gradeTemplateIdArg
+import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation.gradesRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation.lessonIdArg
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation.lessonRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation.schoolClassIdArg
 import com.example.teacherapp.ui.nav.graphs.lesson.route.GradeTemplateFormRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.route.GradeTemplatesRoute
+import com.example.teacherapp.ui.nav.graphs.lesson.route.GradesRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.route.LessonFormRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.route.LessonScaffoldWrapper
 import com.example.teacherapp.ui.nav.graphs.lesson.tab.LessonTab
@@ -26,6 +28,7 @@ private const val lessonGraphRoute = "lesson"
 private const val lessonFormScreen = "lesson-form"
 private const val lessonScreen = "lesson"
 private const val gradeTemplateFormScreen = "grade-template-form"
+private const val gradesScreen = "grades"
 
 internal object LessonNavigation {
     internal const val gradeTemplateIdArg = "grade-template-id"
@@ -33,6 +36,8 @@ internal object LessonNavigation {
     internal const val lessonIdArg = "lesson-id"
 
     internal const val lessonRoute = "$lessonScreen/{$schoolClassIdArg}/{$lessonIdArg}"
+
+    internal const val gradesRoute = "$gradesScreen/{$lessonIdArg}/{$gradeTemplateIdArg}"
 }
 
 private const val lessonFormRoute =
@@ -65,6 +70,14 @@ private fun NavController.navigateToGradeTemplateFormRoute(
 ) {
     val query = if (gradeTemplateId != null) "?$gradeTemplateIdArg=$gradeTemplateId" else ""
     this.navigate("$gradeTemplateFormScreen/$lessonId$query", navOptions)
+}
+
+private fun NavController.navigateToGradesRoute(
+    lessonId: Long,
+    gradeTemplateId: Long,
+    navOptions: NavOptions? = null,
+) {
+    this.navigate("$gradesScreen/$lessonId/$gradeTemplateId", navOptions)
 }
 
 fun NavGraphBuilder.lessonGraph(
@@ -111,7 +124,7 @@ fun NavGraphBuilder.lessonGraph(
                 when (selectedTab) {
                     LessonTab.Grades -> GradeTemplatesRoute(
                         onGradeClick = { gradeTemplateId ->
-                            navController.navigateToGradeTemplateFormRoute(
+                            navController.navigateToGradesRoute(
                                 lessonId = lessonId,
                                 gradeTemplateId = gradeTemplateId,
                             )
@@ -151,6 +164,34 @@ fun NavGraphBuilder.lessonGraph(
                 onNavBack = navController::popBackStack,
                 onShowSnackbar = onShowSnackbar,
                 isEditMode = isEditMode,
+            )
+        }
+
+        composable(
+            gradesRoute,
+            arguments = listOf(
+                navArgument(lessonIdArg) {
+                    type = NavType.LongType
+                },
+                navArgument(gradeTemplateIdArg) {
+                    type = NavType.LongType
+                },
+            ),
+        ) { backStackEntry ->
+            val args = backStackEntry.arguments!!
+            val lessonId = args.getLong(lessonIdArg)
+            val gradeTemplateId = args.getLong(gradeTemplateIdArg)
+
+            GradesRoute(
+                showNavigationIcon = true,
+                onNavBack = navController::popBackStack,
+                onShowSnackbar = onShowSnackbar,
+                onEditClick = {
+                    navController.navigateToGradeTemplateFormRoute(
+                        lessonId = lessonId,
+                        gradeTemplateId = gradeTemplateId,
+                    )
+                },
             )
         }
     }
