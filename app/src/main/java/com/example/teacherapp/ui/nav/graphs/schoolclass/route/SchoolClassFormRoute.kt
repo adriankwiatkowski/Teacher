@@ -32,7 +32,7 @@ internal fun SchoolClassFormRoute(
         schoolYears = schoolYears,
         schoolYear = form.schoolYear,
         onSchoolYearChange = viewModel::onSchoolYearChange,
-        status = form.status,
+        formStatus = form.status,
         isSubmitEnabled = form.isSubmitEnabled,
         onAddSchoolYear = onAddSchoolYear,
         onAddSchoolClass = viewModel::onSubmit,

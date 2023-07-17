@@ -22,6 +22,7 @@ import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.TeacherTopBarDefaults
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
+import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.screens.paramproviders.SchoolYearsPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.SchoolYearInput
@@ -37,7 +38,7 @@ fun SchoolClassFormScreen(
     schoolYears: List<SchoolYear>,
     schoolYear: InputField<SchoolYear?>,
     onSchoolYearChange: (SchoolYear?) -> Unit,
-    status: FormStatus,
+    formStatus: FormStatus,
     isSubmitEnabled: Boolean,
     onAddSchoolYear: () -> Unit,
     onAddSchoolClass: () -> Unit,
@@ -58,21 +59,25 @@ fun SchoolClassFormScreen(
             )
         }
     ) { innerPadding ->
-        // TODO: Show saving status.
-        MainContent(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(MaterialTheme.spacing.small),
-            schoolClassName = schoolClassName,
-            onSchoolClassNameChange = onSchoolClassNameChange,
-            schoolYears = schoolYears,
-            schoolYear = schoolYear,
-            onSchoolYearChange = onSchoolYearChange,
-            isSubmitEnabled = isSubmitEnabled,
-            onSubmit = onAddSchoolClass,
-            onAddSchoolYear = onAddSchoolYear,
-        )
+        FormStatusContent(
+            formStatus = formStatus,
+            savingText = "Zapisywanie klasy...",
+        ) {
+            MainContent(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(MaterialTheme.spacing.small),
+                schoolClassName = schoolClassName,
+                onSchoolClassNameChange = onSchoolClassNameChange,
+                schoolYears = schoolYears,
+                schoolYear = schoolYear,
+                onSchoolYearChange = onSchoolYearChange,
+                isSubmitEnabled = isSubmitEnabled,
+                onSubmit = onAddSchoolClass,
+                onAddSchoolYear = onAddSchoolYear,
+            )
+        }
     }
 }
 
@@ -153,7 +158,7 @@ private fun SchoolClassFormScreenPreview(
                 schoolYears = schoolYears,
                 schoolYear = form.schoolYear,
                 onSchoolYearChange = {},
-                status = form.status,
+                formStatus = form.status,
                 isSubmitEnabled = form.isSubmitEnabled,
                 onAddSchoolYear = {},
                 onAddSchoolClass = {},
