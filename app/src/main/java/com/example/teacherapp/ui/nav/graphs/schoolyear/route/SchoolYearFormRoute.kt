@@ -19,6 +19,7 @@ internal fun SchoolYearFormRoute(
     LaunchedEffect(status, onNavBack) {
         if (status == FormStatus.Success) {
             onNavBack()
+            // TODO: Show snackbar.
         }
     }
 

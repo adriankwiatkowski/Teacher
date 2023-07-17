@@ -12,6 +12,7 @@ internal fun StudentDetailRoute(
     student: Student,
     modifier: Modifier = Modifier,
 ) {
+    // TODO: Remove this.
     val isGradesExpanded = remember { mutableStateOf(true) }
 
     StudentDetailScreen(

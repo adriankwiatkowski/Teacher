@@ -23,7 +23,7 @@ internal fun StudentNoteFormRoute(
     val form = viewModel.form
 
     // Observe save.
-    LaunchedEffect(form.status, onNavBack) {
+    LaunchedEffect(form.status, onShowSnackbar, onNavBack) {
         if (form.status == FormStatus.Success) {
             onShowSnackbar("Zapisano uwagę")
             onNavBack()

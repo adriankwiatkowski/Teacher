@@ -21,16 +21,17 @@ internal fun GradeFormRoute(
     val initialGrade by viewModel.initialGrade.collectAsStateWithLifecycle()
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
     val form = viewModel.form
+    val formStatus = form.status
 
     // Observe save.
-    LaunchedEffect(form.status) {
-        if (form.status == FormStatus.Success) {
+    LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
+        if (formStatus == FormStatus.Success) {
             onShowSnackbar("Zapisano ocenę")
             onNavBack()
         }
     }
     // Observe deletion.
-    LaunchedEffect(isDeleted) {
+    LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
         if (isDeleted) {
             onShowSnackbar("Usunięto ocenę")
             onNavBack()

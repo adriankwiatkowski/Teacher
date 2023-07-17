@@ -45,7 +45,7 @@ internal fun LessonScaffoldWrapper(
     val coroutineScope = rememberCoroutineScope()
 
     // Observe deletion.
-    LaunchedEffect(isLessonDeleted) {
+    LaunchedEffect(isLessonDeleted, onShowSnackbar, onNavBack) {
         if (isLessonDeleted) {
             onShowSnackbar("Usunięto zajęcia")
             onNavBack()

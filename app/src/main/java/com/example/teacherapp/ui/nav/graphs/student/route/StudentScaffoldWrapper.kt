@@ -40,7 +40,7 @@ internal fun StudentScaffoldWrapper(
     val coroutineScope = rememberCoroutineScope()
 
     // Observe deletion.
-    LaunchedEffect(isStudentDeleted) {
+    LaunchedEffect(isStudentDeleted, onShowSnackbar, onNavBack) {
         if (isStudentDeleted) {
             onShowSnackbar("Usunięto ucznia")
             onNavBack()

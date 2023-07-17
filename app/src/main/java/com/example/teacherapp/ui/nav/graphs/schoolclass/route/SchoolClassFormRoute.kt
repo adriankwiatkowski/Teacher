@@ -21,7 +21,7 @@ internal fun SchoolClassFormRoute(
     val status = form.status
 
     LaunchedEffect(status, onNavBack) {
-        if (status is FormStatus.Success) {
+        if (status == FormStatus.Success) {
             onNavBack()
         }
     }
