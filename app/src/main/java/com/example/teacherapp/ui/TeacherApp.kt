@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.teacherapp.ui.components.TeacherBottomNav
+import com.example.teacherapp.ui.components.TeacherNavigationBar
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherNavGraph
 import com.example.teacherapp.ui.theme.TeacherAppTheme
@@ -40,7 +40,7 @@ fun TeacherApp(
         modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
-            TeacherBottomNav(
+            TeacherNavigationBar(
                 screens = bottomNavScreens,
                 selected = selectedBottomNavItem,
                 visible = shouldShowBottomBar,
