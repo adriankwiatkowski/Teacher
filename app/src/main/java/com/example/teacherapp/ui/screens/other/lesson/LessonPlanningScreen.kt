@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.ui.components.pickers.TeacherDatePicker
-import com.example.teacherapp.ui.components.pickers.TimePicker
+import com.example.teacherapp.ui.components.pickers.TeacherTimePicker
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 import java.time.LocalDate
@@ -233,7 +233,7 @@ private fun LessonTimePicker(
     ) {
         Text(text = "Time:")
         Text(text = time.format(timeFormat))
-        TimePicker(time = time, onTimeSelected = onTimeSelected, label = {
+        TeacherTimePicker(time = time, onTimeSelected = onTimeSelected, label = {
             Card {
                 Text(modifier = Modifier.padding(MaterialTheme.spacing.small), text = "Pick time")
             }
