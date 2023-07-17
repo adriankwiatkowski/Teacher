@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
@@ -22,6 +24,7 @@ import com.example.teacherapp.core.model.data.BasicGradeForTemplate
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.components.TeacherTopBar
+import com.example.teacherapp.ui.components.TeacherTopBarDefaults
 import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.grade.data.GradesUiState
 import com.example.teacherapp.ui.screens.paramproviders.BasicGradesForTemplatePreviewParameterProvider
@@ -29,6 +32,7 @@ import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 import java.math.BigDecimal
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GradesScreen(
     uiStateResult: Result<GradesUiState>,
@@ -40,6 +44,8 @@ fun GradesScreen(
     isDeleted: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val scrollBehavior = TeacherTopBarDefaults.default()
+
     val title = remember(uiStateResult) {
         (uiStateResult as? Result.Success)?.data?.gradeTemplateInfo?.let { info ->
             "${info.lessonName} ${info.schoolClassName}"
@@ -47,7 +53,7 @@ fun GradesScreen(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TeacherTopBar(
                 title = title,
@@ -57,6 +63,7 @@ fun GradesScreen(
                     ActionMenuItemProvider.edit(onEditClick),
                     ActionMenuItemProvider.delete(onDeleteClick),
                 ),
+                scrollBehavior = scrollBehavior,
             )
         }
     ) { innerPadding ->

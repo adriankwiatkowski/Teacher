@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,11 +23,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -38,6 +39,7 @@ import com.example.teacherapp.core.model.data.Student
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.TeacherTopBar
+import com.example.teacherapp.ui.components.TeacherTopBarDefaults
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
@@ -47,6 +49,7 @@ import com.example.teacherapp.ui.screens.student.data.StudentFormProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentFormScreen(
     studentResult: Result<Student?>,
@@ -64,22 +67,18 @@ fun StudentFormScreen(
     onPhoneChange: (phone: String) -> Unit,
     isSubmitEnabled: Boolean,
     onAddStudent: () -> Unit,
-    onStudentAdded: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LaunchedEffect(formStatus) {
-        if (formStatus == FormStatus.Success) {
-            onStudentAdded()
-        }
-    }
+    val scrollBehavior = TeacherTopBarDefaults.default()
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TeacherTopBar(
                 title = "Klasa $schoolClassName",
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
+                scrollBehavior = scrollBehavior,
             )
         }
     ) { innerPadding ->
@@ -259,7 +258,6 @@ private fun StudentFormScreenPreview(
                 onPhoneChange = {},
                 isSubmitEnabled = form.isValid,
                 onAddStudent = {},
-                onStudentAdded = {},
             )
         }
     }

@@ -6,19 +6,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.TeacherTopBar
+import com.example.teacherapp.ui.components.TeacherTopBarDefaults
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.screens.paramproviders.SchoolYearsPreviewParameterProvider
@@ -27,6 +29,7 @@ import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassFormProvide
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SchoolClassFormScreen(
     schoolClassName: InputField<String>,
@@ -38,27 +41,24 @@ fun SchoolClassFormScreen(
     isSubmitEnabled: Boolean,
     onAddSchoolYear: () -> Unit,
     onAddSchoolClass: () -> Unit,
-    onSchoolClassAdded: () -> Unit,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LaunchedEffect(status) {
-        if (status is FormStatus.Success) {
-            onSchoolClassAdded()
-        }
-    }
+    val scrollBehavior = TeacherTopBarDefaults.default()
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TeacherTopBar(
                 title = "Stwórz nową klasę",
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
+                scrollBehavior = scrollBehavior,
             )
         }
     ) { innerPadding ->
+        // TODO: Show saving status.
         MainContent(
             modifier = modifier
                 .fillMaxSize()
@@ -148,7 +148,6 @@ private fun SchoolClassFormScreenPreview(
         Surface {
             val form = SchoolClassFormProvider.createDefaultForm()
             SchoolClassFormScreen(
-                modifier = Modifier.fillMaxSize(),
                 schoolClassName = form.schoolClassName,
                 onSchoolClassNameChange = {},
                 schoolYears = schoolYears,
@@ -158,9 +157,9 @@ private fun SchoolClassFormScreenPreview(
                 isSubmitEnabled = form.isSubmitEnabled,
                 onAddSchoolYear = {},
                 onAddSchoolClass = {},
-                onSchoolClassAdded = {},
                 showNavigationIcon = true,
                 onNavBack = {},
+                modifier = Modifier.fillMaxSize(),
             )
         }
     }

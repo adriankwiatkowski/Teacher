@@ -1,9 +1,11 @@
 package com.example.teacherapp.ui.nav.graphs.schoolclass.route
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.ui.screens.schoolclass.SchoolClassFormScreen
 import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassFormViewModel
 
@@ -16,6 +18,13 @@ internal fun SchoolClassFormRoute(
     val viewModel = hiltViewModel<SchoolClassFormViewModel>()
     val schoolYears by viewModel.schoolYears.collectAsStateWithLifecycle()
     val form = viewModel.form
+    val status = form.status
+
+    LaunchedEffect(status, onNavBack) {
+        if (status is FormStatus.Success) {
+            onNavBack()
+        }
+    }
 
     SchoolClassFormScreen(
         schoolClassName = form.schoolClassName,
@@ -25,9 +34,8 @@ internal fun SchoolClassFormRoute(
         onSchoolYearChange = viewModel::onSchoolYearChange,
         status = form.status,
         isSubmitEnabled = form.isSubmitEnabled,
-        onAddSchoolClass = viewModel::onSubmit,
         onAddSchoolYear = onAddSchoolYear,
-        onSchoolClassAdded = onNavBack,
+        onAddSchoolClass = viewModel::onSubmit,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
     )

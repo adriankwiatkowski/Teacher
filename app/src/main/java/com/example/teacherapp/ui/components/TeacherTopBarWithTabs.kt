@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,13 +25,13 @@ import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.ui.components.tab.TeacherTabRow
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
-// TODO: Add support for scrolling behavior.
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun TeacherTopBarWithTabs(
     title: String,
     showNavigationIcon: Boolean,
     onNavigationIconClick: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior?,
     tabs: List<String>,
     selectedTabIndex: Int,
     onTabClick: (studentTabIndex: Int) -> Unit,
@@ -55,6 +58,7 @@ fun TeacherTopBarWithTabs(
                     onNavigationIconClick = onNavigationIconClick,
                     visible = true,
                     menuItems = menuItems,
+                    scrollBehavior = scrollBehavior,
                 )
 
                 TeacherTabRow(
@@ -80,7 +84,7 @@ fun TeacherTopBarWithTabs(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun TeacherTopBarWithTabsPreview() {
@@ -98,6 +102,7 @@ private fun TeacherTopBarWithTabsPreview() {
                 pagerState = rememberPagerState(),
                 isTopBarVisible = true,
                 menuItems = listOf(),
+                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
             ) { tabIndex ->
                 Box(Modifier.fillMaxSize()) {
                     Text(text = "Page index $tabIndex")

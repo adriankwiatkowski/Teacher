@@ -13,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Subject
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -20,11 +21,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,6 +37,7 @@ import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.TeacherFab
 import com.example.teacherapp.ui.components.TeacherTopBar
+import com.example.teacherapp.ui.components.TeacherTopBarDefaults
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
@@ -45,6 +47,7 @@ import com.example.teacherapp.ui.screens.paramproviders.LessonPreviewParameterPr
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LessonFormScreen(
     lessonResult: Result<Lesson?>,
@@ -54,15 +57,10 @@ fun LessonFormScreen(
     isSubmitEnabled: Boolean,
     schoolClassName: String,
     onAddLessonClick: () -> Unit,
-    onLessonAdded: () -> Unit,
     onNavBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LaunchedEffect(formStatus) {
-        if (formStatus == FormStatus.Success) {
-            onLessonAdded()
-        }
-    }
+    val scrollBehavior = TeacherTopBarDefaults.default()
 
     FormStatusContent(
         modifier = modifier,
@@ -70,11 +68,13 @@ fun LessonFormScreen(
         savingText = "Zapisywanie przedmiotu...",
     ) {
         Scaffold(
+            modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
                 TeacherTopBar(
                     title = "Klasa $schoolClassName",
                     showNavigationIcon = true,
                     onNavigationIconClick = onNavBack,
+                    scrollBehavior = scrollBehavior,
                 )
             },
             floatingActionButton = {
@@ -202,7 +202,6 @@ private fun LessonFormScreenPreview(
                 isSubmitEnabled = form.isValid,
                 schoolClassName = lesson.schoolClass.name,
                 onAddLessonClick = {},
-                onLessonAdded = {},
                 onNavBack = {},
             )
         }

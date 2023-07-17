@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -34,6 +35,7 @@ import com.example.teacherapp.data.models.input.FormStatus
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.components.TeacherTopBar
+import com.example.teacherapp.ui.components.TeacherTopBarDefaults
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
@@ -42,6 +44,7 @@ import com.example.teacherapp.ui.screens.gradetemplate.data.GradeTemplateFormPro
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GradeTemplateFormScreen(
     gradeTemplateResult: Result<GradeTemplate?>,
@@ -61,6 +64,8 @@ fun GradeTemplateFormScreen(
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val scrollBehavior = TeacherTopBarDefaults.default()
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -72,7 +77,8 @@ fun GradeTemplateFormScreen(
                     listOf(ActionMenuItemProvider.delete(onDeleteClick))
                 } else {
                     emptyList()
-                }
+                },
+                scrollBehavior = scrollBehavior,
             )
         },
     ) { innerPadding ->

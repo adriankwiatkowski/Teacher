@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -15,12 +16,14 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.SchoolClass
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.components.TeacherTopBar
+import com.example.teacherapp.ui.components.TeacherTopBarDefaults
 import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.SchoolClassPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.lessons
@@ -29,6 +32,7 @@ import com.example.teacherapp.ui.screens.schoolclass.components.students
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SchoolClassScreen(
     schoolClassResult: Result<SchoolClass>,
@@ -45,12 +49,14 @@ fun SchoolClassScreen(
     onDeleteSchoolClassClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val scrollBehavior = TeacherTopBarDefaults.default()
+
     val schoolClassName = remember(schoolClassResult) {
         (schoolClassResult as? Result.Success)?.data?.name.orEmpty()
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TeacherTopBar(
                 title = "Klasa $schoolClassName",
@@ -59,6 +65,7 @@ fun SchoolClassScreen(
                 menuItems = listOf(
                     ActionMenuItemProvider.delete(onDeleteSchoolClassClick)
                 ),
+                scrollBehavior = scrollBehavior,
             )
         }
     ) { innerPadding ->
