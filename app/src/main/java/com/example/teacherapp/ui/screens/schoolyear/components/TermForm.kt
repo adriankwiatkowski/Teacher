@@ -13,7 +13,6 @@ import com.example.teacherapp.data.models.input.InputDate
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.pickers.DatePicker
-import com.example.teacherapp.ui.components.transformation.PrefixTransformation
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 import java.time.LocalDate
@@ -38,7 +37,7 @@ fun TermForm(
             inputField = nameInput,
             onValueChange = onNameChange,
             label = "Nazwa semestru",
-            visualTransformation = PrefixTransformation(namePrefix)
+            prefix = namePrefix,
         )
 
         TermDatePicker(

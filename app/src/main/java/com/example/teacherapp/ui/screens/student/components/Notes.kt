@@ -1,16 +1,14 @@
 package com.example.teacherapp.ui.screens.student.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.ui.Modifier
 import com.example.teacherapp.core.model.data.BasicStudentNote
 import com.example.teacherapp.ui.components.expandablelist.expandableItems
@@ -40,22 +38,11 @@ fun LazyListScope.notes(
         key = { studentNote -> studentNote.id },
     ) { contentPadding, studentNote ->
         // TODO: Consider replacing custom component with built-in ListItem.
-//        ListItem(
-//            modifier = Modifier
-//                .clickable(onClick = { onNoteClick(studentNote.id) })
-//                .padding(contentPadding),
-//            text = {
-//                Text(text = studentNote.title)
-//            },
-//        )
-        Box(
+        ListItem(
             modifier = Modifier
-                .fillMaxWidth()
                 .clickable(onClick = { onNoteClick(studentNote.id) })
-                .padding(contentPadding)
-                .minimumInteractiveComponentSize(),
-        ) {
-            Text(text = studentNote.title)
-        }
+                .padding(contentPadding),
+            headlineContent = { Text(text = studentNote.title) },
+        )
     }
 }
