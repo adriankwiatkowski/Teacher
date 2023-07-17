@@ -1,9 +1,14 @@
 package com.example.teacherapp.ui.components.resource
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.ui.theme.TeacherAppTheme
 
 @Composable
 fun <T> ResultContent(
@@ -25,6 +30,40 @@ fun <T> ResultContent(
             Result.Loading -> if (loadingContent != null) loadingContent() else LoadingScreen()
             is Result.Error -> if (errorContent != null) errorContent() else ErrorScreen()
             is Result.Success -> content(result.data)
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ResultContentSuccessPreview() {
+    TeacherAppTheme {
+        Surface {
+            ResultContent(result = Result.Success(Unit)) {
+                Box(Modifier.fillMaxSize()) {
+                    Text(text = "Success")
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ResultContentLoadingPreview() {
+    TeacherAppTheme {
+        Surface {
+            ResultContent(result = Result.Loading) {}
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ResultContentErrorPreview() {
+    TeacherAppTheme {
+        Surface {
+            ResultContent(result = Result.Error(NullPointerException())) {}
         }
     }
 }
