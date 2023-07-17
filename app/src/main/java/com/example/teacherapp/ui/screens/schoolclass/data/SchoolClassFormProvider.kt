@@ -9,7 +9,7 @@ object SchoolClassFormProvider {
 
     fun validateSchoolClassName(
         name: String,
-        isEdited: Boolean = false,
+        isEdited: Boolean = true,
     ): InputField<String> {
         val charCountLimit = 60
         val trimmedLength = name.trimmedLength()
@@ -23,7 +23,7 @@ object SchoolClassFormProvider {
 
     fun validateSchoolYear(
         schoolYear: SchoolYear?,
-        isEdited: Boolean = false,
+        isEdited: Boolean = true,
     ): InputField<SchoolYear?> {
         return InputField(
             schoolYear,

@@ -9,6 +9,7 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 
+// TODO: Prefix could be replaced with TextField prefix slot.
 class PrefixTransformation(private val prefix: String) : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val prefix = buildAnnotatedString {

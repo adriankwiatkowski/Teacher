@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -163,7 +165,9 @@ private fun Content(
             inputField = name,
             onValueChange = { onNameChange(it) },
             label = "Imię",
-            leadingIcon = Icons.Default.Person,
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Person, contentDescription = null)
+            },
             keyboardOptions = nameKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -173,7 +177,9 @@ private fun Content(
             inputField = surname,
             onValueChange = { onSurnameChange(it) },
             label = "Nazwisko",
-            leadingIcon = Icons.Default.Person,
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Person, contentDescription = null)
+            },
             keyboardOptions = nameKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -183,9 +189,14 @@ private fun Content(
             inputField = email,
             onValueChange = { onEmailChange(it) },
             label = "Email",
-            leadingIcon = Icons.Default.Email,
-            trailingIcon = Icons.Default.CheckCircle,
-            onTrailingIconClick = {},
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Email, contentDescription = null)
+            },
+            trailingIcon = {
+                IconButton(onClick = {}) {
+                    Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
+                }
+            },
             keyboardOptions = commonKeyboardOptions.copy(keyboardType = KeyboardType.Email),
             keyboardActions = commonKeyboardActions,
         )
@@ -195,9 +206,14 @@ private fun Content(
             inputField = phone,
             onValueChange = { onPhoneChange(it) },
             label = "Telefon",
-            leadingIcon = Icons.Default.Phone,
-            trailingIcon = Icons.Default.CheckCircle,
-            onTrailingIconClick = {},
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Phone, contentDescription = null)
+            },
+            trailingIcon = {
+                IconButton(onClick = {}) {
+                    Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
+                }
+            },
             keyboardOptions = commonKeyboardOptions.copy(keyboardType = KeyboardType.Phone),
             keyboardActions = commonKeyboardActions,
         )

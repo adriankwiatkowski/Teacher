@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Subject
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -163,7 +164,9 @@ private fun Content(
             inputField = name,
             onValueChange = { onNameChange(it) },
             label = "Przedmiot",
-            leadingIcon = Icons.Default.Subject,
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Subject, contentDescription = null)
+            },
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
