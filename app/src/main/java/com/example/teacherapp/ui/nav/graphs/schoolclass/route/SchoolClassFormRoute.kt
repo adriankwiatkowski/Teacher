@@ -13,6 +13,7 @@ import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassFormViewMod
 internal fun SchoolClassFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    onShowSnackbar: (message: String) -> Unit,
     onAddSchoolYear: () -> Unit,
 ) {
     val viewModel = hiltViewModel<SchoolClassFormViewModel>()
@@ -20,8 +21,9 @@ internal fun SchoolClassFormRoute(
     val form = viewModel.form
     val status = form.status
 
-    LaunchedEffect(status, onNavBack) {
+    LaunchedEffect(status, onShowSnackbar, onNavBack) {
         if (status == FormStatus.Success) {
+            onShowSnackbar("Zapisano klasę")
             onNavBack()
         }
     }

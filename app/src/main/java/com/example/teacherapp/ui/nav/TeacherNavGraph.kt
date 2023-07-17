@@ -29,7 +29,7 @@ fun TeacherNavGraph(
         addScheduleGraph()
 
         schoolClassGraph(navController = navController, onShowSnackbar = onShowSnackbar)
-        schoolYearGraph(navController = navController)
+        schoolYearGraph(navController = navController, onShowSnackbar = onShowSnackbar)
         studentGraph(navController = navController, onShowSnackbar = onShowSnackbar)
         lessonGraph(navController = navController, onShowSnackbar = onShowSnackbar)
 

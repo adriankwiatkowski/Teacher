@@ -260,6 +260,10 @@ fun NavGraphBuilder.lessonGraph(
             },
         ),
     ) {
-        LessonFormRoute(onNavBack = navController::popBackStack)
+        LessonFormRoute(
+            showNavigationIcon = true,
+            onNavBack = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
+        )
     }
 }

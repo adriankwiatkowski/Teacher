@@ -13,8 +13,15 @@ fun NavController.navigateToSchoolYearFormRoute(navOptions: NavOptions? = null) 
     this.navigate(schoolYearFormScreen, navOptions)
 }
 
-fun NavGraphBuilder.schoolYearGraph(navController: NavController) {
+fun NavGraphBuilder.schoolYearGraph(
+    navController: NavController,
+    onShowSnackbar: (message: String) -> Unit,
+) {
     composable(schoolYearFormRoute) {
-        SchoolYearFormRoute(showNavigationIcon = true, onNavBack = navController::popBackStack)
+        SchoolYearFormRoute(
+            showNavigationIcon = true,
+            onNavBack = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
+        )
     }
 }

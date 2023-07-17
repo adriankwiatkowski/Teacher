@@ -11,15 +11,16 @@ import com.example.teacherapp.ui.screens.schoolyear.data.SchoolYearFormViewModel
 internal fun SchoolYearFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    onShowSnackbar: (message: String) -> Unit,
 ) {
     val viewModel = hiltViewModel<SchoolYearFormViewModel>()
     val form = viewModel.form
     val status = form.status
 
-    LaunchedEffect(status, onNavBack) {
+    LaunchedEffect(status, onShowSnackbar, onNavBack) {
         if (status == FormStatus.Success) {
+            onShowSnackbar("Zapisano rok szkolny")
             onNavBack()
-            // TODO: Show snackbar.
         }
     }
 

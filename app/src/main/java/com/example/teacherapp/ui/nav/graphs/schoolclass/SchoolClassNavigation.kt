@@ -123,6 +123,7 @@ fun NavGraphBuilder.schoolClassGraph(
         SchoolClassFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
             onAddSchoolYear = navController::navigateToSchoolYearFormRoute
         )
     }

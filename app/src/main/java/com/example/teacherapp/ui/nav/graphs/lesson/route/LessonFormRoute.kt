@@ -11,7 +11,9 @@ import com.example.teacherapp.ui.screens.lesson.data.LessonFormViewModel
 
 @Composable
 internal fun LessonFormRoute(
+    showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    onShowSnackbar: (message: String) -> Unit,
     viewModel: LessonFormViewModel = hiltViewModel(),
 ) {
     val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
@@ -19,9 +21,9 @@ internal fun LessonFormRoute(
     val form = viewModel.form
     val formStatus = form.status
 
-    LaunchedEffect(formStatus, onNavBack) {
+    LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
         if (formStatus == FormStatus.Success) {
-            // TODO: Show snackbar.
+            onShowSnackbar("Zapisano zajęcia")
             onNavBack()
         }
     }
@@ -34,6 +36,7 @@ internal fun LessonFormRoute(
         isSubmitEnabled = form.isSubmitEnabled,
         schoolClassName = schoolClassName.orEmpty(),
         onAddLessonClick = viewModel::onSubmit,
+        showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
     )
 }

@@ -174,6 +174,10 @@ fun NavGraphBuilder.studentGraph(
             },
         ),
     ) {
-        StudentFormRoute(showNavigationIcon = true, onNavBack = navController::popBackStack)
+        StudentFormRoute(
+            showNavigationIcon = true,
+            onNavBack = navController::popBackStack,
+            onShowSnackbar = onShowSnackbar,
+        )
     }
 }

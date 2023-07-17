@@ -57,6 +57,7 @@ fun LessonFormScreen(
     isSubmitEnabled: Boolean,
     schoolClassName: String,
     onAddLessonClick: () -> Unit,
+    showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -72,7 +73,7 @@ fun LessonFormScreen(
             topBar = {
                 TeacherTopBar(
                     title = "Klasa $schoolClassName",
-                    showNavigationIcon = true,
+                    showNavigationIcon = showNavigationIcon,
                     onNavigationIconClick = onNavBack,
                     scrollBehavior = scrollBehavior,
                 )
@@ -202,6 +203,7 @@ private fun LessonFormScreenPreview(
                 isSubmitEnabled = form.isValid,
                 schoolClassName = lesson.schoolClass.name,
                 onAddLessonClick = {},
+                showNavigationIcon = true,
                 onNavBack = {},
             )
         }
