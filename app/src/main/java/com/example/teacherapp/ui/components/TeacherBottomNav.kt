@@ -1,9 +1,9 @@
 package com.example.teacherapp.ui.components
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
@@ -27,11 +27,11 @@ fun TeacherBottomNav(
         return
     }
 
-    BottomNavigation(
+    NavigationBar(
         modifier = modifier,
     ) {
         screens.forEach { screen ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = { Icon(screen.icon, contentDescription = null) },
                 label = { Text(screen.title) },
                 selected = selected == screen,

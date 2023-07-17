@@ -1,6 +1,6 @@
 package com.example.teacherapp.ui.theme
 
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -18,7 +18,7 @@ data class Spacing(
 
 val LocalSpacing = staticCompositionLocalOf { Spacing() }
 
-@Suppress("unused")
+@Suppress("UnusedReceiverParameter")
 val MaterialTheme.spacing: Spacing
     @Composable
     @ReadOnlyComposable

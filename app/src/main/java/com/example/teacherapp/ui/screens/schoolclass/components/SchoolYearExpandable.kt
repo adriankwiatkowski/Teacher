@@ -3,9 +3,9 @@ package com.example.teacherapp.ui.screens.schoolclass.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -13,12 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.example.teacherapp.core.common.utils.format
 import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.ui.components.expandablelist.expandableItem
 import com.example.teacherapp.ui.screens.paramproviders.SchoolYearPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
-import com.example.teacherapp.core.common.utils.format
 import java.time.LocalDate
 
 fun LazyListScope.schoolYearExpandable(
@@ -75,7 +75,6 @@ private fun TermItem(
         }
     }
 }
-
 
 @Preview
 @Composable

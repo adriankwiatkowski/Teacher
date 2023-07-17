@@ -1,9 +1,10 @@
 package com.example.teacherapp.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -21,23 +22,23 @@ fun TeacherApp(
     modifier: Modifier = Modifier,
     appState: TeacherAppState = rememberTeacherAppState(),
 ) {
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val selectedBottomNavItem by appState.selectedBottomNavigationItem.collectAsStateWithLifecycle()
     val shouldShowBottomBar by appState.shouldShowBottomBar.collectAsStateWithLifecycle()
     val bottomNavScreens = remember { TeacherBottomNavScreen.values().toList() }
 
-    val onShowSnackbar: ((message: String) -> Unit) = remember(scaffoldState) {
+    val onShowSnackbar: ((message: String) -> Unit) = remember(snackbarHostState) {
         { message ->
             appState.coroutineScope.launch {
-                scaffoldState.snackbarHostState.showSnackbar(message = message)
+                snackbarHostState.showSnackbar(message = message)
             }
         }
     }
 
     Scaffold(
         modifier = modifier,
-        scaffoldState = scaffoldState,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
             TeacherBottomNav(
                 screens = bottomNavScreens,

@@ -11,6 +11,13 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Divider
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,7 +65,6 @@ fun StudentNotesScreen(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun MainScreen(
     notes: List<BasicStudentNote>,
@@ -77,7 +83,7 @@ private fun MainScreen(
         itemsIndexed(items = notes, key = { _, note -> note.id }) { index, note ->
             ListItem(
                 modifier = Modifier.clickable { onNoteClick(note.id) },
-                text = { Text(note.title) }
+                headlineContent = { Text(note.title) },
             )
             if (index != notes.lastIndex) {
                 Divider()
@@ -95,7 +101,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
     ) {
         Text(
             text = "Uczeń nie ma żadnej uwagi",
-            style = MaterialTheme.typography.h4
+            style = MaterialTheme.typography.displayMedium
         )
     }
 }

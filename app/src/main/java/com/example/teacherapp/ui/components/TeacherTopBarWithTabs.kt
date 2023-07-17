@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +22,7 @@ import com.example.teacherapp.data.models.ActionMenuItem
 import com.example.teacherapp.ui.components.tab.TeacherTabRow
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
+// TODO: Add support for scrolling behavior.
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TeacherTopBarWithTabs(

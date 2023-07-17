@@ -68,10 +68,12 @@ dependencies {
     androidTestImplementation composeBom
 
     // Compose
-    // Material Design 2
-    implementation 'androidx.compose.material:material'
+    // Material Design 3
+    implementation 'androidx.compose.material3:material3'
     // Optional - Add full set of material icons
     implementation 'androidx.compose.material:material-icons-extended'
+    // Optional - Add window size utils
+//    implementation 'androidx.compose.material3:material3-window-size-class'
     // Android Studio Preview support
     implementation "androidx.compose.ui:ui"
     implementation 'androidx.compose.ui:ui-tooling-preview'

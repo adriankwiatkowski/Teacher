@@ -1,8 +1,9 @@
 package com.example.teacherapp.ui.components.pickers
 
 import android.app.DatePickerDialog
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -10,7 +11,7 @@ import com.example.teacherapp.ui.components.form.TeacherChip
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import java.time.LocalDate
 
-@OptIn(ExperimentalMaterialApi::class)
+// TODO: Migrate to M3 Date Picker.
 @Composable
 fun DatePicker(
     date: LocalDate,
@@ -66,9 +67,8 @@ fun DatePicker(
     TeacherChip(
         modifier = modifier,
         onClick = { dialog.show() },
-    ) {
-        label()
-    }
+        label = label,
+    )
 }
 
 @Preview(showBackground = true)

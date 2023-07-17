@@ -6,6 +6,11 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -79,7 +84,7 @@ private fun GradeBox(
     TextButton(
         modifier = modifier,
         onClick = onClick,
-        border = BorderStroke(1.dp, MaterialTheme.colors.primary)
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
     ) {
         Text(grade)
     }

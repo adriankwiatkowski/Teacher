@@ -9,6 +9,14 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +30,6 @@ import com.example.teacherapp.ui.components.resource.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.BasicSchoolClassesPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
-import com.example.teacherapp.ui.theme.warning
 
 @Composable
 fun SchoolClassesScreen(
@@ -91,7 +98,7 @@ private fun MainContent(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun ClassItem(
     name: String,
@@ -119,23 +126,16 @@ private fun ClassItem(
                 TeacherChip(
                     modifier = chipModifier,
                     onClick = onStudentsClick,
-                    leadingIcon = {
-                        Icon(Icons.Outlined.Person, contentDescription = "")
-                    }
-                ) {
-                    Text("Uczniowie ($studentCount)")
-                }
+                    leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "") },
+                    label = { Text("Uczniowie ($studentCount)") }
+                )
 
                 TeacherChip(
                     modifier = chipModifier,
                     onClick = onLessonsClick,
-                    leadingIcon = {
-                        Icon(Icons.Default.List, contentDescription = "")
-                    }
-                ) {
-                    // TODO: Add lesson count.
-                    Text("Zajęcia (0)")
-                }
+                    leadingIcon = { Icon(Icons.Default.List, contentDescription = "") },
+                    label = { Text("Zajęcia (0)") }, // TODO: Add lesson count.
+                )
             }
         }
     }
@@ -152,13 +152,13 @@ private fun EmptyClasses(
         Text(
             modifier = Modifier.weight(9f),
             text = "Nie istnieje jeszcze żadna klasa",
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.displayLarge,
         )
         Icon(
             modifier = Modifier.weight(1f),
             imageVector = Icons.Default.Warning,
             contentDescription = null,
-            tint = MaterialTheme.colors.warning,
+//            tint = MaterialTheme.colors.warning, // TODO: Add warning color or remove this warning.
         )
     }
 }

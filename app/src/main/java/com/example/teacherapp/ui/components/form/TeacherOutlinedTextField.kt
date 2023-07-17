@@ -2,12 +2,22 @@ package com.example.teacherapp.ui.components.form
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.ui.theme.spacing
 
+// TODO: Migrate to M3 TextField that does support supportingText.
 @Composable
 fun TeacherOutlinedTextField(
     value: String,
@@ -46,7 +57,7 @@ fun TeacherOutlinedTextField(
     minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = MaterialTheme.shapes.small,
-    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors()
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors()
 ) {
     val leadingIconComposable: @Composable (() -> Unit)? = if (leadingIcon != null) {
         @Composable {
@@ -82,10 +93,11 @@ fun TeacherOutlinedTextField(
                         .padding(MaterialTheme.spacing.small),
                     imageVector = Icons.Default.Info,
                     contentDescription = null,
-                    tint = MaterialTheme.colors.error,
+                    tint = MaterialTheme.colorScheme.error,
                 )
             }
         }
+
         trailingIcon != null -> {
             @Composable {
                 val clickModifier = if (onTrailingIconClick != null) {
@@ -102,6 +114,7 @@ fun TeacherOutlinedTextField(
                 )
             }
         }
+
         else -> null
     }
 
@@ -154,13 +167,13 @@ fun TeacherOutlinedTextField(
     minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = MaterialTheme.shapes.small,
-    colors: TextFieldColors = TextFieldDefaults.outlinedTextFieldColors()
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors()
 ) {
     val labelComposable: @Composable (() -> Unit)? = if (label != null) {
         @Composable {
             Text(
                 text = label,
-                color = if (isError) MaterialTheme.colors.error else Color.Unspecified,
+                color = if (isError) MaterialTheme.colorScheme.error else Color.Unspecified,
             )
         }
     } else {
@@ -202,7 +215,7 @@ fun TeacherOutlinedTextField(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Top,
         ) {
-            val textColor = if (isError) MaterialTheme.colors.error else Color.Unspecified
+            val textColor = if (isError) MaterialTheme.colorScheme.error else Color.Unspecified
 
             if (supportingText != null) {
                 Text(
@@ -212,7 +225,7 @@ fun TeacherOutlinedTextField(
                     text = supportingText,
                     color = textColor,
                     textAlign = TextAlign.Start,
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.labelSmall,
                 )
             }
 
@@ -224,7 +237,7 @@ fun TeacherOutlinedTextField(
                     text = "${counter.first}/${counter.second}",
                     color = textColor,
                     textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.caption,
+                    style = MaterialTheme.typography.labelSmall,
                 )
             }
         }

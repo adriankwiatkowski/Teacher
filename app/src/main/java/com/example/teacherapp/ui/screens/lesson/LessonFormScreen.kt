@@ -10,14 +10,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.FabPosition
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Subject
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -133,7 +133,7 @@ private fun Content(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        Text(text = "Klasa $schoolClassName", style = MaterialTheme.typography.h4)
+        Text(text = "Klasa $schoolClassName", style = MaterialTheme.typography.headlineMedium)
 
         val focusManager = LocalFocusManager.current
         val movePrev = { focusManager.moveFocus(FocusDirection.Up) }

@@ -1,7 +1,8 @@
 package com.example.teacherapp.ui.components.pickers
 
 import android.app.TimePickerDialog
-import androidx.compose.material.*
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -10,7 +11,7 @@ import com.example.teacherapp.ui.components.form.TeacherChip
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import java.time.LocalTime
 
-@OptIn(ExperimentalMaterialApi::class)
+// TODO: Migrate to M3 Time Picker.
 @Composable
 fun TimePicker(
     time: LocalTime,
@@ -33,9 +34,8 @@ fun TimePicker(
     TeacherChip(
         modifier = modifier,
         onClick = { dialog.show() },
-    ) {
-        label()
-    }
+        label = label,
+    )
 }
 
 @Preview(showBackground = true)

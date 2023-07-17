@@ -6,13 +6,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -107,7 +106,6 @@ private fun MainContent(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun GradeItem(
     fullName: String,
@@ -117,7 +115,7 @@ private fun GradeItem(
 ) {
     ListItem(
         modifier = modifier.clickable(onClick = onClick),
-        text = { Text("$fullName ($grade)") }
+        headlineContent = { Text("$fullName ($grade)") },
 //        text = { Text(fullName) },
 //        secondaryText = { Text(grade) },
     )
@@ -157,7 +155,7 @@ private fun GradesScreenPreview(
                 onEditClick = {},
                 onDeleteClick = {},
                 isDeleted = false,
-                onStudentClick = { _, _ ->}
+                onStudentClick = { _, _ -> }
             )
         }
     }

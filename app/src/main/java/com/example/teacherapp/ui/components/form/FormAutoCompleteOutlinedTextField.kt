@@ -5,6 +5,14 @@ import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
@@ -14,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> FormAutoCompleteOutlinedTextField(
     inputField: InputField<T>,
@@ -76,7 +84,7 @@ fun <T> FormAutoCompleteOutlinedTextField(
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> FormAutoCompleteOutlinedTextField(
     inputField: InputField<T>,
@@ -159,10 +167,9 @@ fun <T> FormAutoCompleteOutlinedTextField(
                         onClick = {
                             onSuggestionSelect(suggestion)
                             setExpanded(false)
-                        }
-                    ) {
-                        Text(text = suggestionToString(suggestion))
-                    }
+                        },
+                        text = { Text(text = suggestionToString(suggestion)) }
+                    )
                 }
             }
         }

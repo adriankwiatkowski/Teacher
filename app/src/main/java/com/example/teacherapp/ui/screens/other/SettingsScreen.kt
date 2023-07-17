@@ -1,6 +1,6 @@
 package com.example.teacherapp.ui.screens.other
 
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
@@ -8,5 +8,5 @@ import androidx.compose.ui.Modifier
 fun SettingsScreen(
     modifier: Modifier = Modifier,
 ) {
-    Text(text = "Settings")
+    Text(modifier = modifier, text = "Settings")
 }

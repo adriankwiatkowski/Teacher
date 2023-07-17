@@ -5,15 +5,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,7 +55,6 @@ fun GradeTemplatesScreen(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun MainContent(
     grades: List<BasicGradeTemplate>,
@@ -69,9 +67,9 @@ private fun MainContent(
     ) {
         itemsIndexed(grades, key = { _, item -> item.id }) { index, grade ->
             ListItem(
-                modifier = Modifier.clickable(onClick = {onGradeClick(grade.id) }),
-                text = { Text(grade.name) },
-                secondaryText = { Text("Waga ${grade.weight}") },
+                modifier = Modifier.clickable(onClick = { onGradeClick(grade.id) }),
+                headlineContent = { Text(grade.name) },
+                supportingContent = { Text("Waga ${grade.weight}") },
             )
 
             if (index != grades.lastIndex) {

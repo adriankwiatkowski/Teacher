@@ -1,6 +1,6 @@
 package com.example.teacherapp.ui.nav.graphs.student
 
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

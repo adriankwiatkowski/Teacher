@@ -1,15 +1,18 @@
 package com.example.teacherapp.ui.components
 
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.teacherapp.data.models.ActionMenuItem
 
+// TODO: Add support for scrolling behavior.
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TeacherTopBar(
     title: String,
@@ -30,7 +33,7 @@ fun TeacherTopBar(
         return
     }
 
-    TopAppBar(
+    CenterAlignedTopAppBar(
         modifier = modifier,
         title = {
             Text(title)
