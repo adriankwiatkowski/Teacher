@@ -12,7 +12,7 @@ import com.example.teacherapp.core.common.utils.format
 import com.example.teacherapp.data.models.input.InputDate
 import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
-import com.example.teacherapp.ui.components.pickers.DatePicker
+import com.example.teacherapp.ui.components.pickers.TeacherDatePicker
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 import java.time.LocalDate
@@ -69,7 +69,7 @@ private fun TermDatePicker(
     ) {
         Text(text = label)
         Text(text = dateString)
-        DatePicker(
+        TeacherDatePicker(
             date = date,
             onDateSelected = onDateSelected,
             label = {

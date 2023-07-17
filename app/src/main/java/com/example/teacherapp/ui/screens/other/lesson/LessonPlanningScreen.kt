@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.teacherapp.ui.components.pickers.DatePicker
+import com.example.teacherapp.ui.components.pickers.TeacherDatePicker
 import com.example.teacherapp.ui.components.pickers.TimePicker
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
@@ -206,7 +206,7 @@ private fun LessonDatePicker(
     ) {
         Text(text = "Date:")
         Text(text = date.format(dateFormat))
-        DatePicker(
+        TeacherDatePicker(
             date = date,
             onDateSelected = onDateSelected,
             label = {
