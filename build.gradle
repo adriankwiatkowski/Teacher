@@ -7,7 +7,7 @@ buildscript {
         nav_version = '2.6.0'
         coroutines_version = '1.6.4'
         sqldelight_version = '1.5.4'
-        hilt_version = '2.44'
+        hilt_version = '2.46.1'
         hilt_workmanager_version = '1.0.0'
         hilt_nav_compose_version = '1.0.0'
         desugar_jdk_libs = '2.0.3'
