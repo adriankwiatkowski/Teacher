@@ -127,6 +127,7 @@ private fun MainContent(
 
         lessons(
             lessons = schoolClass.lessons,
+            studentCount = schoolClass.students.size.toLong(),
             onLessonClick = onLessonClick,
             onAddLessonClick = onAddLessonClick,
             expanded = isLessonsExpanded,

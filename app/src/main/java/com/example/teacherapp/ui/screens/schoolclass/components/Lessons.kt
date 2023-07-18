@@ -32,6 +32,7 @@ import com.example.teacherapp.ui.theme.spacing
 
 fun LazyListScope.lessons(
     lessons: List<BasicLesson>,
+    studentCount: Long,
     onLessonClick: (Long) -> Unit,
     onAddLessonClick: () -> Unit,
     expanded: MutableState<Boolean>,
@@ -59,6 +60,7 @@ fun LazyListScope.lessons(
                 .padding(contentPadding)
                 .minimumInteractiveComponentSize(),
             name = lesson.name,
+            studentCount = studentCount,
         )
     }
 }
@@ -66,6 +68,7 @@ fun LazyListScope.lessons(
 @Composable
 private fun LessonItem(
     name: String,
+    studentCount: Long,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -78,8 +81,7 @@ private fun LessonItem(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // TODO: Add students count.
-        Text(text = "(0)")
+        Text(text = "($studentCount)")
         Icon(imageVector = Icons.Default.Person, contentDescription = null)
     }
 }
@@ -99,6 +101,7 @@ private fun LessonItemPreview(
             LazyColumn {
                 lessons(
                     lessons = lessons,
+                    studentCount = 4,
                     onLessonClick = {},
                     onAddLessonClick = {},
                     expanded = expanded,
