@@ -32,7 +32,7 @@ import com.example.teacherapp.ui.components.form.TeacherChip
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import java.time.LocalTime
 
-// TODO: Migrate to M3 Time Picker.
+// TODO: Migrate to M3 Time Picker. Replace TimePickerDialog with appropriate component when it will become available.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TeacherTimePicker(
@@ -68,7 +68,6 @@ fun TeacherTimePicker(
     )
 }
 
-// TODO: Replace this with appropriate TimePickerDialog when it will be available.
 @Composable
 private fun TimePickerDialog(
     title: String = "Wybierz czas",

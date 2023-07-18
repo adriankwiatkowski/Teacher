@@ -112,7 +112,7 @@ fun NavGraphBuilder.studentGraph(
                 when (selectedTab) {
                     StudentTab.Detail -> StudentDetailRoute(student = student)
 
-                    StudentTab.Grades -> StudentGradesRoute()
+                    StudentTab.Grades -> StudentGradesRoute(student = student)
 
                     StudentTab.Notes -> StudentNotesRoute(
                         onNoteClick = { studentNoteId ->

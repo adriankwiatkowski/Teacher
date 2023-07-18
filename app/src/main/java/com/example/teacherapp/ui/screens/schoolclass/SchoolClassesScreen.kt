@@ -160,7 +160,6 @@ private fun EmptyClasses(
             modifier = Modifier.weight(1f),
             imageVector = Icons.Default.Warning,
             contentDescription = null,
-//            tint = MaterialTheme.colors.warning, // TODO: Add warning color or remove this warning.
         )
     }
 }

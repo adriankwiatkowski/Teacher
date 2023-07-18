@@ -1,10 +1,12 @@
 package com.example.teacherapp.ui.screens.student
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -12,7 +14,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,22 +25,40 @@ import com.example.teacherapp.core.model.data.StudentGradesByLesson
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
 import com.example.teacherapp.ui.components.result.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.StudentGradesByLessonPreviewParameterProvider
+import com.example.teacherapp.ui.screens.student.data.GradeDialogInfo
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun StudentGradesScreen(
     studentGradesResult: Result<List<StudentGradesByLesson>>,
+    gradeDialog: GradeDialogInfo?,
+    onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGrade) -> Unit,
+    onGradeDialogDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ResultContent(
         modifier = modifier.padding(MaterialTheme.spacing.small),
         result = studentGradesResult,
     ) { studentGradesByLesson ->
-        if (studentGradesByLesson.isEmpty()) {
-            EmptyState()
-        } else {
-            MainScreen(studentGradesByLesson)
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (studentGradesByLesson.isEmpty()) {
+                EmptyState()
+            } else {
+                if (gradeDialog != null) {
+                    StudentGradeDialog(
+                        student = gradeDialog.student,
+                        gradeInfo = gradeDialog.gradeInfo,
+                        grade = gradeDialog.grade,
+                        onDismissRequest = onGradeDialogDismiss,
+                    )
+                }
+            }
+
+            MainScreen(
+                studentGradesByLesson = studentGradesByLesson,
+                onShowGradeDialog = onShowGradeDialog,
+            )
         }
     }
 }
@@ -47,6 +66,7 @@ fun StudentGradesScreen(
 @Composable
 private fun MainScreen(
     studentGradesByLesson: List<StudentGradesByLesson>,
+    onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGrade) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -59,7 +79,10 @@ private fun MainScreen(
         ) { index, studentGrade ->
             Text(studentGrade.lessonName)
             Text("Średnia: ${studentGrade.average.toPlainString()}")
-            Grades(grades = studentGrade.gradesByLessonId)
+            Grades(
+                grades = studentGrade.gradesByLessonId,
+                onGradeClick = { grade -> onShowGradeDialog(studentGrade, grade) }
+            )
 
             if (index != studentGradesByLesson.lastIndex) {
                 Divider()
@@ -72,13 +95,15 @@ private fun MainScreen(
 @Composable
 private fun Grades(
     grades: List<StudentGrade>,
+    onGradeClick: (studentGrade: StudentGrade) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FlowRow(modifier = modifier) {
+    FlowRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+    ) {
         for (grade in grades) {
-            TextButton(onClick = { /*TODO*/ }) {
-                Grade(grade = grade.grade.toPlainString(), onClick = {})
-            }
+            Grade(grade = grade.grade.toPlainString(), onClick = { onGradeClick(grade) })
         }
     }
 }
@@ -120,6 +145,9 @@ private fun StudentGradesScreenPreview(
         Surface {
             StudentGradesScreen(
                 studentGradesResult = Result.Success(studentGrades),
+                gradeDialog = null,
+                onShowGradeDialog = { _, _ -> },
+                onGradeDialogDismiss = {},
             )
         }
     }
