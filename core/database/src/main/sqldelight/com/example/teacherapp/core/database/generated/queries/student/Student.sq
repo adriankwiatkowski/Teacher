@@ -59,7 +59,7 @@ FROM student s
 INNER JOIN school_class sc ON sc.id = s.school_class_id
 INNER JOIN lesson l ON sc.id = l.school_class_id
 INNER JOIN grade_template gt ON gt.lesson_id = l.id
-INNER JOIN grade g ON g.student_id = s.id
+INNER JOIN grade g ON g.student_id = s.id AND g.grade_template_id = gt.id
 WHERE s.id = :id;
 
 insertStudent:
