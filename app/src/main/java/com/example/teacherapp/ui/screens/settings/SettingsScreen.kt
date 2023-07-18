@@ -17,17 +17,46 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.model.data.SettingsData
 import com.example.teacherapp.core.model.data.ThemeConfig
+import com.example.teacherapp.ui.components.result.ResultContent
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
 import com.example.teacherapp.ui.theme.supportsDynamicTheming
 
 @Composable
 fun SettingsScreen(
+    settingsDataResult: Result<SettingsData>,
+    onThemeChange: (theme: ThemeConfig) -> Unit,
+    onDynamicColorChange: (useDynamicColor: Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    supportDynamicColor: Boolean = supportsDynamicTheming(),
+) {
+    ResultContent(
+        modifier = modifier.padding(MaterialTheme.spacing.medium),
+        result = settingsDataResult,
+    ) { settingsData ->
+        SettingsPanel(
+            theme = settingsData.themeConfig,
+            onThemeChange = onThemeChange,
+            useDynamicColor = settingsData.useDynamicColor,
+            onDynamicColorChange = onDynamicColorChange,
+            supportDynamicColor = supportDynamicColor,
+        )
+    }
+}
+
+@Composable
+private fun SettingsPanel(
     theme: ThemeConfig,
     onThemeChange: (theme: ThemeConfig) -> Unit,
     useDynamicColor: Boolean,
@@ -137,11 +166,19 @@ private fun SettingsSwitch(
 private fun SettingsScreenPreview() {
     TeacherAppTheme {
         Surface {
+            var settingsData by remember {
+                mutableStateOf(
+                    SettingsData(
+                        themeConfig = ThemeConfig.SystemDefault,
+                        useDynamicColor = true,
+                    )
+                )
+            }
+
             SettingsScreen(
-                theme = ThemeConfig.SystemDefault,
-                onThemeChange = {},
-                useDynamicColor = true,
-                onDynamicColorChange = {},
+                settingsDataResult = Result.Success(settingsData),
+                onThemeChange = { settingsData = settingsData.copy(themeConfig = it) },
+                onDynamicColorChange = { settingsData = settingsData.copy(useDynamicColor = it) },
             )
         }
     }

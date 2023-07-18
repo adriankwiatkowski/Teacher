@@ -11,6 +11,7 @@ buildscript {
         hilt_workmanager_version = '1.0.0'
         hilt_nav_compose_version = '1.0.0'
         desugar_jdk_libs = '2.0.3'
+        datastore_preferences_version = '1.0.0'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

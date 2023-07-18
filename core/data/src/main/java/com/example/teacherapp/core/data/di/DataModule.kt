@@ -12,6 +12,8 @@ import com.example.teacherapp.core.data.repository.schoolclass.DatabaseSchoolCla
 import com.example.teacherapp.core.data.repository.schoolclass.SchoolClassRepository
 import com.example.teacherapp.core.data.repository.schoolyear.DatabaseSchoolYearRepository
 import com.example.teacherapp.core.data.repository.schoolyear.SchoolYearRepository
+import com.example.teacherapp.core.data.repository.settings.LocalSettingsRepository
+import com.example.teacherapp.core.data.repository.settings.SettingsRepository
 import com.example.teacherapp.core.data.repository.student.DatabaseStudentRepository
 import com.example.teacherapp.core.data.repository.student.StudentRepository
 import com.example.teacherapp.core.data.repository.studentnote.DatabaseStudentNoteRepository
@@ -64,4 +66,9 @@ internal interface DataModule {
     fun bindsLessonActivityRepository(
         lessonActivityRepository: DatabaseLessonActivityRepository,
     ): LessonActivityRepository
+
+    @Binds
+    fun bindsSettingsRepository(
+        settingsRepository: LocalSettingsRepository,
+    ): SettingsRepository
 }

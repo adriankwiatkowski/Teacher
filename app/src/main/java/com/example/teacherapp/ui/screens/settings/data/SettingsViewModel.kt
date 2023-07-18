@@ -1,26 +1,42 @@
 package com.example.teacherapp.ui.screens.settings.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.data.repository.settings.SettingsRepository
+import com.example.teacherapp.core.model.data.SettingsData
 import com.example.teacherapp.core.model.data.ThemeConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor() : ViewModel() {
+class SettingsViewModel @Inject constructor(
+    private val repository: SettingsRepository,
+) : ViewModel() {
 
-    var themeConfig by mutableStateOf(ThemeConfig.SystemDefault)
-        private set
-
-    var useDynamicColor by mutableStateOf(true)
+    val settingsData: StateFlow<Result<SettingsData>> = repository.settings
+        .stateIn(initialValue = Result.Loading)
 
     fun onThemeChange(themeConfig: ThemeConfig) {
-        this.themeConfig = themeConfig
+        viewModelScope.launch {
+            repository.setTheme(themeConfig)
+        }
     }
 
     fun onDynamicColorChange(useDynamicColor: Boolean) {
-        this.useDynamicColor = useDynamicColor
+        viewModelScope.launch {
+            repository.setUseDynamicColor(useDynamicColor)
+        }
     }
+
+    private fun <T> Flow<T>.stateIn(initialValue: T): StateFlow<T> = stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = initialValue,
+    )
 }
