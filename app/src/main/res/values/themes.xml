@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.TeacherApp" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+    <style name="NightAdjusted.Theme.TeacherApp" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
+
+    <style name="PlatformAdjusted.Theme.TeacherApp" parent="NightAdjusted.Theme.TeacherApp">
+        <item name="android:statusBarColor">#4D000000</item>
+    </style>
+
+    <style name="Theme.TeacherApp" parent="PlatformAdjusted.Theme.TeacherApp" />
 </resources>
