@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
 
 private fun getSettingsDataOrDefault(settingsDataResult: Result<SettingsData>): SettingsData {
     return (settingsDataResult as? Result.Success)?.data ?: SettingsData(
-        themeConfig = ThemeConfig.SystemDefault,
+        themeConfig = ThemeConfig.FollowSystem,
         useDynamicColor = true,
     )
 }
@@ -58,7 +58,7 @@ private fun getSettingsDataOrDefault(settingsDataResult: Result<SettingsData>): 
 @Composable
 private fun shouldShowDarkTheme(settingsData: SettingsData): Boolean {
     return when (settingsData.themeConfig) {
-        ThemeConfig.SystemDefault -> isSystemInDarkTheme()
+        ThemeConfig.FollowSystem -> isSystemInDarkTheme()
         ThemeConfig.Light -> false
         ThemeConfig.Dark -> true
     }

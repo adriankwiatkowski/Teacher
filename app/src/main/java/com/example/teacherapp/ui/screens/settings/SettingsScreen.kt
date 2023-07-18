@@ -75,8 +75,8 @@ private fun SettingsPanel(
             Column(Modifier.selectableGroup()) {
                 SettingsRadioButton(
                     label = "Ustawienie domyślne systemu",
-                    selected = theme == ThemeConfig.SystemDefault,
-                    onClick = { onThemeChange(ThemeConfig.SystemDefault) },
+                    selected = theme == ThemeConfig.FollowSystem,
+                    onClick = { onThemeChange(ThemeConfig.FollowSystem) },
                 )
                 SettingsRadioButton(
                     label = "Jasny",
@@ -169,7 +169,7 @@ private fun SettingsScreenPreview() {
             var settingsData by remember {
                 mutableStateOf(
                     SettingsData(
-                        themeConfig = ThemeConfig.SystemDefault,
+                        themeConfig = ThemeConfig.FollowSystem,
                         useDynamicColor = true,
                     )
                 )

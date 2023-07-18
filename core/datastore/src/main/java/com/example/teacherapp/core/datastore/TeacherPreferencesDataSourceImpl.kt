@@ -18,7 +18,7 @@ class TeacherPreferencesDataSourceImpl @Inject constructor(
     override val settings: Flow<SettingsData> = dataStore.data.map { settings ->
         val theme = settings[themeKey]?.let { themeId ->
             ThemeConfig.values().firstOrNull { theme -> theme.value == themeId }
-        } ?: ThemeConfig.SystemDefault
+        } ?: ThemeConfig.FollowSystem
 
         val useDynamicColor = settings[useDynamicColorKey] ?: true
 
