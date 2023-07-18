@@ -1,6 +1,5 @@
 package com.example.teacherapp.ui.nav.graphs.student
 
-import androidx.compose.material3.Text
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -16,6 +15,7 @@ import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentNot
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentRoute
 import com.example.teacherapp.ui.nav.graphs.student.route.StudentDetailRoute
 import com.example.teacherapp.ui.nav.graphs.student.route.StudentFormRoute
+import com.example.teacherapp.ui.nav.graphs.student.route.StudentGradesRoute
 import com.example.teacherapp.ui.nav.graphs.student.route.StudentNoteFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.route.StudentNotesRoute
 import com.example.teacherapp.ui.nav.graphs.student.route.StudentScaffoldWrapper
@@ -110,30 +110,24 @@ fun NavGraphBuilder.studentGraph(
                 viewModel = viewModel,
             ) { selectedTab, student ->
                 when (selectedTab) {
-                    StudentTab.Detail -> {
-                        StudentDetailRoute(student = student)
-                    }
+                    StudentTab.Detail -> StudentDetailRoute(student = student)
 
-                    StudentTab.Grades -> {
-                        Text("Grades")
-                    }
+                    StudentTab.Grades -> StudentGradesRoute()
 
-                    StudentTab.Notes -> {
-                        StudentNotesRoute(
-                            onNoteClick = { studentNoteId ->
-                                navController.navigateToStudentNoteFormRoute(
-                                    studentId = studentId,
-                                    studentNoteId = studentNoteId,
-                                )
-                            },
-                            onAddNoteClick = {
-                                navController.navigateToStudentNoteFormRoute(
-                                    studentId = studentId,
-                                    studentNoteId = null,
-                                )
-                            },
-                        )
-                    }
+                    StudentTab.Notes -> StudentNotesRoute(
+                        onNoteClick = { studentNoteId ->
+                            navController.navigateToStudentNoteFormRoute(
+                                studentId = studentId,
+                                studentNoteId = studentNoteId,
+                            )
+                        },
+                        onAddNoteClick = {
+                            navController.navigateToStudentNoteFormRoute(
+                                studentId = studentId,
+                                studentNoteId = null,
+                            )
+                        },
+                    )
                 }
             }
         }

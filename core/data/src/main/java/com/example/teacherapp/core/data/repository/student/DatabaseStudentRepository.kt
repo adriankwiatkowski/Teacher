@@ -6,6 +6,7 @@ import com.example.teacherapp.core.common.result.asResult
 import com.example.teacherapp.core.common.result.asResultNotNull
 import com.example.teacherapp.core.database.datasource.student.StudentDataSource
 import com.example.teacherapp.core.model.data.Student
+import com.example.teacherapp.core.model.data.StudentGradesByLesson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -26,6 +27,12 @@ internal class DatabaseStudentRepository @Inject constructor(
 
     override fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> = dataSource
         .getStudentSchoolClassNameById(schoolClassId)
+
+    override fun getStudentGradesById(
+        studentId: Long
+    ): Flow<Result<List<StudentGradesByLesson>>> = dataSource
+        .getStudentGradesById(studentId)
+        .asResult()
 
     override suspend fun insertOrUpdateStudent(
         id: Long?,

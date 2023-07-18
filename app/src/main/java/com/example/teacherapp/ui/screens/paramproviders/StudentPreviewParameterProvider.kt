@@ -65,8 +65,8 @@ class BasicStudentPreviewParameterProvider : PreviewParameterProvider<BasicStude
             orderInClass = index + 1L,
             name = name,
             surname = surname,
-            email = null,
-            phone = null,
+            email = if (index % 2 == 0) "$name.$surname@email.com" else null,
+            phone = if (index % 2 == 0) "12312312${index % 10}" else null,
         )
     }
 }

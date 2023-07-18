@@ -2,6 +2,7 @@ package com.example.teacherapp.core.database.datasource.student
 
 import com.example.teacherapp.core.model.data.BasicStudent
 import com.example.teacherapp.core.model.data.Student
+import com.example.teacherapp.core.model.data.StudentGradesByLesson
 import kotlinx.coroutines.flow.Flow
 
 interface StudentDataSource {
@@ -13,6 +14,8 @@ interface StudentDataSource {
     fun getStudentsBySchoolClassId(schoolClassId: Long): Flow<List<BasicStudent>>
 
     fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?>
+
+    fun getStudentGradesById(studentId: Long): Flow<List<StudentGradesByLesson>>
 
     suspend fun insertOrUpdateStudent(
         id: Long?,

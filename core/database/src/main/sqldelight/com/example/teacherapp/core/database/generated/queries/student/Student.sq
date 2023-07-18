@@ -44,6 +44,24 @@ SELECT
 FROM student s
 WHERE s.id = :id;
 
+getStudentGradesById:
+SELECT
+    s.id AS 'student_id',
+    l.id AS 'lesson_id',
+    l.name AS 'lesson_name',
+    gt.id AS 'grade_template_id',
+    gt.name AS 'grade_template_name',
+    gt.weight AS 'grade_template_weight',
+    gt.date AS 'grade_template_date',
+    g.id AS 'grade_id',
+    g.grade AS 'grade'
+FROM student s
+INNER JOIN school_class sc ON sc.id = s.school_class_id
+INNER JOIN lesson l ON sc.id = l.school_class_id
+INNER JOIN grade_template gt ON gt.lesson_id = l.id
+INNER JOIN grade g ON g.student_id = s.id
+WHERE s.id = :id;
+
 insertStudent:
 INSERT OR FAIL
 INTO student

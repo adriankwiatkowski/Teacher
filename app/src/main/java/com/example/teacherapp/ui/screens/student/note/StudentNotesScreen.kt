@@ -108,7 +108,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun EmptyStatePreview() {
+private fun EmptyStatePreview() {
     TeacherAppTheme {
         Surface {
             EmptyState()

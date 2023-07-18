@@ -2,9 +2,11 @@ package com.example.teacherapp.core.database.datasource.student
 
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
+import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternalStudentGrades
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.BasicStudent
 import com.example.teacherapp.core.model.data.Student
+import com.example.teacherapp.core.model.data.StudentGradesByLesson
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
@@ -50,6 +52,14 @@ internal class StudentDataSourceImpl(
         schoolClassQueries.getSchoolClassNameById(schoolClassId)
             .asFlow()
             .mapToOneOrNull()
+
+    override fun getStudentGradesById(studentId: Long): Flow<List<StudentGradesByLesson>> =
+        queries
+            .getStudentGradesById(studentId)
+            .asFlow()
+            .mapToList()
+            .map(::toExternalStudentGrades)
+            .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateStudent(
         id: Long?,
