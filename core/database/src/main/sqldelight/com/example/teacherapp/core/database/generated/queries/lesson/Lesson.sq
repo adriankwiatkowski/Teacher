@@ -3,7 +3,9 @@ SELECT
     l.id,
     l.name AS 'lesson_name',
     l.school_class_id,
-    sc.name AS 'school_class_name'
+    sc.name AS 'school_class_name',
+    (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
+    (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
 FROM lesson l
 INNER JOIN school_class sc ON l.school_class_id = sc.id
 WHERE l.id = :id;

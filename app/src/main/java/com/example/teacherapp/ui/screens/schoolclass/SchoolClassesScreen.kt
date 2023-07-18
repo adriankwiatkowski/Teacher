@@ -84,6 +84,7 @@ private fun MainContent(
             ClassItem(
                 name = schoolClass.name,
                 studentCount = schoolClass.studentCount,
+                lessonCount = schoolClass.lessonCount,
                 onClick = { onClassClick(schoolClass.id) },
                 onStudentsClick = { onStudentsClick(schoolClass.id) },
                 onLessonsClick = { onLessonsClick(schoolClass.id) },
@@ -102,7 +103,8 @@ private fun MainContent(
 @Composable
 private fun ClassItem(
     name: String,
-    studentCount: Int,
+    studentCount: Long,
+    lessonCount: Long,
     onClick: () -> Unit,
     onStudentsClick: () -> Unit,
     onLessonsClick: () -> Unit,
@@ -134,7 +136,7 @@ private fun ClassItem(
                     modifier = chipModifier,
                     onClick = onLessonsClick,
                     leadingIcon = { Icon(Icons.Default.List, contentDescription = "") },
-                    label = { Text("Zajęcia (0)") }, // TODO: Add lesson count.
+                    label = { Text("Zajęcia ($lessonCount)") },
                 )
             }
         }

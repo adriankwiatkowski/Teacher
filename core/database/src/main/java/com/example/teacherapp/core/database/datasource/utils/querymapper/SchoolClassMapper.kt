@@ -60,11 +60,13 @@ internal fun toExternal(
     )
 }
 
-internal fun toExternal(schoolClasses: List<GetAllSchoolClasses>): List<BasicSchoolClass> =
-    schoolClasses.map { schoolClass ->
-        BasicSchoolClass(
-            id = schoolClass.id,
-            name = schoolClass.name,
-            studentCount = 0, // TODO: Query student count.
-        )
-    }
+internal fun toExternal(
+    schoolClasses: List<GetAllSchoolClasses>
+): List<BasicSchoolClass> = schoolClasses.map { schoolClass ->
+    BasicSchoolClass(
+        id = schoolClass.id,
+        name = schoolClass.name,
+        studentCount = schoolClass.student_count,
+        lessonCount = schoolClass.lesson_count,
+    )
+}

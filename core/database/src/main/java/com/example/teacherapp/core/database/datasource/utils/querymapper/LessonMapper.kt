@@ -6,14 +6,15 @@ import com.example.teacherapp.core.model.data.BasicLesson
 import com.example.teacherapp.core.model.data.BasicSchoolClass
 import com.example.teacherapp.core.model.data.Lesson
 
-internal fun toExternal(lessons: List<GetLessonsBySchoolClassId>): List<BasicLesson> =
-    lessons.map { lesson ->
-        BasicLesson(
-            id = lesson.id,
-            name = lesson.name,
-            schoolClassId = lesson.school_class_id,
-        )
-    }
+internal fun toExternal(
+    lessons: List<GetLessonsBySchoolClassId>
+): List<BasicLesson> = lessons.map { lesson ->
+    BasicLesson(
+        id = lesson.id,
+        name = lesson.name,
+        schoolClassId = lesson.school_class_id,
+    )
+}
 
 internal fun toExternal(lesson: GetLessonById?): Lesson? = run {
     if (lesson == null) {
@@ -26,7 +27,8 @@ internal fun toExternal(lesson: GetLessonById?): Lesson? = run {
         schoolClass = BasicSchoolClass(
             id = lesson.school_class_id,
             name = lesson.school_class_name,
-            studentCount = 0, // TODO: Query student count.
+            studentCount = lesson.student_count,
+            lessonCount = lesson.lesson_count,
         ),
     )
 }

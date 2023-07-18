@@ -35,7 +35,8 @@ internal fun toExternal(student: GetStudentById?): Student? = run {
     val schoolClass = BasicSchoolClass(
         id = student.school_class_id,
         name = student.school_class_name,
-        studentCount = 0, // TODO: Query student count.
+        studentCount = student.student_count,
+        lessonCount = student.lesson_count,
     )
     Student(
         id = student.id,

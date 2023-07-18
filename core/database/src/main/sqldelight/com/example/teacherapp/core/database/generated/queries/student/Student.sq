@@ -19,7 +19,9 @@ SELECT
     s.surname,
     s.email,
     s.phone,
-    sc.name AS 'school_class_name'
+    sc.name AS 'school_class_name',
+    (SELECT COUNT(*) FROM student s WHERE sc.id = s.school_class_id) AS 'student_count',
+    (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
 FROM student s
 INNER JOIN school_class sc ON s.school_class_id = sc.id
 WHERE s.id = :id;

@@ -28,6 +28,7 @@ class LessonPreviewParameterProvider : PreviewParameterProvider<Lesson> {
         id = 1L,
         name = "3A",
         studentCount = 20,
+        lessonCount = 4,
     )
 }
 

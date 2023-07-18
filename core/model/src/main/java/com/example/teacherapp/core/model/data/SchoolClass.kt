@@ -11,5 +11,6 @@ data class SchoolClass(
 data class BasicSchoolClass(
     val id: Long,
     val name: String,
-    val studentCount: Int,
+    val studentCount: Long,
+    val lessonCount: Long,
 )

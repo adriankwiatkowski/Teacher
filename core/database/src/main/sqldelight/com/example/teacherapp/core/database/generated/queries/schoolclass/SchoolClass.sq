@@ -1,8 +1,10 @@
 getAllSchoolClasses:
 SELECT
-    school_class.id,
-    school_class.name
-FROM school_class;
+    sc.id,
+    sc.name,
+    (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
+    (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
+FROM school_class sc;
 
 getSchoolClassById:
 SELECT
