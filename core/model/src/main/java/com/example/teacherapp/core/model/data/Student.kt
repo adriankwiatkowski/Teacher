@@ -8,7 +8,6 @@ data class Student(
     val email: String?,
     val phone: String?,
     val schoolClass: BasicSchoolClass,
-    val grades: List<Grade>,
 ) {
     val fullName = "$name $surname"
 }
@@ -24,13 +23,3 @@ data class BasicStudent(
 ) {
     val fullName = "$name $surname"
 }
-
-fun Student.toBasicStudent() = BasicStudent(
-    id = id,
-    classId = schoolClass.id,
-    orderInClass = orderInClass,
-    name = name,
-    surname = surname,
-    email = email,
-    phone = phone,
-)

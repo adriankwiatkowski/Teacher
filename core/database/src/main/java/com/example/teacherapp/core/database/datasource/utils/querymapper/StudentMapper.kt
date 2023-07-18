@@ -45,7 +45,6 @@ internal fun toExternal(student: GetStudentById?): Student? = run {
         email = student.email,
         phone = student.phone,
         schoolClass = schoolClass,
-        grades = emptyList(), // TODO: Query grades.
     )
 }
 
