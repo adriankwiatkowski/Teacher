@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.ui.components.resource.ErrorScreen
-import com.example.teacherapp.ui.components.resource.LoadingScreen
+import com.example.teacherapp.ui.components.result.ErrorScreen
+import com.example.teacherapp.ui.components.result.LoadingScreen
 
 @Composable
 fun FormStatusContent(

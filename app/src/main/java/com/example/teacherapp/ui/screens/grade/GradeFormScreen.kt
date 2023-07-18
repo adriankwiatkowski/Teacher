@@ -34,7 +34,7 @@ import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.TeacherTopBarDefaults
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.resource.ResultContent
+import com.example.teacherapp.ui.components.result.ResultContent
 import com.example.teacherapp.ui.screens.grade.data.GradeFormProvider
 import com.example.teacherapp.ui.screens.grade.data.GradeFormUiState
 import com.example.teacherapp.ui.screens.paramproviders.GradeFormUiStatePreviewParameterProvider

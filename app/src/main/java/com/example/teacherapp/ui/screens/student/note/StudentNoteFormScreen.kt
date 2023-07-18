@@ -37,7 +37,7 @@ import com.example.teacherapp.ui.components.TeacherTopBarDefaults
 import com.example.teacherapp.ui.components.form.FormOutlinedTextField
 import com.example.teacherapp.ui.components.form.FormStatusContent
 import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.resource.ResultContent
+import com.example.teacherapp.ui.components.result.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.StudentNotePreviewParameterProvider
 import com.example.teacherapp.ui.screens.student.note.data.StudentNoteFormProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme

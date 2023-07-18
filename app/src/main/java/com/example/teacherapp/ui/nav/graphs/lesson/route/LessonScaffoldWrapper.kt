@@ -14,7 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.Lesson
 import com.example.teacherapp.data.models.ActionMenuItem
-import com.example.teacherapp.ui.components.resource.ResultContent
+import com.example.teacherapp.ui.components.result.ResultContent
 import com.example.teacherapp.ui.nav.graphs.lesson.tab.LessonTab
 import com.example.teacherapp.ui.screens.lesson.components.LessonScaffold
 import com.example.teacherapp.ui.screens.lesson.data.LessonScaffoldViewModel

@@ -1,9 +1,9 @@
-package com.example.teacherapp.ui.components.resource
+package com.example.teacherapp.ui.components.result
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,18 +13,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
 @Composable
-fun DeletedScreen(
+fun LoadingScreen(
     modifier: Modifier = Modifier,
-    label: String = "Usunięto dane",
+    label: String = "Wczytywanie...",
 ) {
-    DeletedScreen(
+    LoadingScreen(
         modifier = modifier,
-        label = { Text(text = label, style = MaterialTheme.typography.displayMedium) },
+        label = { Text(label) },
     )
 }
 
 @Composable
-fun DeletedScreen(
+fun LoadingScreen(
     label: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,16 +33,17 @@ fun DeletedScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        CircularProgressIndicator()
         label()
     }
 }
 
 @Preview
 @Composable
-private fun DeletedScreenPreview() {
+private fun LoadingScreenPreview() {
     TeacherAppTheme {
         Surface {
-            DeletedScreen()
+            LoadingScreen()
         }
     }
 }

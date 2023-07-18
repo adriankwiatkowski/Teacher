@@ -26,7 +26,7 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.BasicSchoolClass
 import com.example.teacherapp.ui.components.TeacherFab
 import com.example.teacherapp.ui.components.form.TeacherChip
-import com.example.teacherapp.ui.components.resource.ResultContent
+import com.example.teacherapp.ui.components.result.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.BasicSchoolClassesPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing

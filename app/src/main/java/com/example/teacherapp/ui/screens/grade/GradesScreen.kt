@@ -25,7 +25,7 @@ import com.example.teacherapp.core.model.data.GradeTemplateInfo
 import com.example.teacherapp.data.provider.ActionMenuItemProvider
 import com.example.teacherapp.ui.components.TeacherTopBar
 import com.example.teacherapp.ui.components.TeacherTopBarDefaults
-import com.example.teacherapp.ui.components.resource.ResultContent
+import com.example.teacherapp.ui.components.result.ResultContent
 import com.example.teacherapp.ui.screens.grade.data.GradesUiState
 import com.example.teacherapp.ui.screens.paramproviders.BasicGradesForTemplatePreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme

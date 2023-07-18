@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.components.resource
+package com.example.teacherapp.ui.components.result
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,18 +13,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
 @Composable
-fun ErrorScreen(
+fun DeletedScreen(
     modifier: Modifier = Modifier,
-    label: String = "",
+    label: String = "Usunięto dane",
 ) {
-    ErrorScreen(
+    DeletedScreen(
         modifier = modifier,
-        label = { Text(label) },
+        label = { Text(text = label, style = MaterialTheme.typography.displayMedium) },
     )
 }
 
 @Composable
-fun ErrorScreen(
+fun DeletedScreen(
     label: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,20 +33,16 @@ fun ErrorScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = "Wystąpił nieoczekiwany błąd",
-            style = MaterialTheme.typography.displayMedium,
-        )
         label()
     }
 }
 
 @Preview
 @Composable
-private fun ErrorScreenPreview() {
+private fun DeletedScreenPreview() {
     TeacherAppTheme {
         Surface {
-            ErrorScreen()
+            DeletedScreen()
         }
     }
 }

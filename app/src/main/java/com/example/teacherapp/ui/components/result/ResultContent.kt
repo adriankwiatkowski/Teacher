@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.components.resource
+package com.example.teacherapp.ui.components.result
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.teacherapp.BuildConfig
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 
@@ -28,10 +29,30 @@ fun <T> ResultContent(
 
         when (result) {
             Result.Loading -> if (loadingContent != null) loadingContent() else LoadingScreen()
-            is Result.Error -> if (errorContent != null) errorContent() else ErrorScreen()
+
+            is Result.Error -> if (errorContent != null) {
+                errorContent()
+            } else {
+                ErrorScreenWithDebugInfo(exception = result.exception)
+            }
+
             is Result.Success -> content(result.data)
         }
     }
+}
+
+@Composable
+private fun ErrorScreenWithDebugInfo(
+    exception: Throwable?,
+    modifier: Modifier = Modifier,
+) {
+    val label: @Composable () -> Unit = if (BuildConfig.DEBUG) {
+        { Text(exception.toString()) }
+    } else {
+        {}
+    }
+
+    ErrorScreen(modifier = modifier, label = label)
 }
 
 @Preview

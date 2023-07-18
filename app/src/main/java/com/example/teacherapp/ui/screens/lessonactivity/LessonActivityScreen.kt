@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.LessonActivity
-import com.example.teacherapp.ui.components.resource.ResultContent
+import com.example.teacherapp.ui.components.result.ResultContent
 import com.example.teacherapp.ui.screens.paramproviders.LessonActivitiesPreviewParameterProvider
 import com.example.teacherapp.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.theme.spacing
