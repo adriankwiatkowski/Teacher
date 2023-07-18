@@ -8,7 +8,6 @@ import com.example.teacherapp.core.model.data.Grade
 import com.example.teacherapp.core.model.data.GradeTemplate
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
 
-
 internal fun toExternal(
     grade: GetGradeById?
 ): Grade? = run {

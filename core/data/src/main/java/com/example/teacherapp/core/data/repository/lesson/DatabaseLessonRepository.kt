@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
 
-class DatabaseLessonRepository @Inject constructor(
+internal class DatabaseLessonRepository @Inject constructor(
     private val dataSource: LessonDataSource,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationScope private val scope: CoroutineScope,

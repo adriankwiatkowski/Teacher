@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
-class DatabaseSchoolYearRepository @Inject constructor(
+internal class DatabaseSchoolYearRepository @Inject constructor(
     private val dataSource: SchoolYearDataSource,
     @ApplicationScope private val scope: CoroutineScope,
 ) : SchoolYearRepository {

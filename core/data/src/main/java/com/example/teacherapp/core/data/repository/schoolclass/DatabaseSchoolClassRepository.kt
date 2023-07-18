@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DatabaseSchoolClassRepository @Inject constructor(
+internal class DatabaseSchoolClassRepository @Inject constructor(
     private val dataSource: SchoolClassDataSource,
     private val schoolYearDataSource: SchoolYearDataSource,
     @ApplicationScope private val scope: CoroutineScope,

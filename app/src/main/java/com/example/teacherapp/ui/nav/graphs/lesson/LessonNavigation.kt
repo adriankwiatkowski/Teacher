@@ -1,6 +1,5 @@
 package com.example.teacherapp.ui.nav.graphs.lesson
 
-import androidx.compose.material3.Text
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -21,6 +20,7 @@ import com.example.teacherapp.ui.nav.graphs.lesson.route.GradeFormRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.route.GradeTemplateFormRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.route.GradeTemplatesRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.route.GradesRoute
+import com.example.teacherapp.ui.nav.graphs.lesson.route.LessonActivityRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.route.LessonFormRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.route.LessonScaffoldWrapper
 import com.example.teacherapp.ui.nav.graphs.lesson.tab.LessonTab
@@ -139,7 +139,7 @@ fun NavGraphBuilder.lessonGraph(
                     ActionMenuItemProvider.delete(viewModel::onDeleteLesson),
                 ),
                 viewModel = viewModel,
-            ) { selectedTab, lesson ->
+            ) { selectedTab, _ ->
                 when (selectedTab) {
                     LessonTab.Grades -> GradeTemplatesRoute(
                         onGradeClick = { gradeTemplateId ->
@@ -156,9 +156,7 @@ fun NavGraphBuilder.lessonGraph(
                         },
                     )
 
-                    LessonTab.Activity -> {
-                        Text(text = "Aktywność")
-                    }
+                    LessonTab.Activity -> LessonActivityRoute()
                 }
             }
         }

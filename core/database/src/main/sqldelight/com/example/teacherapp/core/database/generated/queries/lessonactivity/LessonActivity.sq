@@ -1,0 +1,28 @@
+getLessonActivitiesByLessonId:
+SELECT
+    la.id,
+    la.sum,
+    l.id AS 'lesson_id',
+    l.name AS 'lesson_name',
+    l.school_class_id AS 'school_class_id',
+    s.order_in_class AS 'student_order_in_class',
+    s.id AS 'student_id',
+    s.name AS 'student_name',
+    s.surname AS 'student_surname',
+    s.email AS 'student_email',
+    s.phone AS 'student_phone'
+FROM lesson l
+INNER JOIN school_class sc ON sc.id = l.school_class_id
+INNER JOIN student s ON s.school_class_id = sc.id
+LEFT JOIN lesson_activity la ON la.student_id = s.id
+WHERE l.id = :id;
+
+insertLessonActivity:
+INSERT OR FAIL
+INTO lesson_activity
+VALUES (?, ?, ?, ?);
+
+updateLessonActivity:
+UPDATE lesson_activity
+SET sum = :sum
+WHERE id = :id;

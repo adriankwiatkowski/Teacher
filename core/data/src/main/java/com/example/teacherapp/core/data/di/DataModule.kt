@@ -6,6 +6,8 @@ import com.example.teacherapp.core.data.repository.gradetemplate.DatabaseGradeTe
 import com.example.teacherapp.core.data.repository.gradetemplate.GradeTemplateRepository
 import com.example.teacherapp.core.data.repository.lesson.DatabaseLessonRepository
 import com.example.teacherapp.core.data.repository.lesson.LessonRepository
+import com.example.teacherapp.core.data.repository.lessonactivity.DatabaseLessonActivityRepository
+import com.example.teacherapp.core.data.repository.lessonactivity.LessonActivityRepository
 import com.example.teacherapp.core.data.repository.schoolclass.DatabaseSchoolClassRepository
 import com.example.teacherapp.core.data.repository.schoolclass.SchoolClassRepository
 import com.example.teacherapp.core.data.repository.schoolyear.DatabaseSchoolYearRepository
@@ -21,7 +23,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface DataModule {
+internal interface DataModule {
 
     @Binds
     fun bindsLessonRepository(
@@ -57,4 +59,9 @@ interface DataModule {
     fun bindsGradeRepository(
         gradeTemplateRepository: DatabaseGradeRepository,
     ): GradeRepository
+
+    @Binds
+    fun bindsLessonActivityRepository(
+        lessonActivityRepository: DatabaseLessonActivityRepository,
+    ): LessonActivityRepository
 }

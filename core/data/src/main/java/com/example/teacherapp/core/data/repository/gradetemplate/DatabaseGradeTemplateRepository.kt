@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DatabaseGradeTemplateRepository @Inject constructor(
+internal class DatabaseGradeTemplateRepository @Inject constructor(
     private val dataSource: GradeTemplateDataSource,
     @ApplicationScope private val scope: CoroutineScope,
 ) : GradeTemplateRepository {

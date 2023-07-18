@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import javax.inject.Inject
 
-class DatabaseGradeRepository @Inject constructor(
+internal class DatabaseGradeRepository @Inject constructor(
     private val dataSource: GradeDataSource,
     private val gradeTemplateDataSource: GradeTemplateDataSource,
     private val studentDataSource: StudentDataSource,
@@ -48,7 +48,7 @@ class DatabaseGradeRepository @Inject constructor(
         id: Long?,
         studentId: Long,
         gradeTemplateId: Long,
-        grade: BigDecimal
+        grade: BigDecimal,
     ) {
         scope.launch {
             dataSource.insertOrUpdateGrade(
