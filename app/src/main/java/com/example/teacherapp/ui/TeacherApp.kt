@@ -47,7 +47,7 @@ fun TeacherApp(
                 onClick = { screen ->
                     val navActions = appState.navActions
                     when (screen) {
-                        TeacherBottomNavScreen.Calendar -> navActions.navigateToCalendarRoute()
+                        TeacherBottomNavScreen.Schedule -> navActions.navigateToScheduleRoute()
                         TeacherBottomNavScreen.SchoolClasses -> navActions.navigateToSchoolClassesRoute()
                         TeacherBottomNavScreen.Settings -> navActions.navigateToSettingsRoute()
                     }

@@ -9,10 +9,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
-import com.example.teacherapp.ui.nav.TeacherDestinations
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation
+import com.example.teacherapp.ui.nav.graphs.schedule.ScheduleNavigation
 import com.example.teacherapp.ui.nav.graphs.schoolclass.SchoolClassNavigation
+import com.example.teacherapp.ui.nav.graphs.settings.SettingsNavigation
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import com.example.teacherapp.ui.nav.rememberNavActions
 import kotlinx.coroutines.CoroutineScope
@@ -50,14 +51,14 @@ class TeacherAppState(
         navController.currentBackStackEntryFlow
             .mapLatest { backStackEntry ->
                 when (backStackEntry.destination.route) {
-                    TeacherDestinations.SCHEDULE_ROUTE -> TeacherBottomNavScreen.Calendar
+                    ScheduleNavigation.scheduleRoute -> TeacherBottomNavScreen.Schedule
 
                     SchoolClassNavigation.schoolClassesRoute,
                     SchoolClassNavigation.schoolClassRoute,
                     StudentNavigation.studentRoute,
                     LessonNavigation.lessonRoute -> TeacherBottomNavScreen.SchoolClasses
 
-                    TeacherDestinations.SETTINGS_ROUTE -> TeacherBottomNavScreen.Settings
+                    SettingsNavigation.settingsRoute -> TeacherBottomNavScreen.Settings
                     else -> null
                 }
             }

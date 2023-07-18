@@ -11,27 +11,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
-import com.example.teacherapp.ui.nav.TeacherScreens.SCHEDULE_SCREEN
-import com.example.teacherapp.ui.nav.TeacherScreens.SETTINGS_SCREEN
+import com.example.teacherapp.ui.nav.graphs.schedule.ScheduleNavigation
+import com.example.teacherapp.ui.nav.graphs.schedule.navigateToScheduleRoute
 import com.example.teacherapp.ui.nav.graphs.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.ui.nav.graphs.schoolclass.navigateToSchoolClassGraph
+import com.example.teacherapp.ui.nav.graphs.settings.SettingsNavigation
+import com.example.teacherapp.ui.nav.graphs.settings.navigateToSettingsRoute
 
 enum class TeacherBottomNavScreen(val route: String, val title: String, val icon: ImageVector) {
-    Calendar(TeacherDestinations.SCHEDULE_ROUTE, "Plan zajęć", Icons.Default.Person),
+    Schedule(ScheduleNavigation.scheduleRoute, "Plan zajęć", Icons.Default.Person),
     SchoolClasses(SchoolClassNavigation.schoolClassesRoute, "Klasy", Icons.Default.Menu),
-    Settings(TeacherDestinations.SETTINGS_ROUTE, "Ustawienia", Icons.Default.Settings),
-}
-
-private object TeacherScreens {
-
-    const val SCHEDULE_SCREEN = "schedule"
-
-    const val SETTINGS_SCREEN = "settings"
-}
-
-object TeacherDestinations {
-    const val SCHEDULE_ROUTE = SCHEDULE_SCREEN
-    const val SETTINGS_ROUTE = SETTINGS_SCREEN
+    Settings(SettingsNavigation.settingsRoute, "Ustawienia", Icons.Default.Settings),
 }
 
 @Composable
@@ -43,8 +33,10 @@ fun rememberNavActions(navController: NavController): TeacherNavigationActions {
 
 class TeacherNavigationActions(private val navController: NavController) {
 
-    fun navigateToCalendarRoute() {
-        navigateToBottomBar(TeacherDestinations.SCHEDULE_ROUTE)
+    fun navigateToScheduleRoute() {
+        navController.navigateToScheduleRoute(navOptions {
+            setBottomBarNavOptions()
+        })
     }
 
     fun navigateToSchoolClassesRoute() {
@@ -54,13 +46,9 @@ class TeacherNavigationActions(private val navController: NavController) {
     }
 
     fun navigateToSettingsRoute() {
-        navigateToBottomBar(TeacherDestinations.SETTINGS_ROUTE)
-    }
-
-    private fun navigateToBottomBar(route: String) {
-        navController.navigate(route) {
+        navController.navigateToSettingsRoute(navOptions {
             setBottomBarNavOptions()
-        }
+        })
     }
 
     private fun NavOptionsBuilder.setBottomBarNavOptions() {
