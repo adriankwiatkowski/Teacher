@@ -39,9 +39,9 @@ import com.example.teacherapp.core.ui.component.form.FormTextField
 import com.example.teacherapp.core.ui.component.result.ResultContent
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
+import com.example.teacherapp.core.ui.provider.ActionItemProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.data.provider.ActionItemProvider
 import com.example.teacherapp.ui.screens.gradetemplate.data.GradeTemplateFormProvider
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,7 +1,7 @@
 package com.example.teacherapp.ui.screens.schoolyear.data
 
 import com.example.teacherapp.core.ui.model.InputField
-import com.example.teacherapp.data.models.input.InputDate
+import com.example.teacherapp.data.InputDate
 import java.util.UUID
 
 data class TermForm(

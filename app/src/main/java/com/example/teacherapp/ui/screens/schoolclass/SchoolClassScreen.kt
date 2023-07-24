@@ -24,9 +24,9 @@ import com.example.teacherapp.core.model.data.SchoolClass
 import com.example.teacherapp.core.ui.component.TeacherTopBar
 import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
 import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.provider.ActionItemProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.data.provider.ActionItemProvider
 import com.example.teacherapp.ui.screens.paramproviders.SchoolClassPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.lessons
 import com.example.teacherapp.ui.screens.schoolclass.components.schoolYearExpandable

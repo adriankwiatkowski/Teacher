@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.teacherapp.data.provider.ActionItemProvider
+import com.example.teacherapp.core.ui.provider.ActionItemProvider
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.schoolClassIdArg
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentIdArg
 import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation.studentNoteIdArg

@@ -1,4 +1,4 @@
-package com.example.teacherapp.data.provider
+package com.example.teacherapp.core.ui.provider
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete

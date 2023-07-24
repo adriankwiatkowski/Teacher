@@ -1,4 +1,4 @@
-package com.example.teacherapp.data.models.input
+package com.example.teacherapp.data
 
 import java.time.LocalDate
 

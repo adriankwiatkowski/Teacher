@@ -4,7 +4,7 @@ import androidx.core.text.trimmedLength
 import com.example.teacherapp.core.common.utils.format
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
-import com.example.teacherapp.data.models.input.InputDate
+import com.example.teacherapp.data.InputDate
 import java.time.LocalDate
 
 object SchoolYearFormProvider {

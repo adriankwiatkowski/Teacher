@@ -28,7 +28,7 @@ import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.data.models.input.InputDate
+import com.example.teacherapp.data.InputDate
 import com.example.teacherapp.ui.screens.schoolyear.components.TermForm
 import com.example.teacherapp.ui.screens.schoolyear.data.SchoolYearFormProvider
 import com.example.teacherapp.ui.screens.schoolyear.data.TermForm

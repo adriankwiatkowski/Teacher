@@ -14,7 +14,7 @@ import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
 import com.example.teacherapp.core.ui.model.InputField
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.data.models.input.InputDate
+import com.example.teacherapp.data.InputDate
 import java.time.LocalDate
 
 @Composable
