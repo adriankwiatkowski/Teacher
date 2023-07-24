@@ -1,10 +1,9 @@
-package com.example.teacherapp.ui.screens.schoolyear.data
+package com.example.teacherapp.feature.schoolyear.data
 
 import com.example.teacherapp.core.ui.model.InputField
-import com.example.teacherapp.data.InputDate
 import java.util.UUID
 
-data class TermForm(
+internal data class TermForm(
     val name: InputField<String>,
     val startDate: InputDate,
     val endDate: InputDate,

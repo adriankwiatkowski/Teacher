@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.schoolyear.components
+package com.example.teacherapp.feature.schoolyear.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -14,11 +14,11 @@ import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
 import com.example.teacherapp.core.ui.model.InputField
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.data.InputDate
+import com.example.teacherapp.feature.schoolyear.data.InputDate
 import java.time.LocalDate
 
 @Composable
-fun TermForm(
+internal fun TermForm(
     namePrefix: String,
     nameInput: InputField<String>,
     onNameChange: (name: String) -> Unit,

@@ -1,11 +1,10 @@
-package com.example.teacherapp.ui.nav.graphs.schoolyear.route
+package com.example.teacherapp.feature.schoolyear
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.teacherapp.core.ui.model.FormStatus
-import com.example.teacherapp.ui.screens.schoolyear.SchoolYearFormScreen
-import com.example.teacherapp.ui.screens.schoolyear.data.SchoolYearFormViewModel
+import com.example.teacherapp.feature.schoolyear.data.SchoolYearFormViewModel
 
 @Composable
 internal fun SchoolYearFormRoute(

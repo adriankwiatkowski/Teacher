@@ -1,9 +1,9 @@
-package com.example.teacherapp.ui.screens.schoolyear.data
+package com.example.teacherapp.feature.schoolyear.data
 
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
 
-data class SchoolYearForm(
+internal data class SchoolYearForm(
     val schoolYearName: InputField<String>,
     val termForms: List<TermForm>,
     val status: FormStatus,

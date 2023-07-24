@@ -1,13 +1,12 @@
-package com.example.teacherapp.ui.screens.schoolyear.data
+package com.example.teacherapp.feature.schoolyear.data
 
 import androidx.core.text.trimmedLength
 import com.example.teacherapp.core.common.utils.format
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
-import com.example.teacherapp.data.InputDate
 import java.time.LocalDate
 
-object SchoolYearFormProvider {
+internal object SchoolYearFormProvider {
 
     fun validateSchoolYearName(
         name: String,

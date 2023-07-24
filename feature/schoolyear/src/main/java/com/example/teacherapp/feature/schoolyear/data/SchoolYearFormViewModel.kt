@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.schoolyear.data
+package com.example.teacherapp.feature.schoolyear.data
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +14,7 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
-class SchoolYearFormViewModel @Inject constructor(
+internal class SchoolYearFormViewModel @Inject constructor(
     private val repository: SchoolYearRepository,
 ) : ViewModel() {
 

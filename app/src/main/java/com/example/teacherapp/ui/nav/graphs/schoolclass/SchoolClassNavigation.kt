@@ -17,7 +17,6 @@ import com.example.teacherapp.ui.nav.graphs.schoolclass.SchoolClassNavigation.sc
 import com.example.teacherapp.ui.nav.graphs.schoolclass.route.SchoolClassFormRoute
 import com.example.teacherapp.ui.nav.graphs.schoolclass.route.SchoolClassRoute
 import com.example.teacherapp.ui.nav.graphs.schoolclass.route.SchoolClassesRoute
-import com.example.teacherapp.ui.nav.graphs.schoolyear.navigateToSchoolYearFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentFormRoute
 import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentGraph
 import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassesViewModel
@@ -55,6 +54,7 @@ private fun NavController.navigateToSchoolClassFormRoute(navOptions: NavOptions?
 fun NavGraphBuilder.schoolClassGraph(
     navController: NavController,
     onShowSnackbar: (message: String) -> Unit,
+    navigateToSchoolYearForm: () -> Unit,
 ) {
     navigation(
         startDestination = schoolClassesRoute,
@@ -124,7 +124,7 @@ fun NavGraphBuilder.schoolClassGraph(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
             onShowSnackbar = onShowSnackbar,
-            onAddSchoolYear = navController::navigateToSchoolYearFormRoute
+            onAddSchoolYear = navigateToSchoolYearForm,
         )
     }
 }

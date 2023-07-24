@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.schoolyear
+package com.example.teacherapp.feature.schoolyear
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,15 +28,15 @@ import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.data.InputDate
-import com.example.teacherapp.ui.screens.schoolyear.components.TermForm
-import com.example.teacherapp.ui.screens.schoolyear.data.SchoolYearFormProvider
-import com.example.teacherapp.ui.screens.schoolyear.data.TermForm
+import com.example.teacherapp.feature.schoolyear.components.TermForm
+import com.example.teacherapp.feature.schoolyear.data.InputDate
+import com.example.teacherapp.feature.schoolyear.data.SchoolYearFormProvider
+import com.example.teacherapp.feature.schoolyear.data.TermForm
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SchoolYearFormScreen(
+internal fun SchoolYearFormScreen(
     termForms: List<TermForm>,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
