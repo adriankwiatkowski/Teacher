@@ -47,14 +47,16 @@ internal fun StudentScaffoldWrapper(
         }
     }
 
-    val schoolClassName = remember(studentResult) {
-        (studentResult as? Result.Success)?.data?.schoolClass?.name.orEmpty()
+    val title = remember(studentResult) {
+        val result = (studentResult as? Result.Success) ?: return@remember "Uczeń"
+        val data = result.data
+        "${data.fullName} ${data.schoolClass.name}"
     }
 
     StudentScaffold(
         modifier = modifier,
         isScaffoldVisible = !isStudentDeleted,
-        title = "Klasa $schoolClassName",
+        title = title,
         menuItems = menuItems,
         showNavigationIcon = showNavigationIcon,
         onNavigationIconClick = onNavBack,

@@ -75,7 +75,7 @@ private fun StudentScaffoldPreview() {
             StudentScaffold(
                 modifier = Modifier.fillMaxSize(),
                 isScaffoldVisible = true,
-                title = "Klasa 3A",
+                title = "Jan Kowalski 3A",
                 menuItems = listOf(),
                 showNavigationIcon = true,
                 onNavigationIconClick = {},
