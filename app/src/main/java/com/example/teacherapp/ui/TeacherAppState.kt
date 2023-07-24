@@ -10,11 +10,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.feature.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.feature.settings.SettingsNavigation
+import com.example.teacherapp.feature.student.StudentNavigation
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherNavigationActions
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation
 import com.example.teacherapp.ui.nav.graphs.schedule.ScheduleNavigation
-import com.example.teacherapp.ui.nav.graphs.student.StudentNavigation
 import com.example.teacherapp.ui.nav.rememberNavActions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi

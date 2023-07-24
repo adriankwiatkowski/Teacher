@@ -30,7 +30,7 @@ import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.feature.schoolclass.components.lessons
 import com.example.teacherapp.feature.schoolclass.components.schoolYearExpandable
 import com.example.teacherapp.feature.schoolclass.components.students
-import com.example.teacherapp.feature.schoolclass.previewparam.SchoolClassPreviewParameterProvider
+import com.example.teacherapp.feature.schoolclass.paramprovider.SchoolClassPreviewParameterProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -8,14 +8,14 @@ import com.example.teacherapp.feature.schoolclass.schoolClassGraph
 import com.example.teacherapp.feature.schoolyear.navigateToSchoolYearFormRoute
 import com.example.teacherapp.feature.schoolyear.schoolYearGraph
 import com.example.teacherapp.feature.settings.settingsGraph
+import com.example.teacherapp.feature.student.navigateToStudentFormRoute
+import com.example.teacherapp.feature.student.navigateToStudentGraph
+import com.example.teacherapp.feature.student.studentGraph
 import com.example.teacherapp.ui.TeacherAppState
 import com.example.teacherapp.ui.nav.graphs.lesson.lessonGraph
 import com.example.teacherapp.ui.nav.graphs.lesson.navigateToLessonFormRoute
 import com.example.teacherapp.ui.nav.graphs.lesson.navigateToLessonGraph
 import com.example.teacherapp.ui.nav.graphs.schedule.scheduleGraph
-import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentFormRoute
-import com.example.teacherapp.ui.nav.graphs.student.navigateToStudentGraph
-import com.example.teacherapp.ui.nav.graphs.student.studentGraph
 
 @Composable
 fun TeacherNavGraph(
