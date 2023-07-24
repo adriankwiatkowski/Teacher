@@ -60,19 +60,12 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:model"))
     implementation(project(":core:data"))
+    implementation(project(":core:ui"))
 
     implementation(libs.bundles.androidx)
 
     // Desugar
     coreLibraryDesugaring(libs.desugar.jdk)
-
-    // Compose Bom
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-    implementation(libs.bundles.compose)
-    debugImplementation(libs.bundles.debug.compose)
-    androidTestImplementation(libs.bundles.android.test.compose)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
@@ -85,7 +78,6 @@ dependencies {
 
     testImplementation(libs.junit4)
     androidTestImplementation(libs.junit.ext)
-    androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
 

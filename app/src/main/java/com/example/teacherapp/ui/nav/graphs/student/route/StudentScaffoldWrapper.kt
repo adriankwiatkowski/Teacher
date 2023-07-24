@@ -8,8 +8,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.Student
-import com.example.teacherapp.data.models.ActionMenuItem
-import com.example.teacherapp.ui.components.result.ResultContent
+import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.model.ActionItem
 import com.example.teacherapp.ui.nav.graphs.student.tab.StudentTab
 import com.example.teacherapp.ui.screens.student.components.StudentScaffold
 import com.example.teacherapp.ui.screens.student.data.StudentScaffoldViewModel
@@ -21,7 +21,7 @@ internal fun StudentScaffoldWrapper(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onShowSnackbar: (message: String) -> Unit,
-    menuItems: List<ActionMenuItem>,
+    menuItems: List<ActionItem>,
     modifier: Modifier = Modifier,
     viewModel: StudentScaffoldViewModel = hiltViewModel(),
     content: @Composable (selectedTab: StudentTab, student: Student) -> Unit,

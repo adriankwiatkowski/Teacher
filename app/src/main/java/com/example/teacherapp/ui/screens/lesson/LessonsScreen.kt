@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.model.data.Lesson
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.ui.screens.paramproviders.LessonsPreviewParameterProvider
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -11,10 +11,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.teacherapp.ui.components.TeacherNavigationBar
+import com.example.teacherapp.core.ui.component.TeacherNavigationBar
+import com.example.teacherapp.core.ui.component.TeacherNavigationBarItem
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherNavGraph
-import com.example.teacherapp.ui.theme.TeacherAppTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -40,19 +41,43 @@ fun TeacherApp(
         modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
-            TeacherNavigationBar(
-                screens = bottomNavScreens,
-                selected = selectedBottomNavItem,
-                visible = shouldShowBottomBar,
-                onClick = { screen ->
-                    val navActions = appState.navActions
-                    when (screen) {
-                        TeacherBottomNavScreen.Schedule -> navActions.navigateToScheduleRoute()
-                        TeacherBottomNavScreen.SchoolClasses -> navActions.navigateToSchoolClassesRoute()
-                        TeacherBottomNavScreen.Settings -> navActions.navigateToSettingsRoute()
-                    }
-                },
-            )
+//            TeacherNavigationBar(
+//                screens = bottomNavScreens,
+//                selected = selectedBottomNavItem,
+//                visible = shouldShowBottomBar,
+//                onClick = { screen ->
+//                    val navActions = appState.navActions
+//                    when (screen) {
+//                        TeacherBottomNavScreen.Schedule -> navActions.navigateToScheduleRoute()
+//                        TeacherBottomNavScreen.SchoolClasses -> navActions.navigateToSchoolClassesRoute()
+//                        TeacherBottomNavScreen.Settings -> navActions.navigateToSettingsRoute()
+//                    }
+//                },
+//            )
+            TeacherNavigationBar(visible = shouldShowBottomBar) {
+                for (screen in bottomNavScreens) {
+                    TeacherNavigationBarItem(
+                        selected = screen == selectedBottomNavItem,
+                        onClick = {
+                            val navActions = appState.navActions
+                            when (screen) {
+                                TeacherBottomNavScreen.Schedule -> {
+                                    navActions.navigateToScheduleRoute()
+                                }
+                                TeacherBottomNavScreen.SchoolClasses -> {
+                                    navActions.navigateToSchoolClassesRoute()
+                                }
+                                TeacherBottomNavScreen.Settings -> {
+                                    navActions.navigateToSettingsRoute()
+                                }
+                            }
+                        },
+                        icon = screen.icon,
+                        iconContentDescription = null,
+                        label = screen.title,
+                    )
+                }
+            }
         }
     ) { innerPadding ->
         TeacherNavGraph(

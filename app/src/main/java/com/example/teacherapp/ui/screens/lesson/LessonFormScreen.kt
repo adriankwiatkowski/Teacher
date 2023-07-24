@@ -33,19 +33,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.Lesson
-import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.ui.components.TeacherFab
-import com.example.teacherapp.ui.components.TeacherTopBar
-import com.example.teacherapp.ui.components.TeacherTopBarDefaults
-import com.example.teacherapp.ui.components.form.FormOutlinedTextField
-import com.example.teacherapp.ui.components.form.FormStatusContent
-import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.result.ResultContent
+import com.example.teacherapp.core.ui.component.TeacherButton
+import com.example.teacherapp.core.ui.component.TeacherFab
+import com.example.teacherapp.core.ui.component.TeacherTopBar
+import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
+import com.example.teacherapp.core.ui.component.form.FormStatusContent
+import com.example.teacherapp.core.ui.component.form.FormTextField
+import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.model.FormStatus
+import com.example.teacherapp.core.ui.model.InputField
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.ui.screens.lesson.data.LessonFormProvider
 import com.example.teacherapp.ui.screens.paramproviders.LessonPreviewParameterProvider
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -160,7 +160,7 @@ private fun Content(
         )
         val commonKeyboardActions = KeyboardActions(onNext = { moveNext() })
 
-        FormOutlinedTextField(
+        FormTextField(
             modifier = textFieldModifier,
             inputField = name,
             onValueChange = { onNameChange(it) },
@@ -172,7 +172,7 @@ private fun Content(
             keyboardActions = commonKeyboardActions,
         )
 
-        TeacherOutlinedButton(
+        TeacherButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = onSubmit,
             enabled = isSubmitEnabled,

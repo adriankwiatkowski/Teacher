@@ -12,11 +12,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.teacherapp.data.models.ActionMenuItem
-import com.example.teacherapp.ui.components.TeacherTopBarDefaults
-import com.example.teacherapp.ui.components.TeacherTopBarWithTabs
+import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
+import com.example.teacherapp.core.ui.component.TeacherTopBarWithTabs
+import com.example.teacherapp.core.ui.model.ActionItem
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.nav.graphs.student.tab.StudentTab
-import com.example.teacherapp.ui.theme.TeacherAppTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 fun StudentScaffold(
     isScaffoldVisible: Boolean,
     title: String,
-    menuItems: List<ActionMenuItem>,
+    menuItems: List<ActionItem>,
     showNavigationIcon: Boolean,
     onNavigationIconClick: () -> Unit,
     tabs: List<StudentTab>,

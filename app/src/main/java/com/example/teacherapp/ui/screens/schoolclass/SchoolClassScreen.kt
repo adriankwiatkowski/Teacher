@@ -21,16 +21,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.SchoolClass
-import com.example.teacherapp.data.provider.ActionMenuItemProvider
-import com.example.teacherapp.ui.components.TeacherTopBar
-import com.example.teacherapp.ui.components.TeacherTopBarDefaults
-import com.example.teacherapp.ui.components.result.ResultContent
+import com.example.teacherapp.core.ui.component.TeacherTopBar
+import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
+import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
+import com.example.teacherapp.data.provider.ActionItemProvider
 import com.example.teacherapp.ui.screens.paramproviders.SchoolClassPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.lessons
 import com.example.teacherapp.ui.screens.schoolclass.components.schoolYearExpandable
 import com.example.teacherapp.ui.screens.schoolclass.components.students
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +63,7 @@ fun SchoolClassScreen(
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = listOf(
-                    ActionMenuItemProvider.delete(onDeleteSchoolClassClick)
+                    ActionItemProvider.delete(onDeleteSchoolClassClick)
                 ),
                 scrollBehavior = scrollBehavior,
             )

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.data.repository.schoolclass.SchoolClassRepository
 import com.example.teacherapp.core.model.data.SchoolYear
-import com.example.teacherapp.data.models.input.FormStatus
+import com.example.teacherapp.core.ui.model.FormStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.launchIn

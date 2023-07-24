@@ -28,10 +28,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.SettingsData
 import com.example.teacherapp.core.model.data.ThemeConfig
-import com.example.teacherapp.ui.components.result.ResultContent
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
-import com.example.teacherapp.ui.theme.supportsDynamicTheming
+import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
+import com.example.teacherapp.core.ui.theme.supportsDynamicTheming
 
 @Composable
 fun SettingsScreen(

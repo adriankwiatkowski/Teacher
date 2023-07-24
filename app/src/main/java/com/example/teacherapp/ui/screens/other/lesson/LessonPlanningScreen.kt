@@ -26,10 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.teacherapp.ui.components.pickers.TeacherDatePicker
-import com.example.teacherapp.ui.components.pickers.TeacherTimePicker
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
+import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
+import com.example.teacherapp.core.ui.component.picker.TeacherTimePicker
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -249,7 +249,7 @@ private fun LessonPlanningScreenPreview() {
     }
 }
 
-data class Lesson(
+private data class Lesson(
     val title: String,
     val description: String,
     val date: LocalDate,

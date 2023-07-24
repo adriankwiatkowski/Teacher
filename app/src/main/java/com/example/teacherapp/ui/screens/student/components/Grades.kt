@@ -14,9 +14,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.teacherapp.ui.components.expandablelist.ExpandableItem
-import com.example.teacherapp.ui.components.expandablelist.expandableItem
-import com.example.teacherapp.ui.theme.spacing
+import com.example.teacherapp.core.ui.component.expandablelist.ExpandableItem
+import com.example.teacherapp.core.ui.component.expandablelist.expandableItem
+import com.example.teacherapp.core.ui.theme.spacing
 
 @OptIn(ExperimentalLayoutApi::class)
 fun LazyListScope.grades(

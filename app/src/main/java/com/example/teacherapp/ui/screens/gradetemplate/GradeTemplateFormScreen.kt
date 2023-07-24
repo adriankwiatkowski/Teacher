@@ -31,18 +31,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.GradeTemplate
-import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.data.provider.ActionMenuItemProvider
-import com.example.teacherapp.ui.components.TeacherTopBar
-import com.example.teacherapp.ui.components.TeacherTopBarDefaults
-import com.example.teacherapp.ui.components.form.FormOutlinedTextField
-import com.example.teacherapp.ui.components.form.FormStatusContent
-import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.result.ResultContent
+import com.example.teacherapp.core.ui.component.TeacherButton
+import com.example.teacherapp.core.ui.component.TeacherTopBar
+import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
+import com.example.teacherapp.core.ui.component.form.FormStatusContent
+import com.example.teacherapp.core.ui.component.form.FormTextField
+import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.model.FormStatus
+import com.example.teacherapp.core.ui.model.InputField
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
+import com.example.teacherapp.data.provider.ActionItemProvider
 import com.example.teacherapp.ui.screens.gradetemplate.data.GradeTemplateFormProvider
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +74,7 @@ fun GradeTemplateFormScreen(
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
-                    listOf(ActionMenuItemProvider.delete(onDeleteClick))
+                    listOf(ActionItemProvider.delete(onDeleteClick))
                 } else {
                     emptyList()
                 },
@@ -154,7 +154,7 @@ private fun MainContent(
         )
         val commonKeyboardActions = KeyboardActions(onNext = { moveNext() })
 
-        FormOutlinedTextField(
+        FormTextField(
             modifier = textFieldModifier,
             inputField = name,
             onValueChange = { onNameChange(it) },
@@ -163,7 +163,7 @@ private fun MainContent(
             keyboardActions = commonKeyboardActions,
         )
 
-        FormOutlinedTextField(
+        FormTextField(
             modifier = textFieldModifier,
             inputField = description,
             onValueChange = { onDescriptionChange(it) },
@@ -172,7 +172,7 @@ private fun MainContent(
             keyboardActions = commonKeyboardActions,
         )
 
-        FormOutlinedTextField(
+        FormTextField(
             modifier = textFieldModifier,
             inputField = weight,
             onValueChange = { onWeightChange(it) },
@@ -181,7 +181,7 @@ private fun MainContent(
             keyboardActions = commonKeyboardActions,
         )
 
-        TeacherOutlinedButton(
+        TeacherButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = onSubmit,
             enabled = isSubmitEnabled,

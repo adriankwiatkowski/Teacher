@@ -9,12 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.core.common.utils.format
+import com.example.teacherapp.core.ui.component.form.FormTextField
+import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
+import com.example.teacherapp.core.ui.model.InputField
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.data.models.input.InputDate
-import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.ui.components.form.FormOutlinedTextField
-import com.example.teacherapp.ui.components.pickers.TeacherDatePicker
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
 import java.time.LocalDate
 
 @Composable
@@ -32,7 +32,7 @@ fun TermForm(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
-        FormOutlinedTextField(
+        FormTextField(
             modifier = Modifier.fillMaxWidth(),
             inputField = nameInput,
             onValueChange = onNameChange,

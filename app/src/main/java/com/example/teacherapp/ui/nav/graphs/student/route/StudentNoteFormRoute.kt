@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.teacherapp.data.models.input.FormStatus
+import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.ui.screens.student.note.StudentNoteFormScreen
 import com.example.teacherapp.ui.screens.student.note.data.StudentNoteFormViewModel
 

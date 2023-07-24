@@ -1,10 +1,10 @@
 package com.example.teacherapp.ui.screens.schoolyear.data
 
 import androidx.core.text.trimmedLength
-import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.data.models.input.InputDate
-import com.example.teacherapp.data.models.input.InputField
 import com.example.teacherapp.core.common.utils.format
+import com.example.teacherapp.core.ui.model.FormStatus
+import com.example.teacherapp.core.ui.model.InputField
+import com.example.teacherapp.data.models.input.InputDate
 import java.time.LocalDate
 
 object SchoolYearFormProvider {

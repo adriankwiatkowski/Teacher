@@ -28,18 +28,18 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.BasicStudent
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
-import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.data.provider.ActionMenuItemProvider
-import com.example.teacherapp.ui.components.TeacherTopBar
-import com.example.teacherapp.ui.components.TeacherTopBarDefaults
-import com.example.teacherapp.ui.components.form.FormStatusContent
-import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.result.ResultContent
+import com.example.teacherapp.core.ui.component.TeacherButton
+import com.example.teacherapp.core.ui.component.TeacherTopBar
+import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
+import com.example.teacherapp.core.ui.component.form.FormStatusContent
+import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.model.FormStatus
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
+import com.example.teacherapp.data.provider.ActionItemProvider
 import com.example.teacherapp.ui.screens.grade.data.GradeFormProvider
 import com.example.teacherapp.ui.screens.grade.data.GradeFormUiState
 import com.example.teacherapp.ui.screens.paramproviders.GradeFormUiStatePreviewParameterProvider
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
 import java.math.BigDecimal
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +69,7 @@ fun GradeFormScreen(
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
-                    listOf(ActionMenuItemProvider.delete(onDeleteClick))
+                    listOf(ActionItemProvider.delete(onDeleteClick))
                 } else {
                     emptyList()
                 },
@@ -129,7 +129,7 @@ private fun MainContent(
         )
         GradeInputs(onGradeChange = onGradeChange)
 
-        TeacherOutlinedButton(
+        TeacherButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = onSubmit,
             enabled = isSubmitEnabled,
@@ -214,7 +214,7 @@ private fun GradeInput(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    TeacherOutlinedButton(modifier = modifier, onClick = onClick) {
+    TeacherButton(modifier = modifier, onClick = onClick) {
         Text(grade)
     }
 }

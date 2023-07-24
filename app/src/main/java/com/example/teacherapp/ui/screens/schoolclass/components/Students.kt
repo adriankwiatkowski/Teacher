@@ -20,10 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.model.data.BasicStudent
-import com.example.teacherapp.ui.components.expandablelist.expandableItems
+import com.example.teacherapp.core.ui.component.expandablelist.expandableItems
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.screens.paramproviders.BasicStudentsPreviewParameterProvider
 import com.example.teacherapp.ui.screens.student.components.StudentItem
-import com.example.teacherapp.ui.theme.TeacherAppTheme
 
 fun LazyListScope.students(
     students: List<BasicStudent>,

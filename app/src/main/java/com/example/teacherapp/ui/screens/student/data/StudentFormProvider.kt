@@ -1,8 +1,8 @@
 package com.example.teacherapp.ui.screens.student.data
 
 import androidx.core.text.trimmedLength
-import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.data.models.input.InputField
+import com.example.teacherapp.core.ui.model.FormStatus
+import com.example.teacherapp.core.ui.model.InputField
 
 object StudentFormProvider {
 

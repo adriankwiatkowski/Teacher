@@ -17,8 +17,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.SettingsData
 import com.example.teacherapp.core.model.data.ThemeConfig
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.TeacherApp
-import com.example.teacherapp.ui.theme.TeacherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

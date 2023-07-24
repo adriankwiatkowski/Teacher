@@ -28,8 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
 
 @Composable
 fun LessonScheduleScreen() {
@@ -112,7 +112,12 @@ fun LessonScheduleScreen() {
     }
 }
 
-data class LessonSchedule(val name: String, val startTime: Int, val endTime: Int, val day: String)
+private data class LessonSchedule(
+    val name: String,
+    val startTime: Int,
+    val endTime: Int,
+    val day: String,
+)
 
 @Composable
 private fun Lessons(

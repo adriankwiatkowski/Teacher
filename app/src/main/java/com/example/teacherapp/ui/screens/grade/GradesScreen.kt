@@ -22,14 +22,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.BasicGradeForTemplate
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
-import com.example.teacherapp.data.provider.ActionMenuItemProvider
-import com.example.teacherapp.ui.components.TeacherTopBar
-import com.example.teacherapp.ui.components.TeacherTopBarDefaults
-import com.example.teacherapp.ui.components.result.ResultContent
+import com.example.teacherapp.core.ui.component.TeacherTopBar
+import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
+import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
+import com.example.teacherapp.data.provider.ActionItemProvider
 import com.example.teacherapp.ui.screens.grade.data.GradesUiState
 import com.example.teacherapp.ui.screens.paramproviders.BasicGradesForTemplatePreviewParameterProvider
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
 import java.math.BigDecimal
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,8 +60,8 @@ fun GradesScreen(
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = listOf(
-                    ActionMenuItemProvider.edit(onEditClick),
-                    ActionMenuItemProvider.delete(onDeleteClick),
+                    ActionItemProvider.edit(onEditClick),
+                    ActionItemProvider.delete(onDeleteClick),
                 ),
                 scrollBehavior = scrollBehavior,
             )

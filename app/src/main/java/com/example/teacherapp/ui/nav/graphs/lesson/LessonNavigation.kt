@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.teacherapp.data.provider.ActionMenuItemProvider
+import com.example.teacherapp.data.provider.ActionItemProvider
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation.gradeIdArg
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation.gradeTemplateIdArg
 import com.example.teacherapp.ui.nav.graphs.lesson.LessonNavigation.gradesRoute
@@ -135,8 +135,8 @@ fun NavGraphBuilder.lessonGraph(
                 onNavBack = navController::popBackStack,
                 onShowSnackbar = onShowSnackbar,
                 menuItems = listOf(
-                    ActionMenuItemProvider.edit(onEditClick),
-                    ActionMenuItemProvider.delete(viewModel::onDeleteLesson),
+                    ActionItemProvider.edit(onEditClick),
+                    ActionItemProvider.delete(viewModel::onDeleteLesson),
                 ),
                 viewModel = viewModel,
             ) { selectedTab, _ ->

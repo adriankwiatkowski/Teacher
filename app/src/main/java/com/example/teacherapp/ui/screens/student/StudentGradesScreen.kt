@@ -22,12 +22,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.StudentGrade
 import com.example.teacherapp.core.model.data.StudentGradesByLesson
-import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
-import com.example.teacherapp.ui.components.result.ResultContent
+import com.example.teacherapp.core.ui.component.TeacherButton
+import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.ui.screens.paramproviders.StudentGradesByLessonPreviewParameterProvider
 import com.example.teacherapp.ui.screens.student.data.GradeDialogInfo
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
 
 @Composable
 fun StudentGradesScreen(
@@ -114,7 +114,7 @@ private fun Grade(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    TeacherOutlinedButton(modifier = modifier, onClick = onClick) {
+    TeacherButton(modifier = modifier, onClick = onClick) {
         Text(grade)
     }
 }

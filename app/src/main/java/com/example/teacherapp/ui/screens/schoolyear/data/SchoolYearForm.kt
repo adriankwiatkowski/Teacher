@@ -1,7 +1,7 @@
 package com.example.teacherapp.ui.screens.schoolyear.data
 
-import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.data.models.input.InputField
+import com.example.teacherapp.core.ui.model.FormStatus
+import com.example.teacherapp.core.ui.model.InputField
 
 data class SchoolYearForm(
     val schoolYearName: InputField<String>,

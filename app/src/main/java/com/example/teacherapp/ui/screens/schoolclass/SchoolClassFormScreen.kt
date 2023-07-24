@@ -17,18 +17,18 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.model.data.SchoolYear
-import com.example.teacherapp.data.models.input.FormStatus
-import com.example.teacherapp.data.models.input.InputField
-import com.example.teacherapp.ui.components.TeacherTopBar
-import com.example.teacherapp.ui.components.TeacherTopBarDefaults
-import com.example.teacherapp.ui.components.form.FormOutlinedTextField
-import com.example.teacherapp.ui.components.form.FormStatusContent
-import com.example.teacherapp.ui.components.form.TeacherOutlinedButton
+import com.example.teacherapp.core.ui.component.TeacherButton
+import com.example.teacherapp.core.ui.component.TeacherTopBar
+import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
+import com.example.teacherapp.core.ui.component.form.FormStatusContent
+import com.example.teacherapp.core.ui.component.form.FormTextField
+import com.example.teacherapp.core.ui.model.FormStatus
+import com.example.teacherapp.core.ui.model.InputField
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.ui.screens.paramproviders.SchoolYearsPreviewParameterProvider
 import com.example.teacherapp.ui.screens.schoolclass.components.SchoolYearInput
 import com.example.teacherapp.ui.screens.schoolclass.data.SchoolClassFormProvider
-import com.example.teacherapp.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -118,7 +118,7 @@ private fun MainContent(
         }
 
         item {
-            TeacherOutlinedButton(
+            TeacherButton(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = onSubmit,
                 enabled = isSubmitEnabled,
@@ -135,7 +135,7 @@ private fun ClassNameInput(
     onSchoolClassNameChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FormOutlinedTextField(
+    FormTextField(
         modifier = modifier,
         inputField = schoolClassName,
         onValueChange = onSchoolClassNameChange,

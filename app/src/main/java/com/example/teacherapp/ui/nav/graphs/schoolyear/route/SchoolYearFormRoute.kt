@@ -3,7 +3,7 @@ package com.example.teacherapp.ui.nav.graphs.schoolyear.route
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.teacherapp.data.models.input.FormStatus
+import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.ui.screens.schoolyear.SchoolYearFormScreen
 import com.example.teacherapp.ui.screens.schoolyear.data.SchoolYearFormViewModel
 
