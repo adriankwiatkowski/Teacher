@@ -13,9 +13,10 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "TeacherApp"
-include ':app'
-include ':core:common'
-include ':core:data'
-include ':core:database'
-include ':core:model'
-include ':core:datastore'
+include(":app")
+include(":core:common")
+include(":core:data")
+include(":core:database")
+include(":core:model")
+include(":core:datastore")
+include(":core:mylibrary")
