@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.hilt.nav.compose)
 
     testImplementation(libs.junit4)
+    androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
