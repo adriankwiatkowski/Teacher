@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.settings
+package com.example.teacherapp.feature.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,7 +34,7 @@ import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.core.ui.theme.supportsDynamicTheming
 
 @Composable
-fun SettingsScreen(
+internal fun SettingsScreen(
     settingsDataResult: Result<SettingsData>,
     onThemeChange: (theme: ThemeConfig) -> Unit,
     onDynamicColorChange: (useDynamicColor: Boolean) -> Unit,

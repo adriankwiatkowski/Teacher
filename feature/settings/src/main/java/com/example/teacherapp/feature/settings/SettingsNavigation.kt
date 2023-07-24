@@ -1,16 +1,15 @@
-package com.example.teacherapp.ui.nav.graphs.settings
+package com.example.teacherapp.feature.settings
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.example.teacherapp.ui.nav.graphs.settings.SettingsNavigation.settingsRoute
-import com.example.teacherapp.ui.nav.graphs.settings.route.SettingsRoute
+import com.example.teacherapp.feature.settings.SettingsNavigation.settingsRoute
 
 private const val settingsScreen = "settings"
 
-internal object SettingsNavigation {
-    internal const val settingsRoute = settingsScreen
+object SettingsNavigation {
+    const val settingsRoute = settingsScreen
 }
 
 fun NavController.navigateToSettingsRoute(navOptions: NavOptions? = null) {

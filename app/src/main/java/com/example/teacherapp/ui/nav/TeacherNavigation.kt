@@ -11,12 +11,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
+import com.example.teacherapp.feature.settings.SettingsNavigation
+import com.example.teacherapp.feature.settings.navigateToSettingsRoute
 import com.example.teacherapp.ui.nav.graphs.schedule.ScheduleNavigation
 import com.example.teacherapp.ui.nav.graphs.schedule.navigateToScheduleRoute
 import com.example.teacherapp.ui.nav.graphs.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.ui.nav.graphs.schoolclass.navigateToSchoolClassGraph
-import com.example.teacherapp.ui.nav.graphs.settings.SettingsNavigation
-import com.example.teacherapp.ui.nav.graphs.settings.navigateToSettingsRoute
 
 enum class TeacherBottomNavScreen(val route: String, val title: String, val icon: ImageVector) {
     Schedule(ScheduleNavigation.scheduleRoute, "Plan zajęć", Icons.Default.Person),

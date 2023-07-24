@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.settings.data
+package com.example.teacherapp.feature.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(
+internal class SettingsViewModel @Inject constructor(
     private val repository: SettingsRepository,
 ) : ViewModel() {
 
