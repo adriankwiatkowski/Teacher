@@ -8,7 +8,7 @@ import com.example.teacherapp.core.data.repository.student.StudentRepository
 import com.example.teacherapp.core.model.data.Student
 import com.example.teacherapp.core.model.data.StudentGrade
 import com.example.teacherapp.core.model.data.StudentGradesByLesson
-import com.example.teacherapp.core.studentcommon.StudentConstants
+import com.example.teacherapp.feature.student.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -55,7 +55,7 @@ internal class StudentGradesViewModel @Inject constructor(
     )
 
     companion object {
-        private const val STUDENT_ID_KEY = StudentConstants.studentIdArg
+        private const val STUDENT_ID_KEY = StudentNavigation.studentIdArg
     }
 }
 

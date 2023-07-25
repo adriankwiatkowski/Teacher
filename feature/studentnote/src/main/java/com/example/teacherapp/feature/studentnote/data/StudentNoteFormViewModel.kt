@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.data.repository.studentnote.StudentNoteRepository
 import com.example.teacherapp.core.model.data.StudentNote
-import com.example.teacherapp.core.studentcommon.StudentConstants
 import com.example.teacherapp.core.ui.model.FormStatus
+import com.example.teacherapp.feature.studentnote.StudentNoteNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -102,8 +102,8 @@ internal class StudentNoteFormViewModel @Inject constructor(
     )
 
     companion object {
-        private const val STUDENT_ID_KEY = StudentConstants.studentIdArg
-        private const val STUDENT_NOTE_ID_KEY = StudentConstants.studentNoteIdArg
+        private const val STUDENT_ID_KEY = StudentNoteNavigation.studentIdArg
+        private const val STUDENT_NOTE_ID_KEY = StudentNoteNavigation.studentNoteIdArg
         private const val IS_STUDENT_DELETED_KEY = "is-student-deleted"
     }
 }

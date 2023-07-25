@@ -14,6 +14,8 @@ import com.example.teacherapp.feature.settings.settingsGraph
 import com.example.teacherapp.feature.student.navigateToStudentFormRoute
 import com.example.teacherapp.feature.student.navigateToStudentGraph
 import com.example.teacherapp.feature.student.studentGraph
+import com.example.teacherapp.feature.studentnote.navigateToStudentNoteFormRoute
+import com.example.teacherapp.feature.studentnote.studentNoteGraph
 import com.example.teacherapp.ui.TeacherAppState
 import com.example.teacherapp.ui.nav.graphs.schedule.scheduleGraph
 
@@ -43,7 +45,12 @@ fun TeacherNavGraph(
             navigateToLessonFormRoute = navController::navigateToLessonFormRoute,
         )
         schoolYearGraph(navController = navController, onShowSnackbar = onShowSnackbar)
-        studentGraph(navController = navController, onShowSnackbar = onShowSnackbar)
+        studentGraph(
+            navController = navController,
+            onShowSnackbar = onShowSnackbar,
+            navigateToStudentNoteFormRoute = navController::navigateToStudentNoteFormRoute,
+        )
+        studentNoteGraph(navController = navController, onShowSnackbar = onShowSnackbar)
         lessonGraph(navController = navController, onShowSnackbar = onShowSnackbar)
 
         settingsGraph()

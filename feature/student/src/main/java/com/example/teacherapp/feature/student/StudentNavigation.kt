@@ -8,35 +8,32 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.teacherapp.core.studentcommon.StudentConstants.schoolClassIdArg
-import com.example.teacherapp.core.studentcommon.StudentConstants.studentIdArg
-import com.example.teacherapp.core.studentcommon.StudentConstants.studentNoteIdArg
 import com.example.teacherapp.core.ui.provider.ActionItemProvider
+import com.example.teacherapp.feature.student.StudentNavigation.schoolClassIdArg
+import com.example.teacherapp.feature.student.StudentNavigation.studentIdArg
 import com.example.teacherapp.feature.student.StudentNavigation.studentRoute
 import com.example.teacherapp.feature.student.data.StudentScaffoldViewModel
 import com.example.teacherapp.feature.student.route.StudentDetailRoute
 import com.example.teacherapp.feature.student.route.StudentFormRoute
 import com.example.teacherapp.feature.student.route.StudentGradesRoute
+import com.example.teacherapp.feature.student.route.StudentNotesRoute
 import com.example.teacherapp.feature.student.route.StudentScaffoldWrapper
 import com.example.teacherapp.feature.student.tab.StudentTab
-import com.example.teacherapp.feature.studentnote.route.StudentNoteFormRoute
-import com.example.teacherapp.feature.studentnote.route.StudentNotesRoute
 
 private const val studentGraphRoute = "student"
 
 private const val studentScreen = "student"
 private const val studentFormScreen = "student-form"
-private const val studentNoteFormScreen = "student-note-form"
 
 object StudentNavigation {
+    internal const val schoolClassIdArg = "school-class-id"
+    internal const val studentIdArg = "student-id"
+
     const val studentRoute = "$studentScreen/{$schoolClassIdArg}/{${studentIdArg}}"
 }
 
 private const val studentFormRoute =
     "$studentFormScreen/{$schoolClassIdArg}?$studentIdArg={$studentIdArg}"
-
-private const val studentNoteFormRoute =
-    "$studentNoteFormScreen/{$studentIdArg}?$studentNoteIdArg={$studentNoteIdArg}"
 
 fun NavController.navigateToStudentGraph(
     schoolClassId: Long,
@@ -55,18 +52,10 @@ fun NavController.navigateToStudentFormRoute(
     this.navigate("$studentFormScreen/$schoolClassId$query", navOptions)
 }
 
-private fun NavController.navigateToStudentNoteFormRoute(
-    studentId: Long,
-    studentNoteId: Long?,
-    navOptions: NavOptions? = null,
-) {
-    val query = if (studentNoteId != null) "?$studentNoteIdArg=$studentNoteId" else ""
-    this.navigate("$studentNoteFormScreen/$studentId$query", navOptions)
-}
-
 fun NavGraphBuilder.studentGraph(
     navController: NavController,
     onShowSnackbar: (message: String) -> Unit,
+    navigateToStudentNoteFormRoute: (studentId: Long, studentNoteId: Long?) -> Unit,
 ) {
     navigation(
         startDestination = studentRoute,
@@ -112,43 +101,14 @@ fun NavGraphBuilder.studentGraph(
 
                     StudentTab.Notes -> StudentNotesRoute(
                         onNoteClick = { studentNoteId ->
-                            navController.navigateToStudentNoteFormRoute(
-                                studentId = studentId,
-                                studentNoteId = studentNoteId,
-                            )
+                            navigateToStudentNoteFormRoute(studentId, studentNoteId)
                         },
                         onAddNoteClick = {
-                            navController.navigateToStudentNoteFormRoute(
-                                studentId = studentId,
-                                studentNoteId = null,
-                            )
+                            navigateToStudentNoteFormRoute(studentId, null)
                         },
                     )
                 }
             }
-        }
-
-        composable(
-            studentNoteFormRoute,
-            arguments = listOf(
-                navArgument(studentIdArg) {
-                    type = NavType.LongType
-                },
-                navArgument(studentNoteIdArg) {
-                    type = NavType.LongType
-                    defaultValue = 0L
-                },
-            ),
-        ) { backStackEntry ->
-            val args = backStackEntry.arguments!!
-            val isEditMode = args.getLong(studentNoteIdArg) != 0L
-
-            StudentNoteFormRoute(
-                showNavigationIcon = true,
-                onNavBack = navController::popBackStack,
-                onShowSnackbar = onShowSnackbar,
-                isEditMode = isEditMode,
-            )
         }
     }
 

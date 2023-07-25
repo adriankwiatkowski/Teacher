@@ -44,13 +44,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:studentcommon"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
     implementation(project(":core:data"))
     implementation(project(":core:ui"))
-
-    implementation(project(":feature:studentnote"))
 
     // Desugar
     coreLibraryDesugaring(libs.desugar.jdk)

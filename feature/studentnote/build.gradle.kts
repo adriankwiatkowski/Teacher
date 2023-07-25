@@ -42,7 +42,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:studentcommon"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
     implementation(project(":core:data"))

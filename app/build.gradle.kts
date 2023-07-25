@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":feature:schoolclass"))
     implementation(project(":feature:schoolyear"))
     implementation(project(":feature:student"))
+    implementation(project(":feature:studentnote"))
     implementation(project(":feature:lesson"))
     implementation(project(":feature:settings"))
 
