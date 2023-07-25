@@ -16,6 +16,7 @@ import com.example.teacherapp.core.ui.component.TeacherNavigationBarItem
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherNavGraph
+import com.example.teacherapp.ui.nav.navigateToNotesRouteNavigationBar
 import com.example.teacherapp.ui.nav.navigateToScheduleRouteNavigationBar
 import com.example.teacherapp.ui.nav.navigateToSchoolClassesRouteNavigationBar
 import com.example.teacherapp.ui.nav.navigateToSettingsRouteNavigationBar
@@ -56,6 +57,9 @@ fun TeacherApp(
                                 }
                                 TeacherBottomNavScreen.SchoolClasses -> {
                                     navController.navigateToSchoolClassesRouteNavigationBar()
+                                }
+                                TeacherBottomNavScreen.Notes -> {
+                                    navController.navigateToNotesRouteNavigationBar()
                                 }
                                 TeacherBottomNavScreen.Settings -> {
                                     navController.navigateToSettingsRouteNavigationBar()

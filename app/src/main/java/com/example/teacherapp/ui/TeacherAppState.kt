@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.feature.grade.GradeNavigation
 import com.example.teacherapp.feature.lesson.LessonNavigation
+import com.example.teacherapp.feature.note.NoteNavigation
 import com.example.teacherapp.feature.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.feature.settings.SettingsNavigation
 import com.example.teacherapp.feature.student.StudentNavigation
@@ -37,6 +38,7 @@ class TeacherAppState(val navController: NavHostController, val coroutineScope: 
                 when (backStackEntry.destination.route) {
                     in scheduleRoutes -> TeacherBottomNavScreen.Schedule
                     in schoolClassesRoutes -> TeacherBottomNavScreen.SchoolClasses
+                    in notesRoutes -> TeacherBottomNavScreen.Notes
                     in settingsRoutes -> TeacherBottomNavScreen.Settings
                     else -> null
                 }
@@ -56,6 +58,8 @@ class TeacherAppState(val navController: NavHostController, val coroutineScope: 
         LessonNavigation.lessonRoute,
         GradeNavigation.gradesRoute,
     )
+
+    private val notesRoutes = setOf(NoteNavigation.notesRoute)
 
     private val settingsRoutes = setOf(SettingsNavigation.settingsRoute)
 

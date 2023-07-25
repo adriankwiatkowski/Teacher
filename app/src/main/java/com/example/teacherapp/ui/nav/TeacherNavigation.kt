@@ -2,6 +2,7 @@ package com.example.teacherapp.ui.nav
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notes
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -11,6 +12,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
+import com.example.teacherapp.feature.note.navigateToNotesRoute
 import com.example.teacherapp.feature.schoolclass.navigateToSchoolClassGraph
 import com.example.teacherapp.feature.settings.navigateToSettingsRoute
 import com.example.teacherapp.ui.nav.graphs.schedule.navigateToScheduleRoute
@@ -18,6 +20,7 @@ import com.example.teacherapp.ui.nav.graphs.schedule.navigateToScheduleRoute
 enum class TeacherBottomNavScreen(val title: String, val icon: ImageVector) {
     Schedule("Plan zajęć", Icons.Default.Person),
     SchoolClasses("Klasy", Icons.Default.Menu),
+    Notes("Notatki", Icons.Default.Notes),
     Settings("Ustawienia", Icons.Default.Settings),
 }
 
@@ -27,6 +30,10 @@ fun NavController.navigateToScheduleRouteNavigationBar() {
 
 fun NavController.navigateToSchoolClassesRouteNavigationBar() {
     this.navigateToSchoolClassGraph(bottomBarNavOptions())
+}
+
+fun NavController.navigateToNotesRouteNavigationBar() {
+    this.navigateToNotesRoute(bottomBarNavOptions())
 }
 
 fun NavController.navigateToSettingsRouteNavigationBar() {

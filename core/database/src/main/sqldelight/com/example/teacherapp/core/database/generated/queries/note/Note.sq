@@ -1,0 +1,33 @@
+getNotes:
+SELECT
+    n.id,
+    n.title,
+    n.text,
+    n.priority
+FROM note n;
+
+getNoteById:
+SELECT
+    n.id,
+    n.title,
+    n.text,
+    n.priority
+FROM note n
+WHERE n.id = :id;
+
+insertNote:
+INSERT OR FAIL
+INTO note
+VALUES (?, ?, ?, ?);
+
+updateNote:
+UPDATE note
+SET
+    title = :title,
+    text = :text,
+    priority = :priority
+WHERE id = :id;
+
+deleteNoteById:
+DELETE FROM note
+WHERE id = :id;
