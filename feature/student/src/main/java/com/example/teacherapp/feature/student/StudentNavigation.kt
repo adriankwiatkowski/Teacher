@@ -8,19 +8,19 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.teacherapp.core.studentcommon.StudentConstants.schoolClassIdArg
+import com.example.teacherapp.core.studentcommon.StudentConstants.studentIdArg
+import com.example.teacherapp.core.studentcommon.StudentConstants.studentNoteIdArg
 import com.example.teacherapp.core.ui.provider.ActionItemProvider
-import com.example.teacherapp.feature.student.StudentNavigation.schoolClassIdArg
-import com.example.teacherapp.feature.student.StudentNavigation.studentIdArg
-import com.example.teacherapp.feature.student.StudentNavigation.studentNoteIdArg
 import com.example.teacherapp.feature.student.StudentNavigation.studentRoute
 import com.example.teacherapp.feature.student.data.StudentScaffoldViewModel
 import com.example.teacherapp.feature.student.route.StudentDetailRoute
 import com.example.teacherapp.feature.student.route.StudentFormRoute
 import com.example.teacherapp.feature.student.route.StudentGradesRoute
-import com.example.teacherapp.feature.student.route.StudentNoteFormRoute
-import com.example.teacherapp.feature.student.route.StudentNotesRoute
 import com.example.teacherapp.feature.student.route.StudentScaffoldWrapper
 import com.example.teacherapp.feature.student.tab.StudentTab
+import com.example.teacherapp.feature.studentnote.route.StudentNoteFormRoute
+import com.example.teacherapp.feature.studentnote.route.StudentNotesRoute
 
 private const val studentGraphRoute = "student"
 
@@ -29,10 +29,6 @@ private const val studentFormScreen = "student-form"
 private const val studentNoteFormScreen = "student-note-form"
 
 object StudentNavigation {
-    internal const val schoolClassIdArg = "school-class-id"
-    internal const val studentIdArg = "student-id"
-    internal const val studentNoteIdArg = "student-note-id"
-
     const val studentRoute = "$studentScreen/{$schoolClassIdArg}/{${studentIdArg}}"
 }
 

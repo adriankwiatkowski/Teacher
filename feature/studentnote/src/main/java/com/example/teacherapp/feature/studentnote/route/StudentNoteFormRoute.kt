@@ -1,4 +1,4 @@
-package com.example.teacherapp.feature.student.route
+package com.example.teacherapp.feature.studentnote.route
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -6,17 +6,17 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.core.ui.model.FormStatus
-import com.example.teacherapp.feature.student.note.StudentNoteFormScreen
-import com.example.teacherapp.feature.student.note.data.StudentNoteFormViewModel
+import com.example.teacherapp.feature.studentnote.StudentNoteFormScreen
+import com.example.teacherapp.feature.studentnote.data.StudentNoteFormViewModel
 
 @Composable
-internal fun StudentNoteFormRoute(
+fun StudentNoteFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onShowSnackbar: (message: String) -> Unit,
     isEditMode: Boolean,
-    viewModel: StudentNoteFormViewModel = hiltViewModel(),
 ) {
+    val viewModel = hiltViewModel<StudentNoteFormViewModel>()
     val studentNoteResult by viewModel.studentNoteResult.collectAsStateWithLifecycle()
     val studentFullName by viewModel.studentFullName.collectAsStateWithLifecycle()
     val isStudentNoteDeleted by viewModel.isStudentNoteDeleted.collectAsStateWithLifecycle()

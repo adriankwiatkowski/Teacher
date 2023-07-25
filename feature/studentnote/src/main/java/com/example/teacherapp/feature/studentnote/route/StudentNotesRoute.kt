@@ -1,18 +1,18 @@
-package com.example.teacherapp.feature.student.route
+package com.example.teacherapp.feature.studentnote.route
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.teacherapp.feature.student.note.StudentNotesScreen
-import com.example.teacherapp.feature.student.note.data.StudentNotesViewModel
+import com.example.teacherapp.feature.studentnote.StudentNotesScreen
+import com.example.teacherapp.feature.studentnote.data.StudentNotesViewModel
 
 @Composable
-internal fun StudentNotesRoute(
+fun StudentNotesRoute(
     onNoteClick: (noteId: Long) -> Unit,
     onAddNoteClick: () -> Unit,
-    viewModel: StudentNotesViewModel = hiltViewModel(),
 ) {
+    val viewModel = hiltViewModel<StudentNotesViewModel>()
     val studentNotesResult by viewModel.studentNotesResult.collectAsStateWithLifecycle()
 
     StudentNotesScreen(

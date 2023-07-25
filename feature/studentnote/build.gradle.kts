@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacherapp.feature.student"
+    namespace = "com.example.teacherapp.feature.studentnote"
     compileSdk = 33
 
     defaultConfig {
@@ -27,8 +27,6 @@ android {
         }
     }
     compileOptions {
-        // Flag to enable support for the new language APIs
-        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -49,11 +47,6 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:data"))
     implementation(project(":core:ui"))
-
-    implementation(project(":feature:studentnote"))
-
-    // Desugar
-    coreLibraryDesugaring(libs.desugar.jdk)
 
     // Hilt
     implementation(libs.hilt.android)

@@ -1,4 +1,4 @@
-package com.example.teacherapp.feature.student.note.data
+package com.example.teacherapp.feature.studentnote.data
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.data.repository.studentnote.StudentNoteRepository
 import com.example.teacherapp.core.model.data.BasicStudentNote
-import com.example.teacherapp.feature.student.StudentNavigation
+import com.example.teacherapp.core.studentcommon.StudentConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -30,6 +30,6 @@ internal class StudentNotesViewModel @Inject constructor(
         )
 
     companion object {
-        private const val STUDENT_ID_KEY = StudentNavigation.studentIdArg
+        private const val STUDENT_ID_KEY = StudentConstants.studentIdArg
     }
 }

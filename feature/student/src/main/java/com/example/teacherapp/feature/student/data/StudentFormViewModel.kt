@@ -9,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.data.repository.student.StudentRepository
 import com.example.teacherapp.core.model.data.Student
+import com.example.teacherapp.core.studentcommon.StudentConstants
 import com.example.teacherapp.core.ui.model.FormStatus
-import com.example.teacherapp.feature.student.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -114,7 +114,7 @@ internal class StudentFormViewModel @Inject constructor(
     )
 
     companion object {
-        private const val STUDENT_ID_KEY = StudentNavigation.studentIdArg
-        private const val SCHOOL_CLASS_ID_KEY = StudentNavigation.schoolClassIdArg
+        private const val STUDENT_ID_KEY = StudentConstants.studentIdArg
+        private const val SCHOOL_CLASS_ID_KEY = StudentConstants.schoolClassIdArg
     }
 }

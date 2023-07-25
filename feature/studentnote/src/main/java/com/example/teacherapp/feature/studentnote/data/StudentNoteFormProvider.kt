@@ -1,4 +1,4 @@
-package com.example.teacherapp.feature.student.note.data
+package com.example.teacherapp.feature.studentnote.data
 
 import androidx.core.text.trimmedLength
 import com.example.teacherapp.core.ui.model.FormStatus
