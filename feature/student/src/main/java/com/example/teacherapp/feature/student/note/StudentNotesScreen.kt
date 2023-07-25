@@ -27,9 +27,9 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.BasicStudentNote
 import com.example.teacherapp.core.ui.component.TeacherFab
 import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.paramprovider.BasicStudentNotesPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.feature.student.paramprovider.BasicStudentNotesPreviewParameterProvider
 
 @Composable
 internal fun StudentNotesScreen(
@@ -111,7 +111,11 @@ private fun EmptyState(modifier: Modifier = Modifier) {
 private fun EmptyStatePreview() {
     TeacherAppTheme {
         Surface {
-            EmptyState()
+            StudentNotesScreen(
+                studentNotesResult = Result.Success(emptyList()),
+                onNoteClick = {},
+                onAddNoteClick = {},
+            )
         }
     }
 }

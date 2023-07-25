@@ -39,7 +39,7 @@ import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.feature.lesson.grade.data.GradeFormProvider
 import com.example.teacherapp.feature.lesson.grade.data.GradeFormUiState
-import com.example.teacherapp.feature.lesson.paramprovider.GradeFormUiStatePreviewParameterProvider
+import com.example.teacherapp.feature.lesson.grade.paramprovider.GradeFormUiStatePreviewParameterProvider
 import java.math.BigDecimal
 
 @OptIn(ExperimentalMaterial3Api::class)

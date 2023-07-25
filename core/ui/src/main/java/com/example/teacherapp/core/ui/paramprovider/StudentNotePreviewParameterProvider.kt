@@ -1,10 +1,10 @@
-package com.example.teacherapp.feature.student.paramprovider
+package com.example.teacherapp.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.model.data.BasicStudentNote
 import com.example.teacherapp.core.model.data.StudentNote
 
-internal class StudentNotePreviewParameterProvider : PreviewParameterProvider<StudentNote> {
+class StudentNotePreviewParameterProvider : PreviewParameterProvider<StudentNote> {
     override val values: Sequence<StudentNote> = sequenceOf(
         StudentNote(
             id = 1L,
@@ -18,8 +18,7 @@ internal class StudentNotePreviewParameterProvider : PreviewParameterProvider<St
     )
 }
 
-internal class BasicStudentNotesPreviewParameterProvider :
-    PreviewParameterProvider<List<BasicStudentNote>> {
+class BasicStudentNotesPreviewParameterProvider : PreviewParameterProvider<List<BasicStudentNote>> {
     override val values: Sequence<List<BasicStudentNote>> = sequenceOf(
         listOf(
             BasicStudentNote(

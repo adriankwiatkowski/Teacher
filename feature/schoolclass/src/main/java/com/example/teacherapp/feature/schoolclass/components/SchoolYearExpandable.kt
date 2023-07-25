@@ -16,9 +16,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.utils.format
 import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.core.ui.component.expandablelist.expandableItem
+import com.example.teacherapp.core.ui.paramprovider.SchoolYearPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.feature.schoolclass.paramprovider.SchoolYearPreviewParameterProvider
 import java.time.LocalDate
 
 internal fun LazyListScope.schoolYearExpandable(

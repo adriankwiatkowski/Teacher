@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.paramproviders
+package com.example.teacherapp.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.model.data.BasicStudent

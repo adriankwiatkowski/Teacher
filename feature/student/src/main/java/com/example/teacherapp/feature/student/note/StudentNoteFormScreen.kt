@@ -37,11 +37,11 @@ import com.example.teacherapp.core.ui.component.form.FormTextField
 import com.example.teacherapp.core.ui.component.result.ResultContent
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
+import com.example.teacherapp.core.ui.paramprovider.StudentNotePreviewParameterProvider
 import com.example.teacherapp.core.ui.provider.ActionItemProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.feature.student.note.data.StudentNoteFormProvider
-import com.example.teacherapp.feature.student.paramprovider.StudentNotePreviewParameterProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

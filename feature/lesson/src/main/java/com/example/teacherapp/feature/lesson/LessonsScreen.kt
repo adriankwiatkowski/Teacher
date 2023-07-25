@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.model.data.Lesson
+import com.example.teacherapp.core.ui.paramprovider.LessonsPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.feature.lesson.paramprovider.LessonsPreviewParameterProvider
 
 // TODO: Currently this screen is unused, consider deleting or using in school class tab.
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,7 +75,7 @@ private fun LessonItem(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun LessonsScreenPreview(
     @PreviewParameter(LessonsPreviewParameterProvider::class) lessons: List<Lesson>,

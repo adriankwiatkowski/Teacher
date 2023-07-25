@@ -21,9 +21,9 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.BasicGradeTemplate
 import com.example.teacherapp.core.ui.component.TeacherFab
 import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.paramprovider.BasicGradeTemplatesPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.feature.lesson.paramprovider.BasicGradeTemplatesPreviewParameterProvider
 
 @Composable
 internal fun GradeTemplatesScreen(

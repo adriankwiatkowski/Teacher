@@ -26,9 +26,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.model.data.BasicLesson
 import com.example.teacherapp.core.ui.component.expandablelist.expandableItems
+import com.example.teacherapp.core.ui.paramprovider.BasicLessonsPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.feature.schoolclass.paramprovider.BasicLessonsPreviewParameterProvider
 
 internal fun LazyListScope.lessons(
     lessons: List<BasicLesson>,

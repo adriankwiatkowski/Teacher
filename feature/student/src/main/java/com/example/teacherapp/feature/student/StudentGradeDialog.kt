@@ -13,9 +13,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.model.data.Student
 import com.example.teacherapp.core.model.data.StudentGrade
 import com.example.teacherapp.core.model.data.StudentGradesByLesson
+import com.example.teacherapp.core.ui.paramprovider.StudentGradesByLessonPreviewParameterProvider
+import com.example.teacherapp.core.ui.paramprovider.StudentPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
-import com.example.teacherapp.feature.student.paramprovider.StudentGradesByLessonPreviewParameterProvider
-import com.example.teacherapp.feature.student.paramprovider.StudentPreviewParameterProvider
 
 @Composable
 internal fun StudentGradeDialog(

@@ -1,17 +1,17 @@
-package com.example.teacherapp.feature.schoolclass.paramprovider
+package com.example.teacherapp.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.core.model.data.Term
 import java.time.LocalDate
 
-internal class SchoolYearsPreviewParameterProvider : PreviewParameterProvider<List<SchoolYear>> {
+class SchoolYearsPreviewParameterProvider : PreviewParameterProvider<List<SchoolYear>> {
     override val values: Sequence<List<SchoolYear>> = sequenceOf(
         SchoolYearPreviewParameterProvider().values.toList(),
     )
 }
 
-internal class SchoolYearPreviewParameterProvider : PreviewParameterProvider<SchoolYear> {
+class SchoolYearPreviewParameterProvider : PreviewParameterProvider<SchoolYear> {
     override val values: Sequence<SchoolYear> = sequenceOf(
         SchoolYear(
             id = 1L,

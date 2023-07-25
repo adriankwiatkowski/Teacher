@@ -1,10 +1,10 @@
-package com.example.teacherapp.feature.schoolclass.paramprovider
+package com.example.teacherapp.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.model.data.BasicSchoolClass
 import com.example.teacherapp.core.model.data.SchoolClass
 
-internal class SchoolClassPreviewParameterProvider : PreviewParameterProvider<SchoolClass> {
+class SchoolClassPreviewParameterProvider : PreviewParameterProvider<SchoolClass> {
     override val values: Sequence<SchoolClass> = BasicSchoolClassPreviewParameterProvider()
         .values
         .map { basicSchoolClass ->
@@ -22,15 +22,14 @@ internal class SchoolClassPreviewParameterProvider : PreviewParameterProvider<Sc
     private val students = BasicStudentPreviewParameterProvider().values.toList()
 }
 
-internal class BasicSchoolClassesPreviewParameterProvider :
+class BasicSchoolClassesPreviewParameterProvider :
     PreviewParameterProvider<List<BasicSchoolClass>> {
     override val values: Sequence<List<BasicSchoolClass>> = sequenceOf(
         BasicSchoolClassPreviewParameterProvider().values.toList(),
     )
 }
 
-internal class BasicSchoolClassPreviewParameterProvider :
-    PreviewParameterProvider<BasicSchoolClass> {
+class BasicSchoolClassPreviewParameterProvider : PreviewParameterProvider<BasicSchoolClass> {
     override val values: Sequence<BasicSchoolClass> = sequenceOf(
         BasicSchoolClass(1, "1A", 10, 10),
         BasicSchoolClass(2, "1B", 11, 11),

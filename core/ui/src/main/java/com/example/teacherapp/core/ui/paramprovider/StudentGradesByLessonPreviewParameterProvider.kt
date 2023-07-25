@@ -1,4 +1,4 @@
-package com.example.teacherapp.feature.student.paramprovider
+package com.example.teacherapp.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.model.data.StudentGrade
@@ -6,7 +6,7 @@ import com.example.teacherapp.core.model.data.StudentGradesByLesson
 import java.math.BigDecimal
 import java.time.LocalDate
 
-internal class StudentGradesByLessonPreviewParameterProvider :
+class StudentGradesByLessonPreviewParameterProvider :
     PreviewParameterProvider<List<StudentGradesByLesson>> {
 
     override val values: Sequence<List<StudentGradesByLesson>> = sequenceOf(

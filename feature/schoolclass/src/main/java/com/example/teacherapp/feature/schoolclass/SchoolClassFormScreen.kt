@@ -24,11 +24,11 @@ import com.example.teacherapp.core.ui.component.form.FormStatusContent
 import com.example.teacherapp.core.ui.component.form.FormTextField
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
+import com.example.teacherapp.core.ui.paramprovider.SchoolYearsPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.feature.schoolclass.components.SchoolYearInput
 import com.example.teacherapp.feature.schoolclass.data.SchoolClassFormProvider
-import com.example.teacherapp.feature.schoolclass.paramprovider.SchoolYearsPreviewParameterProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

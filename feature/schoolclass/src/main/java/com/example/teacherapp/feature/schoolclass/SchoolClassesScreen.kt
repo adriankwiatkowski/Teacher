@@ -27,9 +27,9 @@ import com.example.teacherapp.core.model.data.BasicSchoolClass
 import com.example.teacherapp.core.ui.component.TeacherChip
 import com.example.teacherapp.core.ui.component.TeacherFab
 import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.paramprovider.BasicSchoolClassesPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.feature.schoolclass.paramprovider.BasicSchoolClassesPreviewParameterProvider
 
 @Composable
 internal fun SchoolClassesScreen(

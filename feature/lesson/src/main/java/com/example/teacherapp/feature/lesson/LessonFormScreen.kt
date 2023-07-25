@@ -42,10 +42,10 @@ import com.example.teacherapp.core.ui.component.form.FormTextField
 import com.example.teacherapp.core.ui.component.result.ResultContent
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
+import com.example.teacherapp.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.feature.lesson.data.LessonFormProvider
-import com.example.teacherapp.feature.lesson.paramprovider.LessonPreviewParameterProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

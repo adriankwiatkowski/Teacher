@@ -24,10 +24,10 @@ import com.example.teacherapp.core.model.data.StudentGrade
 import com.example.teacherapp.core.model.data.StudentGradesByLesson
 import com.example.teacherapp.core.ui.component.TeacherButton
 import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.paramprovider.StudentGradesByLessonPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.feature.student.data.GradeDialogInfo
-import com.example.teacherapp.feature.student.paramprovider.StudentGradesByLessonPreviewParameterProvider
 
 @Composable
 internal fun StudentGradesScreen(
