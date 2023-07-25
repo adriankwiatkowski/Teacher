@@ -21,7 +21,7 @@ internal class NoteDataSourceImpl(
 
     private val queries = db.noteQueries
 
-    override fun getNotes(studentId: Long): Flow<List<Note>> =
+    override fun getNotes(): Flow<List<Note>> =
         queries
             .getNotes()
             .asFlow()

@@ -59,5 +59,5 @@ private fun <T> Result.Success<T>.mapNotNull(): Result<T & Any> {
 }
 
 private fun <T> mapNotNull(data: T?): Result<T & Any> {
-    return if (data != null) Result.Success(data) else Result.Error(NullPointerException())
+    return if (data != null) Result.Success(data) else Result.Error(NoSuchElementException())
 }
