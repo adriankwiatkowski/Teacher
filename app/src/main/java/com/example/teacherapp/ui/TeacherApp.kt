@@ -16,6 +16,9 @@ import com.example.teacherapp.core.ui.component.TeacherNavigationBarItem
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
 import com.example.teacherapp.ui.nav.TeacherNavGraph
+import com.example.teacherapp.ui.nav.navigateToScheduleRouteNavigationBar
+import com.example.teacherapp.ui.nav.navigateToSchoolClassesRouteNavigationBar
+import com.example.teacherapp.ui.nav.navigateToSettingsRouteNavigationBar
 import kotlinx.coroutines.launch
 
 @Composable
@@ -46,16 +49,16 @@ fun TeacherApp(
                     TeacherNavigationBarItem(
                         selected = screen == selectedBottomNavItem,
                         onClick = {
-                            val navActions = appState.navActions
+                            val navController = appState.navController
                             when (screen) {
                                 TeacherBottomNavScreen.Schedule -> {
-                                    navActions.navigateToScheduleRoute()
+                                    navController.navigateToScheduleRouteNavigationBar()
                                 }
                                 TeacherBottomNavScreen.SchoolClasses -> {
-                                    navActions.navigateToSchoolClassesRoute()
+                                    navController.navigateToSchoolClassesRouteNavigationBar()
                                 }
                                 TeacherBottomNavScreen.Settings -> {
-                                    navActions.navigateToSettingsRoute()
+                                    navController.navigateToSettingsRouteNavigationBar()
                                 }
                             }
                         },

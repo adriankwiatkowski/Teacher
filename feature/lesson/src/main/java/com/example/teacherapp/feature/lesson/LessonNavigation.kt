@@ -43,7 +43,7 @@ object LessonNavigation {
 
     const val lessonRoute = "$lessonScreen/{$schoolClassIdArg}/{$lessonIdArg}"
 
-    internal const val gradesRoute = "$gradesScreen/{$lessonIdArg}/{$gradeTemplateIdArg}"
+    const val gradesRoute = "$gradesScreen/{$lessonIdArg}/{$gradeTemplateIdArg}"
 }
 
 private const val lessonFormRoute =
