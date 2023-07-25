@@ -41,19 +41,6 @@ fun TeacherApp(
         modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
-//            TeacherNavigationBar(
-//                screens = bottomNavScreens,
-//                selected = selectedBottomNavItem,
-//                visible = shouldShowBottomBar,
-//                onClick = { screen ->
-//                    val navActions = appState.navActions
-//                    when (screen) {
-//                        TeacherBottomNavScreen.Schedule -> navActions.navigateToScheduleRoute()
-//                        TeacherBottomNavScreen.SchoolClasses -> navActions.navigateToSchoolClassesRoute()
-//                        TeacherBottomNavScreen.Settings -> navActions.navigateToSettingsRoute()
-//                    }
-//                },
-//            )
             TeacherNavigationBar(visible = shouldShowBottomBar) {
                 for (screen in bottomNavScreens) {
                     TeacherNavigationBarItem(

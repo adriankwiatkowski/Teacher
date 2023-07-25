@@ -1,14 +1,24 @@
-package com.example.teacherapp.ui.screens.paramproviders
+package com.example.teacherapp.feature.lesson.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.teacherapp.core.model.data.BasicGrade
 import com.example.teacherapp.core.model.data.BasicGradeForTemplate
-import com.example.teacherapp.core.model.data.Grade
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
+import com.example.teacherapp.feature.lesson.grade.data.GradeFormUiState
 import java.math.BigDecimal
 import java.time.LocalDate
 
-class GradeTemplateInfoPreviewParameterProvider : PreviewParameterProvider<GradeTemplateInfo> {
+internal class GradeFormUiStatePreviewParameterProvider :
+    PreviewParameterProvider<GradeFormUiState> {
+    override val values: Sequence<GradeFormUiState> = sequenceOf(
+        GradeFormUiState(
+            gradeTemplateInfo = GradeTemplateInfoPreviewParameterProvider().values.first(),
+            student = BasicStudentPreviewParameterProvider().values.first(),
+        )
+    )
+}
+
+internal class GradeTemplateInfoPreviewParameterProvider :
+    PreviewParameterProvider<GradeTemplateInfo> {
     override val values: Sequence<GradeTemplateInfo> = sequenceOf(
         GradeTemplateInfo(
             gradeTemplateId = 1L,
@@ -22,24 +32,7 @@ class GradeTemplateInfoPreviewParameterProvider : PreviewParameterProvider<Grade
     )
 }
 
-class GradePreviewParameterProvider : PreviewParameterProvider<Grade> {
-    override val values: Sequence<Grade> = sequenceOf(
-        Grade(
-            id = 1L,
-            grade = BigDecimal("4.75"),
-            date = LocalDate.now(),
-            studentId = 1L,
-            studentFullName = "Jan Kowalski",
-            lessonId = 1L,
-            lessonName = "Matematyka",
-            schoolClassId = 1L,
-            schoolClassName = "1A",
-            gradeTemplate = GradeTemplatePreviewParameterProvider().values.first(),
-        )
-    )
-}
-
-class BasicGradesForTemplatePreviewParameterProvider :
+internal class BasicGradesForTemplatePreviewParameterProvider :
     PreviewParameterProvider<List<BasicGradeForTemplate>> {
     override val values: Sequence<List<BasicGradeForTemplate>> = sequenceOf(
         listOf(
@@ -97,35 +90,6 @@ class BasicGradesForTemplatePreviewParameterProvider :
                 gradeName = "Dodawanie",
                 gradeWeight = 1,
             ),
-        ),
-    )
-}
-
-class BasicGradesPreviewParameterProvider : PreviewParameterProvider<List<BasicGrade>> {
-    override val values: Sequence<List<BasicGrade>> = sequenceOf(
-        BasicGradePreviewParameterProvider().values.toList(),
-    )
-}
-
-class BasicGradePreviewParameterProvider : PreviewParameterProvider<BasicGrade> {
-    override val values: Sequence<BasicGrade> = sequenceOf(
-        BasicGrade(
-            id = 1L,
-            grade = BigDecimal("4.75"),
-            date = LocalDate.now(),
-            studentId = 1L,
-            lessonId = 1L,
-            name = "Dodawanie",
-            weight = 1,
-        ),
-        BasicGrade(
-            id = 2L,
-            grade = BigDecimal("5.0"),
-            date = LocalDate.now(),
-            studentId = 2L,
-            lessonId = 1L,
-            name = "Dodawanie",
-            weight = 1,
         ),
     )
 }

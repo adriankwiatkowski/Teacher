@@ -3,6 +3,9 @@ package com.example.teacherapp.ui.nav
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.example.teacherapp.feature.lesson.lessonGraph
+import com.example.teacherapp.feature.lesson.navigateToLessonFormRoute
+import com.example.teacherapp.feature.lesson.navigateToLessonGraph
 import com.example.teacherapp.feature.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.feature.schoolclass.schoolClassGraph
 import com.example.teacherapp.feature.schoolyear.navigateToSchoolYearFormRoute
@@ -12,9 +15,6 @@ import com.example.teacherapp.feature.student.navigateToStudentFormRoute
 import com.example.teacherapp.feature.student.navigateToStudentGraph
 import com.example.teacherapp.feature.student.studentGraph
 import com.example.teacherapp.ui.TeacherAppState
-import com.example.teacherapp.ui.nav.graphs.lesson.lessonGraph
-import com.example.teacherapp.ui.nav.graphs.lesson.navigateToLessonFormRoute
-import com.example.teacherapp.ui.nav.graphs.lesson.navigateToLessonGraph
 import com.example.teacherapp.ui.nav.graphs.schedule.scheduleGraph
 
 @Composable
