@@ -3,7 +3,10 @@ package com.example.teacherapp.ui.nav
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.example.teacherapp.feature.grade.gradeGraph
+import com.example.teacherapp.feature.grade.navigateToGradesRoute
 import com.example.teacherapp.feature.lesson.lessonGraph
+import com.example.teacherapp.feature.lesson.navigateToGradeTemplateFormRoute
 import com.example.teacherapp.feature.lesson.navigateToLessonFormRoute
 import com.example.teacherapp.feature.lesson.navigateToLessonGraph
 import com.example.teacherapp.feature.schoolclass.SchoolClassNavigation
@@ -45,13 +48,24 @@ fun TeacherNavGraph(
             navigateToLessonFormRoute = navController::navigateToLessonFormRoute,
         )
         schoolYearGraph(navController = navController, onShowSnackbar = onShowSnackbar)
+
         studentGraph(
             navController = navController,
             onShowSnackbar = onShowSnackbar,
             navigateToStudentNoteFormRoute = navController::navigateToStudentNoteFormRoute,
         )
         studentNoteGraph(navController = navController, onShowSnackbar = onShowSnackbar)
-        lessonGraph(navController = navController, onShowSnackbar = onShowSnackbar)
+
+        lessonGraph(
+            navController = navController,
+            onShowSnackbar = onShowSnackbar,
+            navigateToGradesRoute = navController::navigateToGradesRoute,
+        )
+        gradeGraph(
+            navController = navController,
+            onShowSnackbar = onShowSnackbar,
+            navigateToGradeTemplateFormRoute = navController::navigateToGradeTemplateFormRoute,
+        )
 
         settingsGraph()
     }

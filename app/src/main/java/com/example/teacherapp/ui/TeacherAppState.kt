@@ -6,6 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.teacherapp.feature.grade.GradeNavigation
 import com.example.teacherapp.feature.lesson.LessonNavigation
 import com.example.teacherapp.feature.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.feature.settings.SettingsNavigation
@@ -53,7 +54,7 @@ class TeacherAppState(val navController: NavHostController, val coroutineScope: 
         SchoolClassNavigation.schoolClassRoute,
         StudentNavigation.studentRoute,
         LessonNavigation.lessonRoute,
-        LessonNavigation.gradesRoute,
+        GradeNavigation.gradesRoute,
     )
 
     private val settingsRoutes = setOf(SettingsNavigation.settingsRoute)
