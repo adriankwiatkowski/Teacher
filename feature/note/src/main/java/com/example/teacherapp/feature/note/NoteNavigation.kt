@@ -21,6 +21,13 @@ fun NavGraphBuilder.noteGraph(
     onShowSnackbar: (message: String) -> Unit,
 ) {
     composable(notesRoute) {
-        NotesRoute()
+        NotesRoute(
+            onNoteClick = { noteId ->
+
+            },
+            onAddNoteClick = {
+
+            }
+        )
     }
 }
