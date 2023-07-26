@@ -9,7 +9,7 @@ import com.example.teacherapp.feature.lesson.lessonGraph
 import com.example.teacherapp.feature.lesson.navigateToGradeTemplateFormRoute
 import com.example.teacherapp.feature.lesson.navigateToLessonFormRoute
 import com.example.teacherapp.feature.lesson.navigateToLessonGraph
-import com.example.teacherapp.feature.note.noteGraph
+import com.example.teacherapp.feature.note.nav.noteGraph
 import com.example.teacherapp.feature.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.feature.schoolclass.schoolClassGraph
 import com.example.teacherapp.feature.schoolyear.navigateToSchoolYearFormRoute

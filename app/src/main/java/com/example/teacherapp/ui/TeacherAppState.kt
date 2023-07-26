@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.feature.grade.GradeNavigation
 import com.example.teacherapp.feature.lesson.LessonNavigation
-import com.example.teacherapp.feature.note.NoteNavigation
+import com.example.teacherapp.feature.note.nav.NoteNavigation
 import com.example.teacherapp.feature.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.feature.settings.SettingsNavigation
 import com.example.teacherapp.feature.student.StudentNavigation

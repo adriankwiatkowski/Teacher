@@ -18,7 +18,7 @@ internal object StudentNoteNavigation {
 }
 
 private const val studentNoteFormRoute =
-    "$studentNoteFormScreen/{${studentIdArg}}?${studentNoteIdArg}={${studentNoteIdArg}}"
+    "$studentNoteFormScreen/{$studentIdArg}?$studentNoteIdArg={$studentNoteIdArg}"
 
 fun NavController.navigateToStudentNoteFormRoute(
     studentId: Long,

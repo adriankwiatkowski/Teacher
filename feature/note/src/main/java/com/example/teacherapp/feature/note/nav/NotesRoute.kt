@@ -1,9 +1,10 @@
-package com.example.teacherapp.feature.note
+package com.example.teacherapp.feature.note.nav
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacherapp.feature.note.NotesScreen
 import com.example.teacherapp.feature.note.data.NotesViewModel
 
 @Composable

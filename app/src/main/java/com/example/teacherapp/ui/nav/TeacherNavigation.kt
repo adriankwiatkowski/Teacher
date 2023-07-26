@@ -12,7 +12,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
-import com.example.teacherapp.feature.note.navigateToNotesRoute
+import com.example.teacherapp.feature.note.nav.navigateToNotesRoute
 import com.example.teacherapp.feature.schoolclass.navigateToSchoolClassGraph
 import com.example.teacherapp.feature.settings.navigateToSettingsRoute
 import com.example.teacherapp.ui.nav.graphs.schedule.navigateToScheduleRoute
