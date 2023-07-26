@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +31,13 @@ fun TeacherFab(
         enter = fadeIn(),
         exit = fadeOut(),
     ) {
-        FloatingActionButton(modifier = modifier, onClick = onClick) {
+//        LargeFloatingActionButton(
+        FloatingActionButton(
+            modifier = modifier,
+            onClick = onClick,
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        ) {
             Icon(imageVector = imageVector, contentDescription = contentDescription)
         }
     }
@@ -56,6 +63,8 @@ fun TeacherExtendedFab(
             onClick = onClick,
             text = { Text(text) },
             icon = { Icon(imageVector = imageVector, contentDescription = contentDescription) },
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
         )
     }
 }
