@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.ui.component.TeacherChip
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import java.time.LocalTime
@@ -45,8 +46,8 @@ fun TeacherTimePicker(
 
     if (showDialog) {
         val timePickerState = rememberTimePickerState(
-            initialHour = time.hour,
-            initialMinute = time.minute,
+            initialHour = TimeUtils.localTimeHour(time),
+            initialMinute = TimeUtils.localTimeMinute(time),
         )
 
         TimePickerDialog(
@@ -54,7 +55,7 @@ fun TeacherTimePicker(
             onConfirm = {
                 val hour = timePickerState.hour
                 val minute = timePickerState.minute
-                onTimeSelected(LocalTime.of(hour, minute))
+                onTimeSelected(TimeUtils.localTimeOf(hour, minute))
             },
         ) {
             TimePicker(state = timePickerState)
@@ -129,7 +130,7 @@ private fun TimePickerDialog(
 private fun TeacherTimePickerPreview() {
     TeacherAppTheme {
         Surface {
-            var time = remember { LocalTime.now() }
+            var time = remember { TimeUtils.currentTime() }
 
             TeacherTimePicker(
                 time = time,

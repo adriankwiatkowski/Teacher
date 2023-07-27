@@ -1,12 +1,12 @@
 package com.example.teacherapp.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.BasicGrade
 import com.example.teacherapp.core.model.data.BasicGradeForTemplate
 import com.example.teacherapp.core.model.data.Grade
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
 import java.math.BigDecimal
-import java.time.LocalDate
 
 class GradeTemplateInfoPreviewParameterProvider : PreviewParameterProvider<GradeTemplateInfo> {
     override val values: Sequence<GradeTemplateInfo> = sequenceOf(
@@ -27,7 +27,7 @@ class GradePreviewParameterProvider : PreviewParameterProvider<Grade> {
         Grade(
             id = 1L,
             grade = BigDecimal("4.75"),
-            date = LocalDate.now(),
+            date = TimeUtils.currentDate(),
             studentId = 1L,
             studentFullName = "Jan Kowalski",
             lessonId = 1L,
@@ -46,7 +46,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
             BasicGradeForTemplate(
                 id = 1L,
                 grade = BigDecimal("6.00"),
-                date = LocalDate.now(),
+                date = TimeUtils.currentDate(),
                 studentId = 1L,
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
@@ -55,7 +55,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
             BasicGradeForTemplate(
                 id = 2L,
                 grade = BigDecimal("5.00"),
-                date = LocalDate.now(),
+                date = TimeUtils.currentDate(),
                 studentId = 2L,
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
@@ -64,7 +64,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
             BasicGradeForTemplate(
                 id = 3L,
                 grade = BigDecimal("4.00"),
-                date = LocalDate.now(),
+                date = TimeUtils.currentDate(),
                 studentId = 3L,
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
@@ -73,7 +73,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
             BasicGradeForTemplate(
                 id = 4L,
                 grade = BigDecimal("3.00"),
-                date = LocalDate.now(),
+                date = TimeUtils.currentDate(),
                 studentId = 4L,
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
@@ -82,7 +82,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
             BasicGradeForTemplate(
                 id = 5L,
                 grade = BigDecimal("2.00"),
-                date = LocalDate.now(),
+                date = TimeUtils.currentDate(),
                 studentId = 5L,
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
@@ -112,7 +112,7 @@ class BasicGradePreviewParameterProvider : PreviewParameterProvider<BasicGrade> 
         BasicGrade(
             id = 1L,
             grade = BigDecimal("4.75"),
-            date = LocalDate.now(),
+            date = TimeUtils.currentDate(),
             studentId = 1L,
             lessonId = 1L,
             name = "Dodawanie",
@@ -121,7 +121,7 @@ class BasicGradePreviewParameterProvider : PreviewParameterProvider<BasicGrade> 
         BasicGrade(
             id = 2L,
             grade = BigDecimal("5.0"),
-            date = LocalDate.now(),
+            date = TimeUtils.currentDate(),
             studentId = 2L,
             lessonId = 1L,
             name = "Dodawanie",

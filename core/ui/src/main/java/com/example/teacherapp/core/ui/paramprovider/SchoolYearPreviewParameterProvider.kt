@@ -1,9 +1,9 @@
 package com.example.teacherapp.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.core.model.data.Term
-import java.time.LocalDate
 
 class SchoolYearsPreviewParameterProvider : PreviewParameterProvider<List<SchoolYear>> {
     override val values: Sequence<List<SchoolYear>> = sequenceOf(
@@ -12,22 +12,27 @@ class SchoolYearsPreviewParameterProvider : PreviewParameterProvider<List<School
 }
 
 class SchoolYearPreviewParameterProvider : PreviewParameterProvider<SchoolYear> {
-    override val values: Sequence<SchoolYear> = sequenceOf(
-        SchoolYear(
+    override val values: Sequence<SchoolYear> = sequenceOf(getSchoolYear())
+
+    private fun getSchoolYear(): SchoolYear {
+        val currentDate = TimeUtils.currentDate()
+        val year = TimeUtils.localDateYear(currentDate)
+
+        return SchoolYear(
             id = 1L,
-            name = "Rok ${LocalDate.now().year}/${LocalDate.now().year + 1}",
+            name = "Rok $year/${year + 1}",
             firstTerm = Term(
                 id = 1L,
                 name = "I",
-                startDate = LocalDate.now(),
-                endDate = LocalDate.now().plusDays(1L),
+                startDate = currentDate,
+                endDate = TimeUtils.plusDays(currentDate, 1L),
             ),
             secondTerm = Term(
                 id = 2L,
                 name = "II",
-                startDate = LocalDate.now().plusDays(2L),
-                endDate = LocalDate.now().plusDays(3L),
+                startDate = TimeUtils.plusDays(currentDate, 2L),
+                endDate = TimeUtils.plusDays(currentDate, 3L),
             ),
-        ),
-    )
+        )
+    }
 }

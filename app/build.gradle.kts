@@ -33,8 +33,6 @@ android {
         }
     }
     compileOptions {
-        // Flag to enable support for the new language APIs
-        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -72,9 +70,6 @@ dependencies {
     implementation(project(":feature:settings"))
 
     implementation(libs.bundles.androidx)
-
-    // Desugar
-    coreLibraryDesugaring(libs.desugar.jdk)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)

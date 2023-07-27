@@ -13,7 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.example.teacherapp.core.common.utils.format
+import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.core.ui.component.expandablelist.expandableItem
 import com.example.teacherapp.core.ui.paramprovider.SchoolYearPreviewParameterProvider
@@ -67,11 +67,11 @@ private fun TermItem(
 
         Row {
             Text("Rozpoczęcie semestru: ")
-            Text(startDate.format())
+            Text(TimeUtils.format(startDate))
         }
         Row {
             Text("Zakończenie semestru: ")
-            Text(endDate.format())
+            Text(TimeUtils.format(endDate))
         }
     }
 }

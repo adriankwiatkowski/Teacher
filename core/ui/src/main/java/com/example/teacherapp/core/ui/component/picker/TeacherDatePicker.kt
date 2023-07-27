@@ -16,12 +16,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.ui.component.TeacherChip
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
-import java.time.ZoneOffset
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +33,7 @@ fun TeacherDatePicker(
 
     if (showDialog) {
         val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = date.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+            initialSelectedDateMillis = TimeUtils.dateToMillis(date)
         )
         val confirmEnabled =
             remember { derivedStateOf { datePickerState.selectedDateMillis != null } }
@@ -48,12 +46,7 @@ fun TeacherDatePicker(
                         showDialog = false
                         val epochMilli = datePickerState.selectedDateMillis
                         if (epochMilli != null) {
-                            onDateSelected(
-                                Instant
-                                    .ofEpochMilli(epochMilli)
-                                    .atZone(ZoneId.of("UTC"))
-                                    .toLocalDate()
-                            )
+                            onDateSelected(TimeUtils.millisToDate(epochMilli))
                         }
                     },
                     enabled = confirmEnabled.value,
@@ -83,7 +76,7 @@ fun TeacherDatePicker(
 private fun TeacherDatePickerPreview() {
     TeacherAppTheme {
         Surface {
-            var date by remember { mutableStateOf(LocalDate.now()) }
+            var date by remember { mutableStateOf(TimeUtils.currentDate()) }
 
             TeacherDatePicker(
                 date = date,

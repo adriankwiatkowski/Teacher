@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.teacherapp.core.common.utils.format
+import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.ui.component.form.FormTextField
 import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
 import com.example.teacherapp.core.ui.model.InputField
@@ -98,9 +98,9 @@ private fun TermFormPreview() {
                 namePrefix = "",
                 nameInput = InputField(name),
                 onNameChange = {},
-                startDate = InputDate(startDate, startDate.format()),
+                startDate = InputDate(startDate, TimeUtils.format(startDate)),
                 onStartDateSelected = {},
-                endDate = InputDate(endDate, endDate.format()),
+                endDate = InputDate(endDate, TimeUtils.format(endDate)),
                 onEndDateSelected = {},
             )
         }

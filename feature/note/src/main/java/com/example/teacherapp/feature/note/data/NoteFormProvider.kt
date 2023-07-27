@@ -1,8 +1,7 @@
 package com.example.teacherapp.feature.note.data
 
 import androidx.core.text.trimmedLength
-import com.example.teacherapp.core.common.utils.currentDate
-import com.example.teacherapp.core.common.utils.format
+import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.NotePriority
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
@@ -35,7 +34,7 @@ internal object NoteFormProvider {
         status: FormStatus = FormStatus.Idle,
     ): NoteForm {
         val actualTitle = title.ifNull {
-            "Notatka z dnia ${currentDate().format()}"
+            "Notatka z dnia ${TimeUtils.format(TimeUtils.currentDate())}"
         }
 
         return NoteForm(

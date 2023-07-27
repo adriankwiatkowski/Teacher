@@ -49,8 +49,6 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    coreLibraryDesugaring(libs.desugar.jdk)
-
     implementation(libs.sqldelight.android)
     implementation(libs.sqldelight.coroutines)
 

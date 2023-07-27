@@ -1,7 +1,7 @@
 package com.example.teacherapp.feature.schoolyear.data
 
 import androidx.core.text.trimmedLength
-import com.example.teacherapp.core.common.utils.format
+import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
 import java.time.LocalDate
@@ -158,12 +158,12 @@ internal object SchoolYearFormProvider {
 
         return TermForm(
             name = validateTermName(name = term, isEdited = false),
-            startDate = InputDate(date, date.format()),
-            endDate = InputDate(date, date.format()),
+            startDate = InputDate(date, TimeUtils.format(date)),
+            endDate = InputDate(date, TimeUtils.format(date)),
         )
     }
 
     private fun createInputDate(date: LocalDate): InputDate {
-        return InputDate(date, date.format())
+        return InputDate(date, TimeUtils.format(date))
     }
 }

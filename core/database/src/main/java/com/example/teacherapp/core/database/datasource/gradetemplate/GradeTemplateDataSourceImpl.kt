@@ -1,6 +1,7 @@
 package com.example.teacherapp.core.database.datasource.gradetemplate
 
 import com.example.teacherapp.core.common.di.DefaultDispatcher
+import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.BasicGradeTemplate
@@ -13,7 +14,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
 
 internal class GradeTemplateDataSourceImpl(
     db: TeacherDatabase,
@@ -51,7 +51,7 @@ internal class GradeTemplateDataSourceImpl(
                 lesson_id = lessonId,
                 name = name,
                 description = description,
-                date = LocalDate.now(),
+                date = TimeUtils.currentDate(),
                 weight = weight.toLong(),
             )
         } else {
@@ -60,7 +60,7 @@ internal class GradeTemplateDataSourceImpl(
                 lesson_id = lessonId,
                 name = name,
                 description = description,
-                date = LocalDate.now(),
+                date = TimeUtils.currentDate(),
                 weight = weight.toLong(),
             )
         }
