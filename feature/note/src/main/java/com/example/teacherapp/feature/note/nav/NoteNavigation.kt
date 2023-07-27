@@ -3,7 +3,9 @@ package com.example.teacherapp.feature.note.nav
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.teacherapp.feature.note.nav.NoteNavigation.noteIdArg
 import com.example.teacherapp.feature.note.nav.NoteNavigation.notesRoute
 
@@ -27,7 +29,7 @@ private fun NavController.navigateToNoteFormRoute(
     navOptions: NavOptions? = null,
 ) {
     val query = if (noteId != null) "?$noteIdArg=$noteId" else ""
-    this.navigate("$noteFormRoute$query", navOptions)
+    this.navigate("$noteFormScreen$query", navOptions)
 }
 
 fun NavGraphBuilder.noteGraph(
@@ -41,7 +43,15 @@ fun NavGraphBuilder.noteGraph(
         )
     }
 
-    composable(noteFormRoute) { backStackEntry ->
+    composable(
+        noteFormRoute,
+        arguments = listOf(
+            navArgument(noteIdArg) {
+                type = NavType.LongType
+                defaultValue = 0L
+            },
+        ),
+    ) { backStackEntry ->
         val args = backStackEntry.arguments!!
         val isEditMode = args.getLong(noteIdArg) != 0L
 
