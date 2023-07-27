@@ -168,13 +168,11 @@ private fun Content(
         )
 
         FormTextField(
-            modifier = textFieldModifier,
+            modifier = Modifier.fillMaxWidth(),
             inputField = text,
             onValueChange = onTextChange,
             label = "Opis",
             minLines = 10,
-            keyboardOptions = commonKeyboardOptions,
-            keyboardActions = commonKeyboardActions,
         )
 
         TeacherButton(

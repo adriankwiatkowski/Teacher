@@ -82,24 +82,36 @@ private fun MainScreen(
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
         itemsIndexed(items = notes, key = { _, note -> note.id }) { index, note ->
-
-            ListItem(
-                modifier = Modifier.clickable { onNoteClick(note.id) },
-                overlineContent = { Text(priorityToName(note.priority)) },
-                headlineContent = { Text(note.title) },
-                supportingContent = {
-                    Text(
-                        text = note.text,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                },
-            )
+            NoteItem(note = note, onClick = { onNoteClick(note.id) })
             if (index != notes.lastIndex) {
                 Divider()
             }
         }
     }
+}
+
+@Composable
+private fun NoteItem(
+    note: Note,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ListItem(
+        modifier = modifier.clickable(onClick = onClick),
+        overlineContent = { Text(priorityToName(note.priority)) },
+        headlineContent = { Text(note.title) },
+        supportingContent = if (note.text.isNotBlank()) {
+            {
+                Text(
+                    text = note.text,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        } else {
+            null
+        },
+    )
 }
 
 private fun priorityToName(notePriority: NotePriority): String {

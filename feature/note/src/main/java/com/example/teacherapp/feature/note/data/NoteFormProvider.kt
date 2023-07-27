@@ -1,6 +1,8 @@
 package com.example.teacherapp.feature.note.data
 
 import androidx.core.text.trimmedLength
+import com.example.teacherapp.core.common.utils.currentDate
+import com.example.teacherapp.core.common.utils.format
 import com.example.teacherapp.core.model.data.NotePriority
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.core.ui.model.InputField
@@ -26,17 +28,23 @@ internal object NoteFormProvider {
     }
 
     fun createDefaultForm(
-        title: String = "",
+        title: String? = null,
         text: String = "",
         priority: NotePriority = NotePriority.Medium,
         isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): NoteForm {
+        val actualTitle = title.ifNull {
+            "Notatka z dnia ${currentDate().format()}"
+        }
+
         return NoteForm(
-            title = validateTitle(title, isEdited = isEdited),
+            title = validateTitle(actualTitle, isEdited = isEdited),
             text = validateText(text, isEdited = isEdited),
             priority = priority,
             status = status,
         )
     }
 }
+
+private inline fun String?.ifNull(defaultValue: () -> String): String = this ?: defaultValue()
