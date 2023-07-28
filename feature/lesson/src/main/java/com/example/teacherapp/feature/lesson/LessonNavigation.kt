@@ -14,11 +14,13 @@ import com.example.teacherapp.feature.lesson.LessonNavigation.lessonIdArg
 import com.example.teacherapp.feature.lesson.LessonNavigation.lessonRoute
 import com.example.teacherapp.feature.lesson.LessonNavigation.schoolClassIdArg
 import com.example.teacherapp.feature.lesson.data.LessonScaffoldViewModel
+import com.example.teacherapp.feature.lesson.route.AttendanceRoute
 import com.example.teacherapp.feature.lesson.route.GradeTemplateFormRoute
 import com.example.teacherapp.feature.lesson.route.GradeTemplatesRoute
 import com.example.teacherapp.feature.lesson.route.LessonActivityRoute
 import com.example.teacherapp.feature.lesson.route.LessonFormRoute
 import com.example.teacherapp.feature.lesson.route.LessonScaffoldWrapper
+import com.example.teacherapp.feature.lesson.route.NotesRoute
 import com.example.teacherapp.feature.lesson.tab.LessonTab
 
 private const val lessonGraphRoute = "lesson"
@@ -124,7 +126,11 @@ fun NavGraphBuilder.lessonGraph(
                         },
                     )
 
+                    LessonTab.Attendance -> AttendanceRoute()
+
                     LessonTab.Activity -> LessonActivityRoute()
+
+                    LessonTab.Notes -> NotesRoute()
                 }
             }
         }
