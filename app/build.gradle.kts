@@ -17,7 +17,15 @@ val keystorePropertiesFile = rootProject.file("keystore.properties")
 val keystoreProperties = Properties()
 
 // Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+} else {
+    // To build release you need to create keystore.properties file and set these properties.
+    keystoreProperties.setProperty("keyAlias", "")
+    keystoreProperties.setProperty("keyPassword", "")
+    keystoreProperties.setProperty("storeFile", "keystore.jks")
+    keystoreProperties.setProperty("storePassword", "")
+}
 
 android {
     namespace = "com.example.teacherapp"
