@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class NotesViewModel @Inject constructor(
+internal class NotesViewModel @Inject constructor(
     private val repository: LessonNoteRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
