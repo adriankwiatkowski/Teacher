@@ -1,6 +1,8 @@
 package com.example.teacherapp.feature.lesson.note
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,11 +53,15 @@ internal fun NotesScreen(
             },
             floatingActionButtonPosition = FabPosition.End,
         ) { innerPadding ->
-            MainContent(
-                modifier = Modifier.padding(innerPadding),
-                notes = notes,
-                onNoteClick = onNoteClick,
-            )
+            if (notes.isEmpty()) {
+                EmptyState(modifier = Modifier.padding(innerPadding))
+            } else {
+                MainContent(
+                    modifier = Modifier.padding(innerPadding),
+                    notes = notes,
+                    onNoteClick = onNoteClick,
+                )
+            }
         }
     }
 }
@@ -82,6 +89,22 @@ private fun MainContent(
                 Divider()
             }
         }
+    }
+}
+
+@Composable
+private fun EmptyState(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = "Nie napisano jeszcze żadnej notatki",
+            style = MaterialTheme.typography.displayMedium,
+        )
     }
 }
 
