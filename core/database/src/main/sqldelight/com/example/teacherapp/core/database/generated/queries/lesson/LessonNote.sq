@@ -1,0 +1,38 @@
+getLessonNotesByLessonId:
+SELECT
+    ln.id,
+    ln.title,
+    ln.text,
+    ln.lesson_id
+FROM lesson_note ln
+INNER JOIN lesson l ON ln.lesson_id = l.id
+WHERE l.id = :lesson_id;
+
+getLessonNoteById:
+SELECT
+    ln.id,
+    ln.title,
+    ln.text,
+    l.id AS 'lesson_id',
+    l.name AS 'lesson_name',
+    l.school_class_id AS 'school_class_id'
+FROM lesson_note ln
+INNER JOIN lesson l ON ln.lesson_id = l.id
+WHERE ln.id = :id;
+
+insertLessonNote:
+INSERT OR FAIL
+INTO lesson_note
+VALUES (?, ?, ?, ?);
+
+updateLessonNote:
+UPDATE lesson_note
+SET
+    lesson_id = :lesson_id,
+    title = :title,
+    text = :text
+WHERE id = :id;
+
+deleteLessonNoteById:
+DELETE FROM lesson_note
+WHERE id = :id;

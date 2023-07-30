@@ -126,6 +126,16 @@ CREATE TABLE attendance
     PRIMARY KEY (lesson_calendar_id, student_id)
 );
 
+CREATE TABLE lesson_note
+(
+    id        INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
+    lesson_id INTEGER  NOT NULL,
+    title     TEXT     NOT NULL,
+    text      TEXT     NOT NULL,
+
+    FOREIGN KEY (lesson_id) REFERENCES lesson (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 -- Notatka
 CREATE TABLE note
 (
