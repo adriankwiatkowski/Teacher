@@ -1,6 +1,6 @@
 package com.example.teacherapp.core.database.adapter
 
-import com.squareup.sqldelight.ColumnAdapter
+import app.cash.sqldelight.ColumnAdapter
 import java.math.BigDecimal
 
 internal object BigDecimalColumnAdapter : ColumnAdapter<BigDecimal, String> {

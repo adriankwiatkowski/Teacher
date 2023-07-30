@@ -1,13 +1,13 @@
 package com.example.teacherapp.core.database.datasource.studentnote
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.BasicStudentNote
 import com.example.teacherapp.core.model.data.StudentNote
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -26,7 +26,7 @@ internal class StudentNoteDataSourceImpl(
         studentNoteQueries
             .getStudentNotesByStudentId(studentId)
             .asFlow()
-            .mapToList()
+            .mapToList(dispatcher)
             .map(::toExternal)
             .flowOn(dispatcher)
 
@@ -34,7 +34,7 @@ internal class StudentNoteDataSourceImpl(
         studentNoteQueries
             .getStudentNoteById(id)
             .asFlow()
-            .mapToOneOrNull()
+            .mapToOneOrNull(dispatcher)
             .map(::toExternal)
             .flowOn(dispatcher)
 
@@ -42,7 +42,7 @@ internal class StudentNoteDataSourceImpl(
         studentQueries
             .getStudentNameById(studentId)
             .asFlow()
-            .mapToOneOrNull()
+            .mapToOneOrNull(dispatcher)
             .map { data ->
                 if (data == null) {
                     return@map null

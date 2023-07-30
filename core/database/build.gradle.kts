@@ -37,8 +37,10 @@ android {
 }
 
 sqldelight {
-    database("TeacherDatabase") { // This will be the name of the generated database class.
-        packageName = "com.example.teacherapp.core.database.generated"
+    databases {
+        create("TeacherDatabase") { // This will be the name of the generated database class.
+            packageName.set("com.example.teacherapp.core.database.generated")
+        }
     }
 }
 

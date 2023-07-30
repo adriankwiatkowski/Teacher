@@ -1,13 +1,13 @@
 package com.example.teacherapp.core.database.datasource.schoolclass
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.BasicSchoolClass
 import com.example.teacherapp.core.model.data.SchoolClass
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -28,15 +28,15 @@ internal class SchoolClassDataSourceImpl(
         val schoolClassFlow = schoolClassQueries
             .getSchoolClassById(id)
             .asFlow()
-            .mapToOneOrNull()
+            .mapToOneOrNull(dispatcher)
         val studentsFlow = studentQueries
             .getStudentsBySchoolClassId(id)
             .asFlow()
-            .mapToList()
+            .mapToList(dispatcher)
         val lessonsFlow = lessonQueries
             .getLessonsBySchoolClassId(id)
             .asFlow()
-            .mapToList()
+            .mapToList(dispatcher)
 
         return combine(
             schoolClassFlow,
@@ -50,7 +50,7 @@ internal class SchoolClassDataSourceImpl(
         schoolClassQueries
             .getAllSchoolClasses()
             .asFlow()
-            .mapToList()
+            .mapToList(dispatcher)
             .map(::toExternal)
             .flowOn(dispatcher)
 

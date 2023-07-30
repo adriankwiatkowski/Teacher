@@ -1,7 +1,7 @@
 package com.example.teacherapp.core.database.adapter
 
+import app.cash.sqldelight.ColumnAdapter
 import com.example.teacherapp.core.common.utils.TimeUtils
-import com.squareup.sqldelight.ColumnAdapter
 import java.time.LocalTime
 
 internal object TimeColumnAdapter : ColumnAdapter<LocalTime, String> {

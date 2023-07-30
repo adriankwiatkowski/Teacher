@@ -1,5 +1,8 @@
 package com.example.teacherapp.core.database.datasource.grade
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
@@ -7,9 +10,6 @@ import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.BasicGradeForTemplate
 import com.example.teacherapp.core.model.data.Grade
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -28,7 +28,7 @@ internal class GradeDataSourceImpl(
         queries
             .getGradeById(id)
             .asFlow()
-            .mapToOneOrNull()
+            .mapToOneOrNull(dispatcher)
             .map(::toExternal)
             .flowOn(dispatcher)
 
@@ -38,7 +38,7 @@ internal class GradeDataSourceImpl(
         queries
             .getGradesByGradeTemplateId(gradeTemplateId)
             .asFlow()
-            .mapToList()
+            .mapToList(dispatcher)
             .map(::toExternal)
             .flowOn(dispatcher)
 
@@ -47,7 +47,7 @@ internal class GradeDataSourceImpl(
     ): Flow<GradeTemplateInfo?> =
         queries.getGradeTemplateInfoByGradeTemplateId(gradeTemplateId)
             .asFlow()
-            .mapToOneOrNull()
+            .mapToOneOrNull(dispatcher)
             .map(::toExternal)
             .flowOn(dispatcher)
 

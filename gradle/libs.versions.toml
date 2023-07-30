@@ -13,7 +13,7 @@ androidxComposeRuntimeTracing = "1.0.0-alpha03"
 lifecycle = "2.6.1"
 nav = "2.6.0"
 
-sqldelight = "1.5.4"
+sqldelight = "2.0.0"
 
 hiltAndroid = '2.46.1'
 hilt = "2.44"
@@ -68,8 +68,8 @@ datastore-preferences = { group = "androidx.datastore", name = "datastore-prefer
 desugar-jdk = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugarJdk" }
 
 # Sqldelight
-sqldelight-android = { group = "com.squareup.sqldelight", name = "android-driver", version.ref = "sqldelight" }
-sqldelight-coroutines = { group = "com.squareup.sqldelight", name = "coroutines-extensions-jvm", version.ref = "sqldelight" }
+sqldelight-android = { group = "app.cash.sqldelight", name = "android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-extensions-jvm", version.ref = "sqldelight" }
 
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
@@ -104,4 +104,4 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqldelight" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
