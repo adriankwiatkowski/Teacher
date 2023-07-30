@@ -1,12 +1,12 @@
 [versions]
 androidGradlePlugin = "8.1.0"
-kotlin = "1.8.21"
-kotlinxCoroutines = "1.7.1"
+kotlin = "1.9.0"
+kotlinxCoroutines = "1.7.3"
 
 androidCore = "1.10.1"
 androidxAppCompat = "1.6.1"
 
-compose = "1.4.7"
+compose = "1.5.1"
 androidxActivity = "1.7.2"
 androidxComposeBom = "2023.06.01"
 androidxComposeRuntimeTracing = "1.0.0-alpha03"
@@ -15,8 +15,8 @@ nav = "2.6.0"
 
 sqldelight = "2.0.0"
 
-hiltAndroid = '2.46.1'
-hilt = "2.44"
+hiltAndroid = '2.47'
+hilt = "2.47"
 hiltNavigationCompose = "1.0.0"
 
 desugarJdk = "2.0.3"
