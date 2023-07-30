@@ -31,10 +31,8 @@ private const val gradeTemplateFormScreen = "grade-template-form"
 
 object LessonNavigation {
     internal const val gradeTemplateIdArg = "grade-template-id"
-    internal const val gradeIdArg = "grade-id"
     internal const val schoolClassIdArg = "school-class-id"
     internal const val lessonIdArg = "lesson-id"
-    internal const val studentIdArg = "student-id"
 
     const val lessonRoute = "$lessonScreen/{$schoolClassIdArg}/{$lessonIdArg}"
 }
@@ -130,7 +128,14 @@ fun NavGraphBuilder.lessonGraph(
 
                     LessonTab.Activity -> LessonActivityRoute()
 
-                    LessonTab.Notes -> NotesRoute()
+                    LessonTab.Notes -> NotesRoute(
+                        onNoteClick = { lessonNoteId ->
+                            // TODO: Navigate to lesson note form.
+                        },
+                        onAddNoteClick = {
+                            // TODO: Navigate to lesson note form.
+                        }
+                    )
                 }
             }
         }
