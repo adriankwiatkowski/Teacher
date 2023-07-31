@@ -9,14 +9,19 @@ import androidx.navigation.compose.rememberNavController
 import com.example.teacherapp.feature.grade.GradeNavigation
 import com.example.teacherapp.feature.lesson.LessonNavigation
 import com.example.teacherapp.feature.note.nav.NoteNavigation
+import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation
 import com.example.teacherapp.feature.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.feature.settings.SettingsNavigation
 import com.example.teacherapp.feature.student.StudentNavigation
 import com.example.teacherapp.ui.nav.TeacherBottomNavScreen
-import com.example.teacherapp.ui.nav.graphs.schedule.ScheduleNavigation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 
 @Composable
 fun rememberTeacherAppState(

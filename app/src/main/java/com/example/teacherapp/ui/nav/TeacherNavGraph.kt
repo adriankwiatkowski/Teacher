@@ -10,6 +10,7 @@ import com.example.teacherapp.feature.lesson.navigateToGradeTemplateFormRoute
 import com.example.teacherapp.feature.lesson.navigateToLessonFormRoute
 import com.example.teacherapp.feature.lesson.navigateToLessonGraph
 import com.example.teacherapp.feature.note.nav.noteGraph
+import com.example.teacherapp.feature.schedule.nav.scheduleGraph
 import com.example.teacherapp.feature.schoolclass.SchoolClassNavigation
 import com.example.teacherapp.feature.schoolclass.schoolClassGraph
 import com.example.teacherapp.feature.schoolyear.navigateToSchoolYearFormRoute
@@ -21,7 +22,6 @@ import com.example.teacherapp.feature.student.studentGraph
 import com.example.teacherapp.feature.studentnote.navigateToStudentNoteFormRoute
 import com.example.teacherapp.feature.studentnote.studentNoteGraph
 import com.example.teacherapp.ui.TeacherAppState
-import com.example.teacherapp.ui.nav.graphs.schedule.scheduleGraph
 
 @Composable
 fun TeacherNavGraph(
@@ -37,7 +37,7 @@ fun TeacherNavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
-        scheduleGraph()
+        scheduleGraph(navController = navController, onShowSnackbar = onShowSnackbar)
 
         schoolClassGraph(
             navController = navController,

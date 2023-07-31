@@ -103,6 +103,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:ui"))
 
+    implementation(project(":feature:schedule"))
     implementation(project(":feature:schoolclass"))
     implementation(project(":feature:schoolyear"))
     implementation(project(":feature:student"))

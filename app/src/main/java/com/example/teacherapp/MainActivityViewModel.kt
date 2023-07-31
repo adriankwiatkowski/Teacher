@@ -13,9 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(
-    repository: SettingsRepository,
-) : ViewModel() {
+class MainActivityViewModel @Inject constructor(repository: SettingsRepository) : ViewModel() {
 
     val settings: StateFlow<Result<SettingsData>> = repository.settings
         .stateIn(initialValue = Result.Loading)

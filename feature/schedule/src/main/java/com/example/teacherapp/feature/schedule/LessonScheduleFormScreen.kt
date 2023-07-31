@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui.screens.other.lesson
+package com.example.teacherapp.feature.schedule
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,7 +40,7 @@ import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun LessonPlanningScreen(
+internal fun LessonScheduleFormScreen(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     schoolClassName: String,
@@ -133,7 +133,7 @@ private fun DateForm(
         ) {
             Box(Modifier.fillMaxWidth()) {
                 Text(
-                    modifier = Modifier.Companion.align(Alignment.Center),
+                    modifier = Modifier.align(Alignment.Center),
                     text = "Termin zajęć",
                     style = MaterialTheme.typography.headlineSmall,
                 )
@@ -220,7 +220,7 @@ private fun LessonTimePicker(
 
 @Preview
 @Composable
-private fun LessonPlanningScreenPreview() {
+private fun LessonScheduleFormScreenPreview() {
     TeacherAppTheme {
         Surface {
             var calendarForm by remember {
@@ -234,7 +234,7 @@ private fun LessonPlanningScreenPreview() {
                 )
             }
 
-            LessonPlanningScreen(
+            LessonScheduleFormScreen(
                 showNavigationIcon = true,
                 onNavBack = {},
                 schoolClassName = "1A",
@@ -243,19 +243,8 @@ private fun LessonPlanningScreenPreview() {
                 onDateChange = { calendarForm = calendarForm.copy(date = it) },
                 onStartTimeChange = { calendarForm = calendarForm.copy(startTime = it) },
                 onEndTimeChange = { calendarForm = calendarForm.copy(endTime = it) },
-                onTypeChange = { calendarForm = calendarForm.copy(type = it) }
+                onTypeChange = { calendarForm = calendarForm.copy(type = it) },
             )
         }
     }
-}
-
-internal data class LessonCalendarForm(
-    val date: LocalDate,
-    val startTime: LocalTime,
-    val endTime: LocalTime,
-    val type: LessonCalendarFormType,
-)
-
-internal enum class LessonCalendarFormType {
-    Once, Weekly, EveryTwoWeeks
 }
