@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.LessonCalendar
 import com.example.teacherapp.core.ui.component.TeacherButton
-import com.example.teacherapp.core.ui.component.TeacherTextField
 import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
 import com.example.teacherapp.core.ui.component.picker.TeacherTimePicker
 import com.example.teacherapp.core.ui.paramprovider.LessonCalendarsPreviewParameterProvider
@@ -48,13 +47,13 @@ fun LessonPlanningScreen(
         contentPadding = PaddingValues(MaterialTheme.spacing.small)
     ) {
         item {
-            Header()
+            Header(
+                schoolClassName = "3A",
+                lessonName = "Matematyka",
+            )
         }
 
-        item {
-            LessonNameForm()
-        }
-
+        // TODO: Separate form when adding and editing lesson date, and only one form should be present.
         dateForms(lessonCalendars)
         item {
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
@@ -65,38 +64,32 @@ fun LessonPlanningScreen(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {},
             ) {
-                Text(text = "Edytuj przedmiot")
+                Text(text = "Dodaj termin zajęć")
             }
         }
     }
 }
 
 @Composable
-private fun Header() {
-    Text(
-        text = "Formularz przedmiotu",
-        fontWeight = FontWeight.Bold,
-        style = MaterialTheme.typography.headlineMedium,
-    )
-    Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+private fun Header(
+    schoolClassName: String,
+    lessonName: String,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier) {
+        Text(
+            text = "Dodaj termin zajęć",
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineMedium,
+        )
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
 
-    Text(
-        text = "Klasa 3A",
-        style = MaterialTheme.typography.headlineSmall,
-    )
-    Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
-}
-
-@Composable
-private fun LessonNameForm() {
-    TeacherTextField(
-        modifier = Modifier.fillMaxWidth(),
-        label = "Przedmiot*",
-        value = "Matematyka",
-        onValueChange = {},
-    )
-
-    Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+        Text(
+            text = "$lessonName $schoolClassName",
+            style = MaterialTheme.typography.headlineSmall,
+        )
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+    }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -161,16 +154,6 @@ private fun LazyListScope.dateForms(
                         Text("Co 2 tygodnie")
                     }
                 }
-            }
-        }
-    }
-
-    item {
-        Box(Modifier.fillMaxWidth()) {
-            TeacherButton(
-                modifier = Modifier.Companion.align(Alignment.Center),
-                onClick = {}) {
-                Text("Dodaj termin zajęć")
             }
         }
     }
