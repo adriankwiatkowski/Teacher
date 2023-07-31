@@ -56,6 +56,7 @@ fun TeacherTimePicker(
                 val hour = timePickerState.hour
                 val minute = timePickerState.minute
                 onTimeSelected(TimeUtils.localTimeOf(hour, minute))
+                showDialog = false
             },
         ) {
             TimePicker(state = timePickerState)
