@@ -6,6 +6,8 @@ import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
+import java.util.Locale
 
 object TimeUtils {
 
@@ -46,6 +48,9 @@ object TimeUtils {
     fun format(localDate: LocalDate): String = localDate.format(dateFormat)
 
     fun format(localTime: LocalTime): String = localTime.format(timeFormat)
+
+    fun getDisplayNameOfDayOfWeek(date: LocalDate): String =
+        date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
 
     private val dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
