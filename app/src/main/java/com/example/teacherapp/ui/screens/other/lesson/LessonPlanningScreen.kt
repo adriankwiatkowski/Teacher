@@ -13,36 +13,38 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.utils.TimeUtils
+import com.example.teacherapp.core.model.data.LessonCalendar
 import com.example.teacherapp.core.ui.component.TeacherButton
 import com.example.teacherapp.core.ui.component.TeacherTextField
 import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
 import com.example.teacherapp.core.ui.component.picker.TeacherTimePicker
+import com.example.teacherapp.core.ui.paramprovider.LessonCalendarsPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import java.time.LocalDate
 import java.time.LocalTime
 
 @Composable
-fun LessonPlanningScreen() {
-    val lessonDate by remember { mutableStateOf(TimeUtils.currentDate()) }
-    val lessonTime by remember { mutableStateOf(TimeUtils.localTimeOf(9, 0)) }
-
+fun LessonPlanningScreen(
+    lessonCalendars: List<LessonCalendar>,
+    modifier: Modifier = Modifier,
+) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.spacing.small)
     ) {
         item {
@@ -53,8 +55,8 @@ fun LessonPlanningScreen() {
             LessonNameForm()
         }
 
+        dateForms(lessonCalendars)
         item {
-            DateForms(lessonDate, lessonTime)
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
         }
 
@@ -67,90 +69,6 @@ fun LessonPlanningScreen() {
             }
         }
     }
-}
-
-@Composable
-@OptIn(ExperimentalLayoutApi::class)
-private fun DateForms(
-    lessonDate: LocalDate,
-    lessonTime: LocalTime,
-) {
-    var lessonDate1 = lessonDate
-    var lessonTime1 = lessonTime
-    Box(Modifier.fillMaxWidth()) {
-        Text(
-            modifier = Modifier.Companion.align(Alignment.Center),
-            text = "Terminy zajęć",
-            style = MaterialTheme.typography.headlineSmall
-        )
-    }
-
-    Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
-
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(MaterialTheme.spacing.small),
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
-        ) {
-            LessonDatePicker(
-                date = lessonDate1,
-                onDateSelected = { date ->
-                    lessonDate1 = date
-                },
-            )
-            LessonTimePicker(
-                label = "Czas rozpoczęcia:",
-                time = lessonTime1,
-                onTimeSelected = { time ->
-                    lessonTime1 = time
-                },
-            )
-            LessonTimePicker(
-                label = "Czas zakończenia:",
-                time = lessonTime1,
-                onTimeSelected = { time ->
-                    lessonTime1 = time
-                },
-            )
-
-            FlowRow {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    RadioButton(selected = true, onClick = {})
-                    Text("Jednorazowe")
-                }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    RadioButton(selected = false, onClick = {})
-                    Text("Cotygodniowe")
-                }
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    RadioButton(selected = false, onClick = {})
-                    Text("Co 2 tygodnie")
-                }
-            }
-        }
-    }
-
-    Box(Modifier.fillMaxWidth()) {
-        TeacherButton(
-            modifier = Modifier.Companion.align(Alignment.Center),
-            onClick = {}) {
-            Text("Dodaj termin zajęć")
-        }
-    }
-}
-
-@Composable
-private fun LessonNameForm() {
-    TeacherTextField(
-        modifier = Modifier.fillMaxWidth(),
-        label = "Przedmiot*",
-        value = "Matematyka",
-        onValueChange = {},
-    )
-
-    Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 }
 
 @Composable
@@ -167,6 +85,95 @@ private fun Header() {
         style = MaterialTheme.typography.headlineSmall,
     )
     Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
+}
+
+@Composable
+private fun LessonNameForm() {
+    TeacherTextField(
+        modifier = Modifier.fillMaxWidth(),
+        label = "Przedmiot*",
+        value = "Matematyka",
+        onValueChange = {},
+    )
+
+    Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+private fun LazyListScope.dateForms(
+    lessonCalendars: List<LessonCalendar>,
+) {
+    item {
+        Box(Modifier.fillMaxWidth()) {
+            Text(
+                modifier = Modifier.Companion.align(Alignment.Center),
+                text = "Terminy zajęć",
+                style = MaterialTheme.typography.headlineSmall
+            )
+        }
+
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+    }
+
+    items(lessonCalendars, key = { it.id }) { lessonCalendar ->
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(MaterialTheme.spacing.small),
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(MaterialTheme.spacing.small),
+            ) {
+                LessonDatePicker(
+                    date = lessonCalendar.date,
+                    onDateSelected = { date ->
+                        // TODO: Set date.
+                    },
+                )
+                LessonTimePicker(
+                    label = "Czas rozpoczęcia:",
+                    time = lessonCalendar.startTime,
+                    onTimeSelected = { time ->
+                        // TODO: Set start time.
+                    },
+                )
+                LessonTimePicker(
+                    label = "Czas zakończenia:",
+                    time = lessonCalendar.endTime,
+                    onTimeSelected = { time ->
+                        // TODO: Set end time.
+                    },
+                )
+
+                FlowRow {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(selected = true, onClick = {})
+                        Text("Jednorazowe")
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(selected = false, onClick = {})
+                        Text("Cotygodniowe")
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(selected = false, onClick = {})
+                        Text("Co 2 tygodnie")
+                    }
+                }
+            }
+        }
+    }
+
+    item {
+        Box(Modifier.fillMaxWidth()) {
+            TeacherButton(
+                modifier = Modifier.Companion.align(Alignment.Center),
+                onClick = {}) {
+                Text("Dodaj termin zajęć")
+            }
+        }
+    }
 }
 
 @Composable
@@ -216,10 +223,16 @@ private fun LessonTimePicker(
 
 @Preview
 @Composable
-private fun LessonPlanningScreenPreview() {
+private fun LessonPlanningScreenPreview(
+    @PreviewParameter(
+        LessonCalendarsPreviewParameterProvider::class
+    ) lessonCalendars: List<LessonCalendar>
+) {
     TeacherAppTheme {
         Surface {
-            LessonPlanningScreen()
+            LessonPlanningScreen(
+                lessonCalendars = lessonCalendars,
+            )
         }
     }
 }
