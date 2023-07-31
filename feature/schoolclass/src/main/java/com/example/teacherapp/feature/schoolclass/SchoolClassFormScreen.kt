@@ -1,10 +1,11 @@
 package com.example.teacherapp.feature.schoolclass
 
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -93,38 +94,35 @@ private fun MainContent(
     onAddSchoolYear: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
-        modifier = modifier,
-        contentPadding = PaddingValues(MaterialTheme.spacing.small),
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .padding(MaterialTheme.spacing.small),
     ) {
-        item {
-            ClassNameInput(
-                modifier = Modifier.fillMaxWidth(),
-                schoolClassName = schoolClassName,
-                onSchoolClassNameChange = onSchoolClassNameChange,
+        ClassNameInput(
+            modifier = Modifier.fillMaxWidth(),
+            schoolClassName = schoolClassName,
+            onSchoolClassNameChange = onSchoolClassNameChange,
+        )
+
+        Card {
+            SchoolYearInput(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacing.small),
+                schoolYears = schoolYears,
+                schoolYear = schoolYear,
+                onSchoolYearChange = onSchoolYearChange,
+                onAddSchoolYear = onAddSchoolYear,
             )
         }
 
-        item {
-            Card {
-                SchoolYearInput(
-                    modifier = Modifier.fillMaxWidth(),
-                    schoolYears = schoolYears,
-                    schoolYear = schoolYear,
-                    onSchoolYearChange = onSchoolYearChange,
-                    onAddSchoolYear = onAddSchoolYear,
-                )
-            }
-        }
-
-        item {
-            TeacherButton(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = onSubmit,
-                enabled = isSubmitEnabled,
-            ) {
-                Text(text = "Dodaj klasę")
-            }
+        TeacherButton(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = onSubmit,
+            enabled = isSubmitEnabled,
+        ) {
+            Text(text = "Dodaj klasę")
         }
     }
 }
