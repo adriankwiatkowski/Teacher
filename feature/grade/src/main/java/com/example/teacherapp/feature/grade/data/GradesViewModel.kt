@@ -8,7 +8,7 @@ import com.example.teacherapp.core.common.result.combineResult
 import com.example.teacherapp.core.data.repository.grade.GradeRepository
 import com.example.teacherapp.core.model.data.BasicGradeForTemplate
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
-import com.example.teacherapp.feature.grade.GradeNavigation
+import com.example.teacherapp.feature.grade.nav.GradeNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

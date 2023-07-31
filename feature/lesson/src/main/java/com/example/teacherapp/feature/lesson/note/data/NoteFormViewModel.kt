@@ -10,7 +10,7 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.data.repository.lessonnote.LessonNoteRepository
 import com.example.teacherapp.core.model.data.LessonNote
 import com.example.teacherapp.core.ui.model.FormStatus
-import com.example.teacherapp.feature.lesson.LessonNavigation
+import com.example.teacherapp.feature.lesson.nav.LessonNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

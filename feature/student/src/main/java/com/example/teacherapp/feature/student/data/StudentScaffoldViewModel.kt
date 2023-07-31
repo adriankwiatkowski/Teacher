@@ -6,10 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.data.repository.student.StudentRepository
 import com.example.teacherapp.core.model.data.Student
-import com.example.teacherapp.feature.student.StudentNavigation
+import com.example.teacherapp.feature.student.nav.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

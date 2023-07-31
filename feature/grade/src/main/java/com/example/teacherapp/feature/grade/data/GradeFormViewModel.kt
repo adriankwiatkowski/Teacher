@@ -13,7 +13,7 @@ import com.example.teacherapp.core.model.data.BasicStudent
 import com.example.teacherapp.core.model.data.Grade
 import com.example.teacherapp.core.model.data.GradeTemplateInfo
 import com.example.teacherapp.core.ui.model.FormStatus
-import com.example.teacherapp.feature.grade.GradeNavigation
+import com.example.teacherapp.feature.grade.nav.GradeNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

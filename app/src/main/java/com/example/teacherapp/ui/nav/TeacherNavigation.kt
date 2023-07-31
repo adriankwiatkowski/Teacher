@@ -14,8 +14,8 @@ import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
 import com.example.teacherapp.feature.note.nav.navigateToNotesRoute
 import com.example.teacherapp.feature.schedule.nav.navigateToScheduleRoute
-import com.example.teacherapp.feature.schoolclass.navigateToSchoolClassGraph
-import com.example.teacherapp.feature.settings.navigateToSettingsRoute
+import com.example.teacherapp.feature.schoolclass.nav.navigateToSchoolClassGraph
+import com.example.teacherapp.feature.settings.nav.navigateToSettingsRoute
 
 enum class TeacherBottomNavScreen(val title: String, val icon: ImageVector) {
     Schedule("Plan zajęć", Icons.Default.Person),
