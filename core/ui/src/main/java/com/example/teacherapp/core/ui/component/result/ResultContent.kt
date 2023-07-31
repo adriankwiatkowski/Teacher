@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.ui.BuildConfig
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 
 @Composable
@@ -45,13 +46,11 @@ private fun ErrorScreenWithDebugInfo(
     exception: Throwable?,
     modifier: Modifier = Modifier,
 ) {
-    // TODO: Add debug info if in inspector mode.
-//    val label: @Composable () -> Unit = if (BuildConfig.DEBUG) {
-//        { Text(exception.toString()) }
-//    } else {
-//        {}
-//    }
-    val label: @Composable () -> Unit = {}
+    val label: @Composable () -> Unit = if (BuildConfig.DEBUG) {
+        { Text(exception.toString()) }
+    } else {
+        {}
+    }
 
     ErrorScreen(modifier = modifier, label = label)
 }
