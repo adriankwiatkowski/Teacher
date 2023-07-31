@@ -21,6 +21,10 @@ internal class DatabaseLessonRepository @Inject constructor(
     @ApplicationScope private val scope: CoroutineScope,
 ) : LessonRepository {
 
+    override fun getLessons(): Flow<Result<List<Lesson>>> = dataSource
+        .getLessons()
+        .asResult()
+
     override fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>> = dataSource
         .getLessonById(lessonId)
         .asResult()

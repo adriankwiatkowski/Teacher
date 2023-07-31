@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface LessonDataSource {
 
+    fun getLessons(): Flow<List<Lesson>>
+
     fun getLessonById(id: Long): Flow<Lesson?>
 
     fun getLessonsBySchoolClassId(schoolClassId: Long): Flow<List<BasicLesson>>

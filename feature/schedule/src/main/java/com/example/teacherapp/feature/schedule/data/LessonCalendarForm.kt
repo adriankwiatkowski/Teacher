@@ -1,4 +1,4 @@
-package com.example.teacherapp.feature.schedule
+package com.example.teacherapp.feature.schedule.data
 
 import java.time.LocalDate
 import java.time.LocalTime

@@ -5,6 +5,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
+import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternalLessons
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.BasicLesson
 import com.example.teacherapp.core.model.data.Lesson
@@ -21,6 +22,14 @@ internal class LessonDataSourceImpl(
 
     private val queries = db.lessonQueries
     private val schoolClassQueries = db.schoolClassQueries
+
+    override fun getLessons(): Flow<List<Lesson>> =
+        queries
+            .getLessons()
+            .asFlow()
+            .mapToList(dispatcher)
+            .map(::toExternalLessons)
+            .flowOn(dispatcher)
 
     override fun getLessonById(id: Long): Flow<Lesson?> =
         queries

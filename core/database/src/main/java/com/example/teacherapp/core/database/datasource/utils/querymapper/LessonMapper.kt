@@ -1,6 +1,7 @@
 package com.example.teacherapp.core.database.datasource.utils.querymapper
 
 import com.example.teacherapp.core.database.generated.queries.lesson.GetLessonById
+import com.example.teacherapp.core.database.generated.queries.lesson.GetLessons
 import com.example.teacherapp.core.database.generated.queries.lesson.GetLessonsBySchoolClassId
 import com.example.teacherapp.core.model.data.BasicLesson
 import com.example.teacherapp.core.model.data.BasicSchoolClass
@@ -13,6 +14,21 @@ internal fun toExternal(
         id = lesson.id,
         name = lesson.name,
         schoolClassId = lesson.school_class_id,
+    )
+}
+
+internal fun toExternalLessons(
+    lessons: List<GetLessons>
+): List<Lesson> = lessons.map { lesson ->
+    Lesson(
+        id = lesson.id,
+        name = lesson.lesson_name,
+        schoolClass = BasicSchoolClass(
+            id = lesson.school_class_id,
+            name = lesson.school_class_name,
+            studentCount = lesson.student_count,
+            lessonCount = lesson.lesson_count,
+        ),
     )
 }
 

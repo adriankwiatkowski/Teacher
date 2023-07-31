@@ -31,7 +31,7 @@ internal fun LessonScaffoldWrapper(
     viewModel: LessonScaffoldViewModel = hiltViewModel(),
     content: @Composable (selectedTab: LessonTab, lesson: Lesson) -> Unit,
 ) {
-    val lessonResult by viewModel.studentResult.collectAsStateWithLifecycle()
+    val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
     val isLessonDeleted by viewModel.isLessonDeleted.collectAsStateWithLifecycle()
 
     val tabs = remember {

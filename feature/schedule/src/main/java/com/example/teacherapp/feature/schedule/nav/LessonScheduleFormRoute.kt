@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.teacherapp.core.common.utils.TimeUtils
-import com.example.teacherapp.feature.schedule.LessonCalendarForm
-import com.example.teacherapp.feature.schedule.LessonCalendarFormType
+import com.example.teacherapp.feature.schedule.data.LessonCalendarForm
+import com.example.teacherapp.feature.schedule.data.LessonCalendarFormType
 import com.example.teacherapp.feature.schedule.LessonScheduleFormScreen
 
 @Composable

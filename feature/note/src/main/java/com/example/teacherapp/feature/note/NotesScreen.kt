@@ -131,7 +131,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
     ) {
         Text(
             text = "Nie napisano jeszcze żadnej notatki",
-            style = MaterialTheme.typography.displayMedium
+            style = MaterialTheme.typography.displayMedium,
         )
     }
 }

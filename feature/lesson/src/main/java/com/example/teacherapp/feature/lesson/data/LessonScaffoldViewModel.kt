@@ -26,7 +26,7 @@ internal class LessonScaffoldViewModel @Inject constructor(
     val isLessonDeleted = savedStateHandle.getStateFlow(IS_LESSON_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val studentResult: StateFlow<Result<Lesson>> = lessonId
+    val lessonResult: StateFlow<Result<Lesson>> = lessonId
         .flatMapLatest { lessonId -> repository.getLessonById(lessonId) }
         .stateIn(
             scope = viewModelScope,
