@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.teacherapp.core.model.data.SchoolYear
 import com.example.teacherapp.core.ui.component.TeacherButton
-import com.example.teacherapp.core.ui.component.form.FormAutoCompleteOutlinedTextField
+import com.example.teacherapp.core.ui.component.form.FormAutoCompleteTextField
 import com.example.teacherapp.core.ui.model.InputField
 
 @Composable
@@ -54,7 +54,7 @@ internal fun SchoolYearInput(
                 }
             }
 
-            FormAutoCompleteOutlinedTextField(
+            FormAutoCompleteTextField(
                 modifier = Modifier.fillMaxWidth(),
                 inputField = schoolYear,
                 onValueChange = {},

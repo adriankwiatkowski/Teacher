@@ -4,16 +4,20 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
@@ -24,7 +28,7 @@ import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T> FormAutoCompleteOutlinedTextField(
+fun <T> FormAutoCompleteTextField(
     inputField: InputField<T>,
     onValueChange: (String) -> Unit,
     onSuggestionSelect: (T) -> Unit,
@@ -33,7 +37,7 @@ fun <T> FormAutoCompleteOutlinedTextField(
     inputToString: (InputField<T>) -> String = { it.value?.toString() ?: "" },
     suggestionToString: (T) -> String = { it?.toString() ?: "" },
     enabled: Boolean = true,
-    readOnly: Boolean = false,
+    readOnly: Boolean = true,
     textStyle: TextStyle = LocalTextStyle.current,
     label: String? = null,
     placeholder: String? = null,
@@ -54,7 +58,7 @@ fun <T> FormAutoCompleteOutlinedTextField(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    FormAutoCompleteOutlinedTextField(
+    FormAutoCompleteTextField(
         inputField = inputField,
         onValueChange = onValueChange,
         onSuggestionSelect = onSuggestionSelect,
@@ -86,7 +90,7 @@ fun <T> FormAutoCompleteOutlinedTextField(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T> FormAutoCompleteOutlinedTextField(
+fun <T> FormAutoCompleteTextField(
     inputField: InputField<T>,
     onValueChange: (String) -> Unit,
     onSuggestionSelect: (T) -> Unit,
@@ -98,7 +102,7 @@ fun <T> FormAutoCompleteOutlinedTextField(
     inputToString: (InputField<T>) -> String = { it.value?.toString() ?: "" },
     suggestionToString: (T) -> String = { it?.toString() ?: "" },
     enabled: Boolean = true,
-    readOnly: Boolean = false,
+    readOnly: Boolean = true,
     textStyle: TextStyle = LocalTextStyle.current,
     label: String? = null,
     placeholder: String? = null,
@@ -125,7 +129,8 @@ fun <T> FormAutoCompleteOutlinedTextField(
         FormTextField(
             inputField = inputField,
             onValueChange = onValueChange,
-            modifier = modifier,
+            // The `menuAnchor` modifier must be passed to the text field for correctness.
+            modifier = modifier.menuAnchor(),
             inputToString = inputToString,
             enabled = enabled,
             readOnly = readOnly,
@@ -164,11 +169,12 @@ fun <T> FormAutoCompleteOutlinedTextField(
             ) {
                 filterSuggestions.forEach { suggestion ->
                     DropdownMenuItem(
+                        text = { Text(text = suggestionToString(suggestion)) },
                         onClick = {
                             onSuggestionSelect(suggestion)
                             setExpanded(false)
                         },
-                        text = { Text(text = suggestionToString(suggestion)) }
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
                 }
             }
@@ -176,16 +182,35 @@ fun <T> FormAutoCompleteOutlinedTextField(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun AutoCompleteTextFieldPreview() {
     TeacherAppTheme {
-        var value by remember { mutableStateOf("1") }
-        FormAutoCompleteOutlinedTextField(
-            inputField = InputField(""),
-            onValueChange = { value = it },
-            onSuggestionSelect = { value = it },
-            suggestions = listOf("111", "112", "113"),
-        )
+        Surface {
+            var value by remember { mutableStateOf("1") }
+            FormAutoCompleteTextField(
+                inputField = InputField(value),
+                onValueChange = { value = it },
+                onSuggestionSelect = { value = it },
+                suggestions = listOf("111", "112", "113"),
+                readOnly = false,
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun AutoCompleteTextFieldReadOnlyPreview() {
+    TeacherAppTheme {
+        Surface {
+            var value by remember { mutableStateOf("111") }
+            FormAutoCompleteTextField(
+                inputField = InputField(value),
+                onValueChange = { value = it },
+                onSuggestionSelect = { value = it },
+                suggestions = listOf("111", "112", "113"),
+            )
+        }
     }
 }
