@@ -3,7 +3,6 @@ package com.example.teacherapp.ui.screens.other.lesson
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,11 +24,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.ui.component.TeacherButton
 import com.example.teacherapp.core.ui.component.TeacherRadioButton
+import com.example.teacherapp.core.ui.component.TeacherTopBar
+import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
 import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
 import com.example.teacherapp.core.ui.component.picker.TeacherTimePicker
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
@@ -35,8 +38,11 @@ import com.example.teacherapp.core.ui.theme.spacing
 import java.time.LocalDate
 import java.time.LocalTime
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LessonPlanningScreen(
+    showNavigationIcon: Boolean,
+    onNavBack: () -> Unit,
     schoolClassName: String,
     lessonName: String,
     lessonCalendarForm: LessonCalendarForm,
@@ -46,33 +52,49 @@ internal fun LessonPlanningScreen(
     onTypeChange: (type: LessonCalendarFormType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-    ) {
-        Header(
-            schoolClassName = schoolClassName,
-            lessonName = lessonName,
-        )
+    val scrollBehavior = TeacherTopBarDefaults.default()
 
-        DateForm(
-            date = lessonCalendarForm.date,
-            onDateChange = onDateChange,
-            startTime = lessonCalendarForm.startTime,
-            onStartTimeChange = onStartTimeChange,
-            endTime = lessonCalendarForm.endTime,
-            onEndTimeChange = onEndTimeChange,
-            type = lessonCalendarForm.type,
-            onTypeChange = onTypeChange,
-        )
-        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
-
-        TeacherButton(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = {},
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TeacherTopBar(
+                title = "Dodaj termin zajęć",
+                showNavigationIcon = showNavigationIcon,
+                onNavigationIconClick = onNavBack,
+                scrollBehavior = scrollBehavior,
+            )
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .padding(MaterialTheme.spacing.small),
         ) {
-            Text(text = "Dodaj termin zajęć")
+            Header(
+                schoolClassName = schoolClassName,
+                lessonName = lessonName,
+            )
+
+            DateForm(
+                date = lessonCalendarForm.date,
+                onDateChange = onDateChange,
+                startTime = lessonCalendarForm.startTime,
+                onStartTimeChange = onStartTimeChange,
+                endTime = lessonCalendarForm.endTime,
+                onEndTimeChange = onEndTimeChange,
+                type = lessonCalendarForm.type,
+                onTypeChange = onTypeChange,
+            )
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+
+            TeacherButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {},
+            ) {
+                Text(text = "Dodaj termin zajęć")
+            }
         }
     }
 }
@@ -83,14 +105,7 @@ private fun Header(
     lessonName: String,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier) {
-        Text(
-            text = "Dodaj termin zajęć",
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.headlineMedium,
-        )
-        Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
-
+    Column(modifier = modifier) {
         Text(
             text = "$lessonName $schoolClassName",
             style = MaterialTheme.typography.headlineSmall,
@@ -99,7 +114,6 @@ private fun Header(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DateForm(
     date: LocalDate,
@@ -111,11 +125,7 @@ private fun DateForm(
     type: LessonCalendarFormType,
     onTypeChange: (type: LessonCalendarFormType) -> Unit,
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(MaterialTheme.spacing.small),
-    ) {
+    Card(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -225,6 +235,8 @@ private fun LessonPlanningScreenPreview() {
             }
 
             LessonPlanningScreen(
+                showNavigationIcon = true,
+                onNavBack = {},
                 schoolClassName = "1A",
                 lessonName = "Matematyka",
                 lessonCalendarForm = calendarForm,
