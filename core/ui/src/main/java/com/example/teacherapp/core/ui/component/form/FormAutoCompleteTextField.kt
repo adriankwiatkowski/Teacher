@@ -10,6 +10,7 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
@@ -115,10 +116,7 @@ fun <T> FormAutoCompleteTextField(
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    shape: Shape = MaterialTheme.shapes.small.copy(
-        bottomEnd = ZeroCornerSize,
-        bottomStart = ZeroCornerSize
-    ),
+    shape: Shape = OutlinedTextFieldDefaults.shape,
     colors: TextFieldColors = ExposedDropdownMenuDefaults.textFieldColors(),
 ) {
     ExposedDropdownMenuBox(
