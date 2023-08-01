@@ -46,11 +46,19 @@ internal class LessonScheduleFormViewModel @Inject constructor(
     }
 
     fun onStartTimeChange(startTime: LocalTime) {
-        form = form.copy(startTime = LessonScheduleFormProvider.sanitizeStartTime(startTime))
+        val timeData = LessonScheduleFormProvider.sanitizeStartTime(startTime, form.endTime)
+        form = form.copy(
+            startTime = timeData.startTime,
+            endTime = timeData.endTime,
+        )
     }
 
     fun onEndTimeChange(endTime: LocalTime) {
-        form = form.copy(endTime = LessonScheduleFormProvider.sanitizeEndTime(endTime))
+        val timeData = LessonScheduleFormProvider.sanitizeEndTime(form.startTime, endTime)
+        form = form.copy(
+            startTime = timeData.startTime,
+            endTime = timeData.endTime,
+        )
     }
 
     fun onTypeChange(type: LessonScheduleType) {

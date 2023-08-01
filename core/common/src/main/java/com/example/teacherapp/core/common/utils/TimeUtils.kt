@@ -48,12 +48,19 @@ object TimeUtils {
     fun plusTime(time: LocalTime, hours: Long, minutes: Long): LocalTime =
         time.plusHours(hours).plusMinutes(minutes)
 
+    fun minusTime(time: LocalTime, hours: Long, minutes: Long): LocalTime =
+        time.minusHours(hours).minusMinutes(minutes)
+
     fun format(localDate: LocalDate): String = localDate.format(dateFormat)
 
     fun format(localTime: LocalTime): String = localTime.format(timeFormat)
 
     fun getDisplayNameOfDayOfWeek(date: LocalDate): String =
         date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
+
+    fun isBefore(a: LocalTime, b: LocalTime): Boolean = a.isBefore(b)
+
+    fun isAfter(a: LocalTime, b: LocalTime): Boolean = a.isAfter(b)
 
     private val dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 

@@ -6,19 +6,42 @@ import com.example.teacherapp.core.ui.model.FormStatus
 import java.time.LocalDate
 import java.time.LocalTime
 
-// TODO: Add validation/sanitization.
 internal object LessonScheduleFormProvider {
 
-    fun sanitizeDate(date: LocalDate, isEdited: Boolean = true): LocalDate {
+    fun sanitizeDate(date: LocalDate): LocalDate {
         return date
     }
 
-    fun sanitizeStartTime(startTime: LocalTime, isEdited: Boolean = true): LocalTime {
-        return startTime
+    @Suppress("NAME_SHADOWING")
+    fun sanitizeStartTime(startTime: LocalTime, endTime: LocalTime): TimeData {
+        var startTime = startTime
+        var endTime = endTime
+
+        if (TimeUtils.localTimeHour(startTime) == 23 && TimeUtils.localTimeMinute(startTime) == 59) {
+            startTime = TimeUtils.localTimeOf(23, 58)
+        }
+
+        if (!TimeUtils.isBefore(startTime, endTime)) {
+            endTime = TimeUtils.plusTime(startTime, 0, 1)
+        }
+
+        return TimeData(startTime, endTime)
     }
 
-    fun sanitizeEndTime(endTime: LocalTime, isEdited: Boolean = true): LocalTime {
-        return endTime
+    @Suppress("NAME_SHADOWING")
+    fun sanitizeEndTime(startTime: LocalTime, endTime: LocalTime): TimeData {
+        var startTime = startTime
+        var endTime = endTime
+
+        if (TimeUtils.localTimeHour(endTime) == 0 && TimeUtils.localTimeMinute(endTime) == 0) {
+            endTime = TimeUtils.localTimeOf(0, 1)
+        }
+
+        if (!TimeUtils.isAfter(endTime, startTime)) {
+            startTime = TimeUtils.minusTime(endTime, 0, 1)
+        }
+
+        return TimeData(startTime, endTime)
     }
 
     fun createDefaultForm(
@@ -26,15 +49,18 @@ internal object LessonScheduleFormProvider {
         startTime: LocalTime = TimeUtils.localTimeOf(8, 0),
         endTime: LocalTime = TimeUtils.plusTime(startTime, hours = 0, minutes = 45),
         type: LessonScheduleType = LessonScheduleType.Weekly,
-        isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): LessonScheduleForm {
+        val timeData = sanitizeStartTime(startTime, endTime)
+
         return LessonScheduleForm(
-            date = sanitizeDate(date, isEdited = isEdited),
-            startTime = sanitizeStartTime(startTime, isEdited = isEdited),
-            endTime = sanitizeEndTime(endTime, isEdited = isEdited),
+            date = sanitizeDate(date),
+            startTime = timeData.startTime,
+            endTime = timeData.endTime,
             type = type,
             status = status,
         )
     }
 }
+
+internal data class TimeData(val startTime: LocalTime, val endTime: LocalTime)

@@ -122,7 +122,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Nie istnieje jeszcze żaden przedmiot. Musisz istnieć przedmiot, żeby można było stworzyć plan zajęć",
+            text = "Nie istnieje jeszcze żaden przedmiot. Musi istnieć przedmiot, żeby można było stworzyć plan zajęć.",
             style = MaterialTheme.typography.headlineMedium,
         )
     }
