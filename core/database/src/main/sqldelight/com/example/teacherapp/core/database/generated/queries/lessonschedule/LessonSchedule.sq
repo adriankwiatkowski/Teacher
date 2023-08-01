@@ -1,0 +1,8 @@
+insertLessonSchedule:
+INSERT OR FAIL
+INTO lesson_schedule
+VALUES (?, ?, ?, ?, ?, ?);
+
+deleteLessonScheduleById:
+DELETE FROM lesson_schedule
+WHERE id = :id;

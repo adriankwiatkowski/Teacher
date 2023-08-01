@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.Lesson
+import com.example.teacherapp.core.model.data.LessonScheduleType
 import com.example.teacherapp.core.ui.component.TeacherButton
 import com.example.teacherapp.core.ui.component.TeacherRadioButton
 import com.example.teacherapp.core.ui.component.TeacherTopBar
@@ -42,7 +43,6 @@ import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.feature.schedule.data.LessonScheduleForm
 import com.example.teacherapp.feature.schedule.data.LessonScheduleFormProvider
-import com.example.teacherapp.feature.schedule.data.LessonScheduleFormType
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -56,7 +56,7 @@ internal fun LessonScheduleFormScreen(
     onDateChange: (date: LocalDate) -> Unit,
     onStartTimeChange: (date: LocalTime) -> Unit,
     onEndTimeChange: (date: LocalTime) -> Unit,
-    onTypeChange: (type: LessonScheduleFormType) -> Unit,
+    onTypeChange: (type: LessonScheduleType) -> Unit,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
@@ -132,8 +132,8 @@ private fun DateForm(
     onStartTimeChange: (date: LocalTime) -> Unit,
     endTime: LocalTime,
     onEndTimeChange: (date: LocalTime) -> Unit,
-    type: LessonScheduleFormType,
-    onTypeChange: (type: LessonScheduleFormType) -> Unit,
+    type: LessonScheduleType,
+    onTypeChange: (type: LessonScheduleType) -> Unit,
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(
@@ -165,18 +165,18 @@ private fun DateForm(
             Column(Modifier.selectableGroup()) {
                 TeacherRadioButton(
                     label = "Jednorazowe",
-                    selected = type == LessonScheduleFormType.Once,
-                    onClick = { onTypeChange(LessonScheduleFormType.Once) },
+                    selected = type == LessonScheduleType.Once,
+                    onClick = { onTypeChange(LessonScheduleType.Once) },
                 )
                 TeacherRadioButton(
                     label = "Cotygodniowe",
-                    selected = type == LessonScheduleFormType.Weekly,
-                    onClick = { onTypeChange(LessonScheduleFormType.Weekly) },
+                    selected = type == LessonScheduleType.Weekly,
+                    onClick = { onTypeChange(LessonScheduleType.Weekly) },
                 )
                 TeacherRadioButton(
                     label = "Co 2 tygodnie",
-                    selected = type == LessonScheduleFormType.EveryTwoWeeks,
-                    onClick = { onTypeChange(LessonScheduleFormType.EveryTwoWeeks) },
+                    selected = type == LessonScheduleType.EveryTwoWeeks,
+                    onClick = { onTypeChange(LessonScheduleType.EveryTwoWeeks) },
                 )
             }
         }

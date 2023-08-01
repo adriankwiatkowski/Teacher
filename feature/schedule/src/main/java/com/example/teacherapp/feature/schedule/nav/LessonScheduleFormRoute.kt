@@ -22,7 +22,7 @@ internal fun LessonScheduleFormRoute(
     // Observe save.
     LaunchedEffect(form.status, onShowSnackbar, onNavBack) {
         if (form.status == FormStatus.Success) {
-            onShowSnackbar("Zapisano notatkę")
+            onShowSnackbar("Zapisano termin zajęć")
             onNavBack()
         }
     }

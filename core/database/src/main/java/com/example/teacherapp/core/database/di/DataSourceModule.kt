@@ -11,6 +11,8 @@ import com.example.teacherapp.core.database.datasource.lessonactivity.LessonActi
 import com.example.teacherapp.core.database.datasource.lessonactivity.LessonActivityDataSourceImpl
 import com.example.teacherapp.core.database.datasource.lessonnote.LessonNoteDataSource
 import com.example.teacherapp.core.database.datasource.lessonnote.LessonNoteDataSourceImpl
+import com.example.teacherapp.core.database.datasource.lessonschedule.LessonScheduleDataSource
+import com.example.teacherapp.core.database.datasource.lessonschedule.LessonScheduleDataSourceImpl
 import com.example.teacherapp.core.database.datasource.note.NoteDataSource
 import com.example.teacherapp.core.database.datasource.note.NoteDataSourceImpl
 import com.example.teacherapp.core.database.datasource.schoolclass.SchoolClassDataSource
@@ -32,6 +34,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {
+
+    @Provides
+    @Singleton
+    fun provideLessonScheduleDataSource(
+        db: TeacherDatabase,
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
+    ): LessonScheduleDataSource {
+        return LessonScheduleDataSourceImpl(db, dispatcher)
+    }
 
     @Provides
     @Singleton

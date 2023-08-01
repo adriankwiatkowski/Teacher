@@ -10,6 +10,8 @@ import com.example.teacherapp.core.data.repository.lessonactivity.DatabaseLesson
 import com.example.teacherapp.core.data.repository.lessonactivity.LessonActivityRepository
 import com.example.teacherapp.core.data.repository.lessonnote.DatabaseLessonNoteRepository
 import com.example.teacherapp.core.data.repository.lessonnote.LessonNoteRepository
+import com.example.teacherapp.core.data.repository.lessonschedule.DatabaseLessonScheduleRepository
+import com.example.teacherapp.core.data.repository.lessonschedule.LessonScheduleRepository
 import com.example.teacherapp.core.data.repository.note.DatabaseNoteRepository
 import com.example.teacherapp.core.data.repository.note.NoteRepository
 import com.example.teacherapp.core.data.repository.schoolclass.DatabaseSchoolClassRepository
@@ -30,6 +32,11 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 internal interface DataModule {
+
+    @Binds
+    fun bindsLessonScheduleRepository(
+        lessonScheduleRepository: DatabaseLessonScheduleRepository,
+    ): LessonScheduleRepository
 
     @Binds
     fun bindsLessonRepository(

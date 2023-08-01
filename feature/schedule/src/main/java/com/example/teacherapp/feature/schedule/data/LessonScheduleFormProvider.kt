@@ -1,6 +1,7 @@
 package com.example.teacherapp.feature.schedule.data
 
 import com.example.teacherapp.core.common.utils.TimeUtils
+import com.example.teacherapp.core.model.data.LessonScheduleType
 import com.example.teacherapp.core.ui.model.FormStatus
 import java.time.LocalDate
 import java.time.LocalTime
@@ -24,7 +25,7 @@ internal object LessonScheduleFormProvider {
         date: LocalDate = TimeUtils.currentDate(),
         startTime: LocalTime = TimeUtils.localTimeOf(8, 0),
         endTime: LocalTime = TimeUtils.plusTime(startTime, hours = 0, minutes = 45),
-        type: LessonScheduleFormType = LessonScheduleFormType.Weekly,
+        type: LessonScheduleType = LessonScheduleType.Weekly,
         isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): LessonScheduleForm {

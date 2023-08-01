@@ -7,8 +7,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
-import com.example.teacherapp.core.data.repository.lesson.LessonRepository
+import com.example.teacherapp.core.data.repository.lessonschedule.LessonScheduleRepository
 import com.example.teacherapp.core.model.data.Lesson
+import com.example.teacherapp.core.model.data.LessonScheduleType
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class LessonScheduleFormViewModel @Inject constructor(
-    repository: LessonRepository, // TODO: Change to LessonScheduleRepository.
+    private val repository: LessonScheduleRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -52,7 +53,7 @@ internal class LessonScheduleFormViewModel @Inject constructor(
         form = form.copy(endTime = LessonScheduleFormProvider.sanitizeEndTime(endTime))
     }
 
-    fun onTypeChange(type: LessonScheduleFormType) {
+    fun onTypeChange(type: LessonScheduleType) {
         form = form.copy(type = type)
     }
 
@@ -63,12 +64,13 @@ internal class LessonScheduleFormViewModel @Inject constructor(
 
         form = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-//            repository.insertLessonSchedule(
-//                date = form.date,
-//                startTime = form.startTime,
-//                endTime = form.endTime,
-//                type = form.type,
-//            )
+            repository.insertLessonSchedule(
+                lessonId = lessonId.value,
+                date = form.date,
+                startTime = form.startTime,
+                endTime = form.endTime,
+                type = form.type,
+            )
 
             if (isActive) {
                 form = form.copy(status = FormStatus.Success)

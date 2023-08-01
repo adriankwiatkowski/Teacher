@@ -40,7 +40,7 @@ CREATE TABLE lesson
     FOREIGN KEY (school_class_id) REFERENCES school_class (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE lesson_calendar
+CREATE TABLE lesson_schedule
 (
     id         INTEGER            NOT NULL PRIMARY KEY AUTOINCREMENT,
     lesson_id  INTEGER            NOT NULL,
@@ -116,14 +116,14 @@ CREATE TABLE lesson_activity
 -- Obecność
 CREATE TABLE attendance
 (
-    lesson_calendar_id INTEGER NOT NULL,
+    lesson_schedule_id INTEGER NOT NULL,
     student_id         INTEGER NOT NULL,
     attendance         TEXT    NOT NULL,
 
-    FOREIGN KEY (lesson_calendar_id) REFERENCES lesson_calendar (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (lesson_schedule_id) REFERENCES lesson_schedule (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE,
 
-    PRIMARY KEY (lesson_calendar_id, student_id)
+    PRIMARY KEY (lesson_schedule_id, student_id)
 );
 
 CREATE TABLE lesson_note
