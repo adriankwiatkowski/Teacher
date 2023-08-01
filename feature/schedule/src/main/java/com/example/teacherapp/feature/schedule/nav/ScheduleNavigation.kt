@@ -3,7 +3,9 @@ package com.example.teacherapp.feature.schedule.nav
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation.lessonIdArg
 import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation.lessonPickerRoute
 import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation.scheduleRoute
@@ -50,7 +52,14 @@ fun NavGraphBuilder.scheduleGraph(
             onLessonClick = navController::navigateToLessonScheduleFormRoute,
         )
     }
-    composable(lessonScheduleFormRoute) {
+    composable(
+        lessonScheduleFormRoute,
+        arguments = listOf(
+            navArgument(lessonIdArg) {
+                type = NavType.LongType
+            },
+        ),
+    ) {
         LessonScheduleFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
