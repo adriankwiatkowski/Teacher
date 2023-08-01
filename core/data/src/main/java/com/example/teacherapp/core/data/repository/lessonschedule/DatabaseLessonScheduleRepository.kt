@@ -2,10 +2,12 @@ package com.example.teacherapp.core.data.repository.lessonschedule
 
 import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.common.result.asResult
 import com.example.teacherapp.core.common.result.asResultNotNull
 import com.example.teacherapp.core.database.datasource.lesson.LessonDataSource
 import com.example.teacherapp.core.database.datasource.lessonschedule.LessonScheduleDataSource
 import com.example.teacherapp.core.model.data.Lesson
+import com.example.teacherapp.core.model.data.LessonSchedule
 import com.example.teacherapp.core.model.data.LessonScheduleType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +21,10 @@ class DatabaseLessonScheduleRepository @Inject constructor(
     private val dataSource: LessonScheduleDataSource,
     @ApplicationScope private val scope: CoroutineScope,
 ) : LessonScheduleRepository {
+
+    override fun getLessonSchedules(): Flow<Result<List<LessonSchedule>>> = dataSource
+        .getLessonSchedules()
+        .asResult()
 
     override fun getLessonById(lessonId: Long): Flow<Result<Lesson>> = lessonDataSource
         .getLessonById(lessonId)

@@ -3,9 +3,9 @@ package com.example.teacherapp.core.model.data
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class LessonCalendar(
+data class LessonSchedule(
     val id: Long,
-    val lessonId: Long,
+    val lesson: Lesson,
     val date: LocalDate,
     val startTime: LocalTime,
     val endTime: LocalTime,
