@@ -63,6 +63,7 @@ fun NavGraphBuilder.scheduleGraph(
         LessonScheduleFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            onSave = { navController.popBackStack(scheduleRoute, inclusive = false) },
             onShowSnackbar = onShowSnackbar,
         )
     }

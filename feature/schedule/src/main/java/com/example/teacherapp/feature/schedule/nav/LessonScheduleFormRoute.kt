@@ -13,6 +13,7 @@ import com.example.teacherapp.feature.schedule.data.LessonScheduleFormViewModel
 internal fun LessonScheduleFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    onSave: () -> Unit,
     onShowSnackbar: (message: String) -> Unit,
     viewModel: LessonScheduleFormViewModel = hiltViewModel(),
 ) {
@@ -20,10 +21,10 @@ internal fun LessonScheduleFormRoute(
     val form = viewModel.form
 
     // Observe save.
-    LaunchedEffect(form.status, onShowSnackbar, onNavBack) {
+    LaunchedEffect(form.status, onShowSnackbar, onSave) {
         if (form.status == FormStatus.Success) {
             onShowSnackbar("Zapisano termin zajęć")
-            onNavBack()
+            onSave()
         }
     }
 
