@@ -45,6 +45,8 @@ object TimeUtils {
 
     fun plusDays(date: LocalDate, daysToAdd: Long): LocalDate = date.plusDays(daysToAdd)
 
+    fun minusDays(date: LocalDate, daysToSubtract: Long): LocalDate = date.minusDays(daysToSubtract)
+
     fun plusTime(time: LocalTime, hours: Long, minutes: Long): LocalTime =
         time.plusHours(hours).plusMinutes(minutes)
 

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
 import javax.inject.Inject
 
 internal class LessonScheduleDataSourceImpl @Inject constructor(
@@ -21,9 +22,9 @@ internal class LessonScheduleDataSourceImpl @Inject constructor(
 
     private val queries = db.lessonScheduleQueries
 
-    override fun getLessonSchedules(): Flow<List<LessonSchedule>> =
+    override fun getLessonSchedules(date: LocalDate): Flow<List<LessonSchedule>> =
         queries
-            .getLessonSchedules()
+            .getLessonSchedules(date)
             .asFlow()
             .mapToList(dispatcher)
             .map(::toExternal)

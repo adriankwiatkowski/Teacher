@@ -10,7 +10,7 @@ import java.time.LocalTime
 
 interface LessonScheduleRepository {
 
-    fun getLessonSchedules(): Flow<Result<List<LessonSchedule>>>
+    fun getLessonSchedules(date: LocalDate): Flow<Result<List<LessonSchedule>>>
 
     fun getLessonById(lessonId: Long): Flow<Result<Lesson>>
 

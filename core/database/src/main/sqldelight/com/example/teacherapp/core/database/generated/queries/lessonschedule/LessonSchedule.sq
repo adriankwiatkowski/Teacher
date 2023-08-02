@@ -1,5 +1,4 @@
 getLessonSchedules:
-
 SELECT
     ls.id,
     ls.date,
@@ -14,7 +13,8 @@ SELECT
     (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
 FROM lesson_schedule ls
 INNER JOIN lesson l ON ls.lesson_id = l.id
-INNER JOIN school_class sc ON l.school_class_id = sc.id;
+INNER JOIN school_class sc ON l.school_class_id = sc.id
+WHERE ls.date = :date;
 
 insertLessonSchedule:
 INSERT OR FAIL

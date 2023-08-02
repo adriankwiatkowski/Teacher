@@ -31,8 +31,10 @@ internal class DatabaseLessonScheduleRepository @Inject constructor(
     @ApplicationScope private val scope: CoroutineScope,
 ) : LessonScheduleRepository {
 
-    override fun getLessonSchedules(): Flow<Result<List<LessonSchedule>>> = lessonScheduleDataSource
-        .getLessonSchedules()
+    override fun getLessonSchedules(
+        date: LocalDate
+    ): Flow<Result<List<LessonSchedule>>> = lessonScheduleDataSource
+        .getLessonSchedules(date)
         .asResult()
 
     override fun getLessonById(lessonId: Long): Flow<Result<Lesson>> = lessonDataSource
@@ -44,7 +46,7 @@ internal class DatabaseLessonScheduleRepository @Inject constructor(
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
-        type: LessonScheduleType
+        type: LessonScheduleType,
     ) {
         scope.launch {
             withContext(dispatcher) {
