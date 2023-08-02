@@ -14,7 +14,8 @@ SELECT
 FROM lesson_schedule ls
 INNER JOIN lesson l ON ls.lesson_id = l.id
 INNER JOIN school_class sc ON l.school_class_id = sc.id
-WHERE ls.date = :date;
+WHERE ls.date = :date
+ORDER BY ls.start_time ASC;
 
 insertLessonSchedule:
 INSERT OR FAIL
