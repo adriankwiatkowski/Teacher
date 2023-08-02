@@ -114,8 +114,6 @@ internal object SchoolYearFormProvider {
             } else if (!isStartDateChanged && isStartDateInvalid) {
                 newTermForms[changedDateIndex] =
                     changed.copy(startDate = createInputDate(prevDay(changed.endDate)))
-            } else {
-                return newTermForms
             }
 
             changed = newTermForms[changedDateIndex]
