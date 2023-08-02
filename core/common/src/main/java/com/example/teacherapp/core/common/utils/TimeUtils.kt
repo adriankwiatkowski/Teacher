@@ -6,6 +6,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -67,7 +68,7 @@ object TimeUtils {
     fun isBetween(date: LocalDate, start: LocalDate, end: LocalDate): Boolean =
         !date.isBefore(start) && !date.isAfter(end)
 
-    private val dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+    private val dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
 
     private val timeFormat = DateTimeFormatter.ofPattern("HH:mm")
 }
