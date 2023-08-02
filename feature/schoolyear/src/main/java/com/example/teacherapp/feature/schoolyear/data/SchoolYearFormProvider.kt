@@ -47,79 +47,21 @@ internal object SchoolYearFormProvider {
     ): List<TermForm> {
         val newTermForms = termForms.toMutableList()
 
-        val prevDay = { date: InputDate -> date.date.minusDays(1L) }
-        val nextDay = { date: InputDate -> date.date.plusDays(1L) }
+        var changed = newTermForms[changedDateIndex]
+        val isEndDateInvalid = !changed.endDate.date.isAfter(changed.startDate.date)
+        val isStartDateInvalid = !changed.startDate.date.isBefore(changed.endDate.date)
 
-        val fixNextDates = { changed: TermForm ->
-            var prev = changed
-
-            for (i in (changedDateIndex + 1) until newTermForms.size) {
-                var current = newTermForms[i]
-                val isStartDateInvalid = !current.startDate.date.isAfter(prev.endDate.date)
-                if (isStartDateInvalid) {
-                    newTermForms[i] =
-                        current.copy(startDate = createInputDate(nextDay(prev.endDate)))
-                    current = newTermForms[i]
-
-                    val isEndDateInvalid = !current.endDate.date.isAfter(current.startDate.date)
-                    if (isEndDateInvalid) {
-                        newTermForms[i] =
-                            current.copy(endDate = createInputDate(nextDay(current.startDate)))
-                        current = newTermForms[i]
-
-                        prev = current
-                        continue
-                    }
-                }
-
-                break
-            }
+        if (isStartDateChanged && isEndDateInvalid) {
+            newTermForms[changedDateIndex] =
+                changed.copy(endDate = createInputDate(nextDay(changed.startDate)))
+        } else if (!isStartDateChanged && isStartDateInvalid) {
+            newTermForms[changedDateIndex] =
+                changed.copy(startDate = createInputDate(prevDay(changed.endDate)))
         }
 
-        val fixPrevDates = { changed: TermForm ->
-            var next = changed
-
-            for (i in (changedDateIndex - 1) downTo 0) {
-                var current = newTermForms[i]
-                val isEndDateInvalid = !current.endDate.date.isBefore(next.startDate.date)
-                if (isEndDateInvalid) {
-                    newTermForms[i] =
-                        current.copy(endDate = createInputDate(prevDay(next.startDate)))
-                    current = newTermForms[i]
-
-                    val isStartDateInvalid =
-                        !current.startDate.date.isBefore(current.endDate.date)
-                    if (isStartDateInvalid) {
-                        newTermForms[i] =
-                            current.copy(startDate = createInputDate(prevDay(current.endDate)))
-                        current = newTermForms[i]
-
-                        next = current
-                        continue
-                    }
-                }
-
-                break
-            }
-        }
-
-        run {
-            var changed = newTermForms[changedDateIndex]
-            val isEndDateInvalid = !changed.endDate.date.isAfter(changed.startDate.date)
-            val isStartDateInvalid = !changed.startDate.date.isBefore(changed.endDate.date)
-
-            if (isStartDateChanged && isEndDateInvalid) {
-                newTermForms[changedDateIndex] =
-                    changed.copy(endDate = createInputDate(nextDay(changed.startDate)))
-            } else if (!isStartDateChanged && isStartDateInvalid) {
-                newTermForms[changedDateIndex] =
-                    changed.copy(startDate = createInputDate(prevDay(changed.endDate)))
-            }
-
-            changed = newTermForms[changedDateIndex]
-            fixPrevDates(changed)
-            fixNextDates(changed)
-        }
+        changed = newTermForms[changedDateIndex]
+        fixPrevDates(changed, changedDateIndex, newTermForms)
+        fixNextDates(changed, changedDateIndex, newTermForms)
 
         return newTermForms
     }
@@ -161,7 +103,72 @@ internal object SchoolYearFormProvider {
         )
     }
 
+    private fun fixPrevDates(
+        changed: TermForm,
+        changedDateIndex: Int,
+        newTermForms: MutableList<TermForm>,
+    ) {
+        var next = changed
+
+        for (i in (changedDateIndex - 1) downTo 0) {
+            var current = newTermForms[i]
+            val isEndDateInvalid = !current.endDate.date.isBefore(next.startDate.date)
+            if (isEndDateInvalid) {
+                newTermForms[i] =
+                    current.copy(endDate = createInputDate(prevDay(next.startDate)))
+                current = newTermForms[i]
+
+                val isStartDateInvalid =
+                    !current.startDate.date.isBefore(current.endDate.date)
+                if (isStartDateInvalid) {
+                    newTermForms[i] =
+                        current.copy(startDate = createInputDate(prevDay(current.endDate)))
+                    current = newTermForms[i]
+
+                    next = current
+                    continue
+                }
+            }
+
+            break
+        }
+    }
+
+    private fun fixNextDates(
+        changed: TermForm,
+        changedDateIndex: Int,
+        newTermForms: MutableList<TermForm>,
+    ) {
+        var prev = changed
+
+        for (i in (changedDateIndex + 1) until newTermForms.size) {
+            var current = newTermForms[i]
+            val isStartDateInvalid = !current.startDate.date.isAfter(prev.endDate.date)
+            if (isStartDateInvalid) {
+                newTermForms[i] =
+                    current.copy(startDate = createInputDate(nextDay(prev.endDate)))
+                current = newTermForms[i]
+
+                val isEndDateInvalid = !current.endDate.date.isAfter(current.startDate.date)
+                if (isEndDateInvalid) {
+                    newTermForms[i] =
+                        current.copy(endDate = createInputDate(nextDay(current.startDate)))
+                    current = newTermForms[i]
+
+                    prev = current
+                    continue
+                }
+            }
+
+            break
+        }
+    }
+
     private fun createInputDate(date: LocalDate): InputDate {
         return InputDate(date, TimeUtils.format(date))
     }
+
+    private fun prevDay(date: InputDate): LocalDate = date.date.minusDays(1L)
+
+    private fun nextDay(date: InputDate): LocalDate = date.date.plusDays(1L)
 }
