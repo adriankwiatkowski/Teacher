@@ -8,6 +8,8 @@ import com.example.teacherapp.core.data.repository.lesson.DatabaseLessonReposito
 import com.example.teacherapp.core.data.repository.lesson.LessonRepository
 import com.example.teacherapp.core.data.repository.lessonactivity.DatabaseLessonActivityRepository
 import com.example.teacherapp.core.data.repository.lessonactivity.LessonActivityRepository
+import com.example.teacherapp.core.data.repository.lessonattendance.DatabaseLessonAttendanceRepository
+import com.example.teacherapp.core.data.repository.lessonattendance.LessonAttendanceRepository
 import com.example.teacherapp.core.data.repository.lessonnote.DatabaseLessonNoteRepository
 import com.example.teacherapp.core.data.repository.lessonnote.LessonNoteRepository
 import com.example.teacherapp.core.data.repository.lessonschedule.DatabaseLessonScheduleRepository
@@ -77,6 +79,11 @@ internal interface DataModule {
     fun bindsLessonActivityRepository(
         lessonActivityRepository: DatabaseLessonActivityRepository,
     ): LessonActivityRepository
+
+    @Binds
+    fun bindsLessonAttendanceRepository(
+        lessonAttendanceRepository: DatabaseLessonAttendanceRepository,
+    ): LessonAttendanceRepository
 
     @Binds
     fun bindsSettingsRepository(

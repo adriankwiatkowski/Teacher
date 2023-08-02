@@ -1,0 +1,35 @@
+getLessonAttendancesByLessonId:
+SELECT
+    la.lesson_schedule_id,
+    la.student_id,
+    la.attendance_id,
+    a.text AS 'attendance_text',
+    s.id AS 'student_id',
+    s.order_in_class AS 'student_order_in_class',
+    s.school_class_id AS 'school_class_id',
+    s.name AS 'student_name',
+    s.surname AS 'student_surname',
+    s.email AS 'student_email',
+    s.phone AS 'student_phone'
+FROM lesson_attendance la
+INNER JOIN attendance a ON la.attendance_id = a.id
+INNER JOIN lesson_schedule ls ON la.lesson_schedule_id = ls.id
+INNER JOIN lesson l ON ls.lesson_id = l.id
+INNER JOIN student s ON la.student_id = s.id
+WHERE l.id = :lesson_id;
+
+getAttendanceByText:
+SELECT
+    a.id,
+    a.text
+FROM attendance a
+WHERE a.text = :text;
+
+insertOrUpdateLessonAttendance:
+INSERT OR REPLACE
+INTO lesson_attendance
+VALUES (?, ?, ?);
+
+deleteLessonAttendance:
+DELETE FROM lesson_attendance
+WHERE lesson_schedule_id = :lesson_schedule_id AND student_id = :student_id;

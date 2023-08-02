@@ -114,16 +114,24 @@ CREATE TABLE lesson_activity
 );
 
 -- Obecność
-CREATE TABLE attendance
+CREATE TABLE lesson_attendance
 (
     lesson_schedule_id INTEGER NOT NULL,
     student_id         INTEGER NOT NULL,
-    attendance         TEXT    NOT NULL,
+    attendance_id      INTEGER NOT NULL,
 
     FOREIGN KEY (lesson_schedule_id) REFERENCES lesson_schedule (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (attendance_id) REFERENCES attendance (id) ON DELETE CASCADE ON UPDATE CASCADE,
 
     PRIMARY KEY (lesson_schedule_id, student_id)
+);
+
+-- nb u sp zw ob
+CREATE TABLE attendance
+(
+    id     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    `text` TEXT    NOT NULL
 );
 
 CREATE TABLE lesson_note
@@ -150,3 +158,10 @@ CREATE TABLE password
     id       INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     password TEXT    NOT NULL
 );
+
+INSERT OR FAIL INTO attendance (text) VALUES
+('nb'),
+('u'),
+('sp'),
+('zw'),
+('ob');

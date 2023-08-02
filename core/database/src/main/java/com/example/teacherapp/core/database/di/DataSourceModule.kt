@@ -9,6 +9,8 @@ import com.example.teacherapp.core.database.datasource.lesson.LessonDataSource
 import com.example.teacherapp.core.database.datasource.lesson.LessonDataSourceImpl
 import com.example.teacherapp.core.database.datasource.lessonactivity.LessonActivityDataSource
 import com.example.teacherapp.core.database.datasource.lessonactivity.LessonActivityDataSourceImpl
+import com.example.teacherapp.core.database.datasource.lessonattendance.LessonAttendanceDataSource
+import com.example.teacherapp.core.database.datasource.lessonattendance.LessonAttendanceDataSourceImpl
 import com.example.teacherapp.core.database.datasource.lessonnote.LessonNoteDataSource
 import com.example.teacherapp.core.database.datasource.lessonnote.LessonNoteDataSourceImpl
 import com.example.teacherapp.core.database.datasource.lessonschedule.LessonScheduleDataSource
@@ -114,6 +116,15 @@ object DataSourceModule {
         @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): LessonActivityDataSource {
         return LessonActivityDataSourceImpl(db, dispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLessonAttendanceDataSource(
+        db: TeacherDatabase,
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
+    ): LessonAttendanceDataSource {
+        return LessonAttendanceDataSourceImpl(db, dispatcher)
     }
 
     @Provides
