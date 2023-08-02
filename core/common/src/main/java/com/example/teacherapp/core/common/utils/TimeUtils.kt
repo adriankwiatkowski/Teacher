@@ -62,6 +62,9 @@ object TimeUtils {
 
     fun isAfter(a: LocalTime, b: LocalTime): Boolean = a.isAfter(b)
 
+    fun isBetween(date: LocalDate, start: LocalDate, end: LocalDate): Boolean =
+        !date.isBefore(start) && !date.isAfter(end)
+
     private val dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     private val timeFormat = DateTimeFormatter.ofPattern("HH:mm")

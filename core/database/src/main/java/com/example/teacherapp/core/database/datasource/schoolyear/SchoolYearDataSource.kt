@@ -6,9 +6,11 @@ import java.time.LocalDate
 
 interface SchoolYearDataSource {
 
-    suspend fun getSchoolYearById(id: Long): Flow<SchoolYear?>
-
     fun getAllSchoolYears(): Flow<List<SchoolYear>>
+
+    fun getSchoolYearById(id: Long): Flow<SchoolYear?>
+
+    suspend fun getSchoolYearByLessonId(lessonId: Long): SchoolYear?
 
     suspend fun insertSchoolYear(
         schoolYearName: String,

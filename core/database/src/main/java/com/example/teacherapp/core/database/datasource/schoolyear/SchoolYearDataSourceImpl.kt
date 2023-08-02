@@ -23,14 +23,6 @@ internal class SchoolYearDataSourceImpl(
     private val queries = db.schoolYearQueries
     private val common = db.commonQueries
 
-    override suspend fun getSchoolYearById(id: Long): Flow<SchoolYear?> =
-        queries
-            .getSchoolYearById(id)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
-
     override fun getAllSchoolYears(): Flow<List<SchoolYear>> =
         queries
             .getAllSchoolYears()
@@ -38,6 +30,22 @@ internal class SchoolYearDataSourceImpl(
             .mapToList(dispatcher)
             .map(::toExternal)
             .flowOn(dispatcher)
+
+    override fun getSchoolYearById(id: Long): Flow<SchoolYear?> =
+        queries
+            .getSchoolYearById(id)
+            .asFlow()
+            .mapToOneOrNull(dispatcher)
+            .map(::toExternal)
+            .flowOn(dispatcher)
+
+    override suspend fun getSchoolYearByLessonId(lessonId: Long): SchoolYear? =
+        withContext(dispatcher) {
+            queries
+                .getSchoolYearByLessonId(lessonId)
+                .executeAsOneOrNull()
+                .let(::toExternal)
+        }
 
     override suspend fun insertSchoolYear(
         schoolYearName: String,

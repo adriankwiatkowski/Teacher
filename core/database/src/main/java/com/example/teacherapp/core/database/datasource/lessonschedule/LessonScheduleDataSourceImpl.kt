@@ -5,14 +5,13 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacherapp.core.database.generated.TeacherDatabase
+import com.example.teacherapp.core.database.model.LessonScheduleDto
 import com.example.teacherapp.core.model.data.LessonSchedule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
-import java.time.LocalTime
 import javax.inject.Inject
 
 internal class LessonScheduleDataSourceImpl @Inject constructor(
@@ -31,19 +30,20 @@ internal class LessonScheduleDataSourceImpl @Inject constructor(
             .flowOn(dispatcher)
 
     override suspend fun insertLessonSchedule(
-        lessonId: Long,
-        date: LocalDate,
-        startTime: LocalTime,
-        endTime: LocalTime
+        lessonScheduleDtos: List<LessonScheduleDto>,
     ): Unit = withContext(dispatcher) {
-        queries.insertLessonSchedule(
-            id = null,
-            lesson_id = lessonId,
-            date = date,
-            start_time = startTime,
-            end_time = endTime,
-            is_valid = true,
-        )
+        queries.transaction {
+            for (lessonScheduleDto in lessonScheduleDtos) {
+                queries.insertLessonSchedule(
+                    id = lessonScheduleDto.id,
+                    lesson_id = lessonScheduleDto.lessonId,
+                    date = lessonScheduleDto.date,
+                    start_time = lessonScheduleDto.startTime,
+                    end_time = lessonScheduleDto.endTime,
+                    is_valid = true,
+                )
+            }
+        }
     }
 
     override suspend fun deleteLessonScheduleById(id: Long): Unit = withContext(dispatcher) {
