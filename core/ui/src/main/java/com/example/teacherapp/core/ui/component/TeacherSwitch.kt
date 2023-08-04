@@ -17,8 +17,8 @@ import com.example.teacherapp.core.ui.theme.spacing
 fun TeacherSwitch(
     label: String,
     checked: Boolean,
-    modifier: Modifier = Modifier,
     onCheckedChange: (isChecked: Boolean) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier

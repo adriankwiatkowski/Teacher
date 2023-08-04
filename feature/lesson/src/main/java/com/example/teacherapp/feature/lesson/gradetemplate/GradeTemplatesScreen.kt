@@ -37,7 +37,7 @@ internal fun GradeTemplatesScreen(
         result = gradesResult,
     ) { grades ->
         Scaffold(
-            modifier = modifier,
+            modifier = Modifier,
             floatingActionButton = {
                 TeacherFab(
                     imageVector = Icons.Default.Add,

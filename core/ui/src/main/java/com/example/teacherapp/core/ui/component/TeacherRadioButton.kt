@@ -19,8 +19,8 @@ import com.example.teacherapp.core.ui.theme.spacing
 fun TeacherRadioButton(
     label: String,
     selected: Boolean,
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
