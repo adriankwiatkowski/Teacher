@@ -1,6 +1,7 @@
 package com.example.teacherapp.feature.lesson.lessonactivity
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
@@ -36,6 +37,7 @@ internal fun LessonActivityScreen(
         result = lessonActivitiesResult,
     ) { lessonActivities ->
         MainContent(
+            modifier = Modifier.fillMaxSize(),
             lessonActivities = lessonActivities,
             onIncreaseLessonActivity = onIncreaseLessonActivity,
             onDecreaseLessonActivity = onDecreaseLessonActivity,

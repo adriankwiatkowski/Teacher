@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -67,7 +68,7 @@ internal fun GradeTemplateFormScreen(
     val scrollBehavior = TeacherTopBarDefaults.default()
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TeacherTopBar(
                 title = "Ocena",

@@ -54,10 +54,16 @@ internal fun NotesScreen(
             floatingActionButtonPosition = FabPosition.End,
         ) { innerPadding ->
             if (notes.isEmpty()) {
-                EmptyState(modifier = Modifier.padding(innerPadding))
+                EmptyState(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                )
             } else {
                 MainContent(
-                    modifier = Modifier.padding(innerPadding),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
                     notes = notes,
                     onNoteClick = onNoteClick,
                 )

@@ -3,6 +3,7 @@ package com.example.teacherapp.feature.grade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -74,7 +75,9 @@ internal fun GradesScreen(
             deletedMessage = "Usunięto ocenę",
         ) { uiState ->
             MainContent(
-                modifier = Modifier.padding(MaterialTheme.spacing.small),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(MaterialTheme.spacing.small),
                 gradeName = uiState.gradeTemplateInfo.gradeName,
                 grades = uiState.grades,
                 onStudentClick = onStudentClick,

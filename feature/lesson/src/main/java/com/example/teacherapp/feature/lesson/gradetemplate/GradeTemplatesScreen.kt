@@ -2,6 +2,7 @@ package com.example.teacherapp.feature.lesson.gradetemplate
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -47,7 +48,9 @@ internal fun GradeTemplatesScreen(
             },
         ) { innerPadding ->
             MainContent(
-                modifier = Modifier.padding(innerPadding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
                 grades = grades,
                 onGradeClick = onGradeClick,
             )
