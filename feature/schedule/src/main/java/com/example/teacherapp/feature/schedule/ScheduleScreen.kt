@@ -154,9 +154,7 @@ private fun ScheduleItem(
     ListItem(
         modifier = modifier.clickable(onClick = onClick),
         headlineContent = {
-            val startTime = TimeUtils.format(schedule.startTime)
-            val endTime = TimeUtils.format(schedule.endTime)
-            Text("$startTime - $endTime")
+            Text(TimeUtils.format(schedule.startTime, schedule.endTime))
         },
         supportingContent = {
             val lessonName = schedule.lesson.name

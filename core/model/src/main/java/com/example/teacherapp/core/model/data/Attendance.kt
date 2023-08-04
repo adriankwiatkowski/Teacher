@@ -1,11 +1,11 @@
 package com.example.teacherapp.core.model.data
 
 enum class Attendance(val text: String) {
+    Present("ob"),
+    Late("sp"),
     Absent("nb"),
     ExcusedAbsence("u"),
-    Late("sp"),
-    Exemption("zw"),
-    Present("ob");
+    Exemption("zw");
 
     companion object {
         fun of(attendance: String): Attendance =

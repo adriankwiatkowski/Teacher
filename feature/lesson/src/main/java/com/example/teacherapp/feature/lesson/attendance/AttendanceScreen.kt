@@ -1,12 +1,156 @@
 package com.example.teacherapp.feature.lesson.attendance
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import com.example.teacherapp.core.common.result.Result
+import com.example.teacherapp.core.common.utils.TimeUtils
+import com.example.teacherapp.core.model.data.LessonScheduleAttendance
+import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.paramprovider.LessonScheduleAttendancesPreviewParameterProvider
+import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.core.ui.theme.spacing
+import java.time.LocalDate
+import java.time.LocalTime
 
 @Composable
 internal fun AttendanceScreen(
+    scheduleAttendancesResult: Result<List<LessonScheduleAttendance>>,
+    onScheduleAttendanceClick: (id: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Text(modifier = modifier, text = "Obecności")
+    ResultContent(result = scheduleAttendancesResult) { scheduleAttendances ->
+        MainContent(
+            modifier = modifier.fillMaxSize(),
+            scheduleAttendances = scheduleAttendances,
+            onScheduleAttendanceClick = onScheduleAttendanceClick,
+        )
+    }
+}
+
+@Composable
+private fun MainContent(
+    scheduleAttendances: List<LessonScheduleAttendance>,
+    onScheduleAttendanceClick: (id: Long) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(MaterialTheme.spacing.small),
+    ) {
+        items(scheduleAttendances, key = { it.lessonScheduleId }) { scheduleAttendance ->
+            AttendanceItem(
+                date = scheduleAttendance.date,
+                startTime = scheduleAttendance.startTime,
+                endTime = scheduleAttendance.endTime,
+                presentCount = scheduleAttendance.presentCount,
+                lateCount = scheduleAttendance.lateCount,
+                absentCount = scheduleAttendance.absentCount,
+                excusedAbsenceCount = scheduleAttendance.excusedAbsenceCount,
+                exemptionCount = scheduleAttendance.exemptionCount,
+                attendanceNotSetCount = scheduleAttendance.attendanceNotSetCount,
+                onClick = { onScheduleAttendanceClick(scheduleAttendance.lessonScheduleId) },
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun AttendanceItem(
+    date: LocalDate,
+    startTime: LocalTime,
+    endTime: LocalTime,
+    presentCount: Long,
+    lateCount: Long,
+    absentCount: Long,
+    excusedAbsenceCount: Long,
+    exemptionCount: Long,
+    attendanceNotSetCount: Long,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ListItem(
+        modifier = modifier.clickable(onClick = onClick),
+        overlineContent = { Text(text = TimeUtils.format(date)) },
+        headlineContent = { Text(text = TimeUtils.format(startTime, endTime)) },
+        supportingContent = {
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
+            ) {
+                AttendanceCountItem(label = "ob", count = presentCount)
+                AttendanceCountItem(label = "sp", count = lateCount)
+                AttendanceCountItem(label = "nb", count = absentCount)
+                AttendanceCountItem(label = "u", count = excusedAbsenceCount)
+                AttendanceCountItem(label = "zw", count = exemptionCount)
+                AttendanceCountItem(
+                    label = "niezaznaczone",
+                    count = attendanceNotSetCount,
+                    emphasis = true
+                )
+            }
+        },
+    )
+}
+
+@Composable
+private fun AttendanceCountItem(
+    label: String,
+    count: Long,
+    modifier: Modifier = Modifier,
+    emphasis: Boolean = false,
+) {
+    if (count <= 0) {
+        return
+    }
+
+    Card(
+        modifier = modifier,
+        colors = if (emphasis) CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+        ) else CardDefaults.cardColors(),
+    ) {
+        Text(
+            modifier = Modifier.padding(MaterialTheme.spacing.extraSmall),
+            text = "$label ($count)",
+            style = MaterialTheme.typography.labelMedium
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun AttendanceScreenPreview(
+    @PreviewParameter(
+        LessonScheduleAttendancesPreviewParameterProvider::class
+    ) data: List<LessonScheduleAttendance>
+) {
+    TeacherAppTheme {
+        Surface {
+            AttendanceScreen(
+                scheduleAttendancesResult = Result.Success(data),
+                onScheduleAttendanceClick = {},
+            )
+        }
+    }
 }

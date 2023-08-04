@@ -12,10 +12,6 @@ class LessonSchedulesPreviewParameterProvider : PreviewParameterProvider<List<Le
     override val values: Sequence<List<LessonSchedule>> = sequenceOf(lessonSchedules)
 }
 
-class LessonSchedulePreviewParameterProvider : PreviewParameterProvider<LessonSchedule> {
-    override val values: Sequence<LessonSchedule> = lessonSchedules.asSequence()
-}
-
 private val lessonSchedules = makeLessonSchedules(
     SimpleLessonSchedule(
         date = TimeUtils.currentDate(),

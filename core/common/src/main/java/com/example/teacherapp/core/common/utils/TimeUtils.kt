@@ -58,6 +58,9 @@ object TimeUtils {
 
     fun format(localTime: LocalTime): String = localTime.format(timeFormat)
 
+    fun format(a: LocalTime, b: LocalTime): String =
+        "${a.format(timeFormat)} - ${b.format(timeFormat)}"
+
     fun getDisplayNameOfDayOfWeek(date: LocalDate): String =
         date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
 
