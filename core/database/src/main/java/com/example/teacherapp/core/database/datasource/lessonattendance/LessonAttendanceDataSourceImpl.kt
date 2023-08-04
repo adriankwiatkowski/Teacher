@@ -33,9 +33,9 @@ internal class LessonAttendanceDataSourceImpl @Inject constructor(
             .map(::toExternalLessonScheduleAttendances)
             .flowOn(dispatcher)
 
-    override fun getLessonAttendancesByLessonId(lessonId: Long): Flow<List<LessonAttendance>> =
+    override fun getLessonAttendancesByLessonScheduleId(lessonScheduleId: Long): Flow<List<LessonAttendance>> =
         queries
-            .getLessonAttendancesByLessonId(lessonId)
+            .getLessonAttendancesByLessonScheduleId(lessonScheduleId)
             .asFlow()
             .mapToList(dispatcher)
             .map(::toExternal)

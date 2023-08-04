@@ -11,7 +11,7 @@ interface LessonAttendanceDataSource {
         lessonId: Long
     ): Flow<List<LessonScheduleAttendance>>
 
-    fun getLessonAttendancesByLessonId(lessonId: Long): Flow<List<LessonAttendance>>
+    fun getLessonAttendancesByLessonScheduleId(lessonScheduleId: Long): Flow<List<LessonAttendance>>
 
     suspend fun insertOrUpdateLessonAttendance(
         lessonScheduleId: Long,

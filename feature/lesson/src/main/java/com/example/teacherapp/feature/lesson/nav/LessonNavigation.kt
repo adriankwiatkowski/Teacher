@@ -14,6 +14,7 @@ import com.example.teacherapp.feature.lesson.nav.LessonNavigation.gradeTemplateI
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonNoteIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonRoute
+import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonScheduleIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.schoolClassIdArg
 import com.example.teacherapp.feature.lesson.tab.LessonTab
 
@@ -23,12 +24,14 @@ private const val lessonFormScreen = "lesson-form"
 private const val lessonScreen = "lesson"
 private const val gradeTemplateFormScreen = "grade-template-form"
 private const val lessonNoteFormScreen = "lesson-note-form"
+private const val lessonAttendanceFormScreen = "lesson-attendance-form"
 
 object LessonNavigation {
     internal const val gradeTemplateIdArg = "grade-template-id"
     internal const val schoolClassIdArg = "school-class-id"
     internal const val lessonIdArg = "lesson-id"
     internal const val lessonNoteIdArg = "lesson-note-id"
+    internal const val lessonScheduleIdArg = "lesson-schedule-id"
 
     const val lessonRoute = "$lessonScreen/{$schoolClassIdArg}/{$lessonIdArg}"
 }
@@ -41,6 +44,8 @@ private const val gradeTemplateFormRoute =
 
 private const val lessonNoteFormRoute =
     "$lessonNoteFormScreen/{$lessonIdArg}?$lessonNoteIdArg={$lessonNoteIdArg}"
+
+private const val lessonAttendanceFormRoute = "$lessonAttendanceFormScreen/{$lessonScheduleIdArg}"
 
 fun NavController.navigateToLessonGraph(
     schoolClassId: Long,
@@ -75,6 +80,13 @@ private fun NavController.navigateToLessonNoteFormRoute(
 ) {
     val query = if (lessonNoteId != null) "?$lessonNoteIdArg=$lessonNoteId" else ""
     this.navigate("$lessonNoteFormScreen/$lessonId$query", navOptions)
+}
+
+private fun NavController.navigateToLessonAttendanceFormRoute(
+    lessonScheduleId: Long,
+    navOptions: NavOptions? = null
+) {
+    this.navigate("$lessonAttendanceFormScreen/$lessonScheduleId", navOptions)
 }
 
 fun NavGraphBuilder.lessonGraph(
@@ -133,9 +145,7 @@ fun NavGraphBuilder.lessonGraph(
                     )
 
                     LessonTab.Attendance -> AttendanceRoute(
-                        onScheduleAttendanceClick = { lessonScheduleId ->
-                            // TODO: Navigate to attendance form route.
-                        },
+                        onScheduleAttendanceClick = navController::navigateToLessonAttendanceFormRoute
                     )
 
                     LessonTab.Activity -> LessonActivityRoute()
@@ -203,6 +213,20 @@ fun NavGraphBuilder.lessonGraph(
                 isEditMode = isEditMode,
             )
         }
+    }
+
+    composable(
+        lessonAttendanceFormRoute,
+        arguments = listOf(
+            navArgument(lessonScheduleIdArg) {
+                type = NavType.LongType
+            },
+        ),
+    ) {
+        AttendanceFormRoute(
+            showNavigationIcon = true,
+            onNavBack = navController::popBackStack,
+        )
     }
 
     composable(

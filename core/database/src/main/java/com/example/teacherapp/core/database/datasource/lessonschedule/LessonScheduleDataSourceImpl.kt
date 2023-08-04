@@ -2,6 +2,7 @@ package com.example.teacherapp.core.database.datasource.lessonschedule
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacherapp.core.database.generated.TeacherDatabase
@@ -27,6 +28,14 @@ internal class LessonScheduleDataSourceImpl @Inject constructor(
             .getLessonSchedules(date)
             .asFlow()
             .mapToList(dispatcher)
+            .map(::toExternal)
+            .flowOn(dispatcher)
+
+    override fun getLessonScheduleById(lessonScheduleId: Long): Flow<LessonSchedule?> =
+        queries
+            .getLessonScheduleById(lessonScheduleId)
+            .asFlow()
+            .mapToOneOrNull(dispatcher)
             .map(::toExternal)
             .flowOn(dispatcher)
 

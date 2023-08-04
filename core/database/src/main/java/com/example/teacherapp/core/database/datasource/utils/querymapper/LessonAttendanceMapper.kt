@@ -1,6 +1,6 @@
 package com.example.teacherapp.core.database.datasource.utils.querymapper
 
-import com.example.teacherapp.core.database.generated.queries.lessonattendance.GetLessonAttendancesByLessonId
+import com.example.teacherapp.core.database.generated.queries.lessonattendance.GetLessonAttendancesByLessonScheduleId
 import com.example.teacherapp.core.database.generated.queries.lessonattendance.GetLessonSchedulesByLessonId
 import com.example.teacherapp.core.model.data.Attendance
 import com.example.teacherapp.core.model.data.BasicStudent
@@ -35,19 +35,22 @@ internal fun toExternalLessonScheduleAttendances(
 }
 
 internal fun toExternal(
-    attendances: List<GetLessonAttendancesByLessonId>
-): List<LessonAttendance> = attendances.map { attendance ->
+    attendances: List<GetLessonAttendancesByLessonScheduleId>
+): List<LessonAttendance> = attendances.map { lessonAttendance ->
+    val attendance =
+        lessonAttendance.attendance_text?.let { attendance -> Attendance.of(attendance) }
+
     LessonAttendance(
-        lessonScheduleId = attendance.lesson_schedule_id,
+        lessonScheduleId = lessonAttendance.lesson_schedule_id,
         student = BasicStudent(
-            id = attendance.student_id,
-            classId = attendance.school_class_id,
-            orderInClass = attendance.student_order_in_class,
-            name = attendance.student_name,
-            surname = attendance.student_surname,
-            email = attendance.student_email,
-            phone = attendance.student_phone,
+            id = lessonAttendance.student_id,
+            classId = lessonAttendance.school_class_id,
+            orderInClass = lessonAttendance.student_order_in_class,
+            name = lessonAttendance.student_name,
+            surname = lessonAttendance.student_surname,
+            email = lessonAttendance.student_email,
+            phone = lessonAttendance.student_phone,
         ),
-        attendance = Attendance.of(attendance.attendance_text),
+        attendance = attendance,
     )
 }

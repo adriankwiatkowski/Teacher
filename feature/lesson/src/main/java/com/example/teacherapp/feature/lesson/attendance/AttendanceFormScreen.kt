@@ -24,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
@@ -59,7 +60,7 @@ internal fun AttendanceFormScreen(
     val scrollBehavior = TeacherTopBarDefaults.default()
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TeacherTopBar(
                 title = "Wystawienie frekwencji",
@@ -131,6 +132,7 @@ private fun MainContent(
         ) { attendance ->
             AttendanceItem(
                 studentFullName = attendance.student.fullName,
+                attendance = attendance.attendance,
                 onClick = { onLessonAttendanceClick(attendance) },
             )
         }
@@ -206,13 +208,25 @@ private fun AttendanceDialog(
 @Composable
 private fun AttendanceItem(
     studentFullName: String,
+    attendance: Attendance?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val attendanceText = remember(attendance) {
+        when (attendance) {
+            Attendance.Present -> "obecny"
+            Attendance.Late -> "spóźniony"
+            Attendance.Absent -> "nieobecny"
+            Attendance.ExcusedAbsence -> "nieobecność usprawiedliwiona"
+            Attendance.Exemption -> "zwolnienie"
+            null -> "brak"
+        }
+    }
+
     ListItem(
         modifier = modifier.clickable(onClick = onClick),
         headlineContent = { Text(studentFullName) },
-        supportingContent = { Text("obecny") },
+        supportingContent = { Text(attendanceText) },
     )
 }
 

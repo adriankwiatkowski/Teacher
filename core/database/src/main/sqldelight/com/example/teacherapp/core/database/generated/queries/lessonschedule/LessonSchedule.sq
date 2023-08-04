@@ -17,6 +17,24 @@ INNER JOIN school_class sc ON l.school_class_id = sc.id
 WHERE ls.date = :date
 ORDER BY ls.start_time ASC;
 
+getLessonScheduleById:
+SELECT
+    ls.id,
+    ls.date,
+    ls.start_time,
+    ls.end_time,
+    ls.is_valid,
+    l.id AS 'lesson_id',
+    l.name AS 'lesson_name',
+    sc.id AS 'school_class_id',
+    sc.name AS 'school_class_name',
+    (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
+    (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
+FROM lesson_schedule ls
+INNER JOIN lesson l ON ls.lesson_id = l.id
+INNER JOIN school_class sc ON l.school_class_id = sc.id
+WHERE ls.id = :id;
+
 insertLessonSchedule:
 INSERT OR FAIL
 INTO lesson_schedule
