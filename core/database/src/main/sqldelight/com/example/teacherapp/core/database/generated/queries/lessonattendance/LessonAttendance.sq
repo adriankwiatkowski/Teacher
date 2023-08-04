@@ -1,3 +1,47 @@
+getLessonSchedulesByLessonId:
+SELECT
+    ls.id AS 'lesson_schedule_id',
+    ls.date AS 'lesson_schedule_date',
+    ls.start_time AS 'lesson_schedule_start_time',
+    ls.end_time AS 'lesson_schedule_end_time',
+    ls.is_valid AS 'lesson_schedule_is_valid',
+    (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
+    (SELECT COUNT(*)
+        FROM attendance a
+        WHERE a.id = la.attendance_id
+            AND ls.id = la.lesson_schedule_id
+            AND a.text = 'ob'
+    ) AS 'present_count',
+    (SELECT COUNT(*)
+        FROM attendance a
+        WHERE a.id = la.attendance_id
+            AND ls.id = la.lesson_schedule_id
+            AND a.text = 'sp'
+    ) AS 'late_count',
+    (SELECT COUNT(*)
+        FROM attendance a
+        WHERE a.id = la.attendance_id
+            AND ls.id = la.lesson_schedule_id
+            AND a.text = 'nb'
+    ) AS 'absent_count',
+    (SELECT COUNT(*)
+        FROM attendance a
+        WHERE a.id = la.attendance_id
+            AND ls.id = la.lesson_schedule_id
+            AND a.text = 'u'
+    ) AS 'excused_absence_count',
+    (SELECT COUNT(*)
+        FROM attendance a
+        WHERE a.id = la.attendance_id
+            AND ls.id = la.lesson_schedule_id
+            AND a.text = 'zw'
+    ) AS 'exemption_count'
+FROM lesson_schedule ls
+INNER JOIN lesson l ON ls.lesson_id = l.id
+INNER JOIN school_class sc ON l.school_class_id = sc.id
+LEFT JOIN lesson_attendance la ON ls.id = la.lesson_schedule_id
+WHERE ls.lesson_id = :lesson_id;
+
 getLessonAttendancesByLessonId:
 SELECT
     la.lesson_schedule_id,

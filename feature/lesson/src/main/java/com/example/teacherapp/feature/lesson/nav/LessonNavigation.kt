@@ -9,12 +9,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.teacherapp.core.ui.provider.ActionItemProvider
+import com.example.teacherapp.feature.lesson.data.LessonScaffoldViewModel
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.gradeTemplateIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonNoteIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonRoute
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.schoolClassIdArg
-import com.example.teacherapp.feature.lesson.data.LessonScaffoldViewModel
 import com.example.teacherapp.feature.lesson.tab.LessonTab
 
 private const val lessonGraphRoute = "lesson"
@@ -132,7 +132,11 @@ fun NavGraphBuilder.lessonGraph(
                         },
                     )
 
-                    LessonTab.Attendance -> AttendanceRoute()
+                    LessonTab.Attendance -> AttendanceRoute(
+                        onScheduleAttendanceClick = { lessonScheduleId ->
+                            // TODO: Navigate to attendance form route.
+                        },
+                    )
 
                     LessonTab.Activity -> LessonActivityRoute()
 

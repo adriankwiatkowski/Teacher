@@ -6,6 +6,7 @@ import com.example.teacherapp.core.common.result.asResult
 import com.example.teacherapp.core.database.datasource.lessonattendance.LessonAttendanceDataSource
 import com.example.teacherapp.core.model.data.Attendance
 import com.example.teacherapp.core.model.data.LessonAttendance
+import com.example.teacherapp.core.model.data.LessonScheduleAttendance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -15,6 +16,12 @@ internal class DatabaseLessonAttendanceRepository @Inject constructor(
     private val dataSource: LessonAttendanceDataSource,
     @ApplicationScope private val scope: CoroutineScope,
 ) : LessonAttendanceRepository {
+
+    override fun getLessonScheduleAttendancesByLessonId(
+        lessonId: Long
+    ): Flow<Result<List<LessonScheduleAttendance>>> = dataSource
+        .getLessonScheduleAttendancesByLessonId(lessonId)
+        .asResult()
 
     override fun getLessonAttendancesByLessonId(
         lessonId: Long
