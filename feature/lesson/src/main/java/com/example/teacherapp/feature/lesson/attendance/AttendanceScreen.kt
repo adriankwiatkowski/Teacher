@@ -131,7 +131,7 @@ private fun AttendanceCountItem(
         ) else CardDefaults.cardColors(),
     ) {
         Text(
-            modifier = Modifier.padding(MaterialTheme.spacing.extraSmall),
+            modifier = Modifier.padding(MaterialTheme.spacing.small),
             text = "$label ($count)",
             style = MaterialTheme.typography.labelMedium
         )
