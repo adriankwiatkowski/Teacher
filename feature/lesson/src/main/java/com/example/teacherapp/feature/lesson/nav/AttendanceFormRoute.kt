@@ -4,20 +4,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.teacherapp.feature.lesson.attendance.AttendanceFormScreen
-import com.example.teacherapp.feature.lesson.attendance.data.AttendanceFormViewModel
+import com.example.teacherapp.feature.lesson.attendance.AttendanceScreen
+import com.example.teacherapp.feature.lesson.attendance.data.AttendanceViewModel
 
 @Composable
 internal fun AttendanceFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
-    viewModel: AttendanceFormViewModel = hiltViewModel(),
+    viewModel: AttendanceViewModel = hiltViewModel(),
 ) {
     val eventResult by viewModel.eventResult.collectAsStateWithLifecycle()
     val lessonAttendancesResult by viewModel.lessonAttendancesResult.collectAsStateWithLifecycle()
     val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
 
-    AttendanceFormScreen(
+    AttendanceScreen(
         eventResult = eventResult,
         lessonAttendancesResult = lessonAttendancesResult,
         showNavigationIcon = showNavigationIcon,

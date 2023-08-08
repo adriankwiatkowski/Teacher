@@ -144,7 +144,7 @@ fun NavGraphBuilder.lessonGraph(
                         },
                     )
 
-                    LessonTab.Attendance -> AttendanceRoute(
+                    LessonTab.Attendance -> AttendancesRoute(
                         onScheduleAttendanceClick = navController::navigateToLessonAttendanceFormRoute
                     )
 
