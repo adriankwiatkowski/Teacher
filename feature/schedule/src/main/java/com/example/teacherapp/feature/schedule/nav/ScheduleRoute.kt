@@ -12,11 +12,11 @@ internal fun ScheduleRoute(
     onAddScheduleClick: () -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel(),
 ) {
-    val lessonSchedulesResult by viewModel.lessonSchedulesResult.collectAsStateWithLifecycle()
+    val eventsResult by viewModel.eventsResult.collectAsStateWithLifecycle()
     val date by viewModel.date.collectAsStateWithLifecycle()
 
     ScheduleScreen(
-        lessonSchedulesResult = lessonSchedulesResult,
+        eventsResult = eventsResult,
         date = date,
         onDateSelected = viewModel::onDateSelected,
         onPrevDateClick = viewModel::onPrevDateClick,

@@ -1,6 +1,8 @@
 package com.example.teacherapp.core.database.di
 
 import com.example.teacherapp.core.common.di.DefaultDispatcher
+import com.example.teacherapp.core.database.datasource.event.EventDataSource
+import com.example.teacherapp.core.database.datasource.event.EventDataSourceImpl
 import com.example.teacherapp.core.database.datasource.grade.GradeDataSource
 import com.example.teacherapp.core.database.datasource.grade.GradeDataSourceImpl
 import com.example.teacherapp.core.database.datasource.gradetemplate.GradeTemplateDataSource
@@ -13,8 +15,6 @@ import com.example.teacherapp.core.database.datasource.lessonattendance.LessonAt
 import com.example.teacherapp.core.database.datasource.lessonattendance.LessonAttendanceDataSourceImpl
 import com.example.teacherapp.core.database.datasource.lessonnote.LessonNoteDataSource
 import com.example.teacherapp.core.database.datasource.lessonnote.LessonNoteDataSourceImpl
-import com.example.teacherapp.core.database.datasource.lessonschedule.LessonScheduleDataSource
-import com.example.teacherapp.core.database.datasource.lessonschedule.LessonScheduleDataSourceImpl
 import com.example.teacherapp.core.database.datasource.note.NoteDataSource
 import com.example.teacherapp.core.database.datasource.note.NoteDataSourceImpl
 import com.example.teacherapp.core.database.datasource.schoolclass.SchoolClassDataSource
@@ -39,11 +39,11 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideLessonScheduleDataSource(
+    fun provideEventDataSource(
         db: TeacherDatabase,
         @DefaultDispatcher dispatcher: CoroutineDispatcher,
-    ): LessonScheduleDataSource {
-        return LessonScheduleDataSourceImpl(db, dispatcher)
+    ): EventDataSource {
+        return EventDataSourceImpl(db, dispatcher)
     }
 
     @Provides

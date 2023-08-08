@@ -40,10 +40,10 @@ CREATE TABLE lesson
     FOREIGN KEY (school_class_id) REFERENCES school_class (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE lesson_schedule
+CREATE TABLE event
 (
     id         INTEGER            NOT NULL PRIMARY KEY AUTOINCREMENT,
-    lesson_id  INTEGER            NOT NULL,
+    lesson_id  INTEGER, -- Nullable reference
     `date`     TEXT AS LocalDate  NOT NULL,
     start_time TEXT AS LocalTime  NOT NULL,
     end_time   TEXT AS LocalTime  NOT NULL,
@@ -116,15 +116,15 @@ CREATE TABLE lesson_activity
 -- Obecność
 CREATE TABLE lesson_attendance
 (
-    lesson_schedule_id INTEGER NOT NULL,
-    student_id         INTEGER NOT NULL,
-    attendance_id      INTEGER NOT NULL,
+    event_id      INTEGER NOT NULL,
+    student_id    INTEGER NOT NULL,
+    attendance_id INTEGER NOT NULL,
 
-    FOREIGN KEY (lesson_schedule_id) REFERENCES lesson_schedule (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (event_id) REFERENCES event (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (attendance_id) REFERENCES attendance (id) ON DELETE CASCADE ON UPDATE CASCADE,
 
-    PRIMARY KEY (lesson_schedule_id, student_id)
+    PRIMARY KEY (event_id, student_id)
 );
 
 -- nb u sp zw ob
@@ -160,8 +160,8 @@ CREATE TABLE password
 );
 
 INSERT OR FAIL INTO attendance (text) VALUES
-('nb'),
-('u'),
-('sp'),
-('zw'),
-('ob');
+    ('nb'),
+    ('u'),
+    ('sp'),
+    ('zw'),
+    ('ob');

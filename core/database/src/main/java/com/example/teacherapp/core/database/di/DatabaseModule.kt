@@ -8,9 +8,9 @@ import com.example.teacherapp.core.database.adapter.BigDecimalColumnAdapter
 import com.example.teacherapp.core.database.adapter.DateColumnAdapter
 import com.example.teacherapp.core.database.adapter.TimeColumnAdapter
 import com.example.teacherapp.core.database.generated.TeacherDatabase
+import com.example.teacherapp.core.database.generated.model.Event
 import com.example.teacherapp.core.database.generated.model.Grade
 import com.example.teacherapp.core.database.generated.model.Grade_template
-import com.example.teacherapp.core.database.generated.model.Lesson_schedule
 import com.example.teacherapp.core.database.generated.model.Term
 import dagger.Module
 import dagger.Provides
@@ -54,7 +54,7 @@ object DatabaseModule {
             grade_templateAdapter = Grade_template.Adapter(
                 dateAdapter = dateAdapter,
             ),
-            lesson_scheduleAdapter = Lesson_schedule.Adapter(
+            eventAdapter = Event.Adapter(
                 dateAdapter = dateAdapter,
                 start_timeAdapter = timeAdapter,
                 end_timeAdapter = timeAdapter,

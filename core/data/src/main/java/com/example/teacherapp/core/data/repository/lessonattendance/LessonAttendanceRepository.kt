@@ -2,28 +2,26 @@ package com.example.teacherapp.core.data.repository.lessonattendance
 
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.Attendance
+import com.example.teacherapp.core.model.data.Event
 import com.example.teacherapp.core.model.data.LessonAttendance
-import com.example.teacherapp.core.model.data.LessonSchedule
-import com.example.teacherapp.core.model.data.LessonScheduleAttendance
+import com.example.teacherapp.core.model.data.LessonEventAttendance
 import kotlinx.coroutines.flow.Flow
 
 interface LessonAttendanceRepository {
 
-    fun getLessonScheduleAttendancesByLessonId(
+    fun getLessonEventAttendancesByLessonId(
         lessonId: Long
-    ): Flow<Result<List<LessonScheduleAttendance>>>
+    ): Flow<Result<List<LessonEventAttendance>>>
 
-    fun getLessonAttendancesByLessonScheduleId(
-        lessonScheduleId: Long
-    ): Flow<Result<List<LessonAttendance>>>
+    fun getLessonAttendancesByEventId(eventId: Long): Flow<Result<List<LessonAttendance>>>
 
-    fun getLessonScheduleById(lessonScheduleId: Long): Flow<Result<LessonSchedule>>
+    fun getEventById(eventId: Long): Flow<Result<Event>>
 
     suspend fun insertOrUpdateLessonAttendance(
-        lessonScheduleId: Long,
+        eventId: Long,
         studentId: Long,
         attendance: Attendance,
     )
 
-    suspend fun deleteLessonAttendance(lessonScheduleId: Long, studentId: Long)
+    suspend fun deleteLessonAttendance(eventId: Long, studentId: Long)
 }

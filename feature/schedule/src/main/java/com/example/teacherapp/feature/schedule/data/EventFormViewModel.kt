@@ -7,9 +7,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
-import com.example.teacherapp.core.data.repository.lessonschedule.LessonScheduleRepository
+import com.example.teacherapp.core.data.repository.event.EventRepository
+import com.example.teacherapp.core.model.data.EventType
 import com.example.teacherapp.core.model.data.Lesson
-import com.example.teacherapp.core.model.data.LessonScheduleType
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,8 +26,8 @@ import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
-internal class LessonScheduleFormViewModel @Inject constructor(
-    private val repository: LessonScheduleRepository,
+internal class EventFormViewModel @Inject constructor(
+    private val repository: EventRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -61,7 +61,7 @@ internal class LessonScheduleFormViewModel @Inject constructor(
         )
     }
 
-    fun onTypeChange(type: LessonScheduleType) {
+    fun onTypeChange(type: EventType) {
         form = form.copy(type = type)
     }
 
@@ -72,7 +72,7 @@ internal class LessonScheduleFormViewModel @Inject constructor(
 
         form = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-            repository.insertLessonSchedule(
+            repository.insertEvent(
                 lessonId = lessonId.value,
                 date = form.date,
                 startTime = form.startTime,

@@ -6,16 +6,16 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.core.ui.model.FormStatus
-import com.example.teacherapp.feature.schedule.LessonScheduleFormScreen
-import com.example.teacherapp.feature.schedule.data.LessonScheduleFormViewModel
+import com.example.teacherapp.feature.schedule.EventFormScreen
+import com.example.teacherapp.feature.schedule.data.EventFormViewModel
 
 @Composable
-internal fun LessonScheduleFormRoute(
+internal fun EventFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onSave: () -> Unit,
     onShowSnackbar: (message: String) -> Unit,
-    viewModel: LessonScheduleFormViewModel = hiltViewModel(),
+    viewModel: EventFormViewModel = hiltViewModel(),
 ) {
     val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
     val form = viewModel.form
@@ -28,11 +28,11 @@ internal fun LessonScheduleFormRoute(
         }
     }
 
-    LessonScheduleFormScreen(
+    EventFormScreen(
         lessonResult = lessonResult,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
-        lessonScheduleForm = form,
+        eventForm = form,
         onDateChange = viewModel::onDateChange,
         onStartTimeChange = viewModel::onStartTimeChange,
         onEndTimeChange = viewModel::onEndTimeChange,

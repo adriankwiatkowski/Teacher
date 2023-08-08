@@ -13,7 +13,7 @@ private val data: List<LessonAttendance> = BasicStudentsPreviewParameterProvider
     .first()
     .mapIndexed { index, student ->
         LessonAttendance(
-            lessonScheduleId = 1L,
+            eventId = 1L,
             student = student,
             attendance = Attendance.entries[index % Attendance.entries.size],
         )

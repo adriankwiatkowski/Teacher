@@ -1,6 +1,6 @@
 package com.example.teacherapp.core.model.data
 
-enum class LessonScheduleType {
+enum class EventType {
     Once,
     Weekly,
     EveryTwoWeeks,

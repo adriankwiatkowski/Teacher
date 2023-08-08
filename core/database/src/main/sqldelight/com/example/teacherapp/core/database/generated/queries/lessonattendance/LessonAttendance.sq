@@ -1,44 +1,44 @@
-getLessonSchedulesByLessonId:
+getLessonEventsByLessonId:
 SELECT
-    ls.id AS 'lesson_schedule_id',
-    ls.date AS 'lesson_schedule_date',
-    ls.start_time AS 'lesson_schedule_start_time',
-    ls.end_time AS 'lesson_schedule_end_time',
-    ls.is_valid AS 'lesson_schedule_is_valid',
+    e.id AS 'event_id',
+    e.date AS 'event_date',
+    e.start_time AS 'event_start_time',
+    e.end_time AS 'event_end_time',
+    e.is_valid AS 'event_is_valid',
     (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
     (SELECT COUNT(*)
         FROM attendance a
-        INNER JOIN lesson_attendance la ON ls.id = la.lesson_schedule_id
+        INNER JOIN lesson_attendance la ON e.id = la.event_id
         WHERE a.id = la.attendance_id AND a.text = 'ob'
     ) AS 'present_count',
     (SELECT COUNT(*)
         FROM attendance a
-        INNER JOIN lesson_attendance la ON ls.id = la.lesson_schedule_id
+        INNER JOIN lesson_attendance la ON e.id = la.event_id
         WHERE a.id = la.attendance_id AND a.text = 'sp'
     ) AS 'late_count',
     (SELECT COUNT(*)
         FROM attendance a
-        INNER JOIN lesson_attendance la ON ls.id = la.lesson_schedule_id
+        INNER JOIN lesson_attendance la ON e.id = la.event_id
         WHERE a.id = la.attendance_id AND a.text = 'nb'
     ) AS 'absent_count',
     (SELECT COUNT(*)
         FROM attendance a
-        INNER JOIN lesson_attendance la ON ls.id = la.lesson_schedule_id
+        INNER JOIN lesson_attendance la ON e.id = la.event_id
         WHERE a.id = la.attendance_id AND a.text = 'u'
     ) AS 'excused_absence_count',
     (SELECT COUNT(*)
         FROM attendance a
-        INNER JOIN lesson_attendance la ON ls.id = la.lesson_schedule_id
+        INNER JOIN lesson_attendance la ON e.id = la.event_id
         WHERE a.id = la.attendance_id AND a.text = 'zw'
     ) AS 'exemption_count'
-FROM lesson_schedule ls
-INNER JOIN lesson l ON ls.lesson_id = l.id
+FROM event e
+INNER JOIN lesson l ON e.lesson_id = l.id
 INNER JOIN school_class sc ON l.school_class_id = sc.id
-WHERE ls.lesson_id = :lesson_id;
+WHERE e.lesson_id = :lesson_id;
 
-getLessonAttendancesByLessonScheduleId:
+getLessonAttendancesByEventId:
 SELECT
-    ls.id AS 'lesson_schedule_id',
+    e.id AS 'event_id',
     la.attendance_id,
     a.text AS 'attendance_text',
     s.id AS 'student_id',
@@ -48,13 +48,13 @@ SELECT
     s.surname AS 'student_surname',
     s.email AS 'student_email',
     s.phone AS 'student_phone'
-FROM lesson_schedule ls
-INNER JOIN lesson l ON ls.lesson_id = l.id
+FROM event e
+INNER JOIN lesson l ON e.lesson_id = l.id
 INNER JOIN school_class sc ON l.school_class_id = sc.id
 INNER JOIN student s ON sc.id = s.school_class_id
-LEFT JOIN lesson_attendance la ON ls.id = la.lesson_schedule_id AND s.id = la.student_id
+LEFT JOIN lesson_attendance la ON e.id = la.event_id AND s.id = la.student_id
 LEFT JOIN attendance a ON a.id = la.attendance_id
-WHERE ls.id = :lesson_scheule_id;
+WHERE e.id = :event_id;
 
 getAttendanceByText:
 SELECT
@@ -70,4 +70,4 @@ VALUES (?, ?, ?);
 
 deleteLessonAttendance:
 DELETE FROM lesson_attendance
-WHERE lesson_schedule_id = :lesson_schedule_id AND student_id = :student_id;
+WHERE event_id = :event_id AND student_id = :student_id;

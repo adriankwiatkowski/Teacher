@@ -1,5 +1,7 @@
 package com.example.teacherapp.core.data.di
 
+import com.example.teacherapp.core.data.repository.event.DatabaseEventRepository
+import com.example.teacherapp.core.data.repository.event.EventRepository
 import com.example.teacherapp.core.data.repository.grade.DatabaseGradeRepository
 import com.example.teacherapp.core.data.repository.grade.GradeRepository
 import com.example.teacherapp.core.data.repository.gradetemplate.DatabaseGradeTemplateRepository
@@ -12,8 +14,6 @@ import com.example.teacherapp.core.data.repository.lessonattendance.DatabaseLess
 import com.example.teacherapp.core.data.repository.lessonattendance.LessonAttendanceRepository
 import com.example.teacherapp.core.data.repository.lessonnote.DatabaseLessonNoteRepository
 import com.example.teacherapp.core.data.repository.lessonnote.LessonNoteRepository
-import com.example.teacherapp.core.data.repository.lessonschedule.DatabaseLessonScheduleRepository
-import com.example.teacherapp.core.data.repository.lessonschedule.LessonScheduleRepository
 import com.example.teacherapp.core.data.repository.note.DatabaseNoteRepository
 import com.example.teacherapp.core.data.repository.note.NoteRepository
 import com.example.teacherapp.core.data.repository.schoolclass.DatabaseSchoolClassRepository
@@ -36,9 +36,9 @@ import dagger.hilt.components.SingletonComponent
 internal interface DataModule {
 
     @Binds
-    fun bindsLessonScheduleRepository(
-        lessonScheduleRepository: DatabaseLessonScheduleRepository,
-    ): LessonScheduleRepository
+    fun bindsEventRepository(
+        eventRepository: DatabaseEventRepository,
+    ): EventRepository
 
     @Binds
     fun bindsLessonRepository(

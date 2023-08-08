@@ -1,7 +1,7 @@
 package com.example.teacherapp.feature.schedule.data
 
 import com.example.teacherapp.core.common.utils.TimeUtils
-import com.example.teacherapp.core.model.data.LessonScheduleType
+import com.example.teacherapp.core.model.data.EventType
 import com.example.teacherapp.core.ui.model.FormStatus
 import java.time.LocalDate
 import java.time.LocalTime
@@ -48,12 +48,12 @@ internal object LessonScheduleFormProvider {
         date: LocalDate = TimeUtils.currentDate(),
         startTime: LocalTime = TimeUtils.localTimeOf(8, 0),
         endTime: LocalTime = TimeUtils.plusTime(startTime, hours = 0, minutes = 45),
-        type: LessonScheduleType = LessonScheduleType.Weekly,
+        type: EventType = EventType.Weekly,
         status: FormStatus = FormStatus.Idle,
-    ): LessonScheduleForm {
+    ): EventForm {
         val timeData = sanitizeStartTime(startTime, endTime)
 
-        return LessonScheduleForm(
+        return EventForm(
             date = sanitizeDate(date),
             startTime = timeData.startTime,
             endTime = timeData.endTime,

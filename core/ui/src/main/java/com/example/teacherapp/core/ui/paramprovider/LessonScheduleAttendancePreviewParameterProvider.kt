@@ -2,12 +2,12 @@ package com.example.teacherapp.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.common.utils.TimeUtils
-import com.example.teacherapp.core.model.data.LessonScheduleAttendance
+import com.example.teacherapp.core.model.data.LessonEventAttendance
 import java.time.LocalTime
 
 class LessonScheduleAttendancesPreviewParameterProvider :
-    PreviewParameterProvider<List<LessonScheduleAttendance>> {
-    override val values: Sequence<List<LessonScheduleAttendance>> = sequenceOf(data)
+    PreviewParameterProvider<List<LessonEventAttendance>> {
+    override val values: Sequence<List<LessonEventAttendance>> = sequenceOf(data)
 }
 
 private val data = makeData(
@@ -69,10 +69,10 @@ private val data = makeData(
 
 private fun makeData(
     vararg simpleLessonScheduleAttendances: SimpleLessonScheduleAttendance,
-): List<LessonScheduleAttendance> {
+): List<LessonEventAttendance> {
     return simpleLessonScheduleAttendances.mapIndexed { index, simpleLessonScheduleAttendance ->
-        LessonScheduleAttendance(
-            lessonScheduleId = index.toLong() + 1L,
+        LessonEventAttendance(
+            eventId = index.toLong() + 1L,
             date = TimeUtils.plusDays(TimeUtils.currentDate(), index.toLong()),
             startTime = simpleLessonScheduleAttendance.startTime,
             endTime = TimeUtils.plusTime(simpleLessonScheduleAttendance.startTime, 0, 45),

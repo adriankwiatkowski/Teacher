@@ -1,47 +1,47 @@
 package com.example.teacherapp.core.database.datasource.utils.querymapper
 
-import com.example.teacherapp.core.database.generated.queries.lessonattendance.GetLessonAttendancesByLessonScheduleId
-import com.example.teacherapp.core.database.generated.queries.lessonattendance.GetLessonSchedulesByLessonId
+import com.example.teacherapp.core.database.generated.queries.lessonattendance.GetLessonAttendancesByEventId
+import com.example.teacherapp.core.database.generated.queries.lessonattendance.GetLessonEventsByLessonId
 import com.example.teacherapp.core.model.data.Attendance
 import com.example.teacherapp.core.model.data.BasicStudent
 import com.example.teacherapp.core.model.data.LessonAttendance
-import com.example.teacherapp.core.model.data.LessonScheduleAttendance
+import com.example.teacherapp.core.model.data.LessonEventAttendance
 
-internal fun toExternalLessonScheduleAttendances(
-    schedules: List<GetLessonSchedulesByLessonId>
-): List<LessonScheduleAttendance> = schedules.map { schedule ->
+internal fun toExternalLessonEventAttendances(
+    events: List<GetLessonEventsByLessonId>
+): List<LessonEventAttendance> = events.map { event ->
     val attendanceNotSetCount = (
-            schedule.student_count
-                    - schedule.present_count
-                    - schedule.late_count
-                    - schedule.absent_count
-                    - schedule.excused_absence_count
-                    - schedule.exemption_count
+            event.student_count
+                    - event.present_count
+                    - event.late_count
+                    - event.absent_count
+                    - event.excused_absence_count
+                    - event.exemption_count
             )
 
-    LessonScheduleAttendance(
-        lessonScheduleId = schedule.lesson_schedule_id,
-        date = schedule.lesson_schedule_date,
-        startTime = schedule.lesson_schedule_start_time,
-        endTime = schedule.lesson_schedule_end_time,
-        isValid = schedule.lesson_schedule_is_valid,
-        presentCount = schedule.present_count,
-        lateCount = schedule.late_count,
-        absentCount = schedule.absent_count,
-        excusedAbsenceCount = schedule.excused_absence_count,
-        exemptionCount = schedule.exemption_count,
+    LessonEventAttendance(
+        eventId = event.event_id,
+        date = event.event_date,
+        startTime = event.event_start_time,
+        endTime = event.event_end_time,
+        isValid = event.event_is_valid,
+        presentCount = event.present_count,
+        lateCount = event.late_count,
+        absentCount = event.absent_count,
+        excusedAbsenceCount = event.excused_absence_count,
+        exemptionCount = event.exemption_count,
         attendanceNotSetCount = attendanceNotSetCount,
     )
 }
 
 internal fun toExternal(
-    attendances: List<GetLessonAttendancesByLessonScheduleId>
+    attendances: List<GetLessonAttendancesByEventId>
 ): List<LessonAttendance> = attendances.map { lessonAttendance ->
     val attendance =
         lessonAttendance.attendance_text?.let { attendance -> Attendance.of(attendance) }
 
     LessonAttendance(
-        lessonScheduleId = lessonAttendance.lesson_schedule_id,
+        eventId = lessonAttendance.event_id,
         student = BasicStudent(
             id = lessonAttendance.student_id,
             classId = lessonAttendance.school_class_id,

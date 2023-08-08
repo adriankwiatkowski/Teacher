@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.utils.TimeUtils
-import com.example.teacherapp.core.data.repository.lessonschedule.LessonScheduleRepository
-import com.example.teacherapp.core.model.data.LessonSchedule
+import com.example.teacherapp.core.data.repository.event.EventRepository
+import com.example.teacherapp.core.model.data.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ScheduleViewModel @Inject constructor(
-    repository: LessonScheduleRepository,
+    repository: EventRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -31,8 +31,8 @@ internal class ScheduleViewModel @Inject constructor(
         .stateIn(TimeUtils.currentDate())
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lessonSchedulesResult: StateFlow<Result<List<LessonSchedule>>> = date
-        .flatMapLatest { date -> repository.getLessonSchedules(date) }
+    val eventsResult: StateFlow<Result<List<Event>>> = date
+        .flatMapLatest { date -> repository.getEvents(date) }
         .stateIn(initialValue = Result.Loading)
 
     fun onDateSelected(date: LocalDate) {

@@ -3,8 +3,8 @@ package com.example.teacherapp.core.model.data
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class LessonScheduleAttendance(
-    val lessonScheduleId: Long,
+data class LessonEventAttendance(
+    val eventId: Long,
     val date: LocalDate,
     val startTime: LocalTime,
     val endTime: LocalTime,

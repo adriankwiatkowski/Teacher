@@ -25,19 +25,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.utils.TimeUtils
-import com.example.teacherapp.core.model.data.LessonSchedule
+import com.example.teacherapp.core.model.data.Event
 import com.example.teacherapp.core.ui.component.TeacherFab
 import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
 import com.example.teacherapp.core.ui.component.result.ResultContent
 import com.example.teacherapp.core.ui.icon.TeacherIcons
-import com.example.teacherapp.core.ui.paramprovider.LessonSchedulesPreviewParameterProvider
+import com.example.teacherapp.core.ui.paramprovider.EventsPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import java.time.LocalDate
 
 @Composable
 internal fun ScheduleScreen(
-    lessonSchedulesResult: Result<List<LessonSchedule>>,
+    eventsResult: Result<List<Event>>,
     date: LocalDate,
     onDateSelected: (date: LocalDate) -> Unit,
     onPrevDateClick: () -> Unit,
@@ -61,11 +61,11 @@ internal fun ScheduleScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .padding(MaterialTheme.spacing.small),
-            result = lessonSchedulesResult,
-        ) { lessonSchedules ->
+            result = eventsResult,
+        ) { events ->
             MainContent(
                 modifier = Modifier.fillMaxSize(),
-                lessonSchedules = lessonSchedules,
+                events = events,
                 onScheduleClick = onScheduleClick,
                 date = date,
                 onDateSelected = onDateSelected,
@@ -78,7 +78,7 @@ internal fun ScheduleScreen(
 
 @Composable
 private fun MainContent(
-    lessonSchedules: List<LessonSchedule>,
+    events: List<Event>,
     date: LocalDate,
     onDateSelected: (date: LocalDate) -> Unit,
     onPrevDateClick: () -> Unit,
@@ -106,27 +106,27 @@ private fun MainContent(
             }
         }
 
-        if (lessonSchedules.isEmpty()) {
+        if (events.isEmpty()) {
             item {
                 EmptyState()
             }
         } else {
-            scheduleItems(
-                lessonSchedules = lessonSchedules,
+            events(
+                events = events,
                 onScheduleClick = onScheduleClick,
             )
         }
     }
 }
 
-private fun LazyListScope.scheduleItems(
-    lessonSchedules: List<LessonSchedule>,
+private fun LazyListScope.events(
+    events: List<Event>,
     onScheduleClick: (id: Long) -> Unit,
 ) {
-    items(lessonSchedules, key = { it.id }) { schedule ->
-        ScheduleItem(
-            schedule = schedule,
-            onClick = { onScheduleClick(schedule.id) },
+    items(events, key = { it.id }) { event ->
+        EventItem(
+            event = event,
+            onClick = { onScheduleClick(event.id) },
         )
     }
 }
@@ -146,19 +146,19 @@ private fun EmptyState(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun ScheduleItem(
-    schedule: LessonSchedule,
+private fun EventItem(
+    event: Event,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ListItem(
         modifier = modifier.clickable(onClick = onClick),
         headlineContent = {
-            Text(TimeUtils.format(schedule.startTime, schedule.endTime))
+            Text(TimeUtils.format(event.startTime, event.endTime))
         },
         supportingContent = {
-            val lessonName = schedule.lesson.name
-            val schoolClassName = schedule.lesson.schoolClass.name
+            val lessonName = event.lesson.name
+            val schoolClassName = event.lesson.schoolClass.name
             Text("$lessonName $schoolClassName")
         },
     )
@@ -168,14 +168,14 @@ private fun ScheduleItem(
 @Composable
 private fun ScheduleScreenPreview(
     @PreviewParameter(
-        LessonSchedulesPreviewParameterProvider::class
-    ) lessonSchedules: List<LessonSchedule>
+        EventsPreviewParameterProvider::class
+    ) events: List<Event>
 ) {
     TeacherAppTheme {
         Surface {
             ScheduleScreen(
-                lessonSchedulesResult = Result.Success(lessonSchedules),
-                date = lessonSchedules.first().date,
+                eventsResult = Result.Success(events),
+                date = events.first().date,
                 onDateSelected = {},
                 onPrevDateClick = {},
                 onNextDateClick = {},

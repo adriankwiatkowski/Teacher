@@ -3,43 +3,43 @@ package com.example.teacherapp.core.ui.paramprovider
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.BasicSchoolClass
+import com.example.teacherapp.core.model.data.Event
 import com.example.teacherapp.core.model.data.Lesson
-import com.example.teacherapp.core.model.data.LessonSchedule
 import java.time.LocalDate
 import java.time.LocalTime
 
-class LessonSchedulesPreviewParameterProvider : PreviewParameterProvider<List<LessonSchedule>> {
-    override val values: Sequence<List<LessonSchedule>> = sequenceOf(lessonSchedules)
+class EventsPreviewParameterProvider : PreviewParameterProvider<List<Event>> {
+    override val values: Sequence<List<Event>> = sequenceOf(events)
 }
 
-private val lessonSchedules = makeLessonSchedules(
-    SimpleLessonSchedule(
+private val events = makeEvents(
+    SimpleEvent(
         date = TimeUtils.currentDate(),
         startTime = TimeUtils.localTimeOf(8, 0),
         endTime = TimeUtils.localTimeOf(8, 45),
     ),
-    SimpleLessonSchedule(
+    SimpleEvent(
         date = TimeUtils.currentDate(),
         startTime = TimeUtils.localTimeOf(8, 50),
         endTime = TimeUtils.localTimeOf(9, 35),
     ),
-    SimpleLessonSchedule(
+    SimpleEvent(
         date = TimeUtils.currentDate(),
         startTime = TimeUtils.localTimeOf(9, 50),
         endTime = TimeUtils.localTimeOf(10, 35),
     ),
-    SimpleLessonSchedule(
+    SimpleEvent(
         date = TimeUtils.currentDate(),
         startTime = TimeUtils.localTimeOf(10, 40),
         endTime = TimeUtils.localTimeOf(11, 25),
     ),
 )
 
-private fun makeLessonSchedules(
-    vararg lesson: SimpleLessonSchedule,
-): List<LessonSchedule> {
+private fun makeEvents(
+    vararg lesson: SimpleEvent,
+): List<Event> {
     return lesson.mapIndexed { index, simpleLessonCalendar ->
-        LessonSchedule(
+        Event(
             id = index.toLong(),
             lesson = Lesson(
                 id = 1L,
@@ -59,7 +59,7 @@ private fun makeLessonSchedules(
     }
 }
 
-private data class SimpleLessonSchedule(
+private data class SimpleEvent(
     val date: LocalDate,
     val startTime: LocalTime,
     val endTime: LocalTime,

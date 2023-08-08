@@ -13,12 +13,12 @@ internal fun AttendanceFormRoute(
     onNavBack: () -> Unit,
     viewModel: AttendanceFormViewModel = hiltViewModel(),
 ) {
-    val lessonScheduleResult by viewModel.lessonScheduleResult.collectAsStateWithLifecycle()
+    val eventResult by viewModel.eventResult.collectAsStateWithLifecycle()
     val lessonAttendancesResult by viewModel.lessonAttendancesResult.collectAsStateWithLifecycle()
     val dialogState by viewModel.dialogState.collectAsStateWithLifecycle()
 
     AttendanceFormScreen(
-        lessonScheduleResult = lessonScheduleResult,
+        eventResult = eventResult,
         lessonAttendancesResult = lessonAttendancesResult,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,

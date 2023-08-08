@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.data.repository.lessonattendance.LessonAttendanceRepository
 import com.example.teacherapp.core.model.data.Attendance
+import com.example.teacherapp.core.model.data.Event
 import com.example.teacherapp.core.model.data.LessonAttendance
-import com.example.teacherapp.core.model.data.LessonSchedule
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,19 +28,19 @@ internal class AttendanceFormViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val lessonScheduleId = savedStateHandle.getStateFlow(LESSON_SCHEDULE_ID_KEY, 0L)
+    private val eventId = savedStateHandle.getStateFlow(EVENT_ID_KEY, 0L)
 
     private val _dialogState = MutableStateFlow<DialogState?>(null)
     val dialogState = _dialogState.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lessonAttendancesResult: StateFlow<Result<List<LessonAttendance>>> = lessonScheduleId
-        .flatMapLatest { id -> repository.getLessonAttendancesByLessonScheduleId(id) }
+    val lessonAttendancesResult: StateFlow<Result<List<LessonAttendance>>> = eventId
+        .flatMapLatest { id -> repository.getLessonAttendancesByEventId(id) }
         .stateIn(initialValue = Result.Loading)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lessonScheduleResult: StateFlow<Result<LessonSchedule>> = lessonScheduleId
-        .flatMapLatest { id -> repository.getLessonScheduleById(id) }
+    val eventResult: StateFlow<Result<Event>> = eventId
+        .flatMapLatest { id -> repository.getEventById(id) }
         .stateIn(initialValue = Result.Loading)
 
     fun onLessonAttendanceClick(lessonAttendance: LessonAttendance) {
@@ -64,20 +64,20 @@ internal class AttendanceFormViewModel @Inject constructor(
     fun onAttendanceConfirmClick() {
         val dialogState = dialogState.value ?: return
 
-        val lessonScheduleId = lessonScheduleId.value
+        val eventId = eventId.value
         val studentId = dialogState.studentId
         val attendance = dialogState.attendance
 
         viewModelScope.launch {
             if (attendance != null) {
                 repository.insertOrUpdateLessonAttendance(
-                    lessonScheduleId = lessonScheduleId,
+                    eventId = eventId,
                     studentId = studentId,
                     attendance = attendance,
                 )
             } else {
                 repository.deleteLessonAttendance(
-                    lessonScheduleId = lessonScheduleId,
+                    eventId = eventId,
                     studentId = studentId,
                 )
             }
@@ -97,7 +97,7 @@ internal class AttendanceFormViewModel @Inject constructor(
     )
 
     companion object {
-        private const val LESSON_SCHEDULE_ID_KEY = LessonNavigation.lessonScheduleIdArg
+        private const val EVENT_ID_KEY = LessonNavigation.eventIdArg
     }
 }
 

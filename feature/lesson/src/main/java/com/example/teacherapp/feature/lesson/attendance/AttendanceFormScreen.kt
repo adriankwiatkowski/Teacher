@@ -30,21 +30,21 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.Attendance
+import com.example.teacherapp.core.model.data.Event
 import com.example.teacherapp.core.model.data.LessonAttendance
-import com.example.teacherapp.core.model.data.LessonSchedule
 import com.example.teacherapp.core.ui.component.TeacherRadioButton
 import com.example.teacherapp.core.ui.component.TeacherTopBar
 import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
 import com.example.teacherapp.core.ui.component.result.ResultContent
 import com.example.teacherapp.core.ui.paramprovider.LessonAttendancesPreviewParameterProvider
-import com.example.teacherapp.core.ui.paramprovider.LessonSchedulesPreviewParameterProvider
+import com.example.teacherapp.core.ui.paramprovider.EventsPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AttendanceFormScreen(
-    lessonScheduleResult: Result<LessonSchedule>,
+    eventResult: Result<Event>,
     lessonAttendancesResult: Result<List<LessonAttendance>>,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
@@ -87,7 +87,7 @@ internal fun AttendanceFormScreen(
 
             ResultContent(result = lessonAttendancesResult) { lessonAttendances ->
                 MainContent(
-                    lessonScheduleResult = lessonScheduleResult,
+                    eventResult = eventResult,
                     lessonAttendances = lessonAttendances,
                     onLessonAttendanceClick = onLessonAttendanceClick,
                 )
@@ -98,7 +98,7 @@ internal fun AttendanceFormScreen(
 
 @Composable
 private fun MainContent(
-    lessonScheduleResult: Result<LessonSchedule>,
+    eventResult: Result<Event>,
     lessonAttendances: List<LessonAttendance>,
     onLessonAttendanceClick: (lessonAttendance: LessonAttendance) -> Unit,
     modifier: Modifier = Modifier,
@@ -107,20 +107,20 @@ private fun MainContent(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        if (lessonScheduleResult is Result.Success) {
+        if (eventResult is Result.Success) {
             item {
-                val lessonSchedule = lessonScheduleResult.data
-                val lessonName = lessonSchedule.lesson.name
-                val schoolClassName = lessonSchedule.lesson.schoolClass.name
-                val startTime = lessonSchedule.startTime
-                val endTime = lessonSchedule.endTime
+                val event = eventResult.data
+                val lessonName = event.lesson.name
+                val schoolClassName = event.lesson.schoolClass.name
+                val startTime = event.startTime
+                val endTime = event.endTime
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(MaterialTheme.spacing.medium),
                 ) {
                     Text("$lessonName $schoolClassName")
-                    Text(TimeUtils.format(lessonSchedule.date))
+                    Text(TimeUtils.format(event.date))
                     Text(TimeUtils.format(startTime, endTime))
                 }
             }
@@ -239,15 +239,15 @@ private fun AttendanceFormScreenPreview(
 ) {
     TeacherAppTheme {
         Surface {
-            val lessonSchedule = remember {
-                LessonSchedulesPreviewParameterProvider().values.first().first()
+            val event = remember {
+                EventsPreviewParameterProvider().values.first().first()
             }
             var showDialog by remember { mutableStateOf(false) }
             var selectedStudentFullName by remember { mutableStateOf("") }
             var selectedAttendance by remember { mutableStateOf<Attendance?>(null) }
 
             AttendanceFormScreen(
-                lessonScheduleResult = Result.Success(lessonSchedule),
+                eventResult = Result.Success(event),
                 lessonAttendancesResult = Result.Success(lessonAttendances),
                 showNavigationIcon = true,
                 onNavBack = {},

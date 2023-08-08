@@ -11,7 +11,7 @@ import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation.lessonPick
 import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation.scheduleRoute
 
 private const val scheduleScreen = "schedule"
-private const val lessonScheduleFormScreen = "lesson-schedule-form"
+private const val eventFormScreen = "event-form"
 private const val lessonPickerScreen = "lesson-picker"
 
 object ScheduleNavigation {
@@ -21,7 +21,7 @@ object ScheduleNavigation {
     const val lessonPickerRoute = lessonPickerScreen
 }
 
-private const val lessonScheduleFormRoute = "$lessonScheduleFormScreen/{$lessonIdArg}"
+private const val eventFormRoute = "$eventFormScreen/{$lessonIdArg}"
 
 fun NavController.navigateToScheduleRoute(navOptions: NavOptions? = null) {
     this.navigate(scheduleScreen, navOptions)
@@ -31,11 +31,11 @@ private fun NavController.navigateToLessonPickerRoute(navOptions: NavOptions? = 
     this.navigate(lessonPickerScreen, navOptions)
 }
 
-private fun NavController.navigateToLessonScheduleFormRoute(
+private fun NavController.navigateToEventFormRoute(
     lessonId: Long,
     navOptions: NavOptions? = null,
 ) {
-    this.navigate("$lessonScheduleFormScreen/$lessonId", navOptions)
+    this.navigate("$eventFormScreen/$lessonId", navOptions)
 }
 
 fun NavGraphBuilder.scheduleGraph(
@@ -49,18 +49,18 @@ fun NavGraphBuilder.scheduleGraph(
         LessonPickerRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
-            onLessonClick = navController::navigateToLessonScheduleFormRoute,
+            onLessonClick = navController::navigateToEventFormRoute,
         )
     }
     composable(
-        lessonScheduleFormRoute,
+        eventFormRoute,
         arguments = listOf(
             navArgument(lessonIdArg) {
                 type = NavType.LongType
             },
         ),
     ) {
-        LessonScheduleFormRoute(
+        EventFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
             onSave = { navController.popBackStack(scheduleRoute, inclusive = false) },

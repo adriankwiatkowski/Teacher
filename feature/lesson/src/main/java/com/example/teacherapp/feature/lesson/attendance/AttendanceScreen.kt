@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.utils.TimeUtils
-import com.example.teacherapp.core.model.data.LessonScheduleAttendance
+import com.example.teacherapp.core.model.data.LessonEventAttendance
 import com.example.teacherapp.core.ui.component.result.ResultContent
 import com.example.teacherapp.core.ui.paramprovider.LessonScheduleAttendancesPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
@@ -33,7 +33,7 @@ import java.time.LocalTime
 
 @Composable
 internal fun AttendanceScreen(
-    scheduleAttendancesResult: Result<List<LessonScheduleAttendance>>,
+    scheduleAttendancesResult: Result<List<LessonEventAttendance>>,
     onScheduleAttendanceClick: (id: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -48,7 +48,7 @@ internal fun AttendanceScreen(
 
 @Composable
 private fun MainContent(
-    scheduleAttendances: List<LessonScheduleAttendance>,
+    scheduleAttendances: List<LessonEventAttendance>,
     onScheduleAttendanceClick: (id: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -56,7 +56,7 @@ private fun MainContent(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        items(scheduleAttendances, key = { it.lessonScheduleId }) { scheduleAttendance ->
+        items(scheduleAttendances, key = { it.eventId }) { scheduleAttendance ->
             AttendanceItem(
                 date = scheduleAttendance.date,
                 startTime = scheduleAttendance.startTime,
@@ -67,7 +67,7 @@ private fun MainContent(
                 excusedAbsenceCount = scheduleAttendance.excusedAbsenceCount,
                 exemptionCount = scheduleAttendance.exemptionCount,
                 attendanceNotSetCount = scheduleAttendance.attendanceNotSetCount,
-                onClick = { onScheduleAttendanceClick(scheduleAttendance.lessonScheduleId) },
+                onClick = { onScheduleAttendanceClick(scheduleAttendance.eventId) },
             )
         }
     }
@@ -143,7 +143,7 @@ private fun AttendanceCountItem(
 private fun AttendanceScreenPreview(
     @PreviewParameter(
         LessonScheduleAttendancesPreviewParameterProvider::class
-    ) data: List<LessonScheduleAttendance>
+    ) data: List<LessonEventAttendance>
 ) {
     TeacherAppTheme {
         Surface {

@@ -1,12 +1,13 @@
-package com.example.teacherapp.core.database.model
+package com.example.teacherapp.core.model.data
 
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class LessonScheduleDto(
-    val id: Long?,
-    val lessonId: Long,
+data class Event(
+    val id: Long,
+    val lesson: Lesson,
     val date: LocalDate,
     val startTime: LocalTime,
     val endTime: LocalTime,
+    val isValid: Boolean,
 )

@@ -30,8 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.utils.TimeUtils
+import com.example.teacherapp.core.model.data.EventType
 import com.example.teacherapp.core.model.data.Lesson
-import com.example.teacherapp.core.model.data.LessonScheduleType
 import com.example.teacherapp.core.ui.component.TeacherButton
 import com.example.teacherapp.core.ui.component.TeacherRadioButton
 import com.example.teacherapp.core.ui.component.TeacherTopBar
@@ -41,22 +41,22 @@ import com.example.teacherapp.core.ui.component.picker.TeacherTimePicker
 import com.example.teacherapp.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
-import com.example.teacherapp.feature.schedule.data.LessonScheduleForm
+import com.example.teacherapp.feature.schedule.data.EventForm
 import com.example.teacherapp.feature.schedule.data.LessonScheduleFormProvider
 import java.time.LocalDate
 import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun LessonScheduleFormScreen(
+internal fun EventFormScreen(
     lessonResult: Result<Lesson>,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
-    lessonScheduleForm: LessonScheduleForm,
+    eventForm: EventForm,
     onDateChange: (date: LocalDate) -> Unit,
     onStartTimeChange: (date: LocalTime) -> Unit,
     onEndTimeChange: (date: LocalTime) -> Unit,
-    onTypeChange: (type: LessonScheduleType) -> Unit,
+    onTypeChange: (type: EventType) -> Unit,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
@@ -84,13 +84,13 @@ internal fun LessonScheduleFormScreen(
             Header(lessonResult = lessonResult)
 
             DateForm(
-                date = lessonScheduleForm.date,
+                date = eventForm.date,
                 onDateChange = onDateChange,
-                startTime = lessonScheduleForm.startTime,
+                startTime = eventForm.startTime,
                 onStartTimeChange = onStartTimeChange,
-                endTime = lessonScheduleForm.endTime,
+                endTime = eventForm.endTime,
                 onEndTimeChange = onEndTimeChange,
-                type = lessonScheduleForm.type,
+                type = eventForm.type,
                 onTypeChange = onTypeChange,
             )
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
@@ -132,8 +132,8 @@ private fun DateForm(
     onStartTimeChange: (date: LocalTime) -> Unit,
     endTime: LocalTime,
     onEndTimeChange: (date: LocalTime) -> Unit,
-    type: LessonScheduleType,
-    onTypeChange: (type: LessonScheduleType) -> Unit,
+    type: EventType,
+    onTypeChange: (type: EventType) -> Unit,
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(
@@ -165,18 +165,18 @@ private fun DateForm(
             Column(Modifier.selectableGroup()) {
                 TeacherRadioButton(
                     label = "Jednorazowe",
-                    selected = type == LessonScheduleType.Once,
-                    onClick = { onTypeChange(LessonScheduleType.Once) },
+                    selected = type == EventType.Once,
+                    onClick = { onTypeChange(EventType.Once) },
                 )
                 TeacherRadioButton(
                     label = "Cotygodniowe",
-                    selected = type == LessonScheduleType.Weekly,
-                    onClick = { onTypeChange(LessonScheduleType.Weekly) },
+                    selected = type == EventType.Weekly,
+                    onClick = { onTypeChange(EventType.Weekly) },
                 )
                 TeacherRadioButton(
                     label = "Co 2 tygodnie",
-                    selected = type == LessonScheduleType.EveryTwoWeeks,
-                    onClick = { onTypeChange(LessonScheduleType.EveryTwoWeeks) },
+                    selected = type == EventType.EveryTwoWeeks,
+                    onClick = { onTypeChange(EventType.EveryTwoWeeks) },
                 )
             }
         }
@@ -230,18 +230,18 @@ private fun LessonTimePicker(
 
 @Preview
 @Composable
-private fun LessonScheduleFormScreenPreview(
+private fun EventFormScreenPreview(
     @PreviewParameter(LessonPreviewParameterProvider::class, limit = 1) lesson: Lesson,
 ) {
     TeacherAppTheme {
         Surface {
             var form by remember { mutableStateOf(LessonScheduleFormProvider.createDefaultForm()) }
 
-            LessonScheduleFormScreen(
+            EventFormScreen(
                 lessonResult = Result.Success(lesson),
                 showNavigationIcon = true,
                 onNavBack = {},
-                lessonScheduleForm = form,
+                eventForm = form,
                 onDateChange = { form = form.copy(date = it) },
                 onStartTimeChange = { form = form.copy(startTime = it) },
                 onEndTimeChange = { form = form.copy(endTime = it) },

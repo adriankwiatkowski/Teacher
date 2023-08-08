@@ -4,11 +4,11 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternal
-import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternalLessonScheduleAttendances
+import com.example.teacherapp.core.database.datasource.utils.querymapper.toExternalLessonEventAttendances
 import com.example.teacherapp.core.database.generated.TeacherDatabase
 import com.example.teacherapp.core.model.data.Attendance
 import com.example.teacherapp.core.model.data.LessonAttendance
-import com.example.teacherapp.core.model.data.LessonScheduleAttendance
+import com.example.teacherapp.core.model.data.LessonEventAttendance
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -23,26 +23,26 @@ internal class LessonAttendanceDataSourceImpl @Inject constructor(
 
     private val queries = db.lessonAttendanceQueries
 
-    override fun getLessonScheduleAttendancesByLessonId(
+    override fun getLessonEventAttendancesByLessonId(
         lessonId: Long
-    ): Flow<List<LessonScheduleAttendance>> =
+    ): Flow<List<LessonEventAttendance>> =
         queries
-            .getLessonSchedulesByLessonId(lessonId)
+            .getLessonEventsByLessonId(lessonId)
             .asFlow()
             .mapToList(dispatcher)
-            .map(::toExternalLessonScheduleAttendances)
+            .map(::toExternalLessonEventAttendances)
             .flowOn(dispatcher)
 
-    override fun getLessonAttendancesByLessonScheduleId(lessonScheduleId: Long): Flow<List<LessonAttendance>> =
+    override fun getLessonAttendancesByEventId(eventId: Long): Flow<List<LessonAttendance>> =
         queries
-            .getLessonAttendancesByLessonScheduleId(lessonScheduleId)
+            .getLessonAttendancesByEventId(eventId)
             .asFlow()
             .mapToList(dispatcher)
             .map(::toExternal)
             .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateLessonAttendance(
-        lessonScheduleId: Long,
+        eventId: Long,
         studentId: Long,
         attendance: Attendance,
     ): Unit = withContext(dispatcher) {
@@ -50,18 +50,18 @@ internal class LessonAttendanceDataSourceImpl @Inject constructor(
             queries.getAttendanceByText(attendance.text).executeAsOne().id
 
         queries.insertOrUpdateLessonAttendance(
-            lesson_schedule_id = lessonScheduleId,
+            event_id = eventId,
             student_id = studentId,
             attendance_id = attendanceId,
         )
     }
 
     override suspend fun deleteLessonAttendance(
-        lessonScheduleId: Long,
+        eventId: Long,
         studentId: Long,
     ): Unit = withContext(dispatcher) {
         queries.deleteLessonAttendance(
-            lesson_schedule_id = lessonScheduleId,
+            event_id = eventId,
             student_id = studentId,
         )
     }

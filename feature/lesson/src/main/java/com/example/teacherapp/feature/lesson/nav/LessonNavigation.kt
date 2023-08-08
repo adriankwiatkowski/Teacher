@@ -14,7 +14,7 @@ import com.example.teacherapp.feature.lesson.nav.LessonNavigation.gradeTemplateI
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonNoteIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonRoute
-import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonScheduleIdArg
+import com.example.teacherapp.feature.lesson.nav.LessonNavigation.eventIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.schoolClassIdArg
 import com.example.teacherapp.feature.lesson.tab.LessonTab
 
@@ -31,7 +31,7 @@ object LessonNavigation {
     internal const val schoolClassIdArg = "school-class-id"
     internal const val lessonIdArg = "lesson-id"
     internal const val lessonNoteIdArg = "lesson-note-id"
-    internal const val lessonScheduleIdArg = "lesson-schedule-id"
+    internal const val eventIdArg = "event-id"
 
     const val lessonRoute = "$lessonScreen/{$schoolClassIdArg}/{$lessonIdArg}"
 }
@@ -45,7 +45,7 @@ private const val gradeTemplateFormRoute =
 private const val lessonNoteFormRoute =
     "$lessonNoteFormScreen/{$lessonIdArg}?$lessonNoteIdArg={$lessonNoteIdArg}"
 
-private const val lessonAttendanceFormRoute = "$lessonAttendanceFormScreen/{$lessonScheduleIdArg}"
+private const val lessonAttendanceFormRoute = "$lessonAttendanceFormScreen/{$eventIdArg}"
 
 fun NavController.navigateToLessonGraph(
     schoolClassId: Long,
@@ -67,7 +67,7 @@ fun NavController.navigateToLessonFormRoute(
 fun NavController.navigateToGradeTemplateFormRoute(
     lessonId: Long,
     gradeTemplateId: Long?,
-    navOptions: NavOptions? = null
+    navOptions: NavOptions? = null,
 ) {
     val query = if (gradeTemplateId != null) "?$gradeTemplateIdArg=$gradeTemplateId" else ""
     this.navigate("$gradeTemplateFormScreen/$lessonId$query", navOptions)
@@ -76,17 +76,17 @@ fun NavController.navigateToGradeTemplateFormRoute(
 private fun NavController.navigateToLessonNoteFormRoute(
     lessonId: Long,
     lessonNoteId: Long?,
-    navOptions: NavOptions? = null
+    navOptions: NavOptions? = null,
 ) {
     val query = if (lessonNoteId != null) "?$lessonNoteIdArg=$lessonNoteId" else ""
     this.navigate("$lessonNoteFormScreen/$lessonId$query", navOptions)
 }
 
 private fun NavController.navigateToLessonAttendanceFormRoute(
-    lessonScheduleId: Long,
-    navOptions: NavOptions? = null
+    eventId: Long,
+    navOptions: NavOptions? = null,
 ) {
-    this.navigate("$lessonAttendanceFormScreen/$lessonScheduleId", navOptions)
+    this.navigate("$lessonAttendanceFormScreen/$eventId", navOptions)
 }
 
 fun NavGraphBuilder.lessonGraph(
@@ -218,7 +218,7 @@ fun NavGraphBuilder.lessonGraph(
     composable(
         lessonAttendanceFormRoute,
         arguments = listOf(
-            navArgument(lessonScheduleIdArg) {
+            navArgument(eventIdArg) {
                 type = NavType.LongType
             },
         ),

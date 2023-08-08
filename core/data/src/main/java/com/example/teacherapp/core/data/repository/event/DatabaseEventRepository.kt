@@ -1,4 +1,4 @@
-package com.example.teacherapp.core.data.repository.lessonschedule
+package com.example.teacherapp.core.data.repository.event
 
 import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.di.DefaultDispatcher
@@ -6,13 +6,13 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.result.asResult
 import com.example.teacherapp.core.common.result.asResultNotNull
 import com.example.teacherapp.core.common.utils.TimeUtils
+import com.example.teacherapp.core.database.datasource.event.EventDataSource
 import com.example.teacherapp.core.database.datasource.lesson.LessonDataSource
-import com.example.teacherapp.core.database.datasource.lessonschedule.LessonScheduleDataSource
 import com.example.teacherapp.core.database.datasource.schoolyear.SchoolYearDataSource
-import com.example.teacherapp.core.database.model.LessonScheduleDto
+import com.example.teacherapp.core.database.model.EventDto
+import com.example.teacherapp.core.model.data.Event
+import com.example.teacherapp.core.model.data.EventType
 import com.example.teacherapp.core.model.data.Lesson
-import com.example.teacherapp.core.model.data.LessonSchedule
-import com.example.teacherapp.core.model.data.LessonScheduleType
 import com.example.teacherapp.core.model.data.Term
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -23,30 +23,28 @@ import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
 
-internal class DatabaseLessonScheduleRepository @Inject constructor(
-    private val lessonScheduleDataSource: LessonScheduleDataSource,
+internal class DatabaseEventRepository @Inject constructor(
+    private val eventDataSource: EventDataSource,
     private val schoolYearDataSource: SchoolYearDataSource,
     private val lessonDataSource: LessonDataSource,
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     @ApplicationScope private val scope: CoroutineScope,
-) : LessonScheduleRepository {
+) : EventRepository {
 
-    override fun getLessonSchedules(
-        date: LocalDate
-    ): Flow<Result<List<LessonSchedule>>> = lessonScheduleDataSource
-        .getLessonSchedules(date)
+    override fun getEvents(date: LocalDate): Flow<Result<List<Event>>> = eventDataSource
+        .getEvents(date)
         .asResult()
 
     override fun getLessonById(lessonId: Long): Flow<Result<Lesson>> = lessonDataSource
         .getLessonById(lessonId)
         .asResultNotNull()
 
-    override suspend fun insertLessonSchedule(
+    override suspend fun insertEvent(
         lessonId: Long,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
-        type: LessonScheduleType,
+        type: EventType,
     ) {
         scope.launch {
             withContext(dispatcher) {
@@ -57,11 +55,11 @@ internal class DatabaseLessonScheduleRepository @Inject constructor(
                     else -> null
                 }
 
-                val lessonScheduleDtos = mutableListOf<LessonScheduleDto>()
+                val eventDtos = mutableListOf<EventDto>()
 
                 fun addDate(date: LocalDate) {
-                    lessonScheduleDtos.add(
-                        LessonScheduleDto(
+                    eventDtos.add(
+                        EventDto(
                             id = null,
                             lessonId = lessonId,
                             date = date,
@@ -95,20 +93,20 @@ internal class DatabaseLessonScheduleRepository @Inject constructor(
                 // Date isn't in any term, so add date only once ignoring schedule type.
                 if (term != null) {
                     when (type) {
-                        LessonScheduleType.Once -> {} // We already added date, so do nothing.
-                        LessonScheduleType.Weekly -> addDatesUntilEndOfTerm(daysOffset = 7)
-                        LessonScheduleType.EveryTwoWeeks -> addDatesUntilEndOfTerm(daysOffset = 14)
+                        EventType.Once -> {} // We already added date, so do nothing.
+                        EventType.Weekly -> addDatesUntilEndOfTerm(daysOffset = 7)
+                        EventType.EveryTwoWeeks -> addDatesUntilEndOfTerm(daysOffset = 14)
                     }
                 }
 
-                lessonScheduleDataSource.insertLessonSchedule(lessonScheduleDtos)
+                eventDataSource.insertEvents(eventDtos)
             }
         }
     }
 
-    override suspend fun deleteLessonScheduleById(id: Long) {
+    override suspend fun deleteEventById(id: Long) {
         scope.launch {
-            lessonScheduleDataSource.deleteLessonScheduleById(id)
+            eventDataSource.deleteEventById(id)
         }
     }
 
