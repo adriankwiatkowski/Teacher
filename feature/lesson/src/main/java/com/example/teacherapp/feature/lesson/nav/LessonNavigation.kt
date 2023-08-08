@@ -10,11 +10,11 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.teacherapp.core.ui.provider.ActionItemProvider
 import com.example.teacherapp.feature.lesson.data.LessonScaffoldViewModel
+import com.example.teacherapp.feature.lesson.nav.LessonNavigation.eventIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.gradeTemplateIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonNoteIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.lessonRoute
-import com.example.teacherapp.feature.lesson.nav.LessonNavigation.eventIdArg
 import com.example.teacherapp.feature.lesson.nav.LessonNavigation.schoolClassIdArg
 import com.example.teacherapp.feature.lesson.tab.LessonTab
 
@@ -24,7 +24,7 @@ private const val lessonFormScreen = "lesson-form"
 private const val lessonScreen = "lesson"
 private const val gradeTemplateFormScreen = "grade-template-form"
 private const val lessonNoteFormScreen = "lesson-note-form"
-private const val lessonAttendanceFormScreen = "lesson-attendance-form"
+private const val lessonAttendanceScreen = "lesson-attendance"
 
 object LessonNavigation {
     internal const val gradeTemplateIdArg = "grade-template-id"
@@ -45,7 +45,7 @@ private const val gradeTemplateFormRoute =
 private const val lessonNoteFormRoute =
     "$lessonNoteFormScreen/{$lessonIdArg}?$lessonNoteIdArg={$lessonNoteIdArg}"
 
-private const val lessonAttendanceFormRoute = "$lessonAttendanceFormScreen/{$eventIdArg}"
+private const val lessonAttendanceRoute = "$lessonAttendanceScreen/{$eventIdArg}"
 
 fun NavController.navigateToLessonGraph(
     schoolClassId: Long,
@@ -86,7 +86,7 @@ private fun NavController.navigateToLessonAttendanceFormRoute(
     eventId: Long,
     navOptions: NavOptions? = null,
 ) {
-    this.navigate("$lessonAttendanceFormScreen/$eventId", navOptions)
+    this.navigate("$lessonAttendanceScreen/$eventId", navOptions)
 }
 
 fun NavGraphBuilder.lessonGraph(
@@ -216,14 +216,14 @@ fun NavGraphBuilder.lessonGraph(
     }
 
     composable(
-        lessonAttendanceFormRoute,
+        lessonAttendanceRoute,
         arguments = listOf(
             navArgument(eventIdArg) {
                 type = NavType.LongType
             },
         ),
     ) {
-        AttendanceFormRoute(
+        AttendanceRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
         )

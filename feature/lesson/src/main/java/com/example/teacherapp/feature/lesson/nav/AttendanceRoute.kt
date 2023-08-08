@@ -8,7 +8,7 @@ import com.example.teacherapp.feature.lesson.attendance.AttendanceScreen
 import com.example.teacherapp.feature.lesson.attendance.data.AttendanceViewModel
 
 @Composable
-internal fun AttendanceFormRoute(
+internal fun AttendanceRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     viewModel: AttendanceViewModel = hiltViewModel(),

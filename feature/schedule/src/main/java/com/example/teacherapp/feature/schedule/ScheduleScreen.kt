@@ -157,9 +157,9 @@ private fun EventItem(
             Text(TimeUtils.format(event.startTime, event.endTime))
         },
         supportingContent = {
-            val lessonName = event.lesson.name
-            val schoolClassName = event.lesson.schoolClass.name
-            Text("$lessonName $schoolClassName")
+            val text = event.lesson?.let { lesson -> "${lesson.name} ${lesson.schoolClass.name}" }
+                ?: "Wydarzenie"
+            Text(text)
         },
     )
 }

@@ -9,16 +9,16 @@ import com.example.teacherapp.core.model.data.Lesson
 internal fun toExternal(events: List<GetEvents>): List<Event> = events.map { event ->
     Event(
         id = event.id,
-        lesson = Lesson(
+        lesson = if (event.lesson_id != null) Lesson(
             id = event.lesson_id,
-            name = event.lesson_name,
+            name = event.lesson_name!!,
             schoolClass = BasicSchoolClass(
-                id = event.school_class_id,
-                name = event.school_class_name,
+                id = event.school_class_id!!,
+                name = event.school_class_name!!,
                 studentCount = event.student_count,
                 lessonCount = event.lesson_count,
             ),
-        ),
+        ) else null,
         date = event.date,
         startTime = event.start_time,
         endTime = event.end_time,
@@ -33,16 +33,16 @@ internal fun toExternal(event: GetEventById?): Event? = run {
 
     Event(
         id = event.id,
-        lesson = Lesson(
+        lesson = if (event.lesson_id != null) Lesson(
             id = event.lesson_id,
-            name = event.lesson_name,
+            name = event.lesson_name!!,
             schoolClass = BasicSchoolClass(
-                id = event.school_class_id,
-                name = event.school_class_name,
+                id = event.school_class_id!!,
+                name = event.school_class_name!!,
                 studentCount = event.student_count,
                 lessonCount = event.lesson_count,
             ),
-        ),
+        ) else null,
         date = event.date,
         startTime = event.start_time,
         endTime = event.end_time,

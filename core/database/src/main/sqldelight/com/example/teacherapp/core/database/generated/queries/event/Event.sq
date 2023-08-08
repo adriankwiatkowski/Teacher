@@ -12,8 +12,8 @@ SELECT
     (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
     (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
 FROM event e
-INNER JOIN lesson l ON e.lesson_id = l.id -- TODO: Fetch events where lesson is null.
-INNER JOIN school_class sc ON l.school_class_id = sc.id
+LEFT JOIN lesson l ON e.lesson_id = l.id
+LEFT JOIN school_class sc ON l.school_class_id = sc.id
 WHERE e.date = :date
 ORDER BY e.start_time ASC;
 
@@ -31,8 +31,8 @@ SELECT
     (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
     (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
 FROM event e
-INNER JOIN lesson l ON e.lesson_id = l.id
-INNER JOIN school_class sc ON l.school_class_id = sc.id
+LEFT JOIN lesson l ON e.lesson_id = l.id
+LEFT JOIN school_class sc ON l.school_class_id = sc.id
 WHERE e.id = :id;
 
 insertEvent:

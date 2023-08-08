@@ -39,24 +39,34 @@ private fun makeEvents(
     vararg lesson: SimpleEvent,
 ): List<Event> {
     return lesson.mapIndexed { index, simpleLessonCalendar ->
-        Event(
-            id = index.toLong(),
-            lesson = Lesson(
-                id = 1L,
-                name = "Matematyka",
-                schoolClass = BasicSchoolClass(
+        listOf(
+            Event(
+                id = index.toLong() * 2,
+                lesson = Lesson(
                     id = 1L,
-                    name = "1A",
-                    studentCount = 20,
-                    lessonCount = 4,
-                )
+                    name = "Matematyka",
+                    schoolClass = BasicSchoolClass(
+                        id = 1L,
+                        name = "1A",
+                        studentCount = 20,
+                        lessonCount = 4,
+                    )
+                ),
+                date = simpleLessonCalendar.date,
+                startTime = simpleLessonCalendar.startTime,
+                endTime = simpleLessonCalendar.endTime,
+                isValid = true,
             ),
-            date = simpleLessonCalendar.date,
-            startTime = simpleLessonCalendar.startTime,
-            endTime = simpleLessonCalendar.endTime,
-            isValid = true,
+            Event(
+                id = index.toLong() * 2 + 1,
+                lesson = null,
+                date = simpleLessonCalendar.date,
+                startTime = simpleLessonCalendar.startTime,
+                endTime = simpleLessonCalendar.endTime,
+                isValid = true,
+            )
         )
-    }
+    }.flatten()
 }
 
 private data class SimpleEvent(

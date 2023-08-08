@@ -112,8 +112,8 @@ private fun MainContent(
         if (eventResult is Result.Success) {
             item {
                 val event = eventResult.data
-                val lessonName = event.lesson.name
-                val schoolClassName = event.lesson.schoolClass.name
+                val lessonData =
+                    event.lesson?.let { lesson -> "${lesson.name} ${lesson.schoolClass.name}" }
                 val startTime = event.startTime
                 val endTime = event.endTime
                 Column(
@@ -121,7 +121,9 @@ private fun MainContent(
                         .fillMaxWidth()
                         .padding(MaterialTheme.spacing.medium),
                 ) {
-                    Text("$lessonName $schoolClassName")
+                    if (lessonData != null) {
+                        Text(lessonData)
+                    }
                     Text(TimeUtils.format(event.date))
                     Text(TimeUtils.format(startTime, endTime))
                 }
