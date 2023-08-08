@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
@@ -36,8 +38,8 @@ import com.example.teacherapp.core.ui.component.TeacherRadioButton
 import com.example.teacherapp.core.ui.component.TeacherTopBar
 import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
 import com.example.teacherapp.core.ui.component.result.ResultContent
-import com.example.teacherapp.core.ui.paramprovider.LessonAttendancesPreviewParameterProvider
 import com.example.teacherapp.core.ui.paramprovider.EventsPreviewParameterProvider
+import com.example.teacherapp.core.ui.paramprovider.LessonAttendancesPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 
@@ -155,7 +157,11 @@ private fun AttendanceDialog(
         text = {
             Column {
                 Text(studentFullName)
-                Column(Modifier.selectableGroup()) {
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .selectableGroup(),
+                ) {
                     TeacherRadioButton(
                         label = "obecny",
                         selected = attendance == Attendance.Present,
