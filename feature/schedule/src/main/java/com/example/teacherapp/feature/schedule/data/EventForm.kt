@@ -10,11 +10,9 @@ internal data class EventForm(
     val startTime: LocalTime,
     val endTime: LocalTime,
     val type: EventType,
+    val isValid: Boolean,
     val status: FormStatus,
 ) {
-    val isValid: Boolean
-        get() = true
-
     val isSubmitEnabled: Boolean
         get() = isValid && status != FormStatus.Saving && status != FormStatus.Success
 }

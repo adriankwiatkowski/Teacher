@@ -15,9 +15,14 @@ import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -28,25 +33,34 @@ import javax.inject.Inject
 @HiltViewModel
 internal class EventFormViewModel @Inject constructor(
     private val repository: EventRepository,
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val lessonId = savedStateHandle.getStateFlow(LESSON_ID_KEY, 0L)
+    private val lessonId = savedStateHandle.getStateFlow(LESSON_ID_KEY, DEFAULT_ID)
+
+    private val _isLessonForm = MutableStateFlow(true)
+    val isLessonForm = _isLessonForm.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lessonResult: StateFlow<Result<Lesson>> = lessonId
-        .flatMapLatest { lessonId -> repository.getLessonById(lessonId) }
+    val lessonResult: StateFlow<Result<Lesson?>> = lessonId
+        .flatMapLatest { lessonId -> repository.getLessonOrNullById(lessonId) }
         .stateIn(Result.Loading)
 
-    var form by mutableStateOf(LessonScheduleFormProvider.createDefaultForm())
+    var form by mutableStateOf(EventFormProvider.createDefaultForm())
         private set
 
+    init {
+        combine(lessonId, isLessonForm) { lessonId, isLessonForm ->
+            !(isLessonForm && lessonId == DEFAULT_ID)
+        }.onEach { isValid -> form = form.copy(isValid = isValid) }.launchIn(viewModelScope)
+    }
+
     fun onDateChange(date: LocalDate) {
-        form = form.copy(date = LessonScheduleFormProvider.sanitizeDate(date))
+        form = form.copy(date = EventFormProvider.sanitizeDate(date))
     }
 
     fun onStartTimeChange(startTime: LocalTime) {
-        val timeData = LessonScheduleFormProvider.sanitizeStartTime(startTime, form.endTime)
+        val timeData = EventFormProvider.sanitizeStartTime(startTime, form.endTime)
         form = form.copy(
             startTime = timeData.startTime,
             endTime = timeData.endTime,
@@ -54,7 +68,7 @@ internal class EventFormViewModel @Inject constructor(
     }
 
     fun onEndTimeChange(endTime: LocalTime) {
-        val timeData = LessonScheduleFormProvider.sanitizeEndTime(form.startTime, endTime)
+        val timeData = EventFormProvider.sanitizeEndTime(form.startTime, endTime)
         form = form.copy(
             startTime = timeData.startTime,
             endTime = timeData.endTime,
@@ -65,25 +79,47 @@ internal class EventFormViewModel @Inject constructor(
         form = form.copy(type = type)
     }
 
+    fun onIsLessonFormChange(isLessonForm: Boolean) {
+        _isLessonForm.value = isLessonForm
+    }
+
     fun onSubmit() {
         if (!form.isSubmitEnabled) {
             return
         }
 
+        if (isLessonForm.value && lessonId.value == DEFAULT_ID) {
+            return
+        }
+        val lessonId = lessonId.value
+
         form = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-            repository.insertEvent(
-                lessonId = lessonId.value,
-                date = form.date,
-                startTime = form.startTime,
-                endTime = form.endTime,
-                type = form.type,
-            )
+            if (isLessonForm.value) {
+                repository.insertLessonSchedule(
+                    lessonId = lessonId,
+                    date = form.date,
+                    startTime = form.startTime,
+                    endTime = form.endTime,
+                    type = form.type,
+                )
+            } else {
+                repository.insertEvent(
+                    date = form.date,
+                    startTime = form.startTime,
+                    endTime = form.endTime,
+                    type = form.type,
+                )
+            }
 
             if (isActive) {
                 form = form.copy(status = FormStatus.Success)
             }
         }
+    }
+
+    fun setLessonId(lessonId: Long) {
+        savedStateHandle[LESSON_ID_KEY] = lessonId
     }
 
     private fun <T> Flow<T>.stateIn(initialValue: T): StateFlow<T> = stateIn(
@@ -94,5 +130,6 @@ internal class EventFormViewModel @Inject constructor(
 
     companion object {
         private const val LESSON_ID_KEY = ScheduleNavigation.lessonIdArg
+        private const val DEFAULT_ID = 0L
     }
 }

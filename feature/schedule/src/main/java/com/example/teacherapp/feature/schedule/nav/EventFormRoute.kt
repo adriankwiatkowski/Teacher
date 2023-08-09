@@ -15,9 +15,11 @@ internal fun EventFormRoute(
     onNavBack: () -> Unit,
     onSave: () -> Unit,
     onShowSnackbar: (message: String) -> Unit,
+    onLessonPickerClick: () -> Unit,
     viewModel: EventFormViewModel = hiltViewModel(),
 ) {
     val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
+    val isLessonForm by viewModel.isLessonForm.collectAsStateWithLifecycle()
     val form = viewModel.form
 
     // Observe save.
@@ -32,7 +34,10 @@ internal fun EventFormRoute(
         lessonResult = lessonResult,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
+        onLessonPickerClick = onLessonPickerClick,
         eventForm = form,
+        isLessonForm = isLessonForm,
+        onIsLessonFormChange = viewModel::onIsLessonFormChange,
         onDateChange = viewModel::onDateChange,
         onStartTimeChange = viewModel::onStartTimeChange,
         onEndTimeChange = viewModel::onEndTimeChange,

@@ -12,9 +12,16 @@ interface EventRepository {
 
     fun getEvents(date: LocalDate): Flow<Result<List<Event>>>
 
-    fun getLessonById(lessonId: Long): Flow<Result<Lesson>>
+    fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>>
 
     suspend fun insertEvent(
+        date: LocalDate,
+        startTime: LocalTime,
+        endTime: LocalTime,
+        type: EventType,
+    )
+
+    suspend fun insertLessonSchedule(
         lessonId: Long,
         date: LocalDate,
         startTime: LocalTime,

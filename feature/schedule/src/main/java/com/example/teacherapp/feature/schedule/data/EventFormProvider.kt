@@ -6,7 +6,7 @@ import com.example.teacherapp.core.ui.model.FormStatus
 import java.time.LocalDate
 import java.time.LocalTime
 
-internal object LessonScheduleFormProvider {
+internal object EventFormProvider {
 
     fun sanitizeDate(date: LocalDate): LocalDate {
         return date
@@ -58,6 +58,7 @@ internal object LessonScheduleFormProvider {
             startTime = timeData.startTime,
             endTime = timeData.endTime,
             type = type,
+            isValid = false,
             status = status,
         )
     }

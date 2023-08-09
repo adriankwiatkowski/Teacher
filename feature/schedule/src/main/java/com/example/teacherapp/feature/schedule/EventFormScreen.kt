@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.schedule
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import com.example.teacherapp.core.model.data.EventType
 import com.example.teacherapp.core.model.data.Lesson
 import com.example.teacherapp.core.ui.component.TeacherButton
 import com.example.teacherapp.core.ui.component.TeacherRadioButton
+import com.example.teacherapp.core.ui.component.TeacherSwitch
 import com.example.teacherapp.core.ui.component.TeacherTopBar
 import com.example.teacherapp.core.ui.component.TeacherTopBarDefaults
 import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
@@ -42,17 +44,21 @@ import com.example.teacherapp.core.ui.paramprovider.LessonPreviewParameterProvid
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.feature.schedule.data.EventForm
-import com.example.teacherapp.feature.schedule.data.LessonScheduleFormProvider
+import com.example.teacherapp.feature.schedule.data.EventFormProvider
 import java.time.LocalDate
 import java.time.LocalTime
 
+// TODO: If is lesson form then allow to pick term, otherwise allow to specify title for event.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun EventFormScreen(
-    lessonResult: Result<Lesson>,
+    lessonResult: Result<Lesson?>,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    onLessonPickerClick: () -> Unit,
     eventForm: EventForm,
+    isLessonForm: Boolean,
+    onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
     onDateChange: (date: LocalDate) -> Unit,
     onStartTimeChange: (date: LocalTime) -> Unit,
     onEndTimeChange: (date: LocalTime) -> Unit,
@@ -67,7 +73,7 @@ internal fun EventFormScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TeacherTopBar(
-                title = "Dodaj termin zajęć",
+                title = "Dodaj termin",
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -81,15 +87,30 @@ internal fun EventFormScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(MaterialTheme.spacing.small),
         ) {
-            Header(lessonResult = lessonResult)
+            val lesson = remember(lessonResult) {
+                if (lessonResult is Result.Success) {
+                    lessonResult.data
+                } else {
+                    null
+                }
+            }
+
+            Header(
+                lesson = lesson,
+                onLessonPickerClick = onLessonPickerClick,
+                isLessonForm = isLessonForm,
+                onIsLessonFormChange = onIsLessonFormChange,
+            )
 
             DateForm(
+                title = if (lesson != null) "Termin zajęć" else "Termin",
                 date = eventForm.date,
                 onDateChange = onDateChange,
                 startTime = eventForm.startTime,
                 onStartTimeChange = onStartTimeChange,
                 endTime = eventForm.endTime,
                 onEndTimeChange = onEndTimeChange,
+                showTypeControls = isLessonForm,
                 type = eventForm.type,
                 onTypeChange = onTypeChange,
             )
@@ -108,17 +129,38 @@ internal fun EventFormScreen(
 
 @Composable
 private fun Header(
-    lessonResult: Result<Lesson>,
+    lesson: Lesson?,
+    onLessonPickerClick: () -> Unit,
+    isLessonForm: Boolean,
+    onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
-        if (lessonResult is Result.Success) {
-            val lessonName = lessonResult.data.name
-            val schoolClassName = lessonResult.data.schoolClass.name
-            Text(
-                text = "$lessonName $schoolClassName",
-                style = MaterialTheme.typography.headlineSmall,
-            )
+    Column(modifier = modifier.animateContentSize()) {
+        val text = if (lesson != null) {
+            val lessonName = lesson.name
+            val schoolClassName = lesson.schoolClass.name
+            "$lessonName $schoolClassName"
+        } else {
+            "Wybierz przedmiot"
+        }
+
+        TeacherSwitch(
+            label = "Dodaj wydarzenie",
+            checked = !isLessonForm,
+            onCheckedChange = { onIsLessonFormChange(!it) },
+        )
+
+        if (isLessonForm) {
+            TeacherButton(modifier = Modifier.fillMaxWidth(), onClick = onLessonPickerClick) {
+                Text(text = text)
+            }
+            if (lesson == null) {
+                Text(
+                    text = "Nie wybrano przedmiotu!",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            }
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
     }
@@ -126,12 +168,14 @@ private fun Header(
 
 @Composable
 private fun DateForm(
+    title: String,
     date: LocalDate,
     onDateChange: (date: LocalDate) -> Unit,
     startTime: LocalTime,
     onStartTimeChange: (date: LocalTime) -> Unit,
     endTime: LocalTime,
     onEndTimeChange: (date: LocalTime) -> Unit,
+    showTypeControls: Boolean,
     type: EventType,
     onTypeChange: (type: EventType) -> Unit,
 ) {
@@ -139,12 +183,13 @@ private fun DateForm(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(MaterialTheme.spacing.small),
+                .padding(MaterialTheme.spacing.small)
+                .animateContentSize(),
         ) {
             Box(Modifier.fillMaxWidth()) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = "Termin zajęć",
+                    text = title,
                     style = MaterialTheme.typography.headlineSmall,
                 )
             }
@@ -162,22 +207,24 @@ private fun DateForm(
                 onTimeSelected = onEndTimeChange,
             )
 
-            Column(Modifier.selectableGroup()) {
-                TeacherRadioButton(
-                    label = "Jednorazowe",
-                    selected = type == EventType.Once,
-                    onClick = { onTypeChange(EventType.Once) },
-                )
-                TeacherRadioButton(
-                    label = "Cotygodniowe",
-                    selected = type == EventType.Weekly,
-                    onClick = { onTypeChange(EventType.Weekly) },
-                )
-                TeacherRadioButton(
-                    label = "Co 2 tygodnie",
-                    selected = type == EventType.EveryTwoWeeks,
-                    onClick = { onTypeChange(EventType.EveryTwoWeeks) },
-                )
+            if (showTypeControls) {
+                Column(Modifier.selectableGroup()) {
+                    TeacherRadioButton(
+                        label = "Jednorazowe",
+                        selected = type == EventType.Once,
+                        onClick = { onTypeChange(EventType.Once) },
+                    )
+                    TeacherRadioButton(
+                        label = "Cotygodniowe",
+                        selected = type == EventType.Weekly,
+                        onClick = { onTypeChange(EventType.Weekly) },
+                    )
+                    TeacherRadioButton(
+                        label = "Co 2 tygodnie",
+                        selected = type == EventType.EveryTwoWeeks,
+                        onClick = { onTypeChange(EventType.EveryTwoWeeks) },
+                    )
+                }
             }
         }
     }
@@ -235,16 +282,34 @@ private fun EventFormScreenPreview(
 ) {
     TeacherAppTheme {
         Surface {
-            var form by remember { mutableStateOf(LessonScheduleFormProvider.createDefaultForm()) }
+            var form by remember { mutableStateOf(EventFormProvider.createDefaultForm()) }
+            var isLessonForm by remember { mutableStateOf(true) }
 
             EventFormScreen(
                 lessonResult = Result.Success(lesson),
                 showNavigationIcon = true,
                 onNavBack = {},
+                onLessonPickerClick = {},
                 eventForm = form,
-                onDateChange = { form = form.copy(date = it) },
-                onStartTimeChange = { form = form.copy(startTime = it) },
-                onEndTimeChange = { form = form.copy(endTime = it) },
+                isLessonForm = isLessonForm,
+                onIsLessonFormChange = { isLessonForm = it },
+                onDateChange = {
+                    form = form.copy(date = EventFormProvider.sanitizeDate(it))
+                },
+                onStartTimeChange = {
+                    val timeData = EventFormProvider.sanitizeStartTime(it, form.endTime)
+                    form = form.copy(
+                        startTime = timeData.startTime,
+                        endTime = timeData.endTime,
+                    )
+                },
+                onEndTimeChange = {
+                    val timeData = EventFormProvider.sanitizeEndTime(form.startTime, it)
+                    form = form.copy(
+                        startTime = timeData.startTime,
+                        endTime = timeData.endTime,
+                    )
+                },
                 onTypeChange = { form = form.copy(type = it) },
                 isSubmitEnabled = form.isSubmitEnabled,
                 onSubmit = {},

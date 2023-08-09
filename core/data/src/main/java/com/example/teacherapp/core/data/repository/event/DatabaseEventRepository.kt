@@ -4,7 +4,6 @@ import com.example.teacherapp.core.common.di.ApplicationScope
 import com.example.teacherapp.core.common.di.DefaultDispatcher
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.result.asResult
-import com.example.teacherapp.core.common.result.asResultNotNull
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.database.datasource.event.EventDataSource
 import com.example.teacherapp.core.database.datasource.lesson.LessonDataSource
@@ -35,16 +34,37 @@ internal class DatabaseEventRepository @Inject constructor(
         .getEvents(date)
         .asResult()
 
-    override fun getLessonById(lessonId: Long): Flow<Result<Lesson>> = lessonDataSource
+    override fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>> = lessonDataSource
         .getLessonById(lessonId)
-        .asResultNotNull()
+        .asResult()
 
     override suspend fun insertEvent(
-        lessonId: Long,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
         type: EventType,
+    ) {
+        scope.launch {
+            eventDataSource.insertEvents(
+                listOf(
+                    EventDto(
+                        id = null,
+                        lessonId = null,
+                        date = date,
+                        startTime = startTime,
+                        endTime = endTime,
+                    ),
+                )
+            )
+        }
+    }
+
+    override suspend fun insertLessonSchedule(
+        lessonId: Long,
+        date: LocalDate,
+        startTime: LocalTime,
+        endTime: LocalTime,
+        type: EventType
     ) {
         scope.launch {
             withContext(dispatcher) {
