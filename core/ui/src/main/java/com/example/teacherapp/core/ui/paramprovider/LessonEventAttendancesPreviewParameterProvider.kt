@@ -5,13 +5,13 @@ import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.LessonEventAttendance
 import java.time.LocalTime
 
-class LessonScheduleAttendancesPreviewParameterProvider :
+class LessonEventAttendancesPreviewParameterProvider :
     PreviewParameterProvider<List<LessonEventAttendance>> {
     override val values: Sequence<List<LessonEventAttendance>> = sequenceOf(data)
 }
 
 private val data = makeData(
-    SimpleLessonScheduleAttendance(
+    SimpleLessonEventAttendance(
         startTime = TimeUtils.localTimeOf(8, 0),
         presentCount = 14,
         lateCount = 4,
@@ -20,7 +20,7 @@ private val data = makeData(
         exemptionCount = 0,
         attendanceNotSetCount = 0,
     ),
-    SimpleLessonScheduleAttendance(
+    SimpleLessonEventAttendance(
         startTime = TimeUtils.localTimeOf(8, 0),
         presentCount = 14,
         lateCount = 4,
@@ -29,7 +29,7 @@ private val data = makeData(
         exemptionCount = 0,
         attendanceNotSetCount = 0,
     ),
-    SimpleLessonScheduleAttendance(
+    SimpleLessonEventAttendance(
         startTime = TimeUtils.localTimeOf(8, 0),
         presentCount = 18,
         lateCount = 0,
@@ -38,7 +38,7 @@ private val data = makeData(
         exemptionCount = 0,
         attendanceNotSetCount = 0,
     ),
-    SimpleLessonScheduleAttendance(
+    SimpleLessonEventAttendance(
         startTime = TimeUtils.localTimeOf(8, 0),
         presentCount = 18,
         lateCount = 0,
@@ -47,7 +47,7 @@ private val data = makeData(
         exemptionCount = 0,
         attendanceNotSetCount = 2,
     ),
-    SimpleLessonScheduleAttendance(
+    SimpleLessonEventAttendance(
         startTime = TimeUtils.localTimeOf(8, 0),
         presentCount = 18,
         lateCount = 0,
@@ -56,7 +56,7 @@ private val data = makeData(
         exemptionCount = 2,
         attendanceNotSetCount = 0,
     ),
-    SimpleLessonScheduleAttendance(
+    SimpleLessonEventAttendance(
         startTime = TimeUtils.localTimeOf(14, 45),
         presentCount = 20,
         lateCount = 0,
@@ -68,9 +68,9 @@ private val data = makeData(
 )
 
 private fun makeData(
-    vararg simpleLessonScheduleAttendances: SimpleLessonScheduleAttendance,
+    vararg simpleLessonEventAttendances: SimpleLessonEventAttendance,
 ): List<LessonEventAttendance> {
-    return simpleLessonScheduleAttendances.mapIndexed { index, simpleLessonScheduleAttendance ->
+    return simpleLessonEventAttendances.mapIndexed { index, simpleLessonScheduleAttendance ->
         LessonEventAttendance(
             eventId = index.toLong() + 1L,
             date = TimeUtils.plusDays(TimeUtils.currentDate(), index.toLong()),
@@ -87,7 +87,7 @@ private fun makeData(
     }
 }
 
-private data class SimpleLessonScheduleAttendance(
+private data class SimpleLessonEventAttendance(
     val startTime: LocalTime,
     val presentCount: Long,
     val lateCount: Long,

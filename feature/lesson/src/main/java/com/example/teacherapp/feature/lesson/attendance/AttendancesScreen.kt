@@ -25,7 +25,7 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.LessonEventAttendance
 import com.example.teacherapp.core.ui.component.result.ResultContent
-import com.example.teacherapp.core.ui.paramprovider.LessonScheduleAttendancesPreviewParameterProvider
+import com.example.teacherapp.core.ui.paramprovider.LessonEventAttendancesPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import java.time.LocalDate
@@ -142,7 +142,7 @@ private fun AttendanceCountItem(
 @Composable
 private fun AttendancesScreenPreview(
     @PreviewParameter(
-        LessonScheduleAttendancesPreviewParameterProvider::class
+        LessonEventAttendancesPreviewParameterProvider::class
     ) data: List<LessonEventAttendance>
 ) {
     TeacherAppTheme {
