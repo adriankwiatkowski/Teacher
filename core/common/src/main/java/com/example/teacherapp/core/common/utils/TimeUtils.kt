@@ -1,5 +1,6 @@
 package com.example.teacherapp.core.common.utils
 
+import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
@@ -64,12 +65,39 @@ object TimeUtils {
     fun getDisplayNameOfDayOfWeek(date: LocalDate): String =
         date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
 
+    fun getDisplayNameOfDayOfWeek(day: DayOfWeek): String =
+        day.getDisplayName(TextStyle.FULL, Locale.getDefault())
+
     fun isBefore(a: LocalTime, b: LocalTime): Boolean = a.isBefore(b)
 
     fun isAfter(a: LocalTime, b: LocalTime): Boolean = a.isAfter(b)
 
     fun isBetween(date: LocalDate, start: LocalDate, end: LocalDate): Boolean =
         !date.isBefore(start) && !date.isAfter(end)
+
+    fun days(): Array<DayOfWeek> = arrayOf(
+        monday(),
+        tuesday(),
+        wednesday(),
+        thursday(),
+        friday(),
+        saturday(),
+        sunday(),
+    )
+
+    fun monday(): DayOfWeek = DayOfWeek.MONDAY
+
+    fun tuesday(): DayOfWeek = DayOfWeek.TUESDAY
+
+    fun wednesday(): DayOfWeek = DayOfWeek.WEDNESDAY
+
+    fun thursday(): DayOfWeek = DayOfWeek.THURSDAY
+
+    fun friday(): DayOfWeek = DayOfWeek.FRIDAY
+
+    fun saturday(): DayOfWeek = DayOfWeek.SATURDAY
+
+    fun sunday(): DayOfWeek = DayOfWeek.SUNDAY
 
     private val dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
 
