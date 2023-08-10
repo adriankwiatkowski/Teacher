@@ -36,6 +36,7 @@ import com.example.teacherapp.core.ui.theme.spacing
 import com.example.teacherapp.feature.schedule.component.DateForm
 import com.example.teacherapp.feature.schedule.data.EventForm
 import com.example.teacherapp.feature.schedule.data.EventFormProvider
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -49,7 +50,9 @@ internal fun EventFormScreen(
     onLessonPickerClick: () -> Unit,
     eventForm: EventForm,
     isLessonForm: Boolean,
+    showDayPicker: Boolean,
     onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
+    onDayChange: (day: DayOfWeek) -> Unit,
     onDateChange: (date: LocalDate) -> Unit,
     onStartTimeChange: (date: LocalTime) -> Unit,
     onEndTimeChange: (date: LocalTime) -> Unit,
@@ -95,12 +98,15 @@ internal fun EventFormScreen(
 
             DateForm(
                 title = if (lesson != null) "Termin zajęć" else "Termin",
+                day = eventForm.day,
+                onDayChange = onDayChange,
                 date = eventForm.date,
                 onDateChange = onDateChange,
                 startTime = eventForm.startTime,
                 onStartTimeChange = onStartTimeChange,
                 endTime = eventForm.endTime,
                 onEndTimeChange = onEndTimeChange,
+                showDayPicker = showDayPicker,
                 showTypeControls = isLessonForm,
                 type = eventForm.type,
                 onTypeChange = onTypeChange,
@@ -174,7 +180,14 @@ private fun EventFormScreenPreview(
                 onLessonPickerClick = {},
                 eventForm = form,
                 isLessonForm = isLessonForm,
+                showDayPicker = isLessonForm && form.type in setOf(
+                    EventType.Weekly,
+                    EventType.EveryTwoWeeks,
+                ),
                 onIsLessonFormChange = { isLessonForm = it },
+                onDayChange = {
+                    form = form.copy(day = EventFormProvider.sanitizeDay(it))
+                },
                 onDateChange = {
                     form = form.copy(date = EventFormProvider.sanitizeDate(it))
                 },

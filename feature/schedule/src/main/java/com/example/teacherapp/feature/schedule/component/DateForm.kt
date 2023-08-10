@@ -23,18 +23,22 @@ import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.EventType
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 
 @Composable
 internal fun DateForm(
     title: String,
+    day: DayOfWeek,
+    onDayChange: (day: DayOfWeek) -> Unit,
     date: LocalDate,
     onDateChange: (date: LocalDate) -> Unit,
     startTime: LocalTime,
     onStartTimeChange: (date: LocalTime) -> Unit,
     endTime: LocalTime,
     onEndTimeChange: (date: LocalTime) -> Unit,
+    showDayPicker: Boolean,
     showTypeControls: Boolean,
     type: EventType,
     onTypeChange: (type: EventType) -> Unit,
@@ -54,8 +58,12 @@ internal fun DateForm(
             }
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
-            // TODO: Change between date and day picker based on form type.
-            LessonDatePicker(date = date, onDateSelected = onDateChange)
+            if (showDayPicker) {
+                LessonDayPicker(day = day, onDaySelected = onDayChange)
+            } else {
+                LessonDatePicker(date = date, onDateSelected = onDateChange)
+            }
+
             LessonTimePicker(
                 label = "Czas rozpoczęcia:",
                 time = startTime,
@@ -79,19 +87,23 @@ internal fun DateForm(
 private fun DateFormPreview() {
     TeacherAppTheme {
         Surface {
+            var day by remember { mutableStateOf(TimeUtils.monday()) }
             var date by remember { mutableStateOf(TimeUtils.currentDate()) }
             var startTime by remember { mutableStateOf(TimeUtils.localTimeOf(8, 0)) }
             var endTime by remember { mutableStateOf(TimeUtils.localTimeOf(8, 45)) }
-            var type by remember { mutableStateOf(EventType.Weekly) }
+            var type by remember { mutableStateOf(EventType.Once) }
 
             DateForm(
                 title = "Termin zajęć",
+                day = day,
+                onDayChange = { day = it },
                 date = date,
                 onDateChange = { date = it },
                 startTime = startTime,
                 onStartTimeChange = { startTime = it },
                 endTime = endTime,
                 onEndTimeChange = { endTime = it },
+                showDayPicker = type in setOf(EventType.Weekly, EventType.EveryTwoWeeks),
                 showTypeControls = true,
                 type = type,
                 onTypeChange = { type = it },

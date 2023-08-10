@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
@@ -61,6 +62,7 @@ internal class DatabaseEventRepository @Inject constructor(
 
     override suspend fun insertLessonSchedule(
         lessonId: Long,
+        day: DayOfWeek, // TODO: If type is weekly or every two weeks use this parameter `day` instead of `date`. Should also pass which term to use.
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,

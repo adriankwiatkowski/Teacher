@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 import javax.inject.Inject
@@ -53,6 +54,10 @@ internal class EventFormViewModel @Inject constructor(
         combine(lessonId, isLessonForm) { lessonId, isLessonForm ->
             !(isLessonForm && lessonId == DEFAULT_ID)
         }.onEach { isValid -> form = form.copy(isValid = isValid) }.launchIn(viewModelScope)
+    }
+
+    fun onDayChange(day: DayOfWeek) {
+        form = form.copy(day = EventFormProvider.sanitizeDay(day))
     }
 
     fun onDateChange(date: LocalDate) {
@@ -98,6 +103,7 @@ internal class EventFormViewModel @Inject constructor(
             if (isLessonForm.value) {
                 repository.insertLessonSchedule(
                     lessonId = lessonId,
+                    day = form.day,
                     date = form.date,
                     startTime = form.startTime,
                     endTime = form.endTime,

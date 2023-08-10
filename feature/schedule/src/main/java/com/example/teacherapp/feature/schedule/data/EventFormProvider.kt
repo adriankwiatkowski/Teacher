@@ -3,10 +3,15 @@ package com.example.teacherapp.feature.schedule.data
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.EventType
 import com.example.teacherapp.core.ui.model.FormStatus
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 
 internal object EventFormProvider {
+
+    fun sanitizeDay(day: DayOfWeek): DayOfWeek {
+        return day
+    }
 
     fun sanitizeDate(date: LocalDate): LocalDate {
         return date
@@ -45,6 +50,7 @@ internal object EventFormProvider {
     }
 
     fun createDefaultForm(
+        day: DayOfWeek = TimeUtils.monday(),
         date: LocalDate = TimeUtils.currentDate(),
         startTime: LocalTime = TimeUtils.localTimeOf(8, 0),
         endTime: LocalTime = TimeUtils.plusTime(startTime, hours = 0, minutes = 45),
@@ -54,6 +60,7 @@ internal object EventFormProvider {
         val timeData = sanitizeStartTime(startTime, endTime)
 
         return EventForm(
+            day = sanitizeDay(day),
             date = sanitizeDate(date),
             startTime = timeData.startTime,
             endTime = timeData.endTime,

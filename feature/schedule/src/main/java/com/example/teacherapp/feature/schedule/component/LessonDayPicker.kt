@@ -18,7 +18,6 @@ import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import java.time.DayOfWeek
 
-// TODO: Use day picker.
 @Composable
 internal fun LessonDayPicker(
     day: DayOfWeek,

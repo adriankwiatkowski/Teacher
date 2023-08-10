@@ -5,6 +5,7 @@ import com.example.teacherapp.core.model.data.Event
 import com.example.teacherapp.core.model.data.EventType
 import com.example.teacherapp.core.model.data.Lesson
 import kotlinx.coroutines.flow.Flow
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -23,6 +24,7 @@ interface EventRepository {
 
     suspend fun insertLessonSchedule(
         lessonId: Long,
+        day: DayOfWeek,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
