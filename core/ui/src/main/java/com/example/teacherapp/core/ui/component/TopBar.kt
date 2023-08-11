@@ -94,7 +94,7 @@ object TeacherTopBarDefaults {
     fun default(
         state: TopAppBarState = rememberTopAppBarState(),
         canScroll: () -> Boolean = { true }
-    ): TopAppBarScrollBehavior = exitUntilCollapsedScrollBehavior(
+    ): TopAppBarScrollBehavior = pinnedScrollBehavior(
         state = state,
         canScroll = canScroll,
     )
