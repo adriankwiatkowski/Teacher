@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.example.teacherapp"
-    compileSdk = 33
+    compileSdk = 34
 
     signingConfigs {
         create("release") {
@@ -43,7 +43,7 @@ android {
     defaultConfig {
         applicationId = "com.example.teacherapp"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
