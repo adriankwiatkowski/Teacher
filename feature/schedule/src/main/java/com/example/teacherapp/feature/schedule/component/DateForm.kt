@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.EventType
+import com.example.teacherapp.core.ui.component.TeacherRadioButton
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 import java.time.DayOfWeek
@@ -38,8 +41,11 @@ internal fun DateForm(
     onStartTimeChange: (date: LocalTime) -> Unit,
     endTime: LocalTime,
     onEndTimeChange: (date: LocalTime) -> Unit,
+    showTermPicker: Boolean,
     showDayPicker: Boolean,
     showTypeControls: Boolean,
+    isFirstTermSelected: Boolean,
+    onTermSelected: (isFirstTermSelected: Boolean) -> Unit,
     type: EventType,
     onTypeChange: (type: EventType) -> Unit,
 ) {
@@ -57,6 +63,24 @@ internal fun DateForm(
                 )
             }
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+
+            if (showTermPicker) {
+                Text(text = "Semestr", style = MaterialTheme.typography.labelLarge)
+                Column(Modifier.selectableGroup()) {
+                    TeacherRadioButton(
+                        label = "Pierwszy semestr",
+                        selected = isFirstTermSelected,
+                        onClick = { onTermSelected(true) },
+                    )
+                    TeacherRadioButton(
+                        label = "Drugi semestr",
+                        selected = !isFirstTermSelected,
+                        onClick = { onTermSelected(false) },
+                    )
+                }
+                Divider()
+                Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+            }
 
             if (showDayPicker) {
                 LessonDayPicker(day = day, onDaySelected = onDayChange)
@@ -76,6 +100,9 @@ internal fun DateForm(
             )
 
             if (showTypeControls) {
+                Divider()
+                Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+                Text(text = "Typ", style = MaterialTheme.typography.labelLarge)
                 EventTypeControls(type = type, onTypeChange = onTypeChange)
             }
         }
@@ -91,7 +118,8 @@ private fun DateFormPreview() {
             var date by remember { mutableStateOf(TimeUtils.currentDate()) }
             var startTime by remember { mutableStateOf(TimeUtils.localTimeOf(8, 0)) }
             var endTime by remember { mutableStateOf(TimeUtils.localTimeOf(8, 45)) }
-            var type by remember { mutableStateOf(EventType.Once) }
+            var isFirstTermSelected by remember { mutableStateOf(true) }
+            var type by remember { mutableStateOf(EventType.Weekly) }
 
             DateForm(
                 title = "Termin zajęć",
@@ -103,7 +131,10 @@ private fun DateFormPreview() {
                 onStartTimeChange = { startTime = it },
                 endTime = endTime,
                 onEndTimeChange = { endTime = it },
+                showTermPicker = type == EventType.Weekly || type == EventType.EveryTwoWeeks,
                 showDayPicker = type in setOf(EventType.Weekly, EventType.EveryTwoWeeks),
+                isFirstTermSelected = isFirstTermSelected,
+                onTermSelected = { isFirstTermSelected = it },
                 showTypeControls = true,
                 type = type,
                 onTypeChange = { type = it },

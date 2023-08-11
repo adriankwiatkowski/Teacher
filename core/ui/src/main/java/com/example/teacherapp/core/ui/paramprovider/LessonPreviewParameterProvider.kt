@@ -4,6 +4,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacherapp.core.model.data.BasicLesson
 import com.example.teacherapp.core.model.data.BasicSchoolClass
 import com.example.teacherapp.core.model.data.Lesson
+import com.example.teacherapp.core.model.data.LessonWithSchoolYear
 
 class LessonsPreviewParameterProvider : PreviewParameterProvider<List<Lesson>> {
     override val values: Sequence<List<Lesson>> = sequenceOf(
@@ -30,6 +31,21 @@ class LessonPreviewParameterProvider : PreviewParameterProvider<Lesson> {
         studentCount = 20,
         lessonCount = 4,
     )
+}
+
+class LessonWithSchoolYearPreviewParameterProvider :
+    PreviewParameterProvider<LessonWithSchoolYear> {
+    override val values: Sequence<LessonWithSchoolYear> = LessonPreviewParameterProvider()
+        .values
+        .map { lesson ->
+            LessonWithSchoolYear(
+                id = lesson.id,
+                name = lesson.name,
+                schoolClassId = lesson.schoolClass.id,
+                schoolClassName = lesson.schoolClass.name,
+                schoolYear = SchoolYearPreviewParameterProvider().values.first(),
+            )
+        }
 }
 
 class BasicLessonsPreviewParameterProvider : PreviewParameterProvider<List<BasicLesson>> {

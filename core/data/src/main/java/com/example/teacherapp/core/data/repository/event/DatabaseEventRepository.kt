@@ -11,7 +11,7 @@ import com.example.teacherapp.core.database.datasource.schoolyear.SchoolYearData
 import com.example.teacherapp.core.database.model.EventDto
 import com.example.teacherapp.core.model.data.Event
 import com.example.teacherapp.core.model.data.EventType
-import com.example.teacherapp.core.model.data.Lesson
+import com.example.teacherapp.core.model.data.LessonWithSchoolYear
 import com.example.teacherapp.core.model.data.Term
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -35,8 +35,10 @@ internal class DatabaseEventRepository @Inject constructor(
         .getEvents(date)
         .asResult()
 
-    override fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>> = lessonDataSource
-        .getLessonById(lessonId)
+    override fun getLessonWithSchoolYearOrNullById(
+        lessonId: Long
+    ): Flow<Result<LessonWithSchoolYear?>> = lessonDataSource
+        .getLessonWithSchoolYearById(lessonId)
         .asResult()
 
     override suspend fun insertEvent(
@@ -62,20 +64,17 @@ internal class DatabaseEventRepository @Inject constructor(
 
     override suspend fun insertLessonSchedule(
         lessonId: Long,
-        day: DayOfWeek, // TODO: If type is weekly or every two weeks use this parameter `day` instead of `date`. Should also pass which term to use.
+        day: DayOfWeek,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
+        isFirstTermSelected: Boolean,
         type: EventType
     ) {
         scope.launch {
             withContext(dispatcher) {
                 val schoolYear = schoolYearDataSource.getSchoolYearByLessonId(lessonId)!!
-                val term: Term? = when {
-                    isDateInTerm(date, schoolYear.firstTerm) -> schoolYear.firstTerm
-                    isDateInTerm(date, schoolYear.secondTerm) -> schoolYear.secondTerm
-                    else -> null
-                }
+                val term = with(schoolYear) { if (isFirstTermSelected) firstTerm else secondTerm }
 
                 val eventDtos = mutableListOf<EventDto>()
 
@@ -92,33 +91,24 @@ internal class DatabaseEventRepository @Inject constructor(
                 }
 
                 fun addDatesUntilEndOfTerm(daysOffset: Long) {
-                    if (term == null) {
-                        return
-                    }
-
-                    var currentDate = date
+                    var currentDateOfSelectedDay = TimeUtils.firstDayOfWeekFromDate(date, day)
                     while (true) {
-                        val newDate = TimeUtils.plusDays(currentDate, daysOffset)
-
-                        if (!isDateInTerm(newDate, term)) {
+                        if (!isDateInTerm(currentDateOfSelectedDay, term)) {
                             break
                         }
 
-                        addDate(newDate)
-                        currentDate = newDate
+                        addDate(currentDateOfSelectedDay)
+                        currentDateOfSelectedDay = TimeUtils.plusDays(
+                            currentDateOfSelectedDay,
+                            daysOffset,
+                        )
                     }
                 }
 
-                // Add current date.
-                addDate(date)
-
-                // Date isn't in any term, so add date only once ignoring schedule type.
-                if (term != null) {
-                    when (type) {
-                        EventType.Once -> {} // We already added date, so do nothing.
-                        EventType.Weekly -> addDatesUntilEndOfTerm(daysOffset = 7)
-                        EventType.EveryTwoWeeks -> addDatesUntilEndOfTerm(daysOffset = 14)
-                    }
+                when (type) {
+                    EventType.Once -> addDate(date) // TODO: Probably should check if date is in any term.
+                    EventType.Weekly -> addDatesUntilEndOfTerm(daysOffset = 7)
+                    EventType.EveryTwoWeeks -> addDatesUntilEndOfTerm(daysOffset = 14)
                 }
 
                 eventDataSource.insertEvents(eventDtos)

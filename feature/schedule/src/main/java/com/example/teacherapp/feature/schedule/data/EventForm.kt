@@ -11,6 +11,7 @@ internal data class EventForm(
     val date: LocalDate,
     val startTime: LocalTime,
     val endTime: LocalTime,
+    val isFirstTermSelected: Boolean,
     val type: EventType,
     val isValid: Boolean,
     val status: FormStatus,

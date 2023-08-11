@@ -99,6 +99,14 @@ object TimeUtils {
 
     fun sunday(): DayOfWeek = DayOfWeek.SUNDAY
 
+    fun firstDayOfWeekFromDate(date: LocalDate, day: DayOfWeek): LocalDate {
+        var newDate = date
+        while (newDate.dayOfWeek != day) {
+            newDate = newDate.plusDays(1)
+        }
+        return newDate
+    }
+
     private val dateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
 
     private val timeFormat = DateTimeFormatter.ofPattern("HH:mm")

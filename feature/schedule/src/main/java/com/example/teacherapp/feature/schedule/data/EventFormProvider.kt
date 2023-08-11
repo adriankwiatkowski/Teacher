@@ -54,6 +54,7 @@ internal object EventFormProvider {
         date: LocalDate = TimeUtils.currentDate(),
         startTime: LocalTime = TimeUtils.localTimeOf(8, 0),
         endTime: LocalTime = TimeUtils.plusTime(startTime, hours = 0, minutes = 45),
+        isFirstTermSelected: Boolean = true,
         type: EventType = EventType.Weekly,
         status: FormStatus = FormStatus.Idle,
     ): EventForm {
@@ -64,6 +65,7 @@ internal object EventFormProvider {
             date = sanitizeDate(date),
             startTime = timeData.startTime,
             endTime = timeData.endTime,
+            isFirstTermSelected = isFirstTermSelected,
             type = type,
             isValid = false,
             status = status,

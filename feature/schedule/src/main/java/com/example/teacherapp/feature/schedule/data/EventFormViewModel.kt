@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.data.repository.event.EventRepository
 import com.example.teacherapp.core.model.data.EventType
-import com.example.teacherapp.core.model.data.Lesson
+import com.example.teacherapp.core.model.data.LessonWithSchoolYear
 import com.example.teacherapp.core.ui.model.FormStatus
 import com.example.teacherapp.feature.schedule.nav.ScheduleNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,8 +43,8 @@ internal class EventFormViewModel @Inject constructor(
     val isLessonForm = _isLessonForm.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lessonResult: StateFlow<Result<Lesson?>> = lessonId
-        .flatMapLatest { lessonId -> repository.getLessonOrNullById(lessonId) }
+    val lessonResult: StateFlow<Result<LessonWithSchoolYear?>> = lessonId
+        .flatMapLatest { lessonId -> repository.getLessonWithSchoolYearOrNullById(lessonId) }
         .stateIn(Result.Loading)
 
     var form by mutableStateOf(EventFormProvider.createDefaultForm())
@@ -80,6 +80,10 @@ internal class EventFormViewModel @Inject constructor(
         )
     }
 
+    fun onTermSelected(isFirstTermSelected: Boolean) {
+        form = form.copy(isFirstTermSelected = isFirstTermSelected)
+    }
+
     fun onTypeChange(type: EventType) {
         form = form.copy(type = type)
     }
@@ -107,6 +111,7 @@ internal class EventFormViewModel @Inject constructor(
                     date = form.date,
                     startTime = form.startTime,
                     endTime = form.endTime,
+                    isFirstTermSelected = form.isFirstTermSelected,
                     type = form.type,
                 )
             } else {
