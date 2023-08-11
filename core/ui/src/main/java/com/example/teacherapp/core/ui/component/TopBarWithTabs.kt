@@ -16,7 +16,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -69,10 +69,7 @@ fun TeacherTopBarWithTabs(
             }
         }
     ) { innerPadding ->
-        HorizontalPager(
-            pageCount = tabs.size,
-            state = pagerState,
-        ) { page ->
+        HorizontalPager(state = pagerState) { page ->
             Box(
                 modifier = Modifier
                     .padding(innerPadding)
@@ -90,16 +87,17 @@ fun TeacherTopBarWithTabs(
 private fun TeacherTopBarWithTabsPreview() {
     TeacherAppTheme {
         Surface {
-            var selectedTabIndex by remember { mutableStateOf(0) }
+            var selectedTabIndex by remember { mutableIntStateOf(0) }
+            val tabs = remember { listOf("Dane", "Oceny", "Uwagi") }
 
             TeacherTopBarWithTabs(
                 title = "Title",
                 showNavigationIcon = true,
                 onNavigationIconClick = {},
-                tabs = listOf("Dane", "Oceny", "Uwagi"),
+                tabs = tabs,
                 selectedTabIndex = selectedTabIndex,
                 onTabClick = { selectedTabIndex = it },
-                pagerState = rememberPagerState(),
+                pagerState = rememberPagerState { tabs.size },
                 isTopBarVisible = true,
                 menuItems = listOf(),
                 scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),

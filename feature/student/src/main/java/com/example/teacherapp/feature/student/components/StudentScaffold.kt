@@ -8,7 +8,9 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,7 +69,8 @@ private fun StudentScaffoldPreview() {
     TeacherAppTheme {
         Surface {
             val tabs = remember { listOf(StudentTab.Grades, StudentTab.Detail, StudentTab.Notes) }
-            val pagerState = rememberPagerState(initialPage = tabs.indexOf(StudentTab.Detail))
+            val pagerState =
+                rememberPagerState(initialPage = tabs.indexOf(StudentTab.Detail)) { tabs.size }
             val selectedTab = tabs[pagerState.currentPage]
 
             val coroutineScope = rememberCoroutineScope()

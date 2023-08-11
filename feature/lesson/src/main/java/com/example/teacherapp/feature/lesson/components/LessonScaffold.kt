@@ -76,7 +76,8 @@ private fun LessonScaffoldPreview() {
                     LessonTab.Notes,
                 )
             }
-            val pagerState = rememberPagerState(initialPage = tabs.indexOf(LessonTab.Grades))
+            val pagerState =
+                rememberPagerState(initialPage = tabs.indexOf(LessonTab.Grades)) { tabs.size }
             val selectedTab = tabs[pagerState.currentPage]
 
             val coroutineScope = rememberCoroutineScope()

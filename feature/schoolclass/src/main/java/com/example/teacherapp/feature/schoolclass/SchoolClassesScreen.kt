@@ -123,7 +123,7 @@ private fun ClassItem(
     ) {
         FlowRow(
             modifier = Modifier.padding(MaterialTheme.spacing.small),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalArrangement = Arrangement.Center,
         ) {
             Text(text = "Klasa: $name")
 

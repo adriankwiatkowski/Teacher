@@ -42,7 +42,7 @@ internal fun LessonScaffoldWrapper(
             LessonTab.Notes,
         )
     }
-    val pagerState = rememberPagerState(initialPage = tabs.indexOf(LessonTab.Grades))
+    val pagerState = rememberPagerState(initialPage = tabs.indexOf(LessonTab.Grades)) { tabs.size }
     val selectedTab by remember {
         derivedStateOf {
             tabs[pagerState.currentPage]

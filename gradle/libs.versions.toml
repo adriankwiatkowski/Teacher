@@ -8,10 +8,10 @@ androidxAppCompat = "1.6.1"
 
 compose = "1.5.1"
 androidxActivity = "1.7.2"
-androidxComposeBom = "2023.06.01"
+androidxComposeBom = "2023.08.00"
 androidxComposeRuntimeTracing = "1.0.0-alpha03"
 lifecycle = "2.6.1"
-nav = "2.6.0"
+nav = "2.7.0"
 
 sqldelight = "2.0.0"
 

@@ -37,7 +37,7 @@ internal fun NotePriorityPicker(
 
             FlowRow(
                 modifier = modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalArrangement = Arrangement.Center,
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 InputChip(
