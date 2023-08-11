@@ -79,7 +79,7 @@ internal fun StudentScaffoldWrapper(
             isDeleted = isStudentDeleted,
             deletedMessage = "Usunięto pomyślnie dane ucznia."
         ) { student ->
-            content(selectedTab = pagerTab, student = student)
+            content(pagerTab, student)
         }
     }
 }

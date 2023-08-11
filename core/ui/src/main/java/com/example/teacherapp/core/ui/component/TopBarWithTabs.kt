@@ -78,7 +78,7 @@ fun TeacherTopBarWithTabs(
                     .padding(innerPadding)
                     .fillMaxSize(),
             ) {
-                content(tabIndex = page)
+                content(page)
             }
         }
     }

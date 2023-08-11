@@ -87,7 +87,7 @@ internal fun LessonScaffoldWrapper(
             isDeleted = isLessonDeleted,
             deletedMessage = "Usunięto zajęcia."
         ) { lesson ->
-            content(selectedTab = pagerTab, lesson = lesson)
+            content(pagerTab, lesson)
         }
     }
 }
