@@ -90,25 +90,25 @@ internal class DatabaseEventRepository @Inject constructor(
                     )
                 }
 
-                fun addDatesUntilEndOfTerm(daysOffset: Long) {
-                    var currentDateOfSelectedDay = TimeUtils.firstDayOfWeekFromDate(date, day)
+                fun addDatesInTerm(daysOffset: Long) {
+                    var currentDateOfSelectedDay =
+                        TimeUtils.firstDayOfWeekFromDate(term.startDate, day)
+
                     while (true) {
                         if (!isDateInTerm(currentDateOfSelectedDay, term)) {
                             break
                         }
 
                         addDate(currentDateOfSelectedDay)
-                        currentDateOfSelectedDay = TimeUtils.plusDays(
-                            currentDateOfSelectedDay,
-                            daysOffset,
-                        )
+                        currentDateOfSelectedDay =
+                            TimeUtils.plusDays(currentDateOfSelectedDay, daysOffset)
                     }
                 }
 
                 when (type) {
                     EventType.Once -> addDate(date) // TODO: Probably should check if date is in any term.
-                    EventType.Weekly -> addDatesUntilEndOfTerm(daysOffset = 7)
-                    EventType.EveryTwoWeeks -> addDatesUntilEndOfTerm(daysOffset = 14)
+                    EventType.Weekly -> addDatesInTerm(daysOffset = 7)
+                    EventType.EveryTwoWeeks -> addDatesInTerm(daysOffset = 14)
                 }
 
                 eventDataSource.insertEvents(eventDtos)
