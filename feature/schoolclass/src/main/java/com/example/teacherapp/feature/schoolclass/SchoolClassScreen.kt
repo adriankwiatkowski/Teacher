@@ -3,7 +3,6 @@ package com.example.teacherapp.feature.schoolclass
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,12 +69,15 @@ internal fun SchoolClassScreen(
         }
     ) { innerPadding ->
         ResultContent(
-            modifier = Modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
             result = schoolClassResult,
             isDeleted = isSchoolClassDeleted,
             deletedMessage = "Usunięto pomyślnie klasę."
         ) { schoolClass ->
             MainContent(
+                modifier = Modifier.fillMaxSize(),
                 schoolClass = schoolClass,
                 onStudentClick = onStudentClick,
                 onAddStudentClick = onAddStudentClick,
@@ -102,7 +104,7 @@ private fun MainContent(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
         schoolYearExpandable(

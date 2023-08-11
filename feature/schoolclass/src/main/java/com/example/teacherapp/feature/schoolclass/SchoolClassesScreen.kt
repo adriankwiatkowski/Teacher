@@ -1,9 +1,15 @@
 package com.example.teacherapp.feature.schoolclass
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
@@ -54,7 +60,8 @@ internal fun SchoolClassesScreen(
         ResultContent(
             modifier = Modifier
                 .padding(innerPadding)
-                .padding(MaterialTheme.spacing.small),
+                .padding(MaterialTheme.spacing.small)
+                .fillMaxSize(),
             result = schoolClassesResult,
         ) { schoolClasses ->
             MainContent(
