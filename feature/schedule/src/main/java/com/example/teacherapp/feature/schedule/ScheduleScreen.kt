@@ -28,7 +28,8 @@ import com.example.teacherapp.core.common.utils.TimeUtils
 import com.example.teacherapp.core.model.data.Event
 import com.example.teacherapp.core.ui.component.TeacherFab
 import com.example.teacherapp.core.ui.component.picker.TeacherDatePicker
-import com.example.teacherapp.core.ui.component.result.ResultContent
+import com.example.teacherapp.core.ui.component.result.ErrorScreen
+import com.example.teacherapp.core.ui.component.result.LoadingScreen
 import com.example.teacherapp.core.ui.icon.TeacherIcons
 import com.example.teacherapp.core.ui.paramprovider.EventsPreviewParameterProvider
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
@@ -57,28 +58,24 @@ internal fun ScheduleScreen(
         },
         floatingActionButtonPosition = FabPosition.End,
     ) { innerPadding ->
-        ResultContent(
+        MainContent(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(innerPadding)
                 .padding(MaterialTheme.spacing.small),
-            result = eventsResult,
-        ) { events ->
-            MainContent(
-                modifier = Modifier.fillMaxSize(),
-                events = events,
-                onScheduleClick = onScheduleClick,
-                date = date,
-                onDateSelected = onDateSelected,
-                onPrevDateClick = onPrevDateClick,
-                onNextDateClick = onNextDateClick,
-            )
-        }
+            eventsResult = eventsResult,
+            onScheduleClick = onScheduleClick,
+            date = date,
+            onDateSelected = onDateSelected,
+            onPrevDateClick = onPrevDateClick,
+            onNextDateClick = onNextDateClick,
+        )
     }
 }
 
 @Composable
 private fun MainContent(
-    events: List<Event>,
+    eventsResult: Result<List<Event>>,
     date: LocalDate,
     onDateSelected: (date: LocalDate) -> Unit,
     onPrevDateClick: () -> Unit,
@@ -91,30 +88,40 @@ private fun MainContent(
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
         item {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onPrevDateClick) {
-                    Icon(imageVector = TeacherIcons.Previous, contentDescription = null)
-                }
-                TeacherDatePicker(
-                    date = date,
-                    onDateSelected = onDateSelected,
-                    label = { Text(TimeUtils.format(date)) },
-                )
-                IconButton(onClick = onNextDateClick) {
-                    Icon(imageVector = TeacherIcons.Next, contentDescription = null)
-                }
-            }
+            Header(
+                date = date,
+                onDateSelected = onDateSelected,
+                onPrevDateClick = onPrevDateClick,
+                onNextDateClick = onNextDateClick,
+            )
         }
 
-        if (events.isEmpty()) {
-            item {
-                EmptyState()
+        when (eventsResult) {
+            Result.Loading -> {
+                item {
+                    LoadingState()
+                }
             }
-        } else {
-            events(
-                events = events,
-                onScheduleClick = onScheduleClick,
-            )
+
+            is Result.Success -> {
+                val events = eventsResult.data
+                if (events.isEmpty()) {
+                    item {
+                        EmptyState()
+                    }
+                } else {
+                    events(
+                        events = events,
+                        onScheduleClick = onScheduleClick,
+                    )
+                }
+            }
+
+            is Result.Error -> {
+                item {
+                    ErrorState()
+                }
+            }
         }
     }
 }
@@ -132,6 +139,36 @@ private fun LazyListScope.events(
 }
 
 @Composable
+private fun Header(
+    date: LocalDate,
+    onDateSelected: (date: LocalDate) -> Unit,
+    onPrevDateClick: () -> Unit,
+    onNextDateClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = TimeUtils.getDisplayNameOfDayOfWeek(date),
+            style = MaterialTheme.typography.headlineSmall,
+        )
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            IconButton(onClick = onPrevDateClick) {
+                Icon(imageVector = TeacherIcons.Previous, contentDescription = null)
+            }
+            TeacherDatePicker(
+                date = date,
+                onDateSelected = onDateSelected,
+                label = { Text(TimeUtils.format(date)) },
+            )
+            IconButton(onClick = onNextDateClick) {
+                Icon(imageVector = TeacherIcons.Next, contentDescription = null)
+            }
+        }
+    }
+}
+
+@Composable
 private fun EmptyState(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -143,6 +180,16 @@ private fun EmptyState(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.headlineMedium,
         )
     }
+}
+
+@Composable
+private fun LoadingState(modifier: Modifier = Modifier) {
+    LoadingScreen(modifier = modifier)
+}
+
+@Composable
+private fun ErrorState(modifier: Modifier = Modifier) {
+    ErrorScreen(modifier = modifier)
 }
 
 @Composable
@@ -176,6 +223,42 @@ private fun ScheduleScreenPreview(
             ScheduleScreen(
                 eventsResult = Result.Success(events),
                 date = events.first().date,
+                onDateSelected = {},
+                onPrevDateClick = {},
+                onNextDateClick = {},
+                onScheduleClick = {},
+                onAddScheduleClick = {},
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ScheduleScreenLoadingPreview() {
+    TeacherAppTheme {
+        Surface {
+            ScheduleScreen(
+                eventsResult = Result.Loading,
+                date = TimeUtils.currentDate(),
+                onDateSelected = {},
+                onPrevDateClick = {},
+                onNextDateClick = {},
+                onScheduleClick = {},
+                onAddScheduleClick = {},
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ScheduleScreenErrorPreview() {
+    TeacherAppTheme {
+        Surface {
+            ScheduleScreen(
+                eventsResult = Result.Error(IllegalStateException()),
+                date = TimeUtils.currentDate(),
                 onDateSelected = {},
                 onPrevDateClick = {},
                 onNextDateClick = {},
