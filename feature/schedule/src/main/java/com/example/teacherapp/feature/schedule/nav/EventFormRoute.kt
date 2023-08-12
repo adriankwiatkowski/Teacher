@@ -25,9 +25,9 @@ internal fun EventFormRoute(
     val form = viewModel.form
 
     // Observe save.
-    LaunchedEffect(form.status, onShowSnackbar, onSave) {
+    LaunchedEffect(form.status) {
         if (form.status == FormStatus.Success) {
-            onShowSnackbar("Zapisano termin zajęć")
+            onShowSnackbar("Zapisano termin")
             onSave()
         }
     }
