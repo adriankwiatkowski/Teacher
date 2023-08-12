@@ -13,6 +13,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,6 +48,7 @@ import java.math.BigDecimal
 @Composable
 internal fun GradeFormScreen(
     uiStateResult: Result<GradeFormUiState>,
+    snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     formStatus: FormStatus,
@@ -63,6 +66,7 @@ internal fun GradeFormScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
                 title = "Wystawienie oceny",
@@ -233,6 +237,7 @@ private fun GradeFormScreenPreview(
 
             GradeFormScreen(
                 uiStateResult = Result.Success(uiState),
+                snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
                 formStatus = form.status,

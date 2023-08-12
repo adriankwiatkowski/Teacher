@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.schoolclass.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -46,6 +47,7 @@ private fun NavController.navigateToSchoolClassFormRoute(navOptions: NavOptions?
 
 fun NavGraphBuilder.schoolClassGraph(
     navController: NavController,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     navigateToSchoolYearForm: () -> Unit,
     navigateToStudentGraph: (schoolClassId: Long, studentId: Long) -> Unit,
@@ -61,6 +63,7 @@ fun NavGraphBuilder.schoolClassGraph(
             val viewModel = hiltViewModel<SchoolClassesViewModel>()
 
             SchoolClassesRoute(
+                snackbarHostState = snackbarHostState,
                 onAddSchoolClassClick = navController::navigateToSchoolClassFormRoute,
                 onClassClick = { schoolClassId ->
                     navController.navigateToSchoolClassRoute(schoolClassId = schoolClassId)
@@ -87,6 +90,7 @@ fun NavGraphBuilder.schoolClassGraph(
             SchoolClassRoute(
                 showNavigationIcon = true,
                 onNavBack = navController::popBackStack,
+                snackbarHostState = snackbarHostState,
                 onShowSnackbar = onShowSnackbar,
                 onStudentClick = { studentId ->
                     navigateToStudentGraph(schoolClassId, studentId)
@@ -108,6 +112,7 @@ fun NavGraphBuilder.schoolClassGraph(
         SchoolClassFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             onAddSchoolYear = navigateToSchoolYearForm,
         )

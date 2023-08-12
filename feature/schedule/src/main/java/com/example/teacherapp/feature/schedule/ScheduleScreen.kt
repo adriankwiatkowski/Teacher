@@ -16,9 +16,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,6 +42,7 @@ import java.time.LocalDate
 @Composable
 internal fun ScheduleScreen(
     eventsResult: Result<List<Event>>,
+    snackbarHostState: SnackbarHostState,
     date: LocalDate,
     onDateSelected: (date: LocalDate) -> Unit,
     onPrevDateClick: () -> Unit,
@@ -49,6 +53,7 @@ internal fun ScheduleScreen(
 ) {
     Scaffold(
         modifier = modifier,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         floatingActionButton = {
             TeacherFab(
                 imageVector = TeacherIcons.Add,
@@ -222,6 +227,7 @@ private fun ScheduleScreenPreview(
         Surface {
             ScheduleScreen(
                 eventsResult = Result.Success(events),
+                snackbarHostState = remember { SnackbarHostState() },
                 date = events.first().date,
                 onDateSelected = {},
                 onPrevDateClick = {},
@@ -240,6 +246,7 @@ private fun ScheduleScreenLoadingPreview() {
         Surface {
             ScheduleScreen(
                 eventsResult = Result.Loading,
+                snackbarHostState = remember { SnackbarHostState() },
                 date = TimeUtils.currentDate(),
                 onDateSelected = {},
                 onPrevDateClick = {},
@@ -258,6 +265,7 @@ private fun ScheduleScreenErrorPreview() {
         Surface {
             ScheduleScreen(
                 eventsResult = Result.Error(IllegalStateException()),
+                snackbarHostState = remember { SnackbarHostState() },
                 date = TimeUtils.currentDate(),
                 onDateSelected = {},
                 onPrevDateClick = {},

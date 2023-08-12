@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -35,6 +37,7 @@ import com.example.teacherapp.feature.schoolclass.components.students
 @Composable
 internal fun SchoolClassScreen(
     schoolClassResult: Result<SchoolClass>,
+    snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onStudentClick: (id: Long) -> Unit,
@@ -56,6 +59,7 @@ internal fun SchoolClassScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
                 title = "Klasa $schoolClassName",
@@ -152,8 +156,8 @@ private fun SchoolClassScreenPreview(
     TeacherAppTheme {
         Surface {
             SchoolClassScreen(
-                modifier = Modifier.fillMaxSize(),
                 schoolClassResult = Result.Success(schoolClass),
+                snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
                 onStudentClick = {},
@@ -180,8 +184,8 @@ private fun SchoolClassScreenDeletedPreview() {
     TeacherAppTheme {
         Surface {
             SchoolClassScreen(
-                modifier = Modifier.fillMaxSize(),
                 schoolClassResult = Result.Loading,
+                snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
                 onStudentClick = {},

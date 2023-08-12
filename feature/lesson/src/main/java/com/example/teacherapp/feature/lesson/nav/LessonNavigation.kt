@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.lesson.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -91,6 +92,7 @@ private fun NavController.navigateToLessonAttendanceFormRoute(
 
 fun NavGraphBuilder.lessonGraph(
     navController: NavController,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     navigateToGradesRoute: (lessonId: Long, gradeTemplateId: Long) -> Unit,
 ) {
@@ -133,6 +135,7 @@ fun NavGraphBuilder.lessonGraph(
             ) { selectedTab, _ ->
                 when (selectedTab) {
                     LessonTab.Grades -> GradeTemplatesRoute(
+                        snackbarHostState = snackbarHostState,
                         onGradeClick = { gradeTemplateId ->
                             navigateToGradesRoute(lessonId, gradeTemplateId)
                         },
@@ -145,12 +148,14 @@ fun NavGraphBuilder.lessonGraph(
                     )
 
                     LessonTab.Attendance -> AttendancesRoute(
-                        onScheduleAttendanceClick = navController::navigateToLessonAttendanceFormRoute
+                        snackbarHostState = snackbarHostState,
+                        onScheduleAttendanceClick = navController::navigateToLessonAttendanceFormRoute,
                     )
 
-                    LessonTab.Activity -> LessonActivityRoute()
+                    LessonTab.Activity -> LessonActivityRoute(snackbarHostState = snackbarHostState)
 
                     LessonTab.Notes -> NotesRoute(
+                        snackbarHostState = snackbarHostState,
                         onNoteClick = { lessonNoteId ->
                             navController.navigateToLessonNoteFormRoute(
                                 lessonId = lessonId,
@@ -186,6 +191,7 @@ fun NavGraphBuilder.lessonGraph(
             GradeTemplateFormRoute(
                 showNavigationIcon = true,
                 onNavBack = navController::popBackStack,
+                snackbarHostState = snackbarHostState,
                 onShowSnackbar = onShowSnackbar,
                 isEditMode = isEditMode,
             )
@@ -209,6 +215,7 @@ fun NavGraphBuilder.lessonGraph(
             LessonNoteFormRoute(
                 showNavigationIcon = true,
                 onNavBack = navController::popBackStack,
+                snackbarHostState = snackbarHostState,
                 onShowSnackbar = onShowSnackbar,
                 isEditMode = isEditMode,
             )
@@ -226,6 +233,7 @@ fun NavGraphBuilder.lessonGraph(
         AttendanceRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            snackbarHostState = snackbarHostState,
         )
     }
 
@@ -244,6 +252,7 @@ fun NavGraphBuilder.lessonGraph(
         LessonFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
         )
     }

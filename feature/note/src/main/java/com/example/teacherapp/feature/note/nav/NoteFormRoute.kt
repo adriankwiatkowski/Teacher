@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.note.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -13,6 +14,7 @@ import com.example.teacherapp.feature.note.data.NoteFormViewModel
 internal fun NoteFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     isEditMode: Boolean,
     viewModel: NoteFormViewModel = hiltViewModel(),
@@ -38,6 +40,7 @@ internal fun NoteFormRoute(
 
     NoteFormScreen(
         noteResult = noteResult,
+        snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         onDeleteNoteClick = viewModel::onDeleteNote,

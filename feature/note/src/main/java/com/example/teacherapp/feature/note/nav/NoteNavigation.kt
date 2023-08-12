@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.note.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -34,10 +35,12 @@ private fun NavController.navigateToNoteFormRoute(
 
 fun NavGraphBuilder.noteGraph(
     navController: NavController,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
 ) {
     composable(notesRoute) {
         NotesRoute(
+            snackbarHostState = snackbarHostState,
             onNoteClick = { noteId -> navController.navigateToNoteFormRoute(noteId = noteId) },
             onAddNoteClick = { navController.navigateToNoteFormRoute(noteId = null) },
         )
@@ -58,6 +61,7 @@ fun NavGraphBuilder.noteGraph(
         NoteFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             isEditMode = isEditMode,
         )

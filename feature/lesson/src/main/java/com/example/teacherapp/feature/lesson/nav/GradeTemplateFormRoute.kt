@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.lesson.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -13,6 +14,7 @@ import com.example.teacherapp.feature.lesson.gradetemplate.data.GradeTemplateFor
 internal fun GradeTemplateFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     isEditMode: Boolean,
     viewModel: GradeTemplateFormViewModel = hiltViewModel(),
@@ -39,6 +41,7 @@ internal fun GradeTemplateFormRoute(
 
     GradeTemplateFormScreen(
         gradeTemplateResult = gradeTemplateResult,
+        snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         formStatus = form.status,

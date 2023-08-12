@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.lesson.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -9,6 +10,7 @@ import com.example.teacherapp.feature.lesson.note.data.NotesViewModel
 
 @Composable
 internal fun NotesRoute(
+    snackbarHostState: SnackbarHostState,
     onNoteClick: (noteId: Long) -> Unit,
     onAddNoteClick: () -> Unit,
     viewModel: NotesViewModel = hiltViewModel(),
@@ -17,6 +19,7 @@ internal fun NotesRoute(
 
     NotesScreen(
         notesResult = lessonNotesResult,
+        snackbarHostState = snackbarHostState,
         onNoteClick = onNoteClick,
         onAddNoteClick = onAddNoteClick
     )

@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.lesson.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -9,12 +10,14 @@ import com.example.teacherapp.feature.lesson.lessonactivity.data.LessonActivityV
 
 @Composable
 internal fun LessonActivityRoute(
+    snackbarHostState: SnackbarHostState,
     viewModel: LessonActivityViewModel = hiltViewModel(),
 ) {
     val lessonActivitiesResult by viewModel.lessonActivitiesResult.collectAsStateWithLifecycle()
 
     LessonActivityScreen(
         lessonActivitiesResult = lessonActivitiesResult,
+        snackbarHostState = snackbarHostState,
         onIncreaseLessonActivity = viewModel::onIncreaseLessonActivity,
         onDecreaseLessonActivity = viewModel::onDecreaseLessonActivity,
     )

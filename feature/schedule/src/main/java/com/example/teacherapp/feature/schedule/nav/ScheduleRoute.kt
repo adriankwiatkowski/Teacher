@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.schedule.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -9,6 +10,7 @@ import com.example.teacherapp.feature.schedule.data.ScheduleViewModel
 
 @Composable
 internal fun ScheduleRoute(
+    snackbarHostState: SnackbarHostState,
     onAddScheduleClick: () -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel(),
 ) {
@@ -17,6 +19,7 @@ internal fun ScheduleRoute(
 
     ScheduleScreen(
         eventsResult = eventsResult,
+        snackbarHostState = snackbarHostState,
         date = date,
         onDateSelected = viewModel::onDateSelected,
         onPrevDateClick = viewModel::onPrevDateClick,

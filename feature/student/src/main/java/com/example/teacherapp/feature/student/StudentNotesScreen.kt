@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Divider
@@ -16,9 +15,12 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +36,7 @@ import com.example.teacherapp.core.ui.theme.spacing
 @Composable
 internal fun StudentNotesScreen(
     studentNotesResult: Result<List<BasicStudentNote>>,
+    snackbarHostState: SnackbarHostState,
     onNoteClick: (noteId: Long) -> Unit,
     onAddNoteClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -44,6 +47,7 @@ internal fun StudentNotesScreen(
     ) { studentNotes ->
         Scaffold(
             modifier = Modifier.fillMaxSize(),
+            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
             floatingActionButton = {
                 TeacherFab(
                     imageVector = Icons.Default.Add,
@@ -113,6 +117,7 @@ private fun EmptyStatePreview() {
         Surface {
             StudentNotesScreen(
                 studentNotesResult = Result.Success(emptyList()),
+                snackbarHostState = remember { SnackbarHostState() },
                 onNoteClick = {},
                 onAddNoteClick = {},
             )
@@ -129,6 +134,7 @@ private fun StudentNotesScreenPreview(
         Surface {
             StudentNotesScreen(
                 studentNotesResult = Result.Success(studentNotes),
+                snackbarHostState = remember { SnackbarHostState() },
                 onNoteClick = {},
                 onAddNoteClick = {},
             )

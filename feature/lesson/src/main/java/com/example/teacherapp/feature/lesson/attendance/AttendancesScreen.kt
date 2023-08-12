@@ -14,9 +14,13 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -33,15 +37,24 @@ import java.time.LocalTime
 @Composable
 internal fun AttendancesScreen(
     scheduleAttendancesResult: Result<List<LessonEventAttendance>>,
+    snackbarHostState: SnackbarHostState,
     onScheduleAttendanceClick: (id: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ResultContent(result = scheduleAttendancesResult) { scheduleAttendances ->
-        MainContent(
-            modifier = modifier.fillMaxSize(),
-            scheduleAttendances = scheduleAttendances,
-            onScheduleAttendanceClick = onScheduleAttendanceClick,
-        )
+    Scaffold(
+        modifier = modifier,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+    ) { innerPadding ->
+        ResultContent(
+            modifier = Modifier.padding(innerPadding),
+            result = scheduleAttendancesResult,
+        ) { scheduleAttendances ->
+            MainContent(
+                modifier = Modifier.fillMaxSize(),
+                scheduleAttendances = scheduleAttendances,
+                onScheduleAttendanceClick = onScheduleAttendanceClick,
+            )
+        }
     }
 }
 
@@ -148,6 +161,7 @@ private fun AttendancesScreenPreview(
         Surface {
             AttendancesScreen(
                 scheduleAttendancesResult = Result.Success(data),
+                snackbarHostState = remember { SnackbarHostState() },
                 onScheduleAttendanceClick = {},
             )
         }

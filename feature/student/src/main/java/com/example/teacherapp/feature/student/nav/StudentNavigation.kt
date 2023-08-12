@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.student.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -49,6 +50,7 @@ fun NavController.navigateToStudentFormRoute(
 
 fun NavGraphBuilder.studentGraph(
     navController: NavController,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     navigateToStudentNoteFormRoute: (studentId: Long, studentNoteId: Long?) -> Unit,
 ) {
@@ -90,11 +92,18 @@ fun NavGraphBuilder.studentGraph(
                 viewModel = viewModel,
             ) { selectedTab, student ->
                 when (selectedTab) {
-                    StudentTab.Detail -> StudentDetailRoute(student = student)
+                    StudentTab.Detail -> StudentDetailRoute(
+                        snackbarHostState = snackbarHostState,
+                        student = student,
+                    )
 
-                    StudentTab.Grades -> StudentGradesRoute(student = student)
+                    StudentTab.Grades -> StudentGradesRoute(
+                        snackbarHostState = snackbarHostState,
+                        student = student,
+                    )
 
                     StudentTab.Notes -> StudentNotesRoute(
+                        snackbarHostState = snackbarHostState,
                         onNoteClick = { studentNoteId ->
                             navigateToStudentNoteFormRoute(studentId, studentNoteId)
                         },
@@ -122,6 +131,7 @@ fun NavGraphBuilder.studentGraph(
         StudentFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
         )
     }

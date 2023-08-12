@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.schedule.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,6 +17,7 @@ internal fun EventFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onSave: () -> Unit,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     onLessonPickerClick: () -> Unit,
     viewModel: EventFormViewModel = hiltViewModel(),
@@ -38,6 +40,7 @@ internal fun EventFormRoute(
 
     EventFormScreen(
         lessonResult = lessonResult,
+        snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         onLessonPickerClick = onLessonPickerClick,

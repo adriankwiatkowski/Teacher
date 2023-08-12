@@ -6,6 +6,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,22 +31,30 @@ import com.example.teacherapp.core.ui.theme.supportsDynamicTheming
 @Composable
 internal fun SettingsScreen(
     settingsDataResult: Result<SettingsData>,
+    snackbarHostState: SnackbarHostState,
     onThemeChange: (theme: ThemeConfig) -> Unit,
     onDynamicColorChange: (useDynamicColor: Boolean) -> Unit,
     modifier: Modifier = Modifier,
     supportDynamicColor: Boolean = supportsDynamicTheming(),
 ) {
-    ResultContent(
-        modifier = modifier.padding(MaterialTheme.spacing.medium),
-        result = settingsDataResult,
-    ) { settingsData ->
-        SettingsPanel(
-            theme = settingsData.themeConfig,
-            onThemeChange = onThemeChange,
-            useDynamicColor = settingsData.useDynamicColor,
-            onDynamicColorChange = onDynamicColorChange,
-            supportDynamicColor = supportDynamicColor,
-        )
+    Scaffold(
+        modifier = modifier,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+    ) { innerPadding ->
+        ResultContent(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(MaterialTheme.spacing.medium),
+            result = settingsDataResult,
+        ) { settingsData ->
+            SettingsPanel(
+                theme = settingsData.themeConfig,
+                onThemeChange = onThemeChange,
+                useDynamicColor = settingsData.useDynamicColor,
+                onDynamicColorChange = onDynamicColorChange,
+                supportDynamicColor = supportDynamicColor,
+            )
+        }
     }
 }
 
@@ -122,6 +133,7 @@ private fun SettingsScreenPreview() {
 
             SettingsScreen(
                 settingsDataResult = Result.Success(settingsData),
+                snackbarHostState = remember { SnackbarHostState() },
                 onThemeChange = { settingsData = settingsData.copy(themeConfig = it) },
                 onDynamicColorChange = { settingsData = settingsData.copy(useDynamicColor = it) },
             )

@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.student.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -13,6 +14,7 @@ import com.example.teacherapp.feature.student.data.StudentFormViewModel
 internal fun StudentFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     viewModel: StudentFormViewModel = hiltViewModel(),
 ) {
@@ -30,6 +32,7 @@ internal fun StudentFormRoute(
 
     StudentFormScreen(
         studentResult = studentResult,
+        snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         schoolClassName = schoolClassName.orEmpty(),

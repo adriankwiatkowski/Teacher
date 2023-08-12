@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.student.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -10,6 +11,7 @@ import com.example.teacherapp.feature.student.data.StudentGradesViewModel
 
 @Composable
 internal fun StudentGradesRoute(
+    snackbarHostState: SnackbarHostState,
     student: Student,
     viewModel: StudentGradesViewModel = hiltViewModel(),
 ) {
@@ -18,6 +20,7 @@ internal fun StudentGradesRoute(
 
     StudentGradesScreen(
         studentGradesResult = studentGradesResult,
+        snackbarHostState = snackbarHostState,
         gradeDialog = gradeDialog,
         onShowGradeDialog = { gradeInfo, grade ->
             viewModel.onShowGradeDialog(

@@ -12,9 +12,12 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -29,6 +32,7 @@ import com.example.teacherapp.core.ui.theme.spacing
 @Composable
 internal fun GradeTemplatesScreen(
     gradesResult: Result<List<BasicGradeTemplate>>,
+    snackbarHostState: SnackbarHostState,
     onGradeClick: (gradeId: Long) -> Unit,
     onAddGradeClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -38,7 +42,7 @@ internal fun GradeTemplatesScreen(
         result = gradesResult,
     ) { grades ->
         Scaffold(
-            modifier = Modifier,
+            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
             floatingActionButton = {
                 TeacherFab(
                     imageVector = Icons.Default.Add,
@@ -94,6 +98,7 @@ private fun GradeTemplatesScreenPreview(
         Surface {
             GradeTemplatesScreen(
                 gradesResult = Result.Success(grades),
+                snackbarHostState = remember { SnackbarHostState() },
                 onGradeClick = {},
                 onAddGradeClick = {},
             )

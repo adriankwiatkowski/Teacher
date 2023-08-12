@@ -21,9 +21,12 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +43,7 @@ import com.example.teacherapp.core.ui.theme.spacing
 @Composable
 internal fun SchoolClassesScreen(
     schoolClassesResult: Result<List<BasicSchoolClass>>,
+    snackbarHostState: SnackbarHostState,
     onAddSchoolClassClick: () -> Unit,
     onClassClick: (id: Long) -> Unit,
     onStudentsClick: (classId: Long) -> Unit,
@@ -48,6 +52,7 @@ internal fun SchoolClassesScreen(
 ) {
     Scaffold(
         modifier = modifier,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         floatingActionButton = {
             TeacherFab(
                 imageVector = Icons.Default.Add,
@@ -181,6 +186,7 @@ private fun SchoolClassesScreenPreview(
         Surface {
             SchoolClassesScreen(
                 modifier = Modifier.fillMaxSize(),
+                snackbarHostState = remember { SnackbarHostState() },
                 schoolClassesResult = Result.Success(basicSchoolClasses),
                 onAddSchoolClassClick = {},
                 onClassClick = {},

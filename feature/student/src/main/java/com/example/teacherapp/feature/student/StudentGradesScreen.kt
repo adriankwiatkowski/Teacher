@@ -12,9 +12,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,33 +36,38 @@ import com.example.teacherapp.feature.student.data.GradeDialogInfo
 @Composable
 internal fun StudentGradesScreen(
     studentGradesResult: Result<List<StudentGradesByLesson>>,
+    snackbarHostState: SnackbarHostState,
     gradeDialog: GradeDialogInfo?,
     onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGrade) -> Unit,
     onGradeDialogDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ResultContent(
-        modifier = modifier.padding(MaterialTheme.spacing.small),
-        result = studentGradesResult,
-    ) { studentGradesByLesson ->
-        Box(modifier = Modifier.fillMaxSize()) {
-            if (studentGradesByLesson.isEmpty()) {
-                EmptyState()
-            } else {
-                if (gradeDialog != null) {
-                    StudentGradeDialog(
-                        student = gradeDialog.student,
-                        gradeInfo = gradeDialog.gradeInfo,
-                        grade = gradeDialog.grade,
-                        onDismissRequest = onGradeDialogDismiss,
-                    )
+    Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }) { innerPadding ->
+        ResultContent(
+            modifier = modifier
+                .padding(innerPadding)
+                .padding(MaterialTheme.spacing.small),
+            result = studentGradesResult,
+        ) { studentGradesByLesson ->
+            Box(modifier = Modifier.fillMaxSize()) {
+                if (studentGradesByLesson.isEmpty()) {
+                    EmptyState()
+                } else {
+                    if (gradeDialog != null) {
+                        StudentGradeDialog(
+                            student = gradeDialog.student,
+                            gradeInfo = gradeDialog.gradeInfo,
+                            grade = gradeDialog.grade,
+                            onDismissRequest = onGradeDialogDismiss,
+                        )
+                    }
                 }
-            }
 
-            MainScreen(
-                studentGradesByLesson = studentGradesByLesson,
-                onShowGradeDialog = onShowGradeDialog,
-            )
+                MainScreen(
+                    studentGradesByLesson = studentGradesByLesson,
+                    onShowGradeDialog = onShowGradeDialog,
+                )
+            }
         }
     }
 }
@@ -145,6 +154,7 @@ private fun StudentGradesScreenPreview(
         Surface {
             StudentGradesScreen(
                 studentGradesResult = Result.Success(studentGrades),
+                snackbarHostState = remember { SnackbarHostState() },
                 gradeDialog = null,
                 onShowGradeDialog = { _, _ -> },
                 onGradeDialogDismiss = {},

@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.settings.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -16,8 +17,8 @@ fun NavController.navigateToSettingsRoute(navOptions: NavOptions? = null) {
     this.navigate(settingsScreen, navOptions)
 }
 
-fun NavGraphBuilder.settingsGraph() {
+fun NavGraphBuilder.settingsGraph(snackbarHostState: SnackbarHostState) {
     composable(settingsRoute) {
-        SettingsRoute()
+        SettingsRoute(snackbarHostState = snackbarHostState)
     }
 }

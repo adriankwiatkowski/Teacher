@@ -12,6 +12,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +39,7 @@ import java.math.BigDecimal
 @Composable
 internal fun GradesScreen(
     uiStateResult: Result<GradesUiState>,
+    snackbarHostState: SnackbarHostState,
     onStudentClick: (studentId: Long, gradeId: Long?) -> Unit,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
@@ -55,6 +58,7 @@ internal fun GradesScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
                 title = title,
@@ -160,6 +164,7 @@ private fun GradesScreenPreview(
 
             GradesScreen(
                 uiStateResult = Result.Success(uiState),
+                snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
                 onEditClick = {},

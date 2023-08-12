@@ -13,9 +13,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.key.isShiftPressed
@@ -47,6 +50,7 @@ import com.example.teacherapp.feature.lesson.note.data.NoteFormProvider
 @Composable
 internal fun NoteFormScreen(
     noteResult: Result<LessonNote?>,
+    snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onDeleteNoteClick: () -> Unit,
@@ -65,6 +69,7 @@ internal fun NoteFormScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
                 title = "Notatka z zajęć",
@@ -189,6 +194,7 @@ private fun NoteFormScreenPreview(
 
             NoteFormScreen(
                 noteResult = Result.Success(note),
+                snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
                 onDeleteNoteClick = {},
@@ -215,6 +221,7 @@ private fun NoteFormScreenDeletedPreview() {
 
             NoteFormScreen(
                 noteResult = Result.Loading,
+                snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
                 onDeleteNoteClick = {},

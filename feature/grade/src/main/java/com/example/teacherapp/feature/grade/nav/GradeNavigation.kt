@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.grade.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -47,6 +48,7 @@ private fun NavController.navigateToGradeFormRoute(
 
 fun NavGraphBuilder.gradeGraph(
     navController: NavController,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     navigateToGradeTemplateFormRoute: (lessonId: Long, gradeTemplateId: Long?) -> Unit,
 ) {
@@ -68,6 +70,7 @@ fun NavGraphBuilder.gradeGraph(
         GradesRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             onEditClick = {
                 navigateToGradeTemplateFormRoute(lessonId, gradeTemplateId)
@@ -103,6 +106,7 @@ fun NavGraphBuilder.gradeGraph(
         GradeFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             isEditMode = isEditMode,
         )

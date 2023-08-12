@@ -12,10 +12,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CopyAll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,31 +31,35 @@ import com.example.teacherapp.core.ui.theme.spacing
 
 @Composable
 internal fun StudentDetailScreen(
+    snackbarHostState: SnackbarHostState,
     student: Student,
     onEmailClick: (email: String) -> Unit,
     onPhoneClick: (phone: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MainScreen(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(MaterialTheme.spacing.small),
-        studentName = student.fullName,
-        email = student.email,
-        onEmailClick = {
-            val email = student.email
-            if (!email.isNullOrEmpty()) {
-                onEmailClick(email)
-            }
-        },
-        phone = student.phone,
-        onPhoneClick = {
-            val phone = student.phone
-            if (!phone.isNullOrEmpty()) {
-                onPhoneClick(phone)
-            }
-        },
-    )
+    Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }) { innerPadding ->
+        MainScreen(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(MaterialTheme.spacing.small),
+            studentName = student.fullName,
+            email = student.email,
+            onEmailClick = {
+                val email = student.email
+                if (!email.isNullOrEmpty()) {
+                    onEmailClick(email)
+                }
+            },
+            phone = student.phone,
+            onPhoneClick = {
+                val phone = student.phone
+                if (!phone.isNullOrEmpty()) {
+                    onPhoneClick(phone)
+                }
+            },
+        )
+    }
 }
 
 @Composable
@@ -106,6 +114,7 @@ private fun StudentDetailScreenPreview(
     TeacherAppTheme {
         Surface {
             StudentDetailScreen(
+                snackbarHostState = remember { SnackbarHostState() },
                 student = student,
                 onEmailClick = {},
                 onPhoneClick = {},

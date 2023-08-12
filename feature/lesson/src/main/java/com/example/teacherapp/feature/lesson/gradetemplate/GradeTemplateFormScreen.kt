@@ -13,6 +13,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,6 +51,7 @@ import com.example.teacherapp.feature.lesson.gradetemplate.data.GradeTemplateFor
 @Composable
 internal fun GradeTemplateFormScreen(
     gradeTemplateResult: Result<GradeTemplate?>,
+    snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     formStatus: FormStatus,
@@ -69,6 +72,7 @@ internal fun GradeTemplateFormScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
                 title = "Ocena",
@@ -203,6 +207,7 @@ private fun GradeTemplateFormScreenPreview() {
 
             GradeTemplateFormScreen(
                 gradeTemplateResult = Result.Success(null),
+                snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
                 formStatus = form.status,

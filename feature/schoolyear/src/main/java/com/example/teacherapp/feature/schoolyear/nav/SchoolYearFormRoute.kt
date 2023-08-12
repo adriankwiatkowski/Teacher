@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.schoolyear.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -11,6 +12,7 @@ import com.example.teacherapp.feature.schoolyear.data.SchoolYearFormViewModel
 internal fun SchoolYearFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
 ) {
     val viewModel = hiltViewModel<SchoolYearFormViewModel>()
@@ -25,6 +27,7 @@ internal fun SchoolYearFormRoute(
     }
 
     SchoolYearFormScreen(
+        snackbarHostState = snackbarHostState,
         termForms = form.termForms,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,

@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.lesson.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -11,6 +12,7 @@ import com.example.teacherapp.feature.lesson.attendance.data.AttendanceViewModel
 internal fun AttendanceRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    snackbarHostState: SnackbarHostState,
     viewModel: AttendanceViewModel = hiltViewModel(),
 ) {
     val eventResult by viewModel.eventResult.collectAsStateWithLifecycle()
@@ -19,6 +21,7 @@ internal fun AttendanceRoute(
 
     AttendanceScreen(
         eventResult = eventResult,
+        snackbarHostState = snackbarHostState,
         lessonAttendancesResult = lessonAttendancesResult,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,

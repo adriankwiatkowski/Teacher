@@ -2,6 +2,7 @@ package com.example.teacherapp.feature.lesson.lessonactivity
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
@@ -12,9 +13,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -28,20 +33,26 @@ import com.example.teacherapp.core.ui.theme.spacing
 @Composable
 internal fun LessonActivityScreen(
     lessonActivitiesResult: Result<List<LessonActivity>>,
+    snackbarHostState: SnackbarHostState,
     onIncreaseLessonActivity: (lessonActivity: LessonActivity) -> Unit,
     onDecreaseLessonActivity: (lessonActivity: LessonActivity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ResultContent(
+    Scaffold(
         modifier = modifier,
-        result = lessonActivitiesResult,
-    ) { lessonActivities ->
-        MainContent(
-            modifier = Modifier.fillMaxSize(),
-            lessonActivities = lessonActivities,
-            onIncreaseLessonActivity = onIncreaseLessonActivity,
-            onDecreaseLessonActivity = onDecreaseLessonActivity,
-        )
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+    ) { innerPadding ->
+        ResultContent(
+            modifier = Modifier.padding(innerPadding),
+            result = lessonActivitiesResult,
+        ) { lessonActivities ->
+            MainContent(
+                modifier = Modifier.fillMaxSize(),
+                lessonActivities = lessonActivities,
+                onIncreaseLessonActivity = onIncreaseLessonActivity,
+                onDecreaseLessonActivity = onDecreaseLessonActivity,
+            )
+        }
     }
 }
 
@@ -120,6 +131,7 @@ private fun ActivityScreenPreview(
         Surface {
             LessonActivityScreen(
                 lessonActivitiesResult = Result.Success(lessonActivities),
+                snackbarHostState = remember { SnackbarHostState() },
                 onIncreaseLessonActivity = {},
                 onDecreaseLessonActivity = {},
             )

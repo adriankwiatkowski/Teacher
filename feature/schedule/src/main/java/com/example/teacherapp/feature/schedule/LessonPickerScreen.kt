@@ -14,9 +14,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -35,6 +38,7 @@ import com.example.teacherapp.core.ui.theme.spacing
 @Composable
 internal fun LessonPickerScreen(
     lessonsResult: Result<List<Lesson>>,
+    snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onLessonClick: (lessonId: Long) -> Unit,
@@ -44,6 +48,7 @@ internal fun LessonPickerScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
                 title = "Dodaj termin zajęć",
@@ -137,6 +142,7 @@ private fun LessonPickerScreenPreview(
         Surface {
             LessonPickerScreen(
                 lessonsResult = Result.Success(lessons),
+                snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
                 onLessonClick = {},

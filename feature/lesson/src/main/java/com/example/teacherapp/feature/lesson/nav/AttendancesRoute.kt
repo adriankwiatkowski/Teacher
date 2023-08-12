@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.lesson.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -9,6 +10,7 @@ import com.example.teacherapp.feature.lesson.attendance.data.AttendancesViewMode
 
 @Composable
 internal fun AttendancesRoute(
+    snackbarHostState: SnackbarHostState,
     onScheduleAttendanceClick: (lessonScheduleId: Long) -> Unit,
     viewModel: AttendancesViewModel = hiltViewModel(),
 ) {
@@ -16,6 +18,7 @@ internal fun AttendancesRoute(
 
     AttendancesScreen(
         scheduleAttendancesResult = attendancesResult,
+        snackbarHostState = snackbarHostState,
         onScheduleAttendanceClick = onScheduleAttendanceClick,
     )
 }

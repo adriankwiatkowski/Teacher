@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.grade.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -13,6 +14,7 @@ import com.example.teacherapp.feature.grade.data.GradesViewModel
 internal fun GradesRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     onEditClick: () -> Unit,
     onStudentClick: (studentId: Long, gradeId: Long?) -> Unit,
@@ -37,6 +39,7 @@ internal fun GradesRoute(
 
     GradesScreen(
         uiStateResult = uiStateResult,
+        snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         isDeleted = isDeleted,

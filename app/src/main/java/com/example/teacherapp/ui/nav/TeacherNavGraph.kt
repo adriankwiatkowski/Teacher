@@ -1,5 +1,6 @@
 package com.example.teacherapp.ui.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -26,6 +27,7 @@ import com.example.teacherapp.ui.TeacherAppState
 @Composable
 fun TeacherNavGraph(
     appState: TeacherAppState,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = SchoolClassNavigation.schoolClassGraphRoute,
@@ -37,10 +39,15 @@ fun TeacherNavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
-        scheduleGraph(navController = navController, onShowSnackbar = onShowSnackbar)
+        scheduleGraph(
+            navController = navController,
+            snackbarHostState = snackbarHostState,
+            onShowSnackbar = onShowSnackbar
+        )
 
         schoolClassGraph(
             navController = navController,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             navigateToSchoolYearForm = navController::navigateToSchoolYearFormRoute,
             navigateToStudentGraph = navController::navigateToStudentGraph,
@@ -48,28 +55,43 @@ fun TeacherNavGraph(
             navigateToLessonGraph = navController::navigateToLessonGraph,
             navigateToLessonFormRoute = navController::navigateToLessonFormRoute,
         )
-        schoolYearGraph(navController = navController, onShowSnackbar = onShowSnackbar)
+        schoolYearGraph(
+            navController = navController,
+            snackbarHostState = snackbarHostState,
+            onShowSnackbar = onShowSnackbar,
+        )
 
         studentGraph(
             navController = navController,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             navigateToStudentNoteFormRoute = navController::navigateToStudentNoteFormRoute,
         )
-        studentNoteGraph(navController = navController, onShowSnackbar = onShowSnackbar)
+        studentNoteGraph(
+            navController = navController,
+            snackbarHostState = snackbarHostState,
+            onShowSnackbar = onShowSnackbar,
+        )
 
         lessonGraph(
             navController = navController,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             navigateToGradesRoute = navController::navigateToGradesRoute,
         )
         gradeGraph(
             navController = navController,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             navigateToGradeTemplateFormRoute = navController::navigateToGradeTemplateFormRoute,
         )
 
-        noteGraph(navController = navController, onShowSnackbar = onShowSnackbar)
+        noteGraph(
+            navController = navController,
+            snackbarHostState = snackbarHostState,
+            onShowSnackbar = onShowSnackbar,
+        )
 
-        settingsGraph()
+        settingsGraph(snackbarHostState = snackbarHostState)
     }
 }

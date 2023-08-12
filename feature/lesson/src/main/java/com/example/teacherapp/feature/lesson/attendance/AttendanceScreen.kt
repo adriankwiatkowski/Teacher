@@ -17,6 +17,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -47,6 +49,7 @@ import com.example.teacherapp.core.ui.theme.spacing
 @Composable
 internal fun AttendanceScreen(
     eventResult: Result<Event>,
+    snackbarHostState: SnackbarHostState,
     lessonAttendancesResult: Result<List<LessonAttendance>>,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
@@ -63,6 +66,7 @@ internal fun AttendanceScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
                 title = "Wystawienie frekwencji",
@@ -256,6 +260,7 @@ private fun AttendanceScreenPreview(
 
             AttendanceScreen(
                 eventResult = Result.Success(event),
+                snackbarHostState = remember { SnackbarHostState() },
                 lessonAttendancesResult = Result.Success(lessonAttendances),
                 showNavigationIcon = true,
                 onNavBack = {},

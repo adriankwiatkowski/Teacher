@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.schedule.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -46,10 +47,14 @@ private fun NavController.navigateToLessonPickerRoute(navOptions: NavOptions? = 
 
 fun NavGraphBuilder.scheduleGraph(
     navController: NavController,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
 ) {
     composable(scheduleRoute) {
-        ScheduleRoute(onAddScheduleClick = navController::navigateToEventFormRoute)
+        ScheduleRoute(
+            snackbarHostState = snackbarHostState,
+            onAddScheduleClick = navController::navigateToEventFormRoute,
+        )
     }
 
     composable(
@@ -73,6 +78,7 @@ fun NavGraphBuilder.scheduleGraph(
 
         EventFormRoute(
             showNavigationIcon = true,
+            snackbarHostState = snackbarHostState,
             onNavBack = navController::popBackStack,
             onSave = { navController.popBackStack(scheduleRoute, inclusive = false) },
             onShowSnackbar = onShowSnackbar,
@@ -84,6 +90,7 @@ fun NavGraphBuilder.scheduleGraph(
     composable(lessonPickerRoute) {
         LessonPickerRoute(
             showNavigationIcon = true,
+            snackbarHostState = snackbarHostState,
             onNavBack = navController::popBackStack,
             onLessonClick = { lessonId ->
                 // Set result to previous screen.

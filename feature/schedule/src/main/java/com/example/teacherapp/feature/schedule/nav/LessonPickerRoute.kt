@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.schedule.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -10,6 +11,7 @@ import com.example.teacherapp.feature.schedule.data.LessonPickerViewModel
 @Composable
 internal fun LessonPickerRoute(
     showNavigationIcon: Boolean,
+    snackbarHostState: SnackbarHostState,
     onNavBack: () -> Unit,
     onLessonClick: (lessonId: Long) -> Unit,
     viewModel: LessonPickerViewModel = hiltViewModel(),
@@ -18,6 +20,7 @@ internal fun LessonPickerRoute(
 
     LessonPickerScreen(
         lessonsResult = lessonResult,
+        snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         onLessonClick = onLessonClick,

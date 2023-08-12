@@ -2,7 +2,6 @@ package com.example.teacherapp.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -43,7 +42,6 @@ fun TeacherApp(
 
     Scaffold(
         modifier = modifier,
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
             TeacherNavigationBar(visible = shouldShowBottomBar) {
                 for (screen in bottomNavScreens) {
@@ -55,12 +53,15 @@ fun TeacherApp(
                                 TeacherBottomNavScreen.Schedule -> {
                                     navController.navigateToScheduleRouteNavigationBar()
                                 }
+
                                 TeacherBottomNavScreen.SchoolClasses -> {
                                     navController.navigateToSchoolClassesRouteNavigationBar()
                                 }
+
                                 TeacherBottomNavScreen.Notes -> {
                                     navController.navigateToNotesRouteNavigationBar()
                                 }
+
                                 TeacherBottomNavScreen.Settings -> {
                                     navController.navigateToSettingsRouteNavigationBar()
                                 }
@@ -77,6 +78,7 @@ fun TeacherApp(
         TeacherNavGraph(
             modifier = Modifier.padding(innerPadding),
             appState = appState,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
         )
     }

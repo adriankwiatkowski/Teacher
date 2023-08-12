@@ -12,9 +12,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextAlign
@@ -37,6 +40,7 @@ import java.time.LocalDate
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SchoolYearFormScreen(
+    snackbarHostState: SnackbarHostState,
     termForms: List<TermForm>,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
@@ -54,6 +58,7 @@ internal fun SchoolYearFormScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
                 title = "Stwórz nowy rok szkolny",
@@ -95,7 +100,7 @@ private fun MainContent(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
@@ -202,6 +207,7 @@ private fun SchoolYearFormScreenPreview() {
             val form = SchoolYearFormProvider.createDefaultForm()
 
             SchoolYearFormScreen(
+                snackbarHostState = remember { SnackbarHostState() },
                 termForms = form.termForms,
                 showNavigationIcon = true,
                 onNavBack = {},
@@ -213,7 +219,6 @@ private fun SchoolYearFormScreenPreview() {
                 status = form.status,
                 isSubmitEnabled = form.isValid,
                 onAddSchoolYear = {},
-                modifier = Modifier.fillMaxSize(),
             )
         }
     }

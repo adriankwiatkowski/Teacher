@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.schoolyear.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -14,12 +15,14 @@ fun NavController.navigateToSchoolYearFormRoute(navOptions: NavOptions? = null) 
 
 fun NavGraphBuilder.schoolYearGraph(
     navController: NavController,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
 ) {
     composable(schoolYearFormRoute) {
         SchoolYearFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
         )
     }

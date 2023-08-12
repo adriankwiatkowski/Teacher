@@ -20,9 +20,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.input.key.isShiftPressed
@@ -53,6 +56,7 @@ import com.example.teacherapp.feature.student.data.StudentFormProvider
 @Composable
 internal fun StudentFormScreen(
     studentResult: Result<Student?>,
+    snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     schoolClassName: String,
@@ -73,6 +77,7 @@ internal fun StudentFormScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
                 title = "Klasa $schoolClassName",
@@ -244,6 +249,7 @@ private fun StudentFormScreenPreview(
 
             StudentFormScreen(
                 studentResult = Result.Success(student),
+                snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
                 schoolClassName = "1A",

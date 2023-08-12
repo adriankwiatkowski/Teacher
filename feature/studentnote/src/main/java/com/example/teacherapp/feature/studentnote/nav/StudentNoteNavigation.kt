@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.studentnote.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -30,6 +31,7 @@ fun NavController.navigateToStudentNoteFormRoute(
 
 fun NavGraphBuilder.studentNoteGraph(
     navController: NavController,
+    snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
 ) {
     composable(
@@ -50,6 +52,7 @@ fun NavGraphBuilder.studentNoteGraph(
         StudentNoteFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             isEditMode = isEditMode,
         )

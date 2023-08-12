@@ -1,5 +1,6 @@
 package com.example.teacherapp.feature.lesson.nav
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -9,6 +10,7 @@ import com.example.teacherapp.feature.lesson.gradetemplate.data.GradeTemplatesVi
 
 @Composable
 internal fun GradeTemplatesRoute(
+    snackbarHostState: SnackbarHostState,
     onGradeClick: (gradeId: Long) -> Unit,
     onAddGradeClick: () -> Unit,
     viewModel: GradeTemplatesViewModel = hiltViewModel(),
@@ -17,6 +19,7 @@ internal fun GradeTemplatesRoute(
 
     GradeTemplatesScreen(
         gradesResult = gradesResult,
+        snackbarHostState = snackbarHostState,
         onGradeClick = onGradeClick,
         onAddGradeClick = onAddGradeClick,
     )
