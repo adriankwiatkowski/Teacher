@@ -36,10 +36,11 @@ class MainActivity : ComponentActivity() {
             TeacherAppTheme(
                 darkTheme = darkTheme,
                 dynamicColor = settingsData.useDynamicColor,
+                tonalElevation = TonalElevation,
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    tonalElevation = 5.dp,
+                    tonalElevation = TonalElevation,
                 ) {
                     TeacherApp()
                 }
@@ -73,3 +74,5 @@ private fun DefaultPreview() {
         }
     }
 }
+
+private val TonalElevation = 5.dp
