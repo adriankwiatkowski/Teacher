@@ -101,6 +101,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:model"))
     implementation(project(":core:data"))
+    implementation(project(":core:auth"))
     implementation(project(":core:ui"))
 
     implementation(project(":feature:schedule"))

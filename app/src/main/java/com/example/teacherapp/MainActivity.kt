@@ -1,8 +1,9 @@
 package com.example.teacherapp
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
@@ -12,21 +13,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.SettingsData
 import com.example.teacherapp.core.model.data.ThemeConfig
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
+import com.example.teacherapp.ui.AuthenticateScreen
 import com.example.teacherapp.ui.TeacherApp
+import com.example.teacherapp.ui.rememberTeacherAppState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainActivityViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val viewModel = hiltViewModel<MainActivityViewModel>()
+            val authState by viewModel.authState.collectAsStateWithLifecycle()
             val settingsDataResult by viewModel.settings.collectAsStateWithLifecycle()
 
             val settingsData =
@@ -42,10 +47,25 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     tonalElevation = TonalElevation,
                 ) {
-                    TeacherApp()
+                    val appState = rememberTeacherAppState()
+                    if (authState.isAuthenticated) {
+                        // TODO: Fix tabs not preserving state.
+                        TeacherApp(appState = appState)
+                    } else {
+                        AuthenticateScreen(
+                            modifier = Modifier.fillMaxSize(),
+                            authenticate = { viewModel.authenticate(this@MainActivity) },
+                            isDeviceSecure = authState.isDeviceSecured,
+                        )
+                    }
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.authenticate(activity = this)
     }
 }
 
