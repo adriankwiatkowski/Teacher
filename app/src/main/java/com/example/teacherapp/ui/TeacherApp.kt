@@ -23,6 +23,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun TeacherApp(
+    isAuthenticated: Boolean,
+    authenticate: () -> Unit,
+    isDeviceSecure: Boolean,
     modifier: Modifier = Modifier,
     appState: TeacherAppState = rememberTeacherAppState(),
 ) {
@@ -80,6 +83,9 @@ fun TeacherApp(
             appState = appState,
             snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
+            isAuthenticated = isAuthenticated,
+            authenticate = authenticate,
+            isDeviceSecure = isDeviceSecure,
         )
     }
 }
@@ -89,7 +95,11 @@ fun TeacherApp(
 private fun MainScreenPreview() {
     TeacherAppTheme {
         Surface {
-            TeacherApp()
+            TeacherApp(
+                isAuthenticated = true,
+                authenticate = {},
+                isDeviceSecure = true,
+            )
         }
     }
 }

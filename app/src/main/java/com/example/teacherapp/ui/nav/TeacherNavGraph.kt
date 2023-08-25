@@ -2,8 +2,13 @@ package com.example.teacherapp.ui.nav
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navOptions
+import com.example.teacherapp.feature.auth.nav.AuthNavigation
+import com.example.teacherapp.feature.auth.nav.authGraph
+import com.example.teacherapp.feature.auth.nav.navigateToAuthRoute
 import com.example.teacherapp.feature.grade.nav.gradeGraph
 import com.example.teacherapp.feature.grade.nav.navigateToGradesRoute
 import com.example.teacherapp.feature.lesson.nav.lessonGraph
@@ -29,16 +34,32 @@ fun TeacherNavGraph(
     appState: TeacherAppState,
     snackbarHostState: SnackbarHostState,
     onShowSnackbar: (message: String) -> Unit,
+    isAuthenticated: Boolean,
+    authenticate: () -> Unit,
+    isDeviceSecure: Boolean,
     modifier: Modifier = Modifier,
     startDestination: String = SchoolClassNavigation.schoolClassGraphRoute,
 ) {
     val navController = appState.navController
+
+    // Handle authentication navigation.
+    LaunchedEffect(isAuthenticated) {
+        val currentRoute = navController.currentBackStackEntry?.destination?.route
+        if (isAuthenticated && currentRoute == AuthNavigation.authRoute) {
+            navController.popBackStack()
+        }
+        if (!isAuthenticated) {
+            navController.navigateToAuthRoute(navOptions { launchSingleTop = true })
+        }
+    }
 
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
+        authGraph(authenticate = authenticate, isDeviceSecure = isDeviceSecure)
+
         scheduleGraph(
             navController = navController,
             snackbarHostState = snackbarHostState,

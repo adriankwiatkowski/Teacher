@@ -19,7 +19,7 @@ import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 
 @Composable
-fun AuthScreen(
+internal fun AuthScreen(
     authenticate: () -> Unit,
     isDeviceSecure: Boolean,
     modifier: Modifier = Modifier,

@@ -19,7 +19,6 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.SettingsData
 import com.example.teacherapp.core.model.data.ThemeConfig
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
-import com.example.teacherapp.feature.auth.AuthScreen
 import com.example.teacherapp.ui.TeacherApp
 import com.example.teacherapp.ui.rememberTeacherAppState
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,10 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE,
-        )
+        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
 
         setContent {
             val authState by viewModel.authState.collectAsStateWithLifecycle()
@@ -55,16 +51,12 @@ class MainActivity : AppCompatActivity() {
                     tonalElevation = TonalElevation,
                 ) {
                     val appState = rememberTeacherAppState()
-                    if (authState.isAuthenticated) {
-                        // TODO: Fix tabs not preserving state.
-                        TeacherApp(appState = appState)
-                    } else {
-                        AuthScreen(
-                            modifier = Modifier.fillMaxSize(),
-                            authenticate = { viewModel.authenticate(this@MainActivity) },
-                            isDeviceSecure = authState.isDeviceSecured,
-                        )
-                    }
+                    TeacherApp(
+                        appState = appState,
+                        isAuthenticated = authState.isAuthenticated,
+                        authenticate = { viewModel.authenticate(this@MainActivity) },
+                        isDeviceSecure = authState.isDeviceSecured,
+                    )
                 }
             }
         }
@@ -97,7 +89,11 @@ private fun shouldShowDarkTheme(settingsData: SettingsData): Boolean {
 private fun DefaultPreview() {
     TeacherAppTheme {
         Surface {
-            TeacherApp()
+            TeacherApp(
+                isAuthenticated = true,
+                authenticate = {},
+                isDeviceSecure = true,
+            )
         }
     }
 }
