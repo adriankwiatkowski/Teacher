@@ -18,7 +18,7 @@ import com.example.teacherapp.core.common.result.Result
 import com.example.teacherapp.core.model.data.SettingsData
 import com.example.teacherapp.core.model.data.ThemeConfig
 import com.example.teacherapp.core.ui.theme.TeacherAppTheme
-import com.example.teacherapp.ui.AuthenticateScreen
+import com.example.teacherapp.feature.auth.AuthScreen
 import com.example.teacherapp.ui.TeacherApp
 import com.example.teacherapp.ui.rememberTeacherAppState
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                         // TODO: Fix tabs not preserving state.
                         TeacherApp(appState = appState)
                     } else {
-                        AuthenticateScreen(
+                        AuthScreen(
                             modifier = Modifier.fillMaxSize(),
                             authenticate = { viewModel.authenticate(this@MainActivity) },
                             isDeviceSecure = authState.isDeviceSecured,

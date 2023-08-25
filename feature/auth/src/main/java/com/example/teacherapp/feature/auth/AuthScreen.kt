@@ -1,4 +1,4 @@
-package com.example.teacherapp.ui
+package com.example.teacherapp.feature.auth
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +19,7 @@ import com.example.teacherapp.core.ui.theme.TeacherAppTheme
 import com.example.teacherapp.core.ui.theme.spacing
 
 @Composable
-fun AuthenticateScreen(
+fun AuthScreen(
     authenticate: () -> Unit,
     isDeviceSecure: Boolean,
     modifier: Modifier = Modifier,
@@ -58,10 +58,10 @@ fun AuthenticateScreen(
 
 @Preview
 @Composable
-private fun AuthenticateScreenNotSecurePreview() {
+private fun AuthScreenNotSecurePreview() {
     TeacherAppTheme {
         Surface {
-            AuthenticateScreen(
+            AuthScreen(
                 authenticate = {},
                 isDeviceSecure = false,
             )
@@ -71,10 +71,10 @@ private fun AuthenticateScreenNotSecurePreview() {
 
 @Preview
 @Composable
-private fun AuthenticateScreenPreview() {
+private fun AuthScreenPreview() {
     TeacherAppTheme {
         Surface {
-            AuthenticateScreen(
+            AuthScreen(
                 authenticate = {},
                 isDeviceSecure = true,
             )

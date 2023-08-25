@@ -104,6 +104,7 @@ dependencies {
     implementation(project(":core:auth"))
     implementation(project(":core:ui"))
 
+    implementation(project(":feature:auth"))
     implementation(project(":feature:schedule"))
     implementation(project(":feature:schoolclass"))
     implementation(project(":feature:schoolyear"))
