@@ -55,6 +55,7 @@ internal class GradeTemplateFormViewModel @Inject constructor(
                     name = GradeTemplateFormProvider.validateName(grade.name),
                     description = GradeTemplateFormProvider.validateDescription(grade.description),
                     weight = GradeTemplateFormProvider.validateWeight(grade.weight.toString()),
+                    isFirstTerm = grade.isFirstTerm,
                     status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
                 )
             }
