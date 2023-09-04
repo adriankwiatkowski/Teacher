@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                         isAuthenticated = authState.isAuthenticated,
                         authenticate = ::authenticate,
                         isDeviceSecure = authState.isDeviceSecured,
+                        enableAuthentication = enableAuthentication,
                     )
                 }
             }
@@ -68,6 +69,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun authenticate() {
+        if (!enableAuthentication) {
+            return
+        }
+
         viewModel.authenticate(activity = this)
     }
 }
@@ -97,9 +102,18 @@ private fun DefaultPreview() {
                 isAuthenticated = true,
                 authenticate = {},
                 isDeviceSecure = true,
+                enableAuthentication = true,
             )
         }
     }
 }
 
 private val TonalElevation = 5.dp
+
+// Set whether authentication should be enabled in debug mode.
+private const val SHOULD_ENABLE_AUTHENTICATION = false
+
+// Don't apply authentication if in debug mode and
+// flag SHOULD_ENABLE_AUTHENTICATION is set to disabled.
+// In release it will always be enabled.
+private val enableAuthentication = !BuildConfig.DEBUG || SHOULD_ENABLE_AUTHENTICATION

@@ -26,6 +26,7 @@ fun TeacherApp(
     isAuthenticated: Boolean,
     authenticate: () -> Unit,
     isDeviceSecure: Boolean,
+    enableAuthentication: Boolean,
     modifier: Modifier = Modifier,
     appState: TeacherAppState = rememberTeacherAppState(),
 ) {
@@ -86,6 +87,7 @@ fun TeacherApp(
             isAuthenticated = isAuthenticated,
             authenticate = authenticate,
             isDeviceSecure = isDeviceSecure,
+            enableAuthentication = enableAuthentication,
         )
     }
 }
@@ -99,6 +101,7 @@ private fun MainScreenPreview() {
                 isAuthenticated = true,
                 authenticate = {},
                 isDeviceSecure = true,
+                enableAuthentication = true,
             )
         }
     }

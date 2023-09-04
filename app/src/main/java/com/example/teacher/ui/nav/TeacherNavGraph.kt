@@ -40,12 +40,15 @@ fun TeacherNavGraph(
     isAuthenticated: Boolean,
     authenticate: () -> Unit,
     isDeviceSecure: Boolean,
+    enableAuthentication: Boolean,
     modifier: Modifier = Modifier,
     startDestination: String = SchoolClassNavigation.schoolClassGraphRoute,
 ) {
     val navController = appState.navController
 
-    AuthenticationHandler(navController = navController, isAuthenticated = isAuthenticated)
+    if (enableAuthentication) {
+        AuthenticationHandler(navController = navController, isAuthenticated = isAuthenticated)
+    }
 
     NavHost(
         modifier = modifier,
