@@ -1,10 +1,12 @@
 package com.example.teacher.feature.lesson.gradetemplate
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -28,10 +30,11 @@ import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.BasicGradeTemplatesPreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.lesson.gradetemplate.data.GradeTemplatesUiState
 
 @Composable
 internal fun GradeTemplatesScreen(
-    gradesResult: Result<List<BasicGradeTemplate>>,
+    gradeTemplatesResult: Result<GradeTemplatesUiState>,
     snackbarHostState: SnackbarHostState,
     onGradeClick: (gradeId: Long) -> Unit,
     onAddGradeClick: () -> Unit,
@@ -39,8 +42,8 @@ internal fun GradeTemplatesScreen(
 ) {
     ResultContent(
         modifier = modifier,
-        result = gradesResult,
-    ) { grades ->
+        result = gradeTemplatesResult,
+    ) { gradeTemplates ->
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
             floatingActionButton = {
@@ -55,16 +58,19 @@ internal fun GradeTemplatesScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding),
-                grades = grades,
+                firstTermGrades = gradeTemplates.firstTermGrades,
+                secondTermGrades = gradeTemplates.secondTermGrades,
                 onGradeClick = onGradeClick,
             )
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainContent(
-    grades: List<BasicGradeTemplate>,
+    firstTermGrades: List<BasicGradeTemplate>,
+    secondTermGrades: List<BasicGradeTemplate>,
     onGradeClick: (gradeId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -72,16 +78,30 @@ private fun MainContent(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        itemsIndexed(grades, key = { _, item -> item.id }) { index, grade ->
-            ListItem(
-                modifier = Modifier.clickable(onClick = { onGradeClick(grade.id) }),
-                headlineContent = { Text(grade.name) },
-                supportingContent = { Text("Waga ${grade.weight}") },
-            )
+        stickyHeader {
+            Text(text = "Semestr I")
+        }
+        grades(grades = firstTermGrades, onGradeClick = onGradeClick)
+        stickyHeader {
+            Text(text = "Semestr II")
+        }
+        grades(grades = secondTermGrades, onGradeClick = onGradeClick)
+    }
+}
 
-            if (index != grades.lastIndex) {
-                Divider()
-            }
+private fun LazyListScope.grades(
+    grades: List<BasicGradeTemplate>,
+    onGradeClick: (gradeId: Long) -> Unit,
+) {
+    itemsIndexed(grades, key = { _, item -> item.id }) { index, grade ->
+        ListItem(
+            modifier = Modifier.clickable(onClick = { onGradeClick(grade.id) }),
+            headlineContent = { Text(grade.name) },
+            supportingContent = { Text("Waga ${grade.weight}") },
+        )
+
+        if (index != grades.lastIndex) {
+            Divider()
         }
     }
 }
@@ -96,8 +116,15 @@ private fun GradeTemplatesScreenPreview(
 ) {
     TeacherTheme {
         Surface {
+            val gradeTemplates = remember(grades) {
+                GradeTemplatesUiState(
+                    firstTermGrades = grades.filter { grade -> grade.isFirstTerm },
+                    secondTermGrades = grades.filter { grade -> !grade.isFirstTerm }
+                )
+            }
+
             GradeTemplatesScreen(
-                gradesResult = Result.Success(grades),
+                gradeTemplatesResult = Result.Success(gradeTemplates),
                 snackbarHostState = remember { SnackbarHostState() },
                 onGradeClick = {},
                 onAddGradeClick = {},

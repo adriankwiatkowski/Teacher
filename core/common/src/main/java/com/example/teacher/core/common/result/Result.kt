@@ -37,6 +37,19 @@ fun <T> Flow<Result<T>>.notNull(): Flow<Result<T & Any>> {
         }
 }
 
+inline fun <T, R> Flow<Result<T>>.mapResult(
+    crossinline transform: suspend (value: T) -> Result<R>
+): Flow<Result<R>> {
+    return this
+        .map { result ->
+            when (result) {
+                is Result.Success -> transform(result.data)
+                is Result.Error -> Result.Error(result.exception)
+                Result.Loading -> Result.Loading
+            }
+        }
+}
+
 fun <T1, T2, R> Flow<Result<T1>>.combineResult(
     other: Flow<Result<T2>>,
     transform: suspend (a: T1, b: T2) -> Result<R>,

@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.common.result.mapResult
 import com.example.teacher.core.data.repository.gradetemplate.GradeTemplateRepository
 import com.example.teacher.core.model.data.BasicGradeTemplate
 import com.example.teacher.feature.lesson.nav.LessonNavigation
@@ -25,8 +26,21 @@ internal class GradeTemplatesViewModel @Inject constructor(
     private val lessonId = savedStateHandle.getStateFlow(LESSON_ID_KEY, 0L)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val gradesResult: StateFlow<Result<List<BasicGradeTemplate>>> = lessonId
+    private val gradesResult: StateFlow<Result<List<BasicGradeTemplate>>> = lessonId
         .flatMapLatest { lessonId -> repository.getGradeTemplatesByLessonId(lessonId) }
+        .stateIn(initialValue = Result.Loading)
+
+    val gradeTemplatesResult: StateFlow<Result<GradeTemplatesUiState>> = gradesResult
+        .mapResult { grades ->
+            val firstTermGrades = grades.filter { grade -> grade.isFirstTerm }
+            val secondTermGrades = grades.filter { grade -> !grade.isFirstTerm }
+            Result.Success(
+                GradeTemplatesUiState(
+                    firstTermGrades = firstTermGrades,
+                    secondTermGrades = secondTermGrades,
+                )
+            )
+        }
         .stateIn(initialValue = Result.Loading)
 
     private fun <T> Flow<T>.stateIn(initialValue: T): StateFlow<T> = stateIn(

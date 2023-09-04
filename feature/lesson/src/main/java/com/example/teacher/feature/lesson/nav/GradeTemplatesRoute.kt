@@ -15,10 +15,10 @@ internal fun GradeTemplatesRoute(
     onAddGradeClick: () -> Unit,
     viewModel: GradeTemplatesViewModel = hiltViewModel(),
 ) {
-    val gradesResult by viewModel.gradesResult.collectAsStateWithLifecycle()
+    val gradeTemplatesResult by viewModel.gradeTemplatesResult.collectAsStateWithLifecycle()
 
     GradeTemplatesScreen(
-        gradesResult = gradesResult,
+        gradeTemplatesResult = gradeTemplatesResult,
         snackbarHostState = snackbarHostState,
         onGradeClick = onGradeClick,
         onAddGradeClick = onAddGradeClick,
