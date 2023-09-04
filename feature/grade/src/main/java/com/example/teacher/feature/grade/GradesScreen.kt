@@ -158,6 +158,7 @@ private fun GradesScreenPreview(
                         lessonName = "Matematyka",
                         schoolClassId = 1L,
                         schoolClassName = "1A",
+                        isFirstTerm = true,
                     ),
                 )
             }

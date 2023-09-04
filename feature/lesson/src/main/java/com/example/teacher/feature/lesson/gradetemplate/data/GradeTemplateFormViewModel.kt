@@ -73,6 +73,10 @@ internal class GradeTemplateFormViewModel @Inject constructor(
         form = form.copy(weight = GradeTemplateFormProvider.validateWeight(weight))
     }
 
+    fun onIsFirstTermChange(isFirstTerm: Boolean) {
+        form = form.copy(isFirstTerm = isFirstTerm)
+    }
+
     fun onSubmit() {
         if (!form.isSubmitEnabled) {
             return
@@ -86,6 +90,7 @@ internal class GradeTemplateFormViewModel @Inject constructor(
                 name = form.name.value.trim(),
                 description = form.description.value?.trim().orEmpty(),
                 weight = form.weight.value.trim().toInt(),
+                isFirstTerm = form.isFirstTerm,
             )
 
             if (isActive) {

@@ -15,6 +15,7 @@ interface GradeTemplateDataSource {
         name: String,
         description: String?,
         weight: Int,
+        isFirstTerm: Boolean,
         lessonId: Long,
     )
 

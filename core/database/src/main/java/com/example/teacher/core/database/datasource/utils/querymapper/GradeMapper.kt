@@ -31,6 +31,7 @@ internal fun toExternal(
             name = grade.grade_template_name,
             description = grade.grade_template_description,
             weight = grade.grade_template_weight.toInt(),
+            isFirstTerm = grade.grade_is_first_term,
         ),
     )
 }
@@ -46,6 +47,7 @@ internal fun toExternal(
         studentFullName = "${grade.student_name} ${grade.student_surname}",
         gradeName = grade.grade_template_name,
         gradeWeight = grade.grade_template_weight.toInt(),
+        isFirstTerm = grade.grade_is_first_term,
     )
 }
 
@@ -64,5 +66,6 @@ internal fun toExternal(
         lessonName = gradeInfo.lesson_name,
         schoolClassId = gradeInfo.school_class_id,
         schoolClassName = gradeInfo.school_class_name,
+        isFirstTerm = gradeInfo.grade_is_first_term,
     )
 }

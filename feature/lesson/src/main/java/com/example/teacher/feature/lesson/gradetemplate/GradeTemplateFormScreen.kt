@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.GradeTemplate
 import com.example.teacher.core.ui.component.TeacherButton
+import com.example.teacher.core.ui.component.TeacherSwitch
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.form.FormStatusContent
@@ -61,6 +62,8 @@ internal fun GradeTemplateFormScreen(
     onDescriptionChange: (description: String) -> Unit,
     weight: InputField<String>,
     onWeightChange: (weight: String) -> Unit,
+    isFirstTerm: Boolean,
+    onIsFirstTermChange: (isFirstTerm: Boolean) -> Unit,
     isSubmitEnabled: Boolean,
     onAddGrade: () -> Unit,
     isEditMode: Boolean,
@@ -109,6 +112,8 @@ internal fun GradeTemplateFormScreen(
                     onDescriptionChange = onDescriptionChange,
                     weight = weight,
                     onWeightChange = onWeightChange,
+                    isFirstTerm = isFirstTerm,
+                    onIsFirstTermChange = onIsFirstTermChange,
                     submitText = if (isEditMode) "Edytuj ocenę" else "Dodaj ocenę",
                     isSubmitEnabled = isSubmitEnabled,
                     onSubmit = onAddGrade,
@@ -126,6 +131,8 @@ private fun MainContent(
     onDescriptionChange: (description: String) -> Unit,
     weight: InputField<String>,
     onWeightChange: (weight: String) -> Unit,
+    isFirstTerm: Boolean,
+    onIsFirstTermChange: (isFirstTerm: Boolean) -> Unit,
     submitText: String,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
@@ -158,6 +165,12 @@ private fun MainContent(
             capitalization = KeyboardCapitalization.Sentences
         )
         val commonKeyboardActions = KeyboardActions(onNext = { moveNext() })
+
+        TeacherSwitch(
+            label = "Pierwszy semestr",
+            checked = isFirstTerm,
+            onCheckedChange = { onIsFirstTermChange(it) },
+        )
 
         FormTextField(
             modifier = textFieldModifier,
@@ -224,6 +237,8 @@ private fun GradeTemplateFormScreenPreview() {
                 onWeightChange = {
                     form = form.copy(weight = GradeTemplateFormProvider.validateWeight(it))
                 },
+                isFirstTerm = form.isFirstTerm,
+                onIsFirstTermChange = { form = form.copy(isFirstTerm = it) },
                 isSubmitEnabled = form.isSubmitEnabled,
                 onAddGrade = {},
                 isEditMode = true,

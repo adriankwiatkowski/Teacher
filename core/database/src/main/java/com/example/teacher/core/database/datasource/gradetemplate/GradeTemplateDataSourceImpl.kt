@@ -43,6 +43,7 @@ internal class GradeTemplateDataSourceImpl(
         name: String,
         description: String?,
         weight: Int,
+        isFirstTerm: Boolean,
         lessonId: Long,
     ): Unit = withContext(dispatcher) {
         if (id == null) {
@@ -53,6 +54,7 @@ internal class GradeTemplateDataSourceImpl(
                 description = description,
                 date = TimeUtils.currentDate(),
                 weight = weight.toLong(),
+                is_first_term = isFirstTerm,
             )
         } else {
             queries.updateGradeTemplate(
@@ -62,6 +64,7 @@ internal class GradeTemplateDataSourceImpl(
                 description = description,
                 date = TimeUtils.currentDate(),
                 weight = weight.toLong(),
+                is_first_term = isFirstTerm,
             )
         }
     }

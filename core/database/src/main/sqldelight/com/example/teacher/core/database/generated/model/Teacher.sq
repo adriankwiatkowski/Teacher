@@ -79,12 +79,13 @@ CREATE TABLE student_note
 
 CREATE TABLE grade_template
 (
-    id          INTEGER           NOT NULL PRIMARY KEY AUTOINCREMENT,
-    lesson_id   INTEGER           NOT NULL,
-    name        TEXT              NOT NULL,
-    description TEXT,
-    `date`      TEXT AS LocalDate NOT NULL,
-    weight      INTEGER           NOT NULL,
+    id            INTEGER            NOT NULL PRIMARY KEY AUTOINCREMENT,
+    lesson_id     INTEGER            NOT NULL,
+    name          TEXT               NOT NULL,
+    description   TEXT,
+    `date`        TEXT AS LocalDate  NOT NULL,
+    weight        INTEGER            NOT NULL,
+    is_first_term INTEGER AS Boolean NOT NULL,
 
     FOREIGN KEY (lesson_id) REFERENCES lesson (id) ON DELETE CASCADE ON UPDATE CASCADE
 );

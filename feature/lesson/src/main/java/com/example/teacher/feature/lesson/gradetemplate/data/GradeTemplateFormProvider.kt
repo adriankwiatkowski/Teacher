@@ -48,6 +48,7 @@ internal object GradeTemplateFormProvider {
         name: String = "",
         description: String? = null,
         weight: String = DefaultWeight,
+        isFirstTerm: Boolean = true,
         isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): GradeTemplateForm {
@@ -55,6 +56,7 @@ internal object GradeTemplateFormProvider {
             name = validateName(name, isEdited = isEdited),
             description = validateDescription(description, isEdited = isEdited),
             weight = validateWeight(weight, isEdited = isEdited),
+            isFirstTerm = isFirstTerm,
             status = status,
         )
     }

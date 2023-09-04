@@ -12,6 +12,7 @@ class GradeTemplatePreviewParameterProvider : PreviewParameterProvider<GradeTemp
             name = "Dodawanie",
             description = "Sprawdzian z dodawania",
             weight = 1,
+            isFirstTerm = true,
         )
     )
 }
@@ -30,12 +31,14 @@ class BasicGradeTemplatePreviewParameterProvider : PreviewParameterProvider<Basi
             lessonId = 1L,
             name = "Dodawanie",
             weight = 1,
+            isFirstTerm = true,
         ),
         BasicGradeTemplate(
             id = 2L,
             lessonId = 1L,
             name = "Odejmowanie",
             weight = 2,
+            isFirstTerm = false,
         ),
     )
 }

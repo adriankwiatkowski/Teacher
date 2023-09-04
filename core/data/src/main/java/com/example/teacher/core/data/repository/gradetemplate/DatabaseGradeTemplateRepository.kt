@@ -31,6 +31,7 @@ internal class DatabaseGradeTemplateRepository @Inject constructor(
         name: String,
         description: String?,
         weight: Int,
+        isFirstTerm: Boolean,
         lessonId: Long,
     ) {
         scope.launch {
@@ -39,6 +40,7 @@ internal class DatabaseGradeTemplateRepository @Inject constructor(
                 name = name,
                 description = description,
                 weight = weight,
+                isFirstTerm = isFirstTerm,
                 lessonId = lessonId,
             )
         }

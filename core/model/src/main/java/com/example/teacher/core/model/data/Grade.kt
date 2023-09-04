@@ -30,6 +30,7 @@ data class BasicGrade(
 
     val name: String,
     val weight: Int,
+    val isFirstTerm: Boolean,
 )
 
 data class BasicGradeForTemplate(
@@ -42,4 +43,5 @@ data class BasicGradeForTemplate(
 
     val gradeName: String,
     val gradeWeight: Int,
+    val isFirstTerm: Boolean,
 )

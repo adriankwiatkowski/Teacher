@@ -51,6 +51,8 @@ internal fun GradeTemplateFormRoute(
         onDescriptionChange = viewModel::onDescriptionChange,
         weight = form.weight,
         onWeightChange = viewModel::onWeightChange,
+        isFirstTerm = form.isFirstTerm,
+        onIsFirstTermChange = viewModel::onIsFirstTermChange,
         isSubmitEnabled = form.isSubmitEnabled,
         onAddGrade = viewModel::onSubmit,
         isEditMode = isEditMode,

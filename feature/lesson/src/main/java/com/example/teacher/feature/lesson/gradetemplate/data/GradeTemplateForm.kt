@@ -7,6 +7,7 @@ internal data class GradeTemplateForm(
     val name: InputField<String>,
     val description: InputField<String?>,
     val weight: InputField<String>,
+    val isFirstTerm: Boolean,
     val status: FormStatus,
 ) {
     val isValid: Boolean

@@ -18,6 +18,7 @@ class GradeTemplateInfoPreviewParameterProvider : PreviewParameterProvider<Grade
             lessonName = "Matematyka",
             schoolClassId = 1L,
             schoolClassName = "1A",
+            isFirstTerm = true,
         ),
     )
 }
@@ -51,6 +52,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
                 gradeWeight = 1,
+                isFirstTerm = true,
             ),
             BasicGradeForTemplate(
                 id = 2L,
@@ -60,6 +62,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
                 gradeWeight = 1,
+                isFirstTerm = true,
             ),
             BasicGradeForTemplate(
                 id = 3L,
@@ -69,6 +72,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
                 gradeWeight = 1,
+                isFirstTerm = true,
             ),
             BasicGradeForTemplate(
                 id = 4L,
@@ -78,6 +82,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
                 gradeWeight = 1,
+                isFirstTerm = true,
             ),
             BasicGradeForTemplate(
                 id = 5L,
@@ -87,6 +92,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
                 gradeWeight = 1,
+                isFirstTerm = false,
             ),
             BasicGradeForTemplate(
                 id = null,
@@ -96,6 +102,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
                 studentFullName = "Jan Kowalski",
                 gradeName = "Dodawanie",
                 gradeWeight = 1,
+                isFirstTerm = false,
             ),
         ),
     )
@@ -117,6 +124,7 @@ class BasicGradePreviewParameterProvider : PreviewParameterProvider<BasicGrade> 
             lessonId = 1L,
             name = "Dodawanie",
             weight = 1,
+            isFirstTerm = true,
         ),
         BasicGrade(
             id = 2L,
@@ -126,6 +134,7 @@ class BasicGradePreviewParameterProvider : PreviewParameterProvider<BasicGrade> 
             lessonId = 1L,
             name = "Dodawanie",
             weight = 1,
+            isFirstTerm = false,
         ),
     )
 }

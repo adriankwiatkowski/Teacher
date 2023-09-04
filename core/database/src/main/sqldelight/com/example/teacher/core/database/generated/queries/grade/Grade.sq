@@ -14,7 +14,8 @@ SELECT
     gt.lesson_id AS 'grade_template_lesson_id',
     gt.name AS 'grade_template_name',
     gt.description AS 'grade_template_description',
-    gt.weight AS 'grade_template_weight'
+    gt.weight AS 'grade_template_weight',
+    gt.is_first_term AS 'grade_is_first_term'
 FROM grade g
 INNER JOIN grade_template gt ON gt.id = g.grade_template_id
 INNER JOIN lesson l ON l.id = gt.lesson_id
@@ -29,6 +30,7 @@ SELECT
     g.date,
     gt.name AS 'grade_template_name',
     gt.weight AS 'grade_template_weight',
+    gt.is_first_term AS 'grade_is_first_term',
     s.id AS 'student_id',
     s.name AS 'student_name',
     s.surname AS 'student_surname',
@@ -45,6 +47,7 @@ SELECT
     gt.id AS 'grade_template_id',
     gt.name AS 'grade_name',
     gt.weight AS 'grade_weight',
+    gt.is_first_term AS 'grade_is_first_term',
     l.id AS 'lessson_id',
     l.name AS 'lesson_name',
     sc.id AS 'school_class_id',

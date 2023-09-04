@@ -13,6 +13,7 @@ internal fun toExternal(
         lessonId = grade.lesson_id,
         name = grade.name,
         weight = grade.weight.toInt(),
+        isFirstTerm = grade.grade_is_first_term,
     )
 }
 
@@ -27,5 +28,6 @@ internal fun toExternal(grade: GetGradeTemplateById?): GradeTemplate? = run {
         name = grade.name,
         description = grade.description,
         weight = grade.weight.toInt(),
+        isFirstTerm = grade.grade_is_first_term,
     )
 }
