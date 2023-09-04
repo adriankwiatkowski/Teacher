@@ -64,11 +64,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.authenticate(activity = this)
+        authenticate()
     }
 
     private fun authenticate() {
-        viewModel.authenticate(this)
+        viewModel.authenticate(activity = this)
     }
 }
 
