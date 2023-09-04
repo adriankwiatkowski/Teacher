@@ -7,10 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -66,7 +65,6 @@ internal fun GradeTemplatesScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainContent(
     firstTermGrades: List<BasicGradeTemplate>,
@@ -78,14 +76,26 @@ private fun MainContent(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        stickyHeader {
-            Text(text = "Semestr I")
-        }
+        // TODO: Don't hardcode term name.
+        termHeader("Semestr I")
         grades(grades = firstTermGrades, onGradeClick = onGradeClick)
-        stickyHeader {
-            Text(text = "Semestr II")
-        }
+
+        // TODO: Don't hardcode term name.
+        termHeader("Semestr II")
         grades(grades = secondTermGrades, onGradeClick = onGradeClick)
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+private fun LazyListScope.termHeader(text: String) {
+    stickyHeader {
+        Surface(modifier = Modifier.fillParentMaxWidth()) {
+            Text(
+                modifier = Modifier.padding(MaterialTheme.spacing.small),
+                style = MaterialTheme.typography.headlineSmall,
+                text = text,
+            )
+        }
     }
 }
 
@@ -93,15 +103,17 @@ private fun LazyListScope.grades(
     grades: List<BasicGradeTemplate>,
     onGradeClick: (gradeId: Long) -> Unit,
 ) {
-    itemsIndexed(grades, key = { _, item -> item.id }) { index, grade ->
+    items(grades, key = { item -> item.id }) { grade ->
         ListItem(
             modifier = Modifier.clickable(onClick = { onGradeClick(grade.id) }),
             headlineContent = { Text(grade.name) },
             supportingContent = { Text("Waga ${grade.weight}") },
         )
+    }
 
-        if (index != grades.lastIndex) {
-            Divider()
+    if (grades.isEmpty()) {
+        item {
+            ListItem(headlineContent = { Text("Brak ocen w semestrze") })
         }
     }
 }
