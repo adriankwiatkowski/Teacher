@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -35,7 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.GradeTemplate
 import com.example.teacher.core.ui.component.TeacherButton
-import com.example.teacher.core.ui.component.TeacherSwitch
+import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.form.FormStatusContent
@@ -166,11 +167,20 @@ private fun MainContent(
         )
         val commonKeyboardActions = KeyboardActions(onNext = { moveNext() })
 
-        TeacherSwitch(
-            label = "Pierwszy semestr",
-            checked = isFirstTerm,
-            onCheckedChange = { onIsFirstTermChange(it) },
-        )
+
+        // TODO: Don't hardcode term names.
+        Column(Modifier.selectableGroup()) {
+            TeacherRadioButton(
+                label = "Semestr I",
+                selected = isFirstTerm,
+                onClick = { onIsFirstTermChange(true) },
+            )
+            TeacherRadioButton(
+                label = "Semestr II",
+                selected = !isFirstTerm,
+                onClick = { onIsFirstTermChange(false) },
+            )
+        }
 
         FormTextField(
             modifier = textFieldModifier,

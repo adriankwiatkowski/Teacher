@@ -76,11 +76,10 @@ private fun MainContent(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        // TODO: Don't hardcode term name.
+        // TODO: Don't hardcode term names.
         termHeader("Semestr I")
         grades(grades = firstTermGrades, onGradeClick = onGradeClick)
 
-        // TODO: Don't hardcode term name.
         termHeader("Semestr II")
         grades(grades = secondTermGrades, onGradeClick = onGradeClick)
     }
