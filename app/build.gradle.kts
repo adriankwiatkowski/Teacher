@@ -28,7 +28,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.example.teacherapp"
+    namespace = "com.example.teacher"
     compileSdk = 34
 
     signingConfigs {
@@ -41,7 +41,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.teacherapp"
+        applicationId = "com.example.teacher"
         minSdk = 21
         targetSdk = 34
         versionCode = 1

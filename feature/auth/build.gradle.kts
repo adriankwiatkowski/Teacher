@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacherapp.feature.auth"
+    namespace = "com.example.teacher.feature.auth"
     compileSdk = 34
 
     defaultConfig {

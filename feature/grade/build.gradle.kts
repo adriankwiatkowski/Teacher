@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacherapp.feature.grade"
+    namespace = "com.example.teacher.feature.grade"
     compileSdk = 33
 
     defaultConfig {

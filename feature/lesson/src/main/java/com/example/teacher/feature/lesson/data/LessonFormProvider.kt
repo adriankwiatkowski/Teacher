@@ -1,0 +1,30 @@
+package com.example.teacher.feature.lesson.data
+
+import androidx.core.text.trimmedLength
+import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.model.InputField
+
+internal object LessonFormProvider {
+
+    fun validateName(name: String, isEdited: Boolean = true): InputField<String> {
+        val trimmedLength = name.trimmedLength()
+        val charCountLimit = 60
+        return InputField(
+            name,
+            counter = trimmedLength to charCountLimit,
+            isError = trimmedLength !in 1..charCountLimit,
+            isEdited = isEdited,
+        )
+    }
+
+    fun createDefaultForm(
+        id: Long? = null,
+        name: String = "",
+        isEdited: Boolean = false,
+        status: FormStatus = FormStatus.Idle,
+    ): LessonForm = LessonForm(
+        id = id,
+        name = validateName(name, isEdited = isEdited),
+        status = status,
+    )
+}

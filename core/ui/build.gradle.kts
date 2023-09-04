@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacherapp.core.ui"
+    namespace = "com.example.teacher.core.ui"
     compileSdk = 33
 
     defaultConfig {

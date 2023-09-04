@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacherapp.core.auth"
+    namespace = "com.example.teacher.core.auth"
     compileSdk = 34
 
     defaultConfig {

@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacherapp.feature.schedule"
+    namespace = "com.example.teacher.feature.schedule"
     compileSdk = 33
 
     defaultConfig {

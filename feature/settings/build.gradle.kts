@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacherapp.feature.settings"
+    namespace = "com.example.teacher.feature.settings"
     compileSdk = 33
 
     defaultConfig {

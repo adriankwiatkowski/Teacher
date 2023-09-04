@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacherapp.core.datastore"
+    namespace = "com.example.teacher.core.datastore"
     compileSdk = 33
 
     defaultConfig {

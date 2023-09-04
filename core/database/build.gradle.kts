@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacherapp.core.database"
+    namespace = "com.example.teacher.core.database"
     compileSdk = 33
 
     defaultConfig {
@@ -39,7 +39,7 @@ android {
 sqldelight {
     databases {
         create("TeacherDatabase") { // This will be the name of the generated database class.
-            packageName.set("com.example.teacherapp.core.database.generated")
+            packageName.set("com.example.teacher.core.database.generated")
         }
     }
 }
