@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.example.teacherapp.core.ui.util.BackPressHandler
 import com.example.teacherapp.feature.auth.AuthScreen
 import com.example.teacherapp.feature.auth.nav.AuthNavigation.authRoute
 
@@ -14,17 +15,20 @@ object AuthNavigation {
 }
 
 fun NavController.navigateToAuthRoute(navOptions: NavOptions? = null) {
-    this.navigate(authRoute, navOptions)
+    this.navigate(authScreen, navOptions)
 }
 
 fun NavGraphBuilder.authGraph(
     authenticate: () -> Unit,
+    isAuthenticated: Boolean,
     isDeviceSecure: Boolean,
 ) {
     composable(authRoute) {
-        AuthScreen(
-            authenticate = authenticate,
-            isDeviceSecure = isDeviceSecure,
-        )
+        // Don't allow back press when user is authenticating.
+        BackPressHandler {
+            // Do nothing.
+        }
+
+        AuthScreen(authenticate = authenticate, isDeviceSecure = isDeviceSecure)
     }
 }

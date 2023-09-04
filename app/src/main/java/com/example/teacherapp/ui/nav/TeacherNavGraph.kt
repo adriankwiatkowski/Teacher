@@ -3,8 +3,11 @@ package com.example.teacherapp.ui.nav
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import com.example.teacherapp.feature.auth.nav.AuthNavigation
 import com.example.teacherapp.feature.auth.nav.authGraph
@@ -42,23 +45,18 @@ fun TeacherNavGraph(
 ) {
     val navController = appState.navController
 
-    // Handle authentication navigation.
-    LaunchedEffect(isAuthenticated) {
-        val currentRoute = navController.currentBackStackEntry?.destination?.route
-        if (isAuthenticated && currentRoute == AuthNavigation.authRoute) {
-            navController.popBackStack()
-        }
-        if (!isAuthenticated) {
-            navController.navigateToAuthRoute(navOptions { launchSingleTop = true })
-        }
-    }
+    AuthenticationHandler(navController = navController, isAuthenticated = isAuthenticated)
 
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
-        authGraph(authenticate = authenticate, isDeviceSecure = isDeviceSecure)
+        authGraph(
+            authenticate = authenticate,
+            isAuthenticated = isAuthenticated,
+            isDeviceSecure = isDeviceSecure,
+        )
 
         scheduleGraph(
             navController = navController,
@@ -114,5 +112,23 @@ fun TeacherNavGraph(
         )
 
         settingsGraph(snackbarHostState = snackbarHostState)
+    }
+}
+
+@Composable
+private fun AuthenticationHandler(navController: NavController, isAuthenticated: Boolean) {
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+
+    // Handle authentication navigation.
+    LaunchedEffect(isAuthenticated, currentRoute) {
+        // Navigate to previous (secure) screen if just authenticated.
+        if (isAuthenticated && currentRoute == AuthNavigation.authRoute) {
+            navController.popBackStack(AuthNavigation.authRoute, inclusive = true)
+        }
+        // Navigate to authentication screen if not authenticated.
+        if (!isAuthenticated) {
+            navController.navigateToAuthRoute(navOptions { launchSingleTop = true })
+        }
     }
 }

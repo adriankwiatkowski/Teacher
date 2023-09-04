@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                     TeacherApp(
                         appState = appState,
                         isAuthenticated = authState.isAuthenticated,
-                        authenticate = { viewModel.authenticate(this@MainActivity) },
+                        authenticate = ::authenticate,
                         isDeviceSecure = authState.isDeviceSecured,
                     )
                 }
@@ -65,6 +65,10 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.authenticate(activity = this)
+    }
+
+    private fun authenticate() {
+        viewModel.authenticate(this)
     }
 }
 
