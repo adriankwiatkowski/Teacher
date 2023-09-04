@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.teacher.feature.schoolclass"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 21
