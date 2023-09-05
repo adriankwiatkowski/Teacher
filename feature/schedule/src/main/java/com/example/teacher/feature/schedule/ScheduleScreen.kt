@@ -171,7 +171,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(R.string.schedule_empty),
+            text = stringResource(R.string.schedule_schedule_empty),
             style = MaterialTheme.typography.headlineMedium,
         )
     }
@@ -200,7 +200,7 @@ private fun EventItem(
         },
         supportingContent = {
             val text = event.lesson?.let { lesson -> "${lesson.name} ${lesson.schoolClass.name}" }
-                ?: stringResource(R.string.event)
+                ?: stringResource(R.string.schedule_event)
             Text(text)
         },
     )

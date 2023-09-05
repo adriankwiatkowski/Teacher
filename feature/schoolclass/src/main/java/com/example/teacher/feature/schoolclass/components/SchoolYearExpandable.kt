@@ -68,14 +68,14 @@ private fun TermItem(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        Text(text = stringResource(R.string.term_name, name))
+        Text(text = stringResource(R.string.school_class_term_name, name))
 
         Row {
-            Text(stringResource(R.string.term_start))
+            Text(stringResource(R.string.school_class_term_start))
             Text(TimeUtils.format(startDate))
         }
         Row {
-            Text(stringResource(R.string.term_end))
+            Text(stringResource(R.string.school_class_term_end))
             Text(TimeUtils.format(endDate))
         }
     }

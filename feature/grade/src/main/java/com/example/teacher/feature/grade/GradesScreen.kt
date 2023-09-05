@@ -56,7 +56,7 @@ internal fun GradesScreen(
     val title = remember(context, uiStateResult) {
         (uiStateResult as? Result.Success)?.data?.gradeTemplateInfo?.let { info ->
             "${info.lessonName} ${info.schoolClassName}"
-        } ?: context.getString(R.string.grades_title)
+        } ?: context.getString(R.string.grade_grades_title)
     }
 
     Scaffold(
@@ -79,7 +79,7 @@ internal fun GradesScreen(
             modifier = Modifier.padding(innerPadding),
             result = uiStateResult,
             isDeleted = isDeleted,
-            deletedMessage = stringResource(R.string.grade_deleted),
+            deletedMessage = stringResource(R.string.grade_grade_deleted),
         ) { uiState ->
             MainContent(
                 modifier = Modifier
@@ -141,7 +141,7 @@ private fun GradeItem(
 @Composable
 private fun gradeToName(grade: BigDecimal?): String {
     val context = LocalContext.current
-    return grade?.toString() ?: context.getString(R.string.no_grade)
+    return grade?.toString() ?: context.getString(R.string.grade_no_grade)
 }
 
 @Preview

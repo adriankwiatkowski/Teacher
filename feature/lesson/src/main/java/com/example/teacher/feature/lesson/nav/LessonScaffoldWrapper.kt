@@ -56,7 +56,7 @@ internal fun LessonScaffoldWrapper(
     // Observe deletion.
     LaunchedEffect(isLessonDeleted, onShowSnackbar, onNavBack) {
         if (isLessonDeleted) {
-            onShowSnackbar.onShowSnackbar(R.string.lesson_deleted)
+            onShowSnackbar.onShowSnackbar(R.string.lesson_lesson_deleted)
             onNavBack()
         }
     }

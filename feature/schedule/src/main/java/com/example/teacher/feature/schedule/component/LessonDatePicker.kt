@@ -36,12 +36,12 @@ internal fun LessonDatePicker(
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = stringResource(R.string.date))
+            Text(text = stringResource(R.string.schedule_date))
             Text(text = TimeUtils.format(date))
             TeacherDatePicker(
                 date = date,
                 onDateSelected = onDateSelected,
-                label = stringResource(R.string.pick_date),
+                label = stringResource(R.string.schedule_pick_date),
             )
         }
     }

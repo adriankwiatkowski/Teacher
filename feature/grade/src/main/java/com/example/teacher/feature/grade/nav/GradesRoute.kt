@@ -28,7 +28,7 @@ internal fun GradesRoute(
     // Observe deletion.
     LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
         if (isDeleted) {
-            onShowSnackbar.onShowSnackbar(R.string.grade_deleted)
+            onShowSnackbar.onShowSnackbar(R.string.grade_grade_deleted)
             onNavBack()
         }
     }

@@ -72,7 +72,7 @@ internal fun SchoolYearFormScreen(
         FormStatusContent(
             modifier = Modifier.padding(innerPadding),
             formStatus = status,
-            savingText = stringResource(R.string.saving_school_year),
+            savingText = stringResource(R.string.school_year_saving_school_year),
         ) {
             MainContent(
                 termForms = termForms,
@@ -118,7 +118,7 @@ private fun MainContent(
         ) { index, termForm ->
             TeamFormItem(
                 modifier = Modifier.fillMaxWidth(),
-                title = stringResource(R.string.term_with_index, index + 1),
+                title = stringResource(R.string.school_year_term_with_index, index + 1),
                 namePrefix = "(${schoolYearName.value}) ",
                 nameInput = termForm.name,
                 onNameChange = { onTermNameChange(index, it) },
@@ -132,7 +132,7 @@ private fun MainContent(
         item {
             TeacherButton(
                 modifier = Modifier.fillMaxWidth(),
-                label = stringResource(R.string.add_school_year),
+                label = stringResource(R.string.school_year_add_school_year),
                 onClick = onSubmit,
                 enabled = isSubmitEnabled,
             )

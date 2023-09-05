@@ -73,7 +73,7 @@ internal fun EventFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = stringResource(R.string.event_form_title),
+                title = stringResource(R.string.schedule_event_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -104,9 +104,9 @@ internal fun EventFormScreen(
 
             DateForm(
                 title = if (lesson != null) {
-                    stringResource(R.string.class_date)
+                    stringResource(R.string.schedule_class_date)
                 } else {
-                    stringResource(R.string.event_date)
+                    stringResource(R.string.schedule_event_date)
                 },
                 day = eventForm.day,
                 onDayChange = onDayChange,
@@ -128,7 +128,7 @@ internal fun EventFormScreen(
 
             TeacherButton(
                 modifier = Modifier.fillMaxWidth(),
-                label = stringResource(R.string.add_event_date),
+                label = stringResource(R.string.schedule_add_event_date),
                 onClick = onSubmit,
                 enabled = isSubmitEnabled,
             )
@@ -150,18 +150,18 @@ private fun Header(
             val schoolClassName = lesson.schoolClassName
             "$lessonName $schoolClassName"
         } else {
-            stringResource(R.string.pick_lesson)
+            stringResource(R.string.schedule_pick_lesson)
         }
 
         TeacherSwitch(
-            label = stringResource(R.string.add_event),
+            label = stringResource(R.string.schedule_add_event),
             checked = !isLessonForm,
             onCheckedChange = { onIsLessonFormChange(!it) },
         )
 
         if (isLessonForm) {
             Text(
-                text = stringResource(R.string.lesson),
+                text = stringResource(R.string.schedule_lesson),
                 style = MaterialTheme.typography.labelMedium,
             )
             TeacherButton(
@@ -171,7 +171,7 @@ private fun Header(
             )
             if (lesson == null) {
                 Text(
-                    text = stringResource(R.string.lesson_not_selected),
+                    text = stringResource(R.string.schedule_lesson_not_selected),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.error,
                 )

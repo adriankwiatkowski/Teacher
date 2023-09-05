@@ -27,7 +27,7 @@ internal fun LessonFormRoute(
 
     LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
         if (formStatus == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.lesson_saved)
+            onShowSnackbar.onShowSnackbar(R.string.lesson_lesson_saved)
             onNavBack()
         }
     }

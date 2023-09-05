@@ -27,7 +27,7 @@ internal fun SchoolClassFormRoute(
 
     LaunchedEffect(status, onShowSnackbar, onNavBack) {
         if (status == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.school_class_saved)
+            onShowSnackbar.onShowSnackbar(R.string.school_class_school_class_saved)
             onNavBack()
         }
     }

@@ -29,14 +29,14 @@ internal fun GradeTemplateFormRoute(
     // Observe save.
     LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
         if (formStatus == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.grade_saved)
+            onShowSnackbar.onShowSnackbar(R.string.lesson_grade_saved)
             onNavBack()
         }
     }
     // Observe deletion.
     LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
         if (isDeleted) {
-            onShowSnackbar.onShowSnackbar(R.string.grade_deleted)
+            onShowSnackbar.onShowSnackbar(R.string.lesson_grade_deleted)
             onNavBack()
         }
     }

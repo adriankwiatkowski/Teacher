@@ -87,7 +87,12 @@ private fun MainScreen(
             key = { item -> item.lessonId },
         ) { studentGrade ->
             Text(studentGrade.lessonName)
-            Text(stringResource(R.string.grade_average, studentGrade.average.toPlainString()))
+            Text(
+                stringResource(
+                    R.string.student_grade_average,
+                    studentGrade.average.toPlainString()
+                )
+            )
             Grades(
                 grades = studentGrade.gradesByLessonId,
                 onGradeClick = { grade -> onShowGradeDialog(studentGrade, grade) }
@@ -130,7 +135,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(R.string.empty_grades),
+            text = stringResource(R.string.student_empty_grades),
             style = MaterialTheme.typography.displayMedium,
         )
     }

@@ -73,7 +73,7 @@ internal fun NoteFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = stringResource(R.string.note_form_title),
+                title = stringResource(R.string.lesson_note_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
@@ -92,11 +92,11 @@ internal fun NoteFormScreen(
                 .padding(MaterialTheme.spacing.small),
             result = noteResult,
             isDeleted = isNoteDeleted,
-            deletedMessage = stringResource(R.string.lesson_note_deleted),
+            deletedMessage = stringResource(R.string.lesson_lesson_note_deleted),
         ) {
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = stringResource(R.string.saving_lesson_note),
+                savingText = stringResource(R.string.lesson_saving_lesson_note),
             ) {
                 MainContent(
                     modifier = Modifier
@@ -108,9 +108,9 @@ internal fun NoteFormScreen(
                     onTextChange = onTextChange,
                     isSubmitEnabled = isSubmitEnabled,
                     submitText = if (isEditMode) {
-                        stringResource(R.string.edit_note)
+                        stringResource(R.string.lesson_edit_note)
                     } else {
-                        stringResource(R.string.add_note)
+                        stringResource(R.string.lesson_add_note)
                     },
                     onSubmit = onAddNote,
                 )
@@ -162,7 +162,7 @@ private fun MainContent(
             modifier = textFieldModifier,
             inputField = title,
             onValueChange = onTitleChange,
-            label = stringResource(R.string.title),
+            label = stringResource(R.string.lesson_title),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -171,7 +171,7 @@ private fun MainContent(
             modifier = Modifier.fillMaxWidth(),
             inputField = text,
             onValueChange = onTextChange,
-            label = stringResource(R.string.description),
+            label = stringResource(R.string.lesson_description),
             minLines = 10,
         )
 

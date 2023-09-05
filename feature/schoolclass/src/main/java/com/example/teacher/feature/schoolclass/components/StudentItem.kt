@@ -42,11 +42,11 @@ internal fun StudentItem(
             Text(text = "$name $surname")
 
             if (email != null) {
-                Text(text = stringResource(R.string.email_with_label, email))
+                Text(text = stringResource(R.string.school_class_email, email))
             }
 
             if (phone != null) {
-                Text(text = stringResource(R.string.phone_with_label, phone))
+                Text(text = stringResource(R.string.school_class_phone, phone))
             }
         }
     }

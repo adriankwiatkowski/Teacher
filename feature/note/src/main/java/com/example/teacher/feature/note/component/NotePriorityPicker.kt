@@ -38,7 +38,7 @@ internal fun NotePriorityPicker(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = stringResource(R.string.note_priority),
+                text = stringResource(R.string.note_note_priority),
                 style = MaterialTheme.typography.bodyLarge,
             )
 

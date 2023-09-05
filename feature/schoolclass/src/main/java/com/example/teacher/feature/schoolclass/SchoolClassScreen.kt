@@ -77,7 +77,7 @@ internal fun SchoolClassScreen(
                 .fillMaxSize(),
             result = schoolClassResult,
             isDeleted = isSchoolClassDeleted,
-            deletedMessage = stringResource(R.string.school_class_deleted),
+            deletedMessage = stringResource(R.string.school_class_school_class_deleted),
         ) { schoolClass ->
             MainContent(
                 modifier = Modifier.fillMaxSize(),
@@ -106,8 +106,8 @@ private fun MainContent(
     isLessonsExpanded: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
-    val studentsLabel = stringResource(R.string.students, schoolClass.students.size)
-    val lessonsLabel = stringResource(R.string.lessons, schoolClass.lessons.size)
+    val studentsLabel = stringResource(R.string.school_class_students, schoolClass.students.size)
+    val lessonsLabel = stringResource(R.string.school_class_lessons, schoolClass.lessons.size)
 
     LazyColumn(
         modifier = modifier.fillMaxSize(),

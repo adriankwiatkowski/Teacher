@@ -34,7 +34,7 @@ internal object GradeTemplateFormProvider {
         val isError = weight.trim().toIntOrNull()?.let { weightNumber ->
             weightNumber !in 1..6
         } ?: true
-        val supportingText = if (isError) R.string.grade_weight_error else null
+        val supportingText = if (isError) R.string.lesson_grade_weight_error else null
 
         return InputField(
             weight,

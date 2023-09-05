@@ -113,27 +113,27 @@ private fun AttendanceItem(
                 horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
             ) {
                 AttendanceCountItem(
-                    label = stringResource(R.string.present_short),
+                    label = stringResource(R.string.lesson_present_short),
                     count = presentCount,
                 )
                 AttendanceCountItem(
-                    label = stringResource(R.string.late_short),
+                    label = stringResource(R.string.lesson_late_short),
                     count = lateCount,
                 )
                 AttendanceCountItem(
-                    label = stringResource(R.string.absent_short),
+                    label = stringResource(R.string.lesson_absent_short),
                     count = absentCount,
                 )
                 AttendanceCountItem(
-                    label = stringResource(R.string.excused_absence_short),
+                    label = stringResource(R.string.lesson_excused_absence_short),
                     count = excusedAbsenceCount,
                 )
                 AttendanceCountItem(
-                    label = stringResource(R.string.exemption_short),
+                    label = stringResource(R.string.lesson_exemption_short),
                     count = exemptionCount,
                 )
                 AttendanceCountItem(
-                    label = stringResource(R.string.no_attendance_short),
+                    label = stringResource(R.string.lesson_no_attendance_short),
                     count = attendanceNotSetCount,
                     emphasis = true,
                 )

@@ -35,7 +35,7 @@ internal fun LessonTimePicker(
         TeacherTimePicker(
             time = time,
             onTimeSelected = onTimeSelected,
-            label = stringResource(R.string.pick_hour),
+            label = stringResource(R.string.schedule_pick_hour),
         )
     }
 }

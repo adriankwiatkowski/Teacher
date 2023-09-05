@@ -61,7 +61,7 @@ private fun StudentsPreview(
     TeacherTheme {
         Surface {
             val expanded = remember { mutableStateOf(false) }
-            val label = stringResource(R.string.students, students.size)
+            val label = stringResource(R.string.school_class_students, students.size)
 
             LazyColumn {
                 students(

@@ -120,7 +120,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(R.string.empty_notes),
+            text = stringResource(R.string.note_empty_notes),
             style = MaterialTheme.typography.displayMedium,
         )
     }

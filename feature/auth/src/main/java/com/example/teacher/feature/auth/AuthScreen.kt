@@ -38,20 +38,20 @@ internal fun AuthScreen(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = stringResource(R.string.sensitive_data),
+                text = stringResource(R.string.auth_sensitive_data),
                 style = MaterialTheme.typography.headlineMedium,
             )
             Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
 
             Text(
-                text = stringResource(R.string.sensitive_data_explanation),
+                text = stringResource(R.string.auth_sensitive_data_explanation),
                 style = MaterialTheme.typography.bodyLarge,
             )
 
             if (!isDeviceSecure) {
                 Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
                 Text(
-                    text = stringResource(R.string.device_not_secure),
+                    text = stringResource(R.string.auth_device_not_secure),
                     style = MaterialTheme.typography.bodyLarge,
                 )
 
@@ -63,7 +63,7 @@ internal fun AuthScreen(
             Spacer(modifier = Modifier.padding(MaterialTheme.spacing.medium))
             TeacherButton(
                 modifier = Modifier.fillMaxWidth(),
-                label = stringResource(R.string.unlock_app),
+                label = stringResource(R.string.auth_unlock_app),
                 onClick = authenticate,
             )
         }

@@ -68,17 +68,17 @@ internal fun DateForm(
 
             if (showTermPicker) {
                 Text(
-                    text = stringResource(R.string.term),
+                    text = stringResource(R.string.schedule_term),
                     style = MaterialTheme.typography.labelLarge,
                 )
                 Column(Modifier.selectableGroup()) {
                     TeacherRadioButton(
-                        label = stringResource(R.string.first_term),
+                        label = stringResource(R.string.schedule_first_term),
                         selected = isFirstTermSelected,
                         onClick = { onTermSelected(true) },
                     )
                     TeacherRadioButton(
-                        label = stringResource(R.string.second_term),
+                        label = stringResource(R.string.schedule_second_term),
                         selected = !isFirstTermSelected,
                         onClick = { onTermSelected(false) },
                     )
@@ -94,12 +94,12 @@ internal fun DateForm(
             }
 
             LessonTimePicker(
-                label = stringResource(R.string.start_time),
+                label = stringResource(R.string.schedule_start_time),
                 time = startTime,
                 onTimeSelected = onStartTimeChange,
             )
             LessonTimePicker(
-                label = stringResource(R.string.end_time),
+                label = stringResource(R.string.schedule_end_time),
                 time = endTime,
                 onTimeSelected = onEndTimeChange,
             )
@@ -109,7 +109,7 @@ internal fun DateForm(
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
                 Text(
-                    text = stringResource(R.string.type),
+                    text = stringResource(R.string.schedule_type),
                     style = MaterialTheme.typography.labelLarge,
                 )
                 EventTypeControls(type = type, onTypeChange = onTypeChange)

@@ -71,7 +71,7 @@ internal fun AttendanceScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = stringResource(R.string.attendance_title),
+                title = stringResource(R.string.lesson_attendance_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -161,7 +161,7 @@ private fun AttendanceDialog(
     AlertDialog(
         modifier = modifier,
         onDismissRequest = onDismissRequest,
-        title = { Text(stringResource(R.string.set_attendance)) },
+        title = { Text(stringResource(R.string.lesson_set_attendance)) },
         text = {
             Column {
                 Text(studentFullName)
@@ -228,12 +228,12 @@ private fun AttendanceItem(
 @Composable
 private fun getAttendanceText(attendance: Attendance?): String {
     return when (attendance) {
-        Attendance.Present -> stringResource(R.string.present)
-        Attendance.Late -> stringResource(R.string.late)
-        Attendance.Absent -> stringResource(R.string.absent)
-        Attendance.ExcusedAbsence -> stringResource(R.string.excused_absence)
-        Attendance.Exemption -> stringResource(R.string.exemption)
-        null -> stringResource(R.string.no_attendance)
+        Attendance.Present -> stringResource(R.string.lesson_present)
+        Attendance.Late -> stringResource(R.string.lesson_late)
+        Attendance.Absent -> stringResource(R.string.lesson_absent)
+        Attendance.ExcusedAbsence -> stringResource(R.string.lesson_excused_absence)
+        Attendance.Exemption -> stringResource(R.string.lesson_exemption)
+        null -> stringResource(R.string.lesson_no_attendance)
     }
 }
 

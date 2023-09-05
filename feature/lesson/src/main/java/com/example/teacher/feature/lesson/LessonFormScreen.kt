@@ -70,14 +70,14 @@ internal fun LessonFormScreen(
     FormStatusContent(
         modifier = modifier,
         formStatus = formStatus,
-        savingText = stringResource(R.string.saving_lesson),
+        savingText = stringResource(R.string.lesson_saving_lesson),
     ) {
         Scaffold(
             modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
             topBar = {
                 TeacherTopBar(
-                    title = stringResource(R.string.school_class, schoolClassName),
+                    title = stringResource(R.string.lesson_school_class, schoolClassName),
                     showNavigationIcon = showNavigationIcon,
                     onNavigationIconClick = onNavBack,
                     scrollBehavior = scrollBehavior,
@@ -105,9 +105,9 @@ internal fun LessonFormScreen(
                         onSubmit = onAddLessonClick,
                         isSubmitEnabled = isSubmitEnabled,
                         submitText = if (lessonResult.data == null) {
-                            stringResource(R.string.add_lesson)
+                            stringResource(R.string.lesson_add_lesson)
                         } else {
-                            stringResource(R.string.edit_lesson)
+                            stringResource(R.string.lesson_edit_lesson)
                         },
                     )
                 } else {
@@ -121,9 +121,9 @@ internal fun LessonFormScreen(
                             name = name,
                             onNameChange = onNameChange,
                             submitText = if (lesson == null) {
-                                stringResource(R.string.add_lesson)
+                                stringResource(R.string.lesson_add_lesson)
                             } else {
-                                stringResource(R.string.edit_lesson)
+                                stringResource(R.string.lesson_edit_lesson)
                             },
                             isSubmitEnabled = isSubmitEnabled,
                             onSubmit = onAddLessonClick,
@@ -147,7 +147,7 @@ private fun Content(
 ) {
     Column(modifier = modifier) {
         Text(
-            text = stringResource(R.string.school_class, schoolClassName),
+            text = stringResource(R.string.lesson_school_class, schoolClassName),
             style = MaterialTheme.typography.headlineMedium,
         )
 
@@ -178,7 +178,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = name,
             onValueChange = { onNameChange(it) },
-            label = stringResource(R.string.lesson),
+            label = stringResource(R.string.lesson_lesson),
             leadingIcon = {
                 val icon = TeacherIcons.subject()
                 Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))

@@ -51,7 +51,7 @@ internal fun LessonPickerScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = stringResource(R.string.event_form_title),
+                title = stringResource(R.string.schedule_event_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -92,7 +92,7 @@ private fun MainScreen(
     ) {
         stickyHeader {
             Text(
-                text = stringResource(R.string.pick_lesson),
+                text = stringResource(R.string.schedule_pick_lesson),
                 style = MaterialTheme.typography.headlineSmall,
             )
         }
@@ -124,7 +124,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(R.string.no_lesson_exists),
+            text = stringResource(R.string.schedule_no_lesson_exists),
             style = MaterialTheme.typography.headlineMedium,
         )
     }

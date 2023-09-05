@@ -75,8 +75,16 @@ private fun MainScreen(
         modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
         Text(text = studentName, style = MaterialTheme.typography.titleLarge)
-        CopyableText(label = stringResource(R.string.email), text = email, onClick = onEmailClick)
-        CopyableText(label = stringResource(R.string.phone), text = phone, onClick = onPhoneClick)
+        CopyableText(
+            label = stringResource(R.string.student_email),
+            text = email,
+            onClick = onEmailClick
+        )
+        CopyableText(
+            label = stringResource(R.string.student_phone),
+            text = phone,
+            onClick = onPhoneClick
+        )
     }
 }
 

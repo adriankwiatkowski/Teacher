@@ -24,17 +24,17 @@ internal fun EventTypeControls(
 ) {
     Column(modifier.selectableGroup()) {
         TeacherRadioButton(
-            label = stringResource(R.string.once),
+            label = stringResource(R.string.schedule_once),
             selected = type == EventType.Once,
             onClick = { onTypeChange(EventType.Once) },
         )
         TeacherRadioButton(
-            label = stringResource(R.string.weekly),
+            label = stringResource(R.string.schedule_weekly),
             selected = type == EventType.Weekly,
             onClick = { onTypeChange(EventType.Weekly) },
         )
         TeacherRadioButton(
-            label = stringResource(R.string.every_two_weeks),
+            label = stringResource(R.string.schedule_every_two_weeks),
             selected = type == EventType.EveryTwoWeeks,
             onClick = { onTypeChange(EventType.EveryTwoWeeks) },
         )

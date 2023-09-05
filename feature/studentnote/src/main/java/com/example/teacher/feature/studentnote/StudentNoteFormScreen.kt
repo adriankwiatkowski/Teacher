@@ -93,11 +93,11 @@ internal fun StudentNoteFormScreen(
                 .padding(MaterialTheme.spacing.small),
             result = studentNoteResult,
             isDeleted = isStudentNoteDeleted,
-            deletedMessage = stringResource(R.string.note_deleted),
+            deletedMessage = stringResource(R.string.student_note_note_deleted),
         ) {
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = stringResource(R.string.saving_note),
+                savingText = stringResource(R.string.student_note_saving_note),
             ) {
                 Content(
                     modifier = Modifier
@@ -110,9 +110,9 @@ internal fun StudentNoteFormScreen(
                     onDescriptionChange = onDescriptionChange,
                     isSubmitEnabled = isSubmitEnabled,
                     submitText = if (isEditMode) {
-                        stringResource(R.string.edit_note)
+                        stringResource(R.string.student_note_edit_note)
                     } else {
-                        stringResource(R.string.add_note)
+                        stringResource(R.string.student_note_add_note)
                     },
                     onSubmit = onAddStudentNote,
                 )
@@ -167,7 +167,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = title,
             onValueChange = { onTitleChange(it) },
-            label = stringResource(R.string.title),
+            label = stringResource(R.string.student_note_title),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -176,7 +176,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = description,
             onValueChange = { onDescriptionChange(it) },
-            label = stringResource(R.string.description),
+            label = stringResource(R.string.student_note_description),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )

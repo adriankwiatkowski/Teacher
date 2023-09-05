@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="details">Dane</string>
-    <string name="grades">Oceny</string>
-    <string name="notes">Uwagi</string>
-    <string name="saving_student">Zapisywanie studenta…</string>
+    <string name="student_details">Dane</string>
+    <string name="student_grades">Oceny</string>
+    <string name="student_notes">Uwagi</string>
+    <string name="student_saving_student">Zapisywanie studenta…</string>
     <string name="student_saved">Zapisano dane ucznia</string>
     <string name="student_deleted">Usunięto ucznia</string>
-    <string name="email">Email</string>
-    <string name="phone">Telefon</string>
-    <string name="school_class_name">Klasa %1$s</string>
+    <string name="student_email">Email</string>
+    <string name="student_phone">Telefon</string>
+    <string name="student_school_class_name">Klasa %1$s</string>
     <string name="add_student">Dodaj studenta</string>
     <string name="edit_student">Edytuj studenta</string>
-    <string name="name">Imię</string>
-    <string name="surname">Nazwisko</string>
+    <string name="student_name">Imię</string>
+    <string name="student_surname">Nazwisko</string>
     <string name="ok">OK</string>
-    <string name="grade_average">Średnia: %1$s</string>
-    <string name="empty_grades">Uczeń nie ma żadnej oceny</string>
-    <string name="empty_notes">Uczeń nie ma żadnej uwagi</string>
+    <string name="student_grade_average">Średnia: %1$s</string>
+    <string name="student_empty_grades">Uczeń nie ma żadnej oceny</string>
+    <string name="student_empty_notes">Uczeń nie ma żadnej uwagi</string>
 </resources>

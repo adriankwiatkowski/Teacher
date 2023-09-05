@@ -80,7 +80,7 @@ internal fun GradeTemplateFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = stringResource(R.string.grade),
+                title = stringResource(R.string.lesson_grade),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
@@ -98,11 +98,11 @@ internal fun GradeTemplateFormScreen(
                 .padding(MaterialTheme.spacing.small),
             result = gradeTemplateResult,
             isDeleted = isDeleted,
-            deletedMessage = stringResource(R.string.grade_deleted),
+            deletedMessage = stringResource(R.string.lesson_grade_deleted),
         ) {
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = stringResource(R.string.saving_grade),
+                savingText = stringResource(R.string.lesson_saving_grade),
             ) {
                 MainContent(
                     modifier = Modifier
@@ -117,9 +117,9 @@ internal fun GradeTemplateFormScreen(
                     isFirstTerm = isFirstTerm,
                     onIsFirstTermChange = onIsFirstTermChange,
                     submitText = if (isEditMode) {
-                        stringResource(R.string.edit_grade)
+                        stringResource(R.string.lesson_edit_grade)
                     } else {
-                        stringResource(R.string.save_grade)
+                        stringResource(R.string.lesson_save_grade)
                     },
                     isSubmitEnabled = isSubmitEnabled,
                     onSubmit = onAddGrade,
@@ -191,7 +191,7 @@ private fun MainContent(
             modifier = textFieldModifier,
             inputField = name,
             onValueChange = { onNameChange(it) },
-            label = stringResource(R.string.name),
+            label = stringResource(R.string.lesson_name),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -200,7 +200,7 @@ private fun MainContent(
             modifier = textFieldModifier,
             inputField = description,
             onValueChange = { onDescriptionChange(it) },
-            label = stringResource(R.string.description),
+            label = stringResource(R.string.lesson_description),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -209,7 +209,7 @@ private fun MainContent(
             modifier = textFieldModifier,
             inputField = weight,
             onValueChange = { onWeightChange(it) },
-            label = stringResource(R.string.weight),
+            label = stringResource(R.string.lesson_weight),
             keyboardOptions = commonKeyboardOptions.copy(keyboardType = KeyboardType.Number),
             keyboardActions = commonKeyboardActions,
         )

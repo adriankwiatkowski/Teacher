@@ -28,14 +28,14 @@ internal fun NoteFormRoute(
     // Observe save.
     LaunchedEffect(form.status, onShowSnackbar, onNavBack) {
         if (form.status == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.note_saved)
+            onShowSnackbar.onShowSnackbar(R.string.note_note_saved)
             onNavBack()
         }
     }
     // Observe deletion.
     LaunchedEffect(isNoteDeleted, onShowSnackbar, onNavBack) {
         if (isNoteDeleted) {
-            onShowSnackbar.onShowSnackbar(R.string.note_deleted)
+            onShowSnackbar.onShowSnackbar(R.string.note_note_deleted)
             onNavBack()
         }
     }

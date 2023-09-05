@@ -67,7 +67,7 @@ internal fun SchoolClassFormScreen(
     ) { innerPadding ->
         FormStatusContent(
             formStatus = formStatus,
-            savingText = stringResource(R.string.saving_school_class),
+            savingText = stringResource(R.string.school_class_saving_school_class),
         ) {
             MainContent(
                 modifier = modifier
@@ -124,7 +124,7 @@ private fun MainContent(
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
-            label = stringResource(R.string.add_school_class),
+            label = stringResource(R.string.school_class_add_school_class),
             onClick = onSubmit,
             enabled = isSubmitEnabled,
         )

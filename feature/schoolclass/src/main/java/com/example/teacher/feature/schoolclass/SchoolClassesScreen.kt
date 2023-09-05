@@ -131,7 +131,7 @@ private fun ClassItem(
             Row {
                 TeacherChip(
                     modifier = chipModifier,
-                    label = stringResource(R.string.students, studentCount),
+                    label = stringResource(R.string.school_class_students, studentCount),
                     onClick = onStudentsClick,
                     leadingIcon = {
                         val icon = TeacherIcons.person()
@@ -141,7 +141,7 @@ private fun ClassItem(
 
                 TeacherChip(
                     modifier = chipModifier,
-                    label = stringResource(R.string.lessons, lessonCount),
+                    label = stringResource(R.string.school_class_lessons, lessonCount),
                     onClick = onLessonsClick,
                     leadingIcon = {
                         val icon = TeacherIcons.subject()

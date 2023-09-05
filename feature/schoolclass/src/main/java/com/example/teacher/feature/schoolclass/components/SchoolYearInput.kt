@@ -37,7 +37,7 @@ internal fun SchoolYearInput(
                 CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.error) {
                     Text(
                         modifier = Modifier.weight(9f),
-                        text = stringResource(R.string.cannot_create_school_class_without_school_year),
+                        text = stringResource(R.string.school_class_no_school_year),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Icon(
@@ -64,14 +64,14 @@ internal fun SchoolYearInput(
                 suggestions = schoolYears,
                 inputToString = { stringifySchoolYear(it.value) },
                 suggestionToString = stringifySchoolYear,
-                label = stringResource(R.string.school_year),
+                label = stringResource(R.string.school_class_school_year),
                 readOnly = true,
             )
         }
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
-            label = stringResource(R.string.add_school_year),
+            label = stringResource(R.string.school_class_add_school_year),
             onClick = onAddSchoolYear,
         )
     }

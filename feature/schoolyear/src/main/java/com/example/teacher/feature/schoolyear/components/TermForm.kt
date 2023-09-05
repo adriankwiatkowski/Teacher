@@ -41,18 +41,18 @@ internal fun TermForm(
             modifier = Modifier.fillMaxWidth(),
             inputField = nameInput,
             onValueChange = onNameChange,
-            label = stringResource(R.string.term_name_label),
+            label = stringResource(R.string.school_year_term_name_label),
             prefix = namePrefix,
         )
 
         TermDatePicker(
-            label = stringResource(R.string.term_start_date_label),
+            label = stringResource(R.string.school_year_term_start_date_label),
             date = startDate.date,
             dateString = startDate.dateString,
             onDateSelected = onStartDateSelected,
         )
         TermDatePicker(
-            label = stringResource(R.string.term_end_date_label),
+            label = stringResource(R.string.school_year_term_end_date_label),
             date = endDate.date,
             dateString = endDate.dateString,
             onDateSelected = onEndDateSelected,
@@ -77,7 +77,7 @@ private fun TermDatePicker(
         TeacherDatePicker(
             date = date,
             onDateSelected = onDateSelected,
-            label = stringResource(R.string.pick_date),
+            label = stringResource(R.string.school_year_pick_date),
         )
     }
 }

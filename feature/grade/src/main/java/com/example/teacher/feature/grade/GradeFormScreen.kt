@@ -70,7 +70,7 @@ internal fun GradeFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = stringResource(R.string.grade_form_title),
+                title = stringResource(R.string.grade_grade_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
@@ -88,11 +88,11 @@ internal fun GradeFormScreen(
                 .padding(MaterialTheme.spacing.small),
             result = uiStateResult,
             isDeleted = isDeleted,
-            deletedMessage = stringResource(R.string.grade_deleted),
+            deletedMessage = stringResource(R.string.grade_grade_deleted),
         ) { uiState ->
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = stringResource(R.string.saving_grade),
+                savingText = stringResource(R.string.grade_saving_grade),
             ) {
                 MainContent(
                     modifier = modifier
@@ -103,9 +103,9 @@ internal fun GradeFormScreen(
                     inputGrade = inputGrade,
                     onGradeChange = onGradeChange,
                     submitText = if (isEditMode) {
-                        stringResource(R.string.edit_grade)
+                        stringResource(R.string.grade_edit_grade)
                     } else {
-                        stringResource(R.string.add_grade)
+                        stringResource(R.string.grade_add_grade)
                     },
                     isSubmitEnabled = isSubmitEnabled,
                     onSubmit = onSubmit,
@@ -167,11 +167,11 @@ private fun GradeInfo(
     Card(modifier = modifier) {
         Column {
             Text(gradeInfo.gradeName)
-            Text(stringResource(R.string.grade_weight, gradeInfo.gradeWeight))
+            Text(stringResource(R.string.grade_grade_weight, gradeInfo.gradeWeight))
             if (initialGrade != null) {
-                Text(stringResource(R.string.current_grade, initialGrade))
+                Text(stringResource(R.string.grade_current_grade, initialGrade))
             }
-            Text("Nowa ocena: ${inputGrade?.toString() ?: stringResource(R.string.no_grade)}")
+            Text("Nowa ocena: ${inputGrade?.toString() ?: stringResource(R.string.grade_no_grade)}")
         }
     }
 }

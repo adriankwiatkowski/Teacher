@@ -105,7 +105,8 @@ private fun LessonActivitySum(
     sum: Long?,
     modifier: Modifier = Modifier,
 ) {
-    val sumString = if (sum != null && sum != 0L) sum else stringResource(R.string.no_activity)
+    val sumString =
+        if (sum != null && sum != 0L) sum else stringResource(R.string.lesson_no_activity)
     Text(modifier = modifier, text = "($sumString)")
 }
 

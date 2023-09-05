@@ -77,7 +77,7 @@ internal fun StudentFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = stringResource(R.string.school_class_name, schoolClassName),
+                title = stringResource(R.string.student_school_class_name, schoolClassName),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -93,7 +93,7 @@ internal fun StudentFormScreen(
         ) { student ->
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = stringResource(R.string.saving_student),
+                savingText = stringResource(R.string.student_saving_student),
             ) {
                 Content(
                     modifier = Modifier
@@ -169,7 +169,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = name,
             onValueChange = { onNameChange(it) },
-            label = stringResource(R.string.name),
+            label = stringResource(R.string.student_name),
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Person, contentDescription = null)
             },
@@ -181,7 +181,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = surname,
             onValueChange = { onSurnameChange(it) },
-            label = stringResource(R.string.surname),
+            label = stringResource(R.string.student_surname),
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Person, contentDescription = null)
             },
@@ -193,7 +193,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = email,
             onValueChange = { onEmailChange(it) },
-            label = stringResource(R.string.email),
+            label = stringResource(R.string.student_email),
             leadingIcon = {
                 val icon = TeacherIcons.email()
                 Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
@@ -206,7 +206,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = phone,
             onValueChange = { onPhoneChange(it) },
-            label = stringResource(R.string.phone),
+            label = stringResource(R.string.student_phone),
             leadingIcon = {
                 val icon = TeacherIcons.phone()
                 Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))

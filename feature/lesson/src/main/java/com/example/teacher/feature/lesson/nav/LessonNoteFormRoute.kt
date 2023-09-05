@@ -29,14 +29,14 @@ internal fun LessonNoteFormRoute(
     // Observe save.
     LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
         if (formStatus == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.lesson_note_saved)
+            onShowSnackbar.onShowSnackbar(R.string.lesson_lesson_note_saved)
             onNavBack()
         }
     }
     // Observe deletion.
     LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
         if (isDeleted) {
-            onShowSnackbar.onShowSnackbar(R.string.lesson_note_deleted)
+            onShowSnackbar.onShowSnackbar(R.string.lesson_lesson_note_deleted)
             onNavBack()
         }
     }

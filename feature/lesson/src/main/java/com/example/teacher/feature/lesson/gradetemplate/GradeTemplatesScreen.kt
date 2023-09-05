@@ -101,13 +101,13 @@ private fun LazyListScope.grades(
         ListItem(
             modifier = Modifier.clickable(onClick = { onGradeClick(grade.id) }),
             headlineContent = { Text(grade.name) },
-            supportingContent = { Text(stringResource(R.string.weight_data, grade.weight)) },
+            supportingContent = { Text(stringResource(R.string.lesson_weight_data, grade.weight)) },
         )
     }
 
     if (grades.isEmpty()) {
         item {
-            ListItem(headlineContent = { Text(stringResource(R.string.no_grades_in_term)) })
+            ListItem(headlineContent = { Text(stringResource(R.string.lesson_no_grades_in_term)) })
         }
     }
 }
