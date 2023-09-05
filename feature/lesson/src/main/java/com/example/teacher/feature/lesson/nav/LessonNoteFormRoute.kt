@@ -27,14 +27,14 @@ internal fun LessonNoteFormRoute(
     val formStatus = form.status
 
     // Observe save.
-    LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
+    LaunchedEffect(formStatus) {
         if (formStatus == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.lesson_lesson_note_saved)
             onNavBack()
         }
     }
     // Observe deletion.
-    LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
+    LaunchedEffect(isDeleted) {
         if (isDeleted) {
             onShowSnackbar.onShowSnackbar(R.string.lesson_lesson_note_deleted)
             onNavBack()

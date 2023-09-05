@@ -27,14 +27,14 @@ internal fun StudentNoteFormRoute(
     val form = viewModel.form
 
     // Observe save.
-    LaunchedEffect(form.status, onShowSnackbar, onNavBack) {
+    LaunchedEffect(form.status) {
         if (form.status == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.student_note_note_saved)
             onNavBack()
         }
     }
     // Observe deletion.
-    LaunchedEffect(isStudentNoteDeleted, onShowSnackbar, onNavBack) {
+    LaunchedEffect(isStudentNoteDeleted) {
         if (isStudentNoteDeleted) {
             onShowSnackbar.onShowSnackbar(R.string.student_note_note_deleted)
             onNavBack()

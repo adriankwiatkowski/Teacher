@@ -27,7 +27,7 @@ internal fun SchoolClassRoute(
     val isSchoolClassDeleted by viewModel.isSchoolClassDeleted.collectAsStateWithLifecycle()
 
     // Observe deletion.
-    LaunchedEffect(isSchoolClassDeleted, onShowSnackbar, onNavBack) {
+    LaunchedEffect(isSchoolClassDeleted) {
         if (isSchoolClassDeleted) {
             onShowSnackbar.onShowSnackbar(R.string.school_class_school_class_deleted)
             onNavBack()

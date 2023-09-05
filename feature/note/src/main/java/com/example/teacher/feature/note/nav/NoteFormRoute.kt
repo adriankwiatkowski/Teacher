@@ -26,14 +26,14 @@ internal fun NoteFormRoute(
     val form = viewModel.form
 
     // Observe save.
-    LaunchedEffect(form.status, onShowSnackbar, onNavBack) {
+    LaunchedEffect(form.status) {
         if (form.status == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.note_note_saved)
             onNavBack()
         }
     }
     // Observe deletion.
-    LaunchedEffect(isNoteDeleted, onShowSnackbar, onNavBack) {
+    LaunchedEffect(isNoteDeleted) {
         if (isNoteDeleted) {
             onShowSnackbar.onShowSnackbar(R.string.note_note_deleted)
             onNavBack()

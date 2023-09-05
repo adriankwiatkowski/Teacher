@@ -25,7 +25,7 @@ internal fun GradesRoute(
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
 
     // Observe deletion.
-    LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
+    LaunchedEffect(isDeleted) {
         if (isDeleted) {
             onShowSnackbar.onShowSnackbar(R.string.grade_grade_deleted)
             onNavBack()

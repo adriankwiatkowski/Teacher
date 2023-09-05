@@ -21,7 +21,7 @@ internal fun SchoolYearFormRoute(
     val form = viewModel.form
     val status = form.status
 
-    LaunchedEffect(status, onShowSnackbar, onNavBack) {
+    LaunchedEffect(status) {
         if (status == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.school_year_saved)
             onNavBack()

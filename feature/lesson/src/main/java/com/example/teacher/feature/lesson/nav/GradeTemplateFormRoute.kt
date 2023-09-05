@@ -28,14 +28,14 @@ internal fun GradeTemplateFormRoute(
     val formStatus = form.status
 
     // Observe save.
-    LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
+    LaunchedEffect(formStatus) {
         if (formStatus == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.lesson_grade_saved)
             onNavBack()
         }
     }
     // Observe deletion.
-    LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
+    LaunchedEffect(isDeleted) {
         if (isDeleted) {
             onShowSnackbar.onShowSnackbar(R.string.lesson_grade_deleted)
             onDelete()
