@@ -1,5 +1,6 @@
 package com.example.teacher.feature.auth
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +32,7 @@ internal fun AuthScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(MaterialTheme.spacing.medium),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
         ) {
             Text(text = "Dane wraźliwe", style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
@@ -50,7 +52,7 @@ internal fun AuthScreen(
 
             Spacer(modifier = Modifier.padding(MaterialTheme.spacing.medium))
             TeacherButton(modifier = Modifier.fillMaxWidth(), onClick = authenticate) {
-                Text(text = "Zaloguj się")
+                Text(text = "Odblokuj aplikację")
             }
         }
     }

@@ -28,9 +28,7 @@ internal class AuthImpl @Inject constructor() : Auth {
 
     private fun setBiometricPromptInfo(): BiometricPrompt.PromptInfo {
         val builder = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric Authentication")
-            .setSubtitle("Enter biometric credentials to proceed.")
-            .setDescription("Input your Fingerprint or FaceID to ensure it's you!")
+            .setTitle("Potwierdź, że to Ty")
             .setAllowedAuthenticators(authenticators)
 
         return builder.build()
