@@ -5,8 +5,6 @@ import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.rememberSplineBasedDecay
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -19,8 +17,10 @@ import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.teacher.core.ui.model.ActionItem
+import com.example.teacher.core.ui.model.TeacherAction
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,15 +32,8 @@ fun TeacherTopBar(
     scrollBehavior: TopAppBarScrollBehavior?,
     modifier: Modifier = Modifier,
     visible: Boolean = true,
-    menuItems: List<ActionItem> = emptyList(),
+    menuItems: List<TeacherAction> = emptyList(),
 ) {
-//    AnimatedVisibility(
-//        modifier = modifier,
-//        visible = visible,
-//        enter = fadeIn(),
-//        exit = fadeOut(),
-//    ) {
-//    }
     if (!visible) {
         return
     }
@@ -53,7 +46,8 @@ fun TeacherTopBar(
         navigationIcon = {
             if (showNavigationIcon) {
                 IconButton(onClick = onNavigationIconClick) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = null)
+                    val icon = TeacherIcons.navigateBack()
+                    Icon(icon.icon, contentDescription = stringResource(icon.text))
                 }
             }
         },
@@ -62,7 +56,7 @@ fun TeacherTopBar(
                 IconButton(onClick = item.onClick) {
                     Icon(
                         imageVector = item.imageVector,
-                        contentDescription = item.contentDescription,
+                        contentDescription = item.contentDescription?.let { stringResource(it) },
                     )
                 }
             }

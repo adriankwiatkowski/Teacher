@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -31,6 +32,7 @@ import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonEventAttendancesPreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.lesson.R
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -110,15 +112,30 @@ private fun AttendanceItem(
                 verticalArrangement = Arrangement.Center,
                 horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
             ) {
-                AttendanceCountItem(label = "ob", count = presentCount)
-                AttendanceCountItem(label = "sp", count = lateCount)
-                AttendanceCountItem(label = "nb", count = absentCount)
-                AttendanceCountItem(label = "u", count = excusedAbsenceCount)
-                AttendanceCountItem(label = "zw", count = exemptionCount)
                 AttendanceCountItem(
-                    label = "niezaznaczone",
+                    label = stringResource(R.string.present_short),
+                    count = presentCount,
+                )
+                AttendanceCountItem(
+                    label = stringResource(R.string.late_short),
+                    count = lateCount,
+                )
+                AttendanceCountItem(
+                    label = stringResource(R.string.absent_short),
+                    count = absentCount,
+                )
+                AttendanceCountItem(
+                    label = stringResource(R.string.excused_absence_short),
+                    count = excusedAbsenceCount,
+                )
+                AttendanceCountItem(
+                    label = stringResource(R.string.exemption_short),
+                    count = exemptionCount,
+                )
+                AttendanceCountItem(
+                    label = stringResource(R.string.no_attendance_short),
                     count = attendanceNotSetCount,
-                    emphasis = true
+                    emphasis = true,
                 )
             }
         },

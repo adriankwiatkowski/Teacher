@@ -7,6 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.util.OnShowSnackbar
+import com.example.teacher.feature.student.R
 import com.example.teacher.feature.student.StudentFormScreen
 import com.example.teacher.feature.student.data.StudentFormViewModel
 
@@ -15,7 +17,7 @@ internal fun StudentFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     viewModel: StudentFormViewModel = hiltViewModel(),
 ) {
     val studentResult by viewModel.studentResult.collectAsStateWithLifecycle()
@@ -25,7 +27,7 @@ internal fun StudentFormRoute(
 
     LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
         if (formStatus == FormStatus.Success) {
-            onShowSnackbar("Zapisano dane ucznia")
+            onShowSnackbar.onShowSnackbar(R.string.student_saved)
             onNavBack()
         }
     }

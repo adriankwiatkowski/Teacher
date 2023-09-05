@@ -7,7 +7,9 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.grade.GradesScreen
+import com.example.teacher.feature.grade.R
 import com.example.teacher.feature.grade.data.GradesViewModel
 
 @Composable
@@ -15,7 +17,7 @@ internal fun GradesRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     onEditClick: () -> Unit,
     onStudentClick: (studentId: Long, gradeId: Long?) -> Unit,
     viewModel: GradesViewModel = hiltViewModel(),
@@ -26,7 +28,7 @@ internal fun GradesRoute(
     // Observe deletion.
     LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
         if (isDeleted) {
-            onShowSnackbar("Usunięto ocenę")
+            onShowSnackbar.onShowSnackbar(R.string.grade_deleted)
             onNavBack()
         }
     }

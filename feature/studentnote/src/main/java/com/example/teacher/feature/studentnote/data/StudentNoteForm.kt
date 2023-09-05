@@ -8,7 +8,7 @@ internal data class StudentNoteForm(
     val description: InputField<String?>,
     val status: FormStatus,
 ) {
-    val isValid: Boolean
+    private val isValid: Boolean
         get() = title.isValid && description.isValid
 
     val isSubmitEnabled: Boolean

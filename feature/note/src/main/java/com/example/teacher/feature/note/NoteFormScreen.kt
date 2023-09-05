@@ -16,7 +16,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,6 +24,7 @@ import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,7 +42,7 @@ import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.paramprovider.NotePreviewParameterProvider
-import com.example.teacher.core.ui.provider.ActionItemProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.note.component.NotePriorityPicker
@@ -76,11 +76,11 @@ internal fun NoteFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Notatka",
+                title = stringResource(R.string.note_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
-                    listOf(ActionItemProvider.delete(onDeleteNoteClick))
+                    listOf(TeacherActions.delete(onDeleteNoteClick))
                 } else {
                     emptyList()
                 },
@@ -95,11 +95,11 @@ internal fun NoteFormScreen(
                 .padding(MaterialTheme.spacing.small),
             result = noteResult,
             isDeleted = isNoteDeleted,
-            deletedMessage = "Usunięto notatkę",
+            deletedMessage = stringResource(R.string.note_deleted),
         ) {
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = "Zapisywanie notatki...",
+                savingText = stringResource(R.string.saving_note),
             ) {
                 Content(
                     modifier = Modifier
@@ -112,7 +112,11 @@ internal fun NoteFormScreen(
                     priority = priority,
                     onPriorityChange = onPriorityChange,
                     isSubmitEnabled = isSubmitEnabled,
-                    submitText = if (isEditMode) "Edytuj notatkę" else "Dodaj notatkę",
+                    submitText = if (isEditMode) {
+                        stringResource(R.string.edit_note)
+                    } else {
+                        stringResource(R.string.add_note)
+                    },
                     onSubmit = onAddNote,
                 )
             }
@@ -161,13 +165,13 @@ private fun Content(
         )
         val commonKeyboardActions = KeyboardActions(onNext = { moveNext() })
 
-        NotePriorityPicker(priority = priority, onPriorityChange = onPriorityChange)
+        NotePriorityPicker(selectedPriority = priority, onPriorityChange = onPriorityChange)
 
         FormTextField(
             modifier = textFieldModifier,
             inputField = title,
             onValueChange = onTitleChange,
-            label = "Tytuł",
+            label = stringResource(R.string.title),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -176,17 +180,16 @@ private fun Content(
             modifier = Modifier.fillMaxWidth(),
             inputField = text,
             onValueChange = onTextChange,
-            label = "Opis",
+            label = stringResource(R.string.description),
             minLines = 10,
         )
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
+            label = submitText,
             onClick = onSubmit,
             enabled = isSubmitEnabled,
-        ) {
-            Text(text = submitText)
-        }
+        )
     }
 }
 
@@ -219,7 +222,7 @@ private fun NoteFormScreenPreview(
                 onTextChange = {},
                 priority = form.priority,
                 onPriorityChange = {},
-                isSubmitEnabled = form.isValid,
+                isSubmitEnabled = form.isSubmitEnabled,
                 onAddNote = {},
                 isEditMode = true,
                 isNoteDeleted = false,
@@ -248,7 +251,7 @@ private fun NoteFormScreenDeletedPreview() {
                 onTextChange = {},
                 priority = form.priority,
                 onPriorityChange = {},
-                isSubmitEnabled = form.isValid,
+                isSubmitEnabled = form.isSubmitEnabled,
                 onAddNote = {},
                 isEditMode = true,
                 isNoteDeleted = true,

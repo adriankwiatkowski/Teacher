@@ -10,7 +10,7 @@ internal data class NoteForm(
     val priority: NotePriority,
     val status: FormStatus,
 ) {
-    val isValid: Boolean
+    private val isValid: Boolean
         get() = title.isValid && text.isValid
 
     val isSubmitEnabled: Boolean

@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.ui.component.TeacherButton
@@ -61,7 +62,7 @@ internal fun SchoolYearFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Stwórz nowy rok szkolny",
+                title = stringResource(R.string.school_year_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -71,7 +72,7 @@ internal fun SchoolYearFormScreen(
         FormStatusContent(
             modifier = Modifier.padding(innerPadding),
             formStatus = status,
-            savingText = "Dodawanie roku szkolnego...",
+            savingText = stringResource(R.string.saving_school_year),
         ) {
             MainContent(
                 termForms = termForms,
@@ -117,7 +118,7 @@ private fun MainContent(
         ) { index, termForm ->
             TeamFormItem(
                 modifier = Modifier.fillMaxWidth(),
-                title = "Semestr ${index + 1}",
+                title = stringResource(R.string.term_with_index, index + 1),
                 namePrefix = "(${schoolYearName.value}) ",
                 nameInput = termForm.name,
                 onNameChange = { onTermNameChange(index, it) },
@@ -131,11 +132,10 @@ private fun MainContent(
         item {
             TeacherButton(
                 modifier = Modifier.fillMaxWidth(),
+                label = stringResource(R.string.add_school_year),
                 onClick = onSubmit,
                 enabled = isSubmitEnabled,
-            ) {
-                Text(text = "Dodaj rok szkolny")
-            }
+            )
         }
     }
 }
@@ -148,7 +148,7 @@ private fun SchoolYearNameInput(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        val label = "Nazwa roku szkolnego"
+        val label = stringResource(R.string.school_year_name)
 
         Text(
             modifier = Modifier.fillMaxWidth(),

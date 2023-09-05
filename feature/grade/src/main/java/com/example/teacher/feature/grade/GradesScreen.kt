@@ -20,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -29,7 +31,7 @@ import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.BasicGradesForTemplatePreviewParameterProvider
-import com.example.teacher.core.ui.provider.ActionItemProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.grade.data.GradesUiState
@@ -48,12 +50,13 @@ internal fun GradesScreen(
     isDeleted: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     val scrollBehavior = TeacherTopBarDefaults.default()
 
-    val title = remember(uiStateResult) {
+    val title = remember(context, uiStateResult) {
         (uiStateResult as? Result.Success)?.data?.gradeTemplateInfo?.let { info ->
             "${info.lessonName} ${info.schoolClassName}"
-        } ?: "Wystawienie ocen"
+        } ?: context.getString(R.string.grades_title)
     }
 
     Scaffold(
@@ -65,8 +68,8 @@ internal fun GradesScreen(
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = listOf(
-                    ActionItemProvider.edit(onEditClick),
-                    ActionItemProvider.delete(onDeleteClick),
+                    TeacherActions.edit(onEditClick),
+                    TeacherActions.delete(onDeleteClick),
                 ),
                 scrollBehavior = scrollBehavior,
             )
@@ -76,7 +79,7 @@ internal fun GradesScreen(
             modifier = Modifier.padding(innerPadding),
             result = uiStateResult,
             isDeleted = isDeleted,
-            deletedMessage = "Usunięto ocenę",
+            deletedMessage = stringResource(R.string.grade_deleted),
         ) { uiState ->
             MainContent(
                 modifier = Modifier
@@ -135,7 +138,11 @@ private fun GradeItem(
     )
 }
 
-private fun gradeToName(grade: BigDecimal?): String = grade?.toString() ?: "brak oceny"
+@Composable
+private fun gradeToName(grade: BigDecimal?): String {
+    val context = LocalContext.current
+    return grade?.toString() ?: context.getString(R.string.no_grade)
+}
 
 @Preview
 @Composable

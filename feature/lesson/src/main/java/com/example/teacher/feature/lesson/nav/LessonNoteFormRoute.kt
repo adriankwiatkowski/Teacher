@@ -7,6 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.util.OnShowSnackbar
+import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.note.NoteFormScreen
 import com.example.teacher.feature.lesson.note.data.NoteFormViewModel
 
@@ -15,7 +17,7 @@ internal fun LessonNoteFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     isEditMode: Boolean,
     viewModel: NoteFormViewModel = hiltViewModel(),
 ) {
@@ -27,14 +29,14 @@ internal fun LessonNoteFormRoute(
     // Observe save.
     LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
         if (formStatus == FormStatus.Success) {
-            onShowSnackbar("Zapisano notatkę z zajęć")
+            onShowSnackbar.onShowSnackbar(R.string.lesson_note_saved)
             onNavBack()
         }
     }
     // Observe deletion.
     LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
         if (isDeleted) {
-            onShowSnackbar("Usunięto notatkę z zajęć")
+            onShowSnackbar.onShowSnackbar(R.string.lesson_note_deleted)
             onNavBack()
         }
     }

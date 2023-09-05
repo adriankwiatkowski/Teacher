@@ -8,11 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.ui.component.TeacherNavigationBar
 import com.example.teacher.core.ui.component.TeacherNavigationBarItem
 import com.example.teacher.core.ui.theme.TeacherTheme
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.ui.nav.TeacherBottomNavScreen
 import com.example.teacher.ui.nav.TeacherNavGraph
 import com.example.teacher.ui.nav.navigateToNotesRouteNavigationBar
@@ -30,16 +33,17 @@ fun TeacherApp(
     modifier: Modifier = Modifier,
     appState: TeacherAppState = rememberTeacherAppState(),
 ) {
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     val selectedBottomNavItem by appState.selectedBottomNavigationItem.collectAsStateWithLifecycle()
     val shouldShowBottomBar by appState.shouldShowBottomBar.collectAsStateWithLifecycle()
-    val bottomNavScreens = remember { TeacherBottomNavScreen.values().toList() }
+    val bottomNavScreens = remember { TeacherBottomNavScreen.entries }
 
-    val onShowSnackbar: ((message: String) -> Unit) = remember(snackbarHostState) {
-        { message ->
+    val onShowSnackbar: OnShowSnackbar = remember(snackbarHostState) {
+        OnShowSnackbar { message ->
             appState.coroutineScope.launch {
-                snackbarHostState.showSnackbar(message = message)
+                snackbarHostState.showSnackbar(message = context.getString(message))
             }
         }
     }
@@ -71,9 +75,9 @@ fun TeacherApp(
                                 }
                             }
                         },
-                        icon = screen.icon,
-                        iconContentDescription = null,
-                        label = screen.title,
+                        icon = screen.icon.icon,
+                        iconContentDescription = stringResource(screen.icon.text),
+                        label = stringResource(screen.icon.text),
                     )
                 }
             }

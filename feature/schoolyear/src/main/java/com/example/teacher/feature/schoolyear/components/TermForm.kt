@@ -5,12 +5,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.ui.component.form.FormTextField
@@ -18,6 +18,7 @@ import com.example.teacher.core.ui.component.picker.TeacherDatePicker
 import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.schoolyear.R
 import com.example.teacher.feature.schoolyear.data.InputDate
 import java.time.LocalDate
 
@@ -40,18 +41,18 @@ internal fun TermForm(
             modifier = Modifier.fillMaxWidth(),
             inputField = nameInput,
             onValueChange = onNameChange,
-            label = "Nazwa semestru",
+            label = stringResource(R.string.term_name_label),
             prefix = namePrefix,
         )
 
         TermDatePicker(
-            label = "Data rozpoczęcia semestru",
+            label = stringResource(R.string.term_start_date_label),
             date = startDate.date,
             dateString = startDate.dateString,
             onDateSelected = onStartDateSelected,
         )
         TermDatePicker(
-            label = "Data zakończenia semestru",
+            label = stringResource(R.string.term_end_date_label),
             date = endDate.date,
             dateString = endDate.dateString,
             onDateSelected = onEndDateSelected,
@@ -76,12 +77,7 @@ private fun TermDatePicker(
         TeacherDatePicker(
             date = date,
             onDateSelected = onDateSelected,
-            label = {
-                Text(
-                    modifier = Modifier.padding(MaterialTheme.spacing.small),
-                    text = "Wybierz datę",
-                )
-            },
+            label = stringResource(R.string.pick_date),
         )
     }
 }

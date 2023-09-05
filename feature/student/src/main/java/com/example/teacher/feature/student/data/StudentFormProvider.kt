@@ -33,7 +33,6 @@ internal object StudentFormProvider {
         val charCountLimit = 60
         return InputField(
             email,
-            supportingText = "Może być pusty",
             counter = trimmedLength to charCountLimit,
             isError = false,
             isEdited = isEdited,
@@ -46,7 +45,6 @@ internal object StudentFormProvider {
         val charCount = 9
         return InputField(
             phone,
-            supportingText = "Telefon musi zawierać $charCount cyfr (może być pusty)",
             counter = trimmedLength to charCount,
             isError = trimmedLength != 0 && trimmedLength != charCount,
             isEdited = isEdited,

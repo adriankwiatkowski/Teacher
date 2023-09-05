@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="students">Uczniowie (%1$s)</string>
+    <string name="lessons">Zajęcia (%1$s)</string>
+    <string name="term_name">Semestr %1$s</string>
+    <string name="term_start">"Rozpoczęcie semestru: "</string>
+    <string name="term_end">"Zakończenie semestru: "</string>
+    <string name="cannot_create_school_class_without_school_year">Żeby stworzyć klasę musisz najpierw dodać rok szkolny.</string>
+    <string name="add_school_year">Dodaj nowy rok szkolny</string>
+    <string name="school_year">Rok szkolny</string>
+    <string name="email">Email: %1$s</string>
+    <string name="phone">Telefon: %1$s</string>
+    <string name="saving_school_class">Zapisywanie klasy…</string>
+    <string name="school_class_saved">Zapisano klasę</string>
+    <string name="school_class_deleted">Usunięto klasę</string>
+    <string name="add_school_class">Dodaj klasę</string>
+    <string name="school_class">Klasa %1$s</string>
+    <string name="school_classes_empty">Nie istnieje jeszcze żadna klasa</string>
+    <string name="school_class_form_title">Stwórz nową klasę</string>
+    <string name="school_class_name_label">Nazwa klasy</string>
+    <string name="school_class_prefix">"(Klasa) "</string>
+</resources>

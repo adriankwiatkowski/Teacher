@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -20,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -27,8 +26,10 @@ import com.example.teacher.core.model.data.BasicGradeTemplate
 import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.BasicGradeTemplatesPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.gradetemplate.data.GradeTemplatesUiState
 
 @Composable
@@ -45,13 +46,7 @@ internal fun GradeTemplatesScreen(
     ) { gradeTemplates ->
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-            floatingActionButton = {
-                TeacherFab(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null,
-                    onClick = onAddGradeClick,
-                )
-            },
+            floatingActionButton = { TeacherFab(action = TeacherActions.add(onAddGradeClick)) },
         ) { innerPadding ->
             MainContent(
                 modifier = Modifier
@@ -106,13 +101,13 @@ private fun LazyListScope.grades(
         ListItem(
             modifier = Modifier.clickable(onClick = { onGradeClick(grade.id) }),
             headlineContent = { Text(grade.name) },
-            supportingContent = { Text("Waga ${grade.weight}") },
+            supportingContent = { Text(stringResource(R.string.weight_data, grade.weight)) },
         )
     }
 
     if (grades.isEmpty()) {
         item {
-            ListItem(headlineContent = { Text("Brak ocen w semestrze") })
+            ListItem(headlineContent = { Text(stringResource(R.string.no_grades_in_term)) })
         }
     }
 }

@@ -13,11 +13,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.model.data.SchoolYear
@@ -58,7 +58,7 @@ internal fun SchoolClassFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Stwórz nową klasę",
+                title = stringResource(R.string.school_class_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -67,7 +67,7 @@ internal fun SchoolClassFormScreen(
     ) { innerPadding ->
         FormStatusContent(
             formStatus = formStatus,
-            savingText = "Zapisywanie klasy...",
+            savingText = stringResource(R.string.saving_school_class),
         ) {
             MainContent(
                 modifier = modifier
@@ -124,11 +124,10 @@ private fun MainContent(
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
+            label = stringResource(R.string.add_school_class),
             onClick = onSubmit,
             enabled = isSubmitEnabled,
-        ) {
-            Text(text = "Dodaj klasę")
-        }
+        )
     }
 }
 
@@ -142,8 +141,8 @@ private fun ClassNameInput(
         modifier = modifier,
         inputField = schoolClassName,
         onValueChange = onSchoolClassNameChange,
-        label = "Nazwa klasy",
-        prefix = "(Klasa) ",
+        label = stringResource(R.string.school_class_name_label),
+        prefix = stringResource(R.string.school_class_prefix),
     )
 }
 

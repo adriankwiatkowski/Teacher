@@ -13,10 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.form.FormAutoCompleteTextField
 import com.example.teacher.core.ui.model.InputField
+import com.example.teacher.feature.schoolclass.R
 
 @Composable
 internal fun SchoolYearInput(
@@ -35,7 +37,7 @@ internal fun SchoolYearInput(
                 CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.error) {
                     Text(
                         modifier = Modifier.weight(9f),
-                        text = "Żeby stworzyć klasę musisz najpierw dodać rok szkolny.",
+                        text = stringResource(R.string.cannot_create_school_class_without_school_year),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Icon(
@@ -62,16 +64,15 @@ internal fun SchoolYearInput(
                 suggestions = schoolYears,
                 inputToString = { stringifySchoolYear(it.value) },
                 suggestionToString = stringifySchoolYear,
-                label = "Rok szkolny",
+                label = stringResource(R.string.school_year),
                 readOnly = true,
             )
         }
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
+            label = stringResource(R.string.add_school_year),
             onClick = onAddSchoolYear,
-        ) {
-            Text(text = "Dodaj nowy rok szkolny")
-        }
+        )
     }
 }

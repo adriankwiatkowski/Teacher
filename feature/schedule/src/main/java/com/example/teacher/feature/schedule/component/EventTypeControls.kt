@@ -9,10 +9,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.theme.TeacherTheme
+import com.example.teacher.feature.schedule.R
 
 @Composable
 internal fun EventTypeControls(
@@ -22,17 +24,17 @@ internal fun EventTypeControls(
 ) {
     Column(modifier.selectableGroup()) {
         TeacherRadioButton(
-            label = "Jednorazowe",
+            label = stringResource(R.string.once),
             selected = type == EventType.Once,
             onClick = { onTypeChange(EventType.Once) },
         )
         TeacherRadioButton(
-            label = "Cotygodniowe",
+            label = stringResource(R.string.weekly),
             selected = type == EventType.Weekly,
             onClick = { onTypeChange(EventType.Weekly) },
         )
         TeacherRadioButton(
-            label = "Co 2 tygodnie",
+            label = stringResource(R.string.every_two_weeks),
             selected = type == EventType.EveryTwoWeeks,
             onClick = { onTypeChange(EventType.EveryTwoWeeks) },
         )

@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.teacher.core.ui.R
 import com.example.teacher.core.ui.theme.TeacherTheme
 
 @Composable
@@ -34,7 +36,7 @@ fun ErrorScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Wystąpił nieoczekiwany błąd",
+            text = stringResource(R.string.unexpected_error),
             style = MaterialTheme.typography.displayMedium,
         )
         label()

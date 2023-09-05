@@ -13,10 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.TeacherTopBarWithTabs
-import com.example.teacher.core.ui.model.ActionItem
+import com.example.teacher.core.ui.model.StringResource
+import com.example.teacher.core.ui.model.TeacherAction
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.feature.lesson.tab.LessonTab
 import kotlinx.coroutines.launch
@@ -26,7 +28,7 @@ import kotlinx.coroutines.launch
 internal fun LessonScaffold(
     isScaffoldVisible: Boolean,
     title: String,
-    menuItems: List<ActionItem>,
+    menuItems: List<TeacherAction>,
     showNavigationIcon: Boolean,
     onNavigationIconClick: () -> Unit,
     tabs: List<LessonTab>,
@@ -36,12 +38,8 @@ internal fun LessonScaffold(
     modifier: Modifier = Modifier,
     content: @Composable (lessonTab: LessonTab) -> Unit,
 ) {
-    val stringTabs = remember(tabs) {
-        tabs.map { tab -> tab.title }
-    }
-    val selectedTabIndex = remember(tabs, selectedTab) {
-        tabs.indexOf(selectedTab)
-    }
+    val stringTabs = remember(tabs) { tabs.map { tab -> StringResource(tab.title) } }
+    val selectedTabIndex = remember(tabs, selectedTab) { tabs.indexOf(selectedTab) }
 
     val scrollBehavior = TeacherTopBarDefaults.default()
 
@@ -99,7 +97,7 @@ private fun LessonScaffoldPreview() {
                 pagerState = pagerState,
             ) { tab ->
                 Column(modifier = Modifier.fillMaxSize()) {
-                    Text(tab.title)
+                    Text(stringResource(tab.title))
                     repeat(10) {
                         Text("Details of tab...")
                     }

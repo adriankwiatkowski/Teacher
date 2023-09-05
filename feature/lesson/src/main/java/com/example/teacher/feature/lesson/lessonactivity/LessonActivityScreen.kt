@@ -4,13 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.RemoveCircle
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -21,14 +15,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.LessonActivity
+import com.example.teacher.core.ui.component.TeacherIconButton
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonActivitiesPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.lesson.R
 
 @Composable
 internal fun LessonActivityScreen(
@@ -67,20 +65,16 @@ private fun MainContent(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        itemsIndexed(
+        items(
             lessonActivities,
-            key = { _, lessonActivity -> lessonActivity.student.id },
-        ) { index, lessonActivity ->
+            key = { lessonActivity -> lessonActivity.student.id },
+        ) { lessonActivity ->
             LessonActivityItem(
                 studentFullName = lessonActivity.student.fullName,
                 lessonActivitySum = lessonActivity.sum,
                 onIncreaseLessonActivity = { onIncreaseLessonActivity(lessonActivity) },
                 onDecreaseLessonActivity = { onDecreaseLessonActivity(lessonActivity) },
             )
-
-            if (index != lessonActivities.lastIndex) {
-                Divider()
-            }
         }
     }
 }
@@ -98,14 +92,10 @@ private fun LessonActivityItem(
         headlineContent = { Text(studentFullName) },
         supportingContent = { LessonActivitySum(sum = lessonActivitySum) },
         leadingContent = {
-            IconButton(onClick = onDecreaseLessonActivity) {
-                Icon(imageVector = Icons.Default.RemoveCircle, contentDescription = null)
-            }
+            TeacherIconButton(action = TeacherActions.minus(onClick = onDecreaseLessonActivity))
         },
         trailingContent = {
-            IconButton(onClick = onIncreaseLessonActivity) {
-                Icon(imageVector = Icons.Default.AddCircle, contentDescription = null)
-            }
+            TeacherIconButton(action = TeacherActions.plus(onClick = onIncreaseLessonActivity))
         }
     )
 }
@@ -115,7 +105,7 @@ private fun LessonActivitySum(
     sum: Long?,
     modifier: Modifier = Modifier,
 ) {
-    val sumString = if (sum != null && sum != 0L) sum else "brak aktywności"
+    val sumString = if (sum != null && sum != 0L) sum else stringResource(R.string.no_activity)
     Text(modifier = modifier, text = "($sumString)")
 }
 

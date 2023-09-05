@@ -9,7 +9,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.schedule.EventFormScreen
+import com.example.teacher.feature.schedule.R
 import com.example.teacher.feature.schedule.data.EventFormViewModel
 
 @Composable
@@ -18,7 +20,7 @@ internal fun EventFormRoute(
     onNavBack: () -> Unit,
     onSave: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     onLessonPickerClick: () -> Unit,
     viewModel: EventFormViewModel = hiltViewModel(),
 ) {
@@ -29,7 +31,7 @@ internal fun EventFormRoute(
     // Observe save.
     LaunchedEffect(form.status) {
         if (form.status == FormStatus.Success) {
-            onShowSnackbar("Zapisano termin")
+            onShowSnackbar.onShowSnackbar(R.string.event_saved)
             onSave()
         }
     }

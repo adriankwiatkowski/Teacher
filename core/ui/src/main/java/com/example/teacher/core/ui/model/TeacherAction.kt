@@ -1,12 +1,11 @@
 package com.example.teacher.core.ui.model
 
-import androidx.compose.runtime.Immutable
+import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
 
-@Immutable
-data class ActionItem(
-    val name: String,
+data class TeacherAction(
+    @StringRes val text: Int,
     val imageVector: ImageVector,
-    val contentDescription: String? = null,
+    @StringRes val contentDescription: Int? = null,
     val onClick: () -> Unit,
 )

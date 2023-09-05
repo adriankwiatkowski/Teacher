@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.note.nav.NoteNavigation.noteIdArg
 import com.example.teacher.feature.note.nav.NoteNavigation.notesRoute
 
@@ -36,7 +37,7 @@ private fun NavController.navigateToNoteFormRoute(
 fun NavGraphBuilder.noteGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
 ) {
     composable(notesRoute) {
         NotesRoute(

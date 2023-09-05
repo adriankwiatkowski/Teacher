@@ -3,8 +3,6 @@ package com.example.teacher.core.ui.component
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -13,15 +11,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.teacher.core.ui.model.TeacherAction
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 
 @Composable
 fun TeacherFab(
-    imageVector: ImageVector,
-    contentDescription: String?,
-    onClick: () -> Unit,
+    action: TeacherAction,
     modifier: Modifier = Modifier,
     visible: Boolean = true,
 ) {
@@ -34,21 +32,19 @@ fun TeacherFab(
 //        LargeFloatingActionButton(
         FloatingActionButton(
             modifier = modifier,
-            onClick = onClick,
+            onClick = action.onClick,
             containerColor = MaterialTheme.colorScheme.tertiaryContainer,
             contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
         ) {
-            Icon(imageVector = imageVector, contentDescription = contentDescription)
+            val contentDescription = action.contentDescription?.let { stringResource(it) }
+            Icon(imageVector = action.imageVector, contentDescription = contentDescription)
         }
     }
 }
 
 @Composable
 fun TeacherExtendedFab(
-    text: String,
-    imageVector: ImageVector,
-    contentDescription: String?,
-    onClick: () -> Unit,
+    action: TeacherAction,
     modifier: Modifier = Modifier,
     visible: Boolean = true,
 ) {
@@ -60,9 +56,12 @@ fun TeacherExtendedFab(
     ) {
         ExtendedFloatingActionButton(
             modifier = modifier,
-            onClick = onClick,
-            text = { Text(text) },
-            icon = { Icon(imageVector = imageVector, contentDescription = contentDescription) },
+            onClick = action.onClick,
+            text = { Text(stringResource(action.text)) },
+            icon = {
+                val contentDescription = action.contentDescription?.let { stringResource(it) }
+                Icon(imageVector = action.imageVector, contentDescription = contentDescription)
+            },
             containerColor = MaterialTheme.colorScheme.tertiaryContainer,
             contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
         )
@@ -74,11 +73,7 @@ fun TeacherExtendedFab(
 private fun TeacherFabPreview() {
     TeacherTheme {
         Surface {
-            TeacherFab(
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
-                onClick = {},
-            )
+            TeacherFab(action = TeacherActions.add(onClick = {}))
         }
     }
 }
@@ -88,12 +83,7 @@ private fun TeacherFabPreview() {
 private fun TeacherExtendedFabPreview() {
     TeacherTheme {
         Surface {
-            TeacherExtendedFab(
-                text = "Utwórz",
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
-                onClick = {},
-            )
+            TeacherExtendedFab(action = TeacherActions.add(onClick = {}))
         }
     }
 }

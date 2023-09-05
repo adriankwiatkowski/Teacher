@@ -8,8 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Divider
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -51,7 +51,7 @@ internal fun LessonPickerScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Dodaj termin zajęć",
+                title = stringResource(R.string.event_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -92,16 +92,13 @@ private fun MainScreen(
     ) {
         stickyHeader {
             Text(
-                text = "Wybierz przedmiot",
+                text = stringResource(R.string.pick_lesson),
                 style = MaterialTheme.typography.headlineSmall,
             )
         }
 
-        itemsIndexed(items = lessons, key = { _, lessons -> lessons.id }) { index, lesson ->
+        items(items = lessons, key = { lessons -> lessons.id }) { lesson ->
             LessonItem(lesson = lesson, onClick = { onLessonClick(lesson.id) })
-            if (index != lessons.lastIndex) {
-                Divider()
-            }
         }
     }
 }
@@ -127,7 +124,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Nie istnieje jeszcze żaden przedmiot. Musi istnieć przedmiot, żeby można było stworzyć plan zajęć.",
+            text = stringResource(R.string.no_lesson_exists),
             style = MaterialTheme.typography.headlineMedium,
         )
     }

@@ -15,8 +15,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
+import com.example.teacher.core.ui.R
 import com.example.teacher.core.ui.component.TeacherChip
 import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.theme.TeacherTheme
@@ -26,7 +28,7 @@ import java.time.DayOfWeek
 fun TeacherDayPicker(
     day: DayOfWeek,
     onDaySelected: (DayOfWeek) -> Unit,
-    label: @Composable () -> Unit,
+    label: String,
     modifier: Modifier = Modifier,
 ) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
@@ -75,7 +77,7 @@ private fun DayPickerDialog(
         },
         confirmButton = {
             TextButton(onClick = onDismissRequest) {
-                Text("Ok")
+                Text(stringResource(R.string.ok))
             }
         },
     )
@@ -91,7 +93,7 @@ private fun TeacherDayPickerPreview() {
             TeacherDayPicker(
                 day = day,
                 onDaySelected = { day = it },
-                label = { Text("Pick day") },
+                label = "Pick day",
             )
         }
     }

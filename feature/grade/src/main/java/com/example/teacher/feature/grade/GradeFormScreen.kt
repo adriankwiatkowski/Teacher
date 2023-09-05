@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -36,7 +37,7 @@ import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.form.FormStatusContent
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
-import com.example.teacher.core.ui.provider.ActionItemProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.grade.data.GradeFormProvider
@@ -69,11 +70,11 @@ internal fun GradeFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Wystawienie oceny",
+                title = stringResource(R.string.grade_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
-                    listOf(ActionItemProvider.delete(onDeleteClick))
+                    listOf(TeacherActions.delete(onDeleteClick))
                 } else {
                     emptyList()
                 },
@@ -87,11 +88,11 @@ internal fun GradeFormScreen(
                 .padding(MaterialTheme.spacing.small),
             result = uiStateResult,
             isDeleted = isDeleted,
-            deletedMessage = "Usunięto ocenę",
+            deletedMessage = stringResource(R.string.grade_deleted),
         ) { uiState ->
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = "Zapisywanie oceny...",
+                savingText = stringResource(R.string.saving_grade),
             ) {
                 MainContent(
                     modifier = modifier
@@ -101,7 +102,11 @@ internal fun GradeFormScreen(
                     initialGrade = initialGrade,
                     inputGrade = inputGrade,
                     onGradeChange = onGradeChange,
-                    submitText = if (isEditMode) "Edytuj ocenę" else "Dodaj ocenę",
+                    submitText = if (isEditMode) {
+                        stringResource(R.string.edit_grade)
+                    } else {
+                        stringResource(R.string.add_grade)
+                    },
                     isSubmitEnabled = isSubmitEnabled,
                     onSubmit = onSubmit,
                 )
@@ -135,11 +140,10 @@ private fun MainContent(
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
+            label = submitText,
             onClick = onSubmit,
             enabled = isSubmitEnabled,
-        ) {
-            Text(text = submitText)
-        }
+        )
     }
 }
 
@@ -163,11 +167,11 @@ private fun GradeInfo(
     Card(modifier = modifier) {
         Column {
             Text(gradeInfo.gradeName)
-            Text("Waga ${gradeInfo.gradeWeight}")
+            Text(stringResource(R.string.grade_weight, gradeInfo.gradeWeight))
             if (initialGrade != null) {
-                Text("Obecna ocena $initialGrade")
+                Text(stringResource(R.string.current_grade, initialGrade))
             }
-            Text("Nowa ocena: ${inputGrade?.toString() ?: "brak oceny"}")
+            Text("Nowa ocena: ${inputGrade?.toString() ?: stringResource(R.string.no_grade)}")
         }
     }
 }
@@ -218,9 +222,7 @@ private fun GradeInput(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    TeacherButton(modifier = modifier, onClick = onClick) {
-        Text(grade)
-    }
+    TeacherButton(modifier = modifier, label = grade, onClick = onClick)
 }
 
 @Preview

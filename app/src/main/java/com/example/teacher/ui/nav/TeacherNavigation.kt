@@ -1,27 +1,23 @@
 package com.example.teacher.ui.nav
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Notes
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
+import com.example.teacher.core.ui.model.TeacherIcon
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.feature.note.nav.navigateToNotesRoute
 import com.example.teacher.feature.schedule.nav.navigateToScheduleRoute
 import com.example.teacher.feature.schoolclass.nav.navigateToSchoolClassGraph
 import com.example.teacher.feature.settings.nav.navigateToSettingsRoute
 
-enum class TeacherBottomNavScreen(val title: String, val icon: ImageVector) {
-    Schedule("Plan zajęć", Icons.Default.Person),
-    SchoolClasses("Klasy", Icons.Default.Menu),
-    Notes("Notatki", Icons.Default.Notes),
-    Settings("Ustawienia", Icons.Default.Settings),
+enum class TeacherBottomNavScreen(val icon: TeacherIcon) {
+    Schedule(TeacherIcons.schedule()),
+    SchoolClasses(TeacherIcons.schoolClasses()),
+    Notes(TeacherIcons.notes()),
+    Settings(TeacherIcons.settings()),
 }
 
 fun NavController.navigateToScheduleRouteNavigationBar() {

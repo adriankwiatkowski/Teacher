@@ -21,8 +21,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.teacher.core.ui.R
 import com.example.teacher.core.ui.component.tab.TeacherTabRow
-import com.example.teacher.core.ui.model.ActionItem
+import com.example.teacher.core.ui.model.TeacherAction
+import com.example.teacher.core.ui.model.StringResource
 import com.example.teacher.core.ui.theme.TeacherTheme
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -32,13 +34,13 @@ fun TeacherTopBarWithTabs(
     showNavigationIcon: Boolean,
     onNavigationIconClick: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior?,
-    tabs: List<String>,
+    tabs: List<StringResource>,
     selectedTabIndex: Int,
     onTabClick: (studentTabIndex: Int) -> Unit,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
     isTopBarVisible: Boolean = true,
-    menuItems: List<ActionItem> = emptyList(),
+    menuItems: List<TeacherAction> = emptyList(),
     content: @Composable (tabIndex: Int) -> Unit,
 ) {
     if (!isTopBarVisible) {
@@ -88,7 +90,13 @@ private fun TeacherTopBarWithTabsPreview() {
     TeacherTheme {
         Surface {
             var selectedTabIndex by remember { mutableIntStateOf(0) }
-            val tabs = remember { listOf("Dane", "Oceny", "Uwagi") }
+            val tabs = remember {
+                listOf(
+                    StringResource(R.string.tab_1),
+                    StringResource(R.string.tab_2),
+                    StringResource(R.string.tab_3),
+                )
+            }
 
             TeacherTopBarWithTabs(
                 title = "Title",

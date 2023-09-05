@@ -5,11 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
@@ -17,14 +12,19 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.model.data.BasicStudent
+import com.example.teacher.core.ui.component.TeacherIconButton
 import com.example.teacher.core.ui.component.expandablelist.expandableItems
 import com.example.teacher.core.ui.paramprovider.BasicStudentsPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
+import com.example.teacher.feature.schoolclass.R
 
 internal fun LazyListScope.students(
+    label: String,
     students: List<BasicStudent>,
     onStudentClick: (Long) -> Unit,
     onAddStudentClick: () -> Unit,
@@ -33,18 +33,11 @@ internal fun LazyListScope.students(
 ) {
     expandableItems(
         modifier = modifier,
-        label = "Uczniowie (${students.size})",
+        label = label,
         expanded = expanded,
         items = students,
         key = { student -> "student-${student.id}" },
-        additionalIcon = {
-            IconButton(onClick = onAddStudentClick) {
-                Icon(
-                    imageVector = Icons.Default.AddCircle,
-                    contentDescription = null,
-                )
-            }
-        },
+        additionalIcon = { TeacherIconButton(TeacherActions.add(onClick = onAddStudentClick)) },
     ) { contentPadding, student ->
         StudentItem(
             modifier = Modifier
@@ -68,8 +61,11 @@ private fun StudentsPreview(
     TeacherTheme {
         Surface {
             val expanded = remember { mutableStateOf(false) }
+            val label = stringResource(R.string.students, students.size)
+
             LazyColumn {
                 students(
+                    label = label,
                     students = students,
                     onStudentClick = {},
                     onAddStudentClick = {},

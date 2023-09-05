@@ -10,11 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -29,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -37,6 +33,8 @@ import com.example.teacher.core.ui.component.TeacherChip
 import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.BasicSchoolClassesPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherActions
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 
@@ -53,13 +51,7 @@ internal fun SchoolClassesScreen(
     Scaffold(
         modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        floatingActionButton = {
-            TeacherFab(
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
-                onClick = onAddSchoolClassClick,
-            )
-        },
+        floatingActionButton = { TeacherFab(TeacherActions.add(onClick = onAddSchoolClassClick)) },
         floatingActionButtonPosition = FabPosition.End,
     ) { innerPadding ->
         ResultContent(
@@ -130,7 +122,7 @@ private fun ClassItem(
             modifier = Modifier.padding(MaterialTheme.spacing.small),
             verticalArrangement = Arrangement.Center,
         ) {
-            Text(text = "Klasa: $name")
+            Text(text = stringResource(R.string.school_class, name))
 
             val chipModifier = Modifier
                 .weight(1f)
@@ -139,16 +131,22 @@ private fun ClassItem(
             Row {
                 TeacherChip(
                     modifier = chipModifier,
+                    label = stringResource(R.string.students, studentCount),
                     onClick = onStudentsClick,
-                    leadingIcon = { Icon(Icons.Outlined.Person, contentDescription = "") },
-                    label = { Text("Uczniowie ($studentCount)") }
+                    leadingIcon = {
+                        val icon = TeacherIcons.person()
+                        Icon(icon.icon, stringResource(icon.text))
+                    },
                 )
 
                 TeacherChip(
                     modifier = chipModifier,
+                    label = stringResource(R.string.lessons, lessonCount),
                     onClick = onLessonsClick,
-                    leadingIcon = { Icon(Icons.Default.List, contentDescription = "") },
-                    label = { Text("Zajęcia ($lessonCount)") },
+                    leadingIcon = {
+                        val icon = TeacherIcons.subject()
+                        Icon(icon.icon, stringResource(icon.text))
+                    },
                 )
             }
         }
@@ -165,13 +163,15 @@ private fun EmptyClasses(
     ) {
         Text(
             modifier = Modifier.weight(9f),
-            text = "Nie istnieje jeszcze żadna klasa",
+            text = stringResource(R.string.school_classes_empty),
             style = MaterialTheme.typography.displayLarge,
         )
+
+        val icon = TeacherIcons.warning()
         Icon(
             modifier = Modifier.weight(1f),
-            imageVector = Icons.Default.Warning,
-            contentDescription = null,
+            imageVector = icon.icon,
+            contentDescription = stringResource(icon.text),
         )
     }
 }

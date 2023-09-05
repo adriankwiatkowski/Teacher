@@ -8,7 +8,7 @@ internal data class GradeForm(
     val grade: InputField<BigDecimal?>,
     val status: FormStatus,
 ) {
-    val isValid: Boolean
+    private val isValid: Boolean
         get() = grade.isValid
 
     val isSubmitEnabled: Boolean

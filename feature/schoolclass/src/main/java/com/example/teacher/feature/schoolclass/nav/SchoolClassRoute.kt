@@ -6,6 +6,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacher.core.ui.util.OnShowSnackbar
+import com.example.teacher.feature.schoolclass.R
 import com.example.teacher.feature.schoolclass.SchoolClassScreen
 import com.example.teacher.feature.schoolclass.data.SchoolClassViewModel
 
@@ -14,7 +16,7 @@ internal fun SchoolClassRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     onStudentClick: (id: Long) -> Unit,
     onAddStudentClick: () -> Unit,
     onLessonClick: (id: Long) -> Unit,
@@ -27,7 +29,7 @@ internal fun SchoolClassRoute(
     // Observe deletion.
     LaunchedEffect(isSchoolClassDeleted, onShowSnackbar, onNavBack) {
         if (isSchoolClassDeleted) {
-            onShowSnackbar("Usunięto klasę")
+            onShowSnackbar.onShowSnackbar(R.string.school_class_deleted)
             onNavBack()
         }
     }

@@ -1,7 +1,6 @@
 package com.example.teacher.feature.lesson.note.data
 
 import androidx.core.text.trimmedLength
-import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
 
@@ -31,16 +30,10 @@ internal object NoteFormProvider {
         isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): NoteForm {
-        val actualTitle = title.ifNull {
-            "Notatka z dnia ${TimeUtils.format(TimeUtils.currentDate())}"
-        }
-
         return NoteForm(
-            title = validateTitle(actualTitle, isEdited = isEdited),
+            title = validateTitle(title.orEmpty(), isEdited = isEdited),
             text = validateText(text, isEdited = isEdited),
             status = status,
         )
     }
 }
-
-private inline fun String?.ifNull(defaultValue: () -> String): String = this ?: defaultValue()

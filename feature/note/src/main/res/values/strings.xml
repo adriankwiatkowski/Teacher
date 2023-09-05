@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="note_priority">Ważność notatki</string>
+    <string name="priority_low">Nieważne</string>
+    <string name="priority_medium">Ważne</string>
+    <string name="priority_high">Bardzo ważne</string>
+    <string name="note_form_title">Notatka</string>
+    <string name="saving_note">Zapisywanie notatki…</string>
+    <string name="note_saved">Zapisano notatkę</string>
+    <string name="note_deleted">Usunięto notatkę</string>
+    <string name="edit_note">Edytuj notatkę</string>
+    <string name="add_note">Dodaj notatkę</string>
+    <string name="title">Tytuł</string>
+    <string name="description">Opis</string>
+    <string name="empty_notes">Nie napisano jeszcze żadnej notatki</string>
+</resources>

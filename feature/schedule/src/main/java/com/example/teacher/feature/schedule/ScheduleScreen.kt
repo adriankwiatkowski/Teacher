@@ -11,8 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -24,17 +22,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.ui.component.TeacherFab
+import com.example.teacher.core.ui.component.TeacherIconButton
 import com.example.teacher.core.ui.component.picker.TeacherDatePicker
 import com.example.teacher.core.ui.component.result.ErrorScreen
 import com.example.teacher.core.ui.component.result.LoadingScreen
-import com.example.teacher.core.ui.icon.TeacherIcons
 import com.example.teacher.core.ui.paramprovider.EventsPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import java.time.LocalDate
@@ -54,13 +54,7 @@ internal fun ScheduleScreen(
     Scaffold(
         modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        floatingActionButton = {
-            TeacherFab(
-                imageVector = TeacherIcons.Add,
-                contentDescription = null,
-                onClick = onAddScheduleClick,
-            )
-        },
+        floatingActionButton = { TeacherFab(TeacherActions.add(onClick = onAddScheduleClick)) },
         floatingActionButtonPosition = FabPosition.End,
     ) { innerPadding ->
         MainContent(
@@ -152,24 +146,20 @@ private fun Header(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TeacherIconButton(TeacherActions.previous(onClick = onPrevDateClick))
+            TeacherDatePicker(
+                date = date,
+                onDateSelected = onDateSelected,
+                label = TimeUtils.format(date),
+            )
+            TeacherIconButton(TeacherActions.next(onClick = onNextDateClick))
+        }
+
         Text(
             text = TimeUtils.getDisplayNameOfDayOfWeek(date),
             style = MaterialTheme.typography.headlineSmall,
         )
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onPrevDateClick) {
-                Icon(imageVector = TeacherIcons.Previous, contentDescription = null)
-            }
-            TeacherDatePicker(
-                date = date,
-                onDateSelected = onDateSelected,
-                label = { Text(TimeUtils.format(date)) },
-            )
-            IconButton(onClick = onNextDateClick) {
-                Icon(imageVector = TeacherIcons.Next, contentDescription = null)
-            }
-        }
     }
 }
 
@@ -181,7 +171,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Brak zajęć",
+            text = stringResource(R.string.schedule_empty),
             style = MaterialTheme.typography.headlineMedium,
         )
     }
@@ -210,7 +200,7 @@ private fun EventItem(
         },
         supportingContent = {
             val text = event.lesson?.let { lesson -> "${lesson.name} ${lesson.schoolClass.name}" }
-                ?: "Wydarzenie"
+                ?: stringResource(R.string.event)
             Text(text)
         },
     )

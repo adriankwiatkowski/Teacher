@@ -11,7 +11,7 @@ internal data class StudentForm(
     val phone: InputField<String?>,
     val status: FormStatus,
 ) {
-    val isValid: Boolean
+    private val isValid: Boolean
         get() = name.isValid && surname.isValid && email.isValid && phone.isValid
 
     val isSubmitEnabled: Boolean

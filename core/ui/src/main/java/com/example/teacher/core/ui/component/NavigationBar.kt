@@ -13,8 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.teacher.core.ui.icon.TeacherIcons
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 
 @Composable
@@ -71,27 +72,21 @@ private fun TeacherNavigationBarPreview() {
     TeacherTheme {
         Surface {
             TeacherNavigationBar(visible = true) {
-                TeacherNavigationBarItem(
-                    selected = false,
-                    onClick = {},
-                    icon = TeacherIcons.Add,
-                    iconContentDescription = null,
-                    label = "Tab 1",
+                val icons = listOf(
+                    TeacherIcons.schedule(),
+                    TeacherIcons.schoolClasses(),
+                    TeacherIcons.notes(),
                 )
-                TeacherNavigationBarItem(
-                    selected = true,
-                    onClick = {},
-                    icon = TeacherIcons.Add,
-                    iconContentDescription = null,
-                    label = "Tab 2",
-                )
-                TeacherNavigationBarItem(
-                    selected = false,
-                    onClick = {},
-                    icon = TeacherIcons.Add,
-                    iconContentDescription = null,
-                    label = "Tab 3",
-                )
+
+                icons.forEachIndexed { index, icon ->
+                    TeacherNavigationBarItem(
+                        selected = index == 1,
+                        onClick = {},
+                        icon = icon.icon,
+                        iconContentDescription = stringResource(icon.text),
+                        label = stringResource(icon.text),
+                    )
+                }
             }
         }
     }

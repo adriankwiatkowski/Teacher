@@ -58,9 +58,3 @@ internal class StudentGradesViewModel @Inject constructor(
         private const val STUDENT_ID_KEY = StudentNavigation.studentIdArg
     }
 }
-
-internal data class GradeDialogInfo(
-    val student: Student,
-    val gradeInfo: StudentGradesByLesson,
-    val grade: StudentGrade,
-)

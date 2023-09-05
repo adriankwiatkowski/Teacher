@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.example.teacher.core.ui.util.OnShowSnackbar
 
 private const val schoolYearFormScreen = "school-year-form"
 private const val schoolYearFormRoute = schoolYearFormScreen
@@ -16,7 +17,7 @@ fun NavController.navigateToSchoolYearFormRoute(navOptions: NavOptions? = null) 
 fun NavGraphBuilder.schoolYearGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
 ) {
     composable(schoolYearFormRoute) {
         SchoolYearFormRoute(

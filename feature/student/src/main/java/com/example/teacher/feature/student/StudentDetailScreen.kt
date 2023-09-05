@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CopyAll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -22,10 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.model.data.Student
 import com.example.teacher.core.ui.paramprovider.StudentPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 
@@ -75,8 +75,8 @@ private fun MainScreen(
         modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
         Text(text = studentName, style = MaterialTheme.typography.titleLarge)
-        CopyableText(label = "Email", text = email, onClick = onEmailClick)
-        CopyableText(label = "Telefon", text = phone, onClick = onPhoneClick)
+        CopyableText(label = stringResource(R.string.email), text = email, onClick = onEmailClick)
+        CopyableText(label = stringResource(R.string.phone), text = phone, onClick = onPhoneClick)
     }
 }
 
@@ -99,7 +99,9 @@ private fun CopyableText(
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
     ) {
         Text(text = "$label: $text", style = MaterialTheme.typography.bodyLarge)
-        Icon(Icons.Default.CopyAll, contentDescription = null)
+
+        val icon = TeacherIcons.copy()
+        Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
     }
 }
 

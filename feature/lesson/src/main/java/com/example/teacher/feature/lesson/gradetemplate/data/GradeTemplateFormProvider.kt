@@ -3,6 +3,7 @@ package com.example.teacher.feature.lesson.gradetemplate.data
 import androidx.core.text.trimmedLength
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
+import com.example.teacher.feature.lesson.R
 
 internal object GradeTemplateFormProvider {
 
@@ -33,7 +34,7 @@ internal object GradeTemplateFormProvider {
         val isError = weight.trim().toIntOrNull()?.let { weightNumber ->
             weightNumber !in 1..6
         } ?: true
-        val supportingText = if (isError) "Waga musi być liczbą od 1 do 6" else null
+        val supportingText = if (isError) R.string.grade_weight_error else null
 
         return InputField(
             weight,

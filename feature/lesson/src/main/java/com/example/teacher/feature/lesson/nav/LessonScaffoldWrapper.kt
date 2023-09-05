@@ -14,7 +14,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.component.result.ResultContent
-import com.example.teacher.core.ui.model.ActionItem
+import com.example.teacher.core.ui.model.TeacherAction
+import com.example.teacher.core.ui.util.OnShowSnackbar
+import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.components.LessonScaffold
 import com.example.teacher.feature.lesson.data.LessonScaffoldViewModel
 import com.example.teacher.feature.lesson.tab.LessonTab
@@ -25,8 +27,8 @@ import kotlinx.coroutines.launch
 internal fun LessonScaffoldWrapper(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
-    onShowSnackbar: (message: String) -> Unit,
-    menuItems: List<ActionItem>,
+    onShowSnackbar: OnShowSnackbar,
+    menuItems: List<TeacherAction>,
     modifier: Modifier = Modifier,
     viewModel: LessonScaffoldViewModel = hiltViewModel(),
     content: @Composable (selectedTab: LessonTab, lesson: Lesson) -> Unit,
@@ -54,7 +56,7 @@ internal fun LessonScaffoldWrapper(
     // Observe deletion.
     LaunchedEffect(isLessonDeleted, onShowSnackbar, onNavBack) {
         if (isLessonDeleted) {
-            onShowSnackbar("Usunięto zajęcia")
+            onShowSnackbar.onShowSnackbar(R.string.lesson_deleted)
             onNavBack()
         }
     }

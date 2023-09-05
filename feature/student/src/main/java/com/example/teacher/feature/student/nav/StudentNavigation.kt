@@ -9,7 +9,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.teacher.core.ui.provider.ActionItemProvider
+import com.example.teacher.core.ui.provider.TeacherActions
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.student.data.StudentScaffoldViewModel
 import com.example.teacher.feature.student.nav.StudentNavigation.schoolClassIdArg
 import com.example.teacher.feature.student.nav.StudentNavigation.studentIdArg
@@ -51,7 +52,7 @@ fun NavController.navigateToStudentFormRoute(
 fun NavGraphBuilder.studentGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     navigateToStudentNoteFormRoute: (studentId: Long, studentNoteId: Long?) -> Unit,
 ) {
     navigation(
@@ -86,8 +87,8 @@ fun NavGraphBuilder.studentGraph(
                 onNavBack = navController::popBackStack,
                 onShowSnackbar = onShowSnackbar,
                 menuItems = listOf(
-                    ActionItemProvider.edit(onClick = onEditClick),
-                    ActionItemProvider.delete(onClick = viewModel::onDeleteStudent),
+                    TeacherActions.edit(onClick = onEditClick),
+                    TeacherActions.delete(onClick = viewModel::onDeleteStudent),
                 ),
                 viewModel = viewModel,
             ) { selectedTab, student ->

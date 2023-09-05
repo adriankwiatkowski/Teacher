@@ -1,8 +1,11 @@
 package com.example.teacher.feature.lesson.tab
 
-internal enum class LessonTab(val title: String) {
-    Grades(title = "Oceny"),
-    Attendance(title = "Obecność"),
-    Activity(title = "Aktywność"),
-    Notes(title = "Notatki"),
+import androidx.annotation.StringRes
+import com.example.teacher.feature.lesson.R
+
+internal enum class LessonTab(@StringRes val title: Int) {
+    Grades(title = R.string.grades),
+    Attendance(title = R.string.attendance),
+    Activity(title = R.string.activity),
+    Notes(title = R.string.notes),
 }

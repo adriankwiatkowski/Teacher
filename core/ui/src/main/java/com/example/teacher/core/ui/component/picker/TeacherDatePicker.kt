@@ -15,8 +15,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
+import com.example.teacher.core.ui.R
 import com.example.teacher.core.ui.component.TeacherChip
 import com.example.teacher.core.ui.theme.TeacherTheme
 import java.time.LocalDate
@@ -26,7 +28,7 @@ import java.time.LocalDate
 fun TeacherDatePicker(
     date: LocalDate,
     onDateSelected: (LocalDate) -> Unit,
-    label: @Composable () -> Unit,
+    label: String,
     modifier: Modifier = Modifier,
 ) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
@@ -51,12 +53,12 @@ fun TeacherDatePicker(
                     },
                     enabled = confirmEnabled.value,
                 ) {
-                    Text("OK")
+                    Text(stringResource(R.string.ok))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDialog = false }) {
-                    Text("Anuluj")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         ) {
@@ -81,7 +83,7 @@ private fun TeacherDatePickerPreview() {
             TeacherDatePicker(
                 date = date,
                 onDateSelected = { date = it },
-                label = { Text("Pick date") },
+                label = "Pick date",
             )
         }
     }

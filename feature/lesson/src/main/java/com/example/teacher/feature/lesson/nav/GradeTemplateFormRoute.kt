@@ -7,6 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.util.OnShowSnackbar
+import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.gradetemplate.GradeTemplateFormScreen
 import com.example.teacher.feature.lesson.gradetemplate.data.GradeTemplateFormViewModel
 
@@ -15,7 +17,7 @@ internal fun GradeTemplateFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     isEditMode: Boolean,
     viewModel: GradeTemplateFormViewModel = hiltViewModel(),
 ) {
@@ -27,14 +29,14 @@ internal fun GradeTemplateFormRoute(
     // Observe save.
     LaunchedEffect(formStatus, onShowSnackbar, onNavBack) {
         if (formStatus == FormStatus.Success) {
-            onShowSnackbar("Zapisano ocenę")
+            onShowSnackbar.onShowSnackbar(R.string.grade_saved)
             onNavBack()
         }
     }
     // Observe deletion.
     LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
         if (isDeleted) {
-            onShowSnackbar("Usunięto ocenę")
+            onShowSnackbar.onShowSnackbar(R.string.grade_deleted)
             onNavBack()
         }
     }

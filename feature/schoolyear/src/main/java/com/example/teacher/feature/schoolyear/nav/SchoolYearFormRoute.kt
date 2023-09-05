@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.util.OnShowSnackbar
+import com.example.teacher.feature.schoolyear.R
 import com.example.teacher.feature.schoolyear.SchoolYearFormScreen
 import com.example.teacher.feature.schoolyear.data.SchoolYearFormViewModel
 
@@ -13,7 +15,7 @@ internal fun SchoolYearFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
 ) {
     val viewModel = hiltViewModel<SchoolYearFormViewModel>()
     val form = viewModel.form
@@ -21,7 +23,7 @@ internal fun SchoolYearFormRoute(
 
     LaunchedEffect(status, onShowSnackbar, onNavBack) {
         if (status == FormStatus.Success) {
-            onShowSnackbar("Zapisano rok szkolny")
+            onShowSnackbar.onShowSnackbar(R.string.school_year_saved)
             onNavBack()
         }
     }

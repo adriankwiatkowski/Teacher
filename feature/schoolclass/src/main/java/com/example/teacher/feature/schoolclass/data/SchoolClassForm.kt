@@ -10,7 +10,7 @@ internal data class SchoolClassForm(
     val schoolYear: InputField<SchoolYear?>,
     val status: FormStatus,
 ) {
-    val isValid: Boolean
+    private val isValid: Boolean
         get() = schoolClassName.isValid && schoolYear.isValid
 
     val isSubmitEnabled: Boolean

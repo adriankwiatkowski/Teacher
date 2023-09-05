@@ -12,14 +12,18 @@ import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.example.teacher.core.model.data.NotePriority
+import com.example.teacher.feature.note.R
+import com.example.teacher.feature.note.util.priorityToName
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 internal fun NotePriorityPicker(
-    priority: NotePriority,
+    selectedPriority: NotePriority,
     onPriorityChange: (priority: NotePriority) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,28 +37,26 @@ internal fun NotePriorityPicker(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = "Ważność notatki", style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = stringResource(R.string.note_priority),
+                style = MaterialTheme.typography.bodyLarge,
+            )
 
             FlowRow(
                 modifier = modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.Center,
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                InputChip(
-                    selected = priority == NotePriority.Low,
-                    onClick = { onPriorityChange(NotePriority.Low) },
-                    label = { Text("Nieważne") }
-                )
-                InputChip(
-                    selected = priority == NotePriority.Medium,
-                    onClick = { onPriorityChange(NotePriority.Medium) },
-                    label = { Text("Ważne") }
-                )
-                InputChip(
-                    selected = priority == NotePriority.High,
-                    onClick = { onPriorityChange(NotePriority.High) },
-                    label = { Text("Bardzo ważne") }
-                )
+                val priorities =
+                    remember { listOf(NotePriority.Low, NotePriority.Medium, NotePriority.High) }
+
+                for (priority in priorities) {
+                    InputChip(
+                        selected = priority == selectedPriority,
+                        onClick = { onPriorityChange(priority) },
+                        label = { priorityToName(priority) }
+                    )
+                }
             }
         }
     }

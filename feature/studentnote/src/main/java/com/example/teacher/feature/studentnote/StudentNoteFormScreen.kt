@@ -25,6 +25,7 @@ import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,7 +42,7 @@ import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.paramprovider.StudentNotePreviewParameterProvider
-import com.example.teacher.core.ui.provider.ActionItemProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.studentnote.data.StudentNoteFormProvider
@@ -73,11 +74,11 @@ internal fun StudentNoteFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Uwaga",
+                title = stringResource(R.string.student_note_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
-                    listOf(ActionItemProvider.delete(onDeleteStudentNoteClick))
+                    listOf(TeacherActions.delete(onDeleteStudentNoteClick))
                 } else {
                     emptyList()
                 },
@@ -92,11 +93,11 @@ internal fun StudentNoteFormScreen(
                 .padding(MaterialTheme.spacing.small),
             result = studentNoteResult,
             isDeleted = isStudentNoteDeleted,
-            deletedMessage = "Usunięto uwagę",
+            deletedMessage = stringResource(R.string.note_deleted),
         ) {
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = "Zapisywanie uwagi...",
+                savingText = stringResource(R.string.saving_note),
             ) {
                 Content(
                     modifier = Modifier
@@ -108,7 +109,11 @@ internal fun StudentNoteFormScreen(
                     description = description,
                     onDescriptionChange = onDescriptionChange,
                     isSubmitEnabled = isSubmitEnabled,
-                    submitText = if (isEditMode) "Edytuj uwagę" else "Dodaj uwagę",
+                    submitText = if (isEditMode) {
+                        stringResource(R.string.edit_note)
+                    } else {
+                        stringResource(R.string.add_note)
+                    },
                     onSubmit = onAddStudentNote,
                 )
             }
@@ -162,7 +167,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = title,
             onValueChange = { onTitleChange(it) },
-            label = "Tytuł",
+            label = stringResource(R.string.title),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -171,18 +176,17 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = description,
             onValueChange = { onDescriptionChange(it) },
-            label = "Opis",
+            label = stringResource(R.string.description),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
+            label = submitText,
             onClick = onSubmit,
             enabled = isSubmitEnabled,
-        ) {
-            Text(text = submitText)
-        }
+        )
     }
 }
 
@@ -213,7 +217,7 @@ private fun StudentNoteFormScreenPreview(
                 onTitleChange = {},
                 description = form.description,
                 onDescriptionChange = {},
-                isSubmitEnabled = form.isValid,
+                isSubmitEnabled = form.isSubmitEnabled,
                 onAddStudentNote = {},
                 isEditMode = true,
                 isStudentNoteDeleted = false,
@@ -244,7 +248,7 @@ private fun StudentNoteFormScreenDeletedPreview() {
                 onTitleChange = {},
                 description = form.description,
                 onDescriptionChange = {},
-                isSubmitEnabled = form.isValid,
+                isSubmitEnabled = form.isSubmitEnabled,
                 onAddStudentNote = {},
                 isEditMode = true,
                 isStudentNoteDeleted = true,

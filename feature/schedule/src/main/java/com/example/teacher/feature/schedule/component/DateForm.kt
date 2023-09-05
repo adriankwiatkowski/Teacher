@@ -20,12 +20,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.schedule.R
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -65,15 +67,18 @@ internal fun DateForm(
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
             if (showTermPicker) {
-                Text(text = "Semestr", style = MaterialTheme.typography.labelLarge)
+                Text(
+                    text = stringResource(R.string.term),
+                    style = MaterialTheme.typography.labelLarge,
+                )
                 Column(Modifier.selectableGroup()) {
                     TeacherRadioButton(
-                        label = "Pierwszy semestr",
+                        label = stringResource(R.string.first_term),
                         selected = isFirstTermSelected,
                         onClick = { onTermSelected(true) },
                     )
                     TeacherRadioButton(
-                        label = "Drugi semestr",
+                        label = stringResource(R.string.second_term),
                         selected = !isFirstTermSelected,
                         onClick = { onTermSelected(false) },
                     )
@@ -89,12 +94,12 @@ internal fun DateForm(
             }
 
             LessonTimePicker(
-                label = "Czas rozpoczęcia:",
+                label = stringResource(R.string.start_time),
                 time = startTime,
                 onTimeSelected = onStartTimeChange,
             )
             LessonTimePicker(
-                label = "Czas zakończenia:",
+                label = stringResource(R.string.end_time),
                 time = endTime,
                 onTimeSelected = onEndTimeChange,
             )
@@ -102,7 +107,11 @@ internal fun DateForm(
             if (showTypeControls) {
                 Divider()
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
-                Text(text = "Typ", style = MaterialTheme.typography.labelLarge)
+
+                Text(
+                    text = stringResource(R.string.type),
+                    style = MaterialTheme.typography.labelLarge,
+                )
                 EventTypeControls(type = type, onTypeChange = onTypeChange)
             }
         }

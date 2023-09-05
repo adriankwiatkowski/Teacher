@@ -21,7 +21,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -37,6 +37,7 @@ import com.example.teacher.core.model.data.Attendance
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.LessonAttendance
 import com.example.teacher.core.ui.component.TeacherRadioButton
+import com.example.teacher.core.ui.component.TeacherTextButton
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.ResultContent
@@ -44,6 +45,7 @@ import com.example.teacher.core.ui.paramprovider.EventsPreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.LessonAttendancesPreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.lesson.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,7 +71,7 @@ internal fun AttendanceScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Wystawienie frekwencji",
+                title = stringResource(R.string.attendance_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -84,7 +86,7 @@ internal fun AttendanceScreen(
             if (showAttendanceDialog) {
                 AttendanceDialog(
                     studentFullName = selectedStudentFullName,
-                    attendance = selectedAttendance,
+                    selectedAttendance = selectedAttendance,
                     onAttendanceSelect = onAttendanceSelect,
                     onDismissRequest = onAttendanceDismissRequest,
                     onConfirmClick = onAttendanceConfirmClick,
@@ -150,7 +152,7 @@ private fun MainContent(
 @Composable
 private fun AttendanceDialog(
     studentFullName: String,
-    attendance: Attendance?,
+    selectedAttendance: Attendance?,
     onAttendanceSelect: (attendance: Attendance?) -> Unit,
     onDismissRequest: () -> Unit,
     onConfirmClick: () -> Unit,
@@ -159,7 +161,7 @@ private fun AttendanceDialog(
     AlertDialog(
         modifier = modifier,
         onDismissRequest = onDismissRequest,
-        title = { Text("Wystaw frekwencję") },
+        title = { Text(stringResource(R.string.set_attendance)) },
         text = {
             Column {
                 Text(studentFullName)
@@ -168,51 +170,41 @@ private fun AttendanceDialog(
                         .verticalScroll(rememberScrollState())
                         .selectableGroup(),
                 ) {
-                    TeacherRadioButton(
-                        label = "obecny",
-                        selected = attendance == Attendance.Present,
-                        onClick = { onAttendanceSelect(Attendance.Present) },
-                    )
-                    TeacherRadioButton(
-                        label = "spóźniony",
-                        selected = attendance == Attendance.Late,
-                        onClick = { onAttendanceSelect(Attendance.Late) },
-                    )
-                    TeacherRadioButton(
-                        label = "nieobecny",
-                        selected = attendance == Attendance.Absent,
-                        onClick = { onAttendanceSelect(Attendance.Absent) },
-                    )
-                    TeacherRadioButton(
-                        label = "nieobecność usprawiedliwiona",
-                        selected = attendance == Attendance.ExcusedAbsence,
-                        onClick = { onAttendanceSelect(Attendance.ExcusedAbsence) },
-                    )
-                    TeacherRadioButton(
-                        label = "zwolnienie",
-                        selected = attendance == Attendance.Exemption,
-                        onClick = { onAttendanceSelect(Attendance.Exemption) },
-                    )
-                    TeacherRadioButton(
-                        label = "brak",
-                        selected = attendance == null,
-                        onClick = { onAttendanceSelect(null) },
-                    )
+                    val attendances = remember {
+                        listOf(
+                            Attendance.Present,
+                            Attendance.Late,
+                            Attendance.Absent,
+                            Attendance.ExcusedAbsence,
+                            Attendance.Exemption,
+                            null,
+                        )
+                    }
+
+                    for (attendance in attendances) {
+                        TeacherRadioButton(
+                            label = getAttendanceText(attendance),
+                            selected = selectedAttendance == attendance,
+                            onClick = { onAttendanceSelect(attendance) },
+                        )
+                    }
                 }
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text("Anuluj")
-            }
+            TeacherTextButton(
+                label = stringResource(com.example.teacher.core.ui.R.string.cancel),
+                onClick = onDismissRequest,
+            )
         },
         confirmButton = {
-            TextButton(onClick = {
-                onConfirmClick()
-                onDismissRequest()
-            }) {
-                Text("Ok")
-            }
+            TeacherTextButton(
+                label = stringResource(com.example.teacher.core.ui.R.string.ok),
+                onClick = {
+                    onConfirmClick()
+                    onDismissRequest()
+                },
+            )
         },
     )
 }
@@ -224,22 +216,25 @@ private fun AttendanceItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val attendanceText = remember(attendance) {
-        when (attendance) {
-            Attendance.Present -> "obecny"
-            Attendance.Late -> "spóźniony"
-            Attendance.Absent -> "nieobecny"
-            Attendance.ExcusedAbsence -> "nieobecność usprawiedliwiona"
-            Attendance.Exemption -> "zwolnienie"
-            null -> "brak"
-        }
-    }
+    val attendanceText = getAttendanceText(attendance)
 
     ListItem(
         modifier = modifier.clickable(onClick = onClick),
         headlineContent = { Text(studentFullName) },
         supportingContent = { Text(attendanceText) },
     )
+}
+
+@Composable
+private fun getAttendanceText(attendance: Attendance?): String {
+    return when (attendance) {
+        Attendance.Present -> stringResource(R.string.present)
+        Attendance.Late -> stringResource(R.string.late)
+        Attendance.Absent -> stringResource(R.string.absent)
+        Attendance.ExcusedAbsence -> stringResource(R.string.excused_absence)
+        Attendance.Exemption -> stringResource(R.string.exemption)
+        null -> stringResource(R.string.no_attendance)
+    }
 }
 
 @Preview

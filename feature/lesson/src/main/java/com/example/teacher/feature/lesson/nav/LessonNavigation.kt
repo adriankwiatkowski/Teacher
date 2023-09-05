@@ -9,7 +9,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.teacher.core.ui.provider.ActionItemProvider
+import com.example.teacher.core.ui.provider.TeacherActions
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.lesson.data.LessonScaffoldViewModel
 import com.example.teacher.feature.lesson.nav.LessonNavigation.eventIdArg
 import com.example.teacher.feature.lesson.nav.LessonNavigation.gradeTemplateIdArg
@@ -93,7 +94,7 @@ private fun NavController.navigateToLessonAttendanceFormRoute(
 fun NavGraphBuilder.lessonGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     navigateToGradesRoute: (lessonId: Long, gradeTemplateId: Long) -> Unit,
 ) {
     navigation(
@@ -128,8 +129,8 @@ fun NavGraphBuilder.lessonGraph(
                 onNavBack = navController::popBackStack,
                 onShowSnackbar = onShowSnackbar,
                 menuItems = listOf(
-                    ActionItemProvider.edit(onEditClick),
-                    ActionItemProvider.delete(viewModel::onDeleteLesson),
+                    TeacherActions.edit(onEditClick),
+                    TeacherActions.delete(viewModel::onDeleteLesson),
                 ),
                 viewModel = viewModel,
             ) { selectedTab, _ ->

@@ -10,7 +10,7 @@ internal data class GradeTemplateForm(
     val isFirstTerm: Boolean,
     val status: FormStatus,
 ) {
-    val isValid: Boolean
+    private val isValid: Boolean
         get() = name.isValid && description.isValid && weight.isValid
 
     val isSubmitEnabled: Boolean

@@ -39,7 +39,7 @@ import java.time.LocalTime
 fun TeacherTimePicker(
     time: LocalTime,
     onTimeSelected: (LocalTime) -> Unit,
-    label: @Composable () -> Unit,
+    label: String,
     modifier: Modifier = Modifier,
 ) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
@@ -136,7 +136,7 @@ private fun TeacherTimePickerPreview() {
             TeacherTimePicker(
                 time = time,
                 onTimeSelected = { time = it },
-                label = { Text("Pick time") },
+                label = "Pick time",
             )
         }
     }

@@ -10,9 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Subject
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
@@ -30,6 +27,7 @@ import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +44,8 @@ import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherActions
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.data.LessonFormProvider
@@ -70,14 +70,14 @@ internal fun LessonFormScreen(
     FormStatusContent(
         modifier = modifier,
         formStatus = formStatus,
-        savingText = "Zapisywanie przedmiotu...",
+        savingText = stringResource(R.string.saving_lesson),
     ) {
         Scaffold(
             modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
             topBar = {
                 TeacherTopBar(
-                    title = "Klasa $schoolClassName",
+                    title = stringResource(R.string.school_class, schoolClassName),
                     showNavigationIcon = showNavigationIcon,
                     onNavigationIconClick = onNavBack,
                     scrollBehavior = scrollBehavior,
@@ -85,9 +85,7 @@ internal fun LessonFormScreen(
             },
             floatingActionButton = {
                 TeacherFab(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null,
-                    onClick = onAddLessonClick,
+                    action = TeacherActions.add(onClick = onAddLessonClick),
                     visible = isSubmitEnabled,
                 )
             },
@@ -106,7 +104,11 @@ internal fun LessonFormScreen(
                         onNameChange = onNameChange,
                         onSubmit = onAddLessonClick,
                         isSubmitEnabled = isSubmitEnabled,
-                        submitText = if (lessonResult.data == null) "Dodaj przedmiot" else "Edytuj przedmiot",
+                        submitText = if (lessonResult.data == null) {
+                            stringResource(R.string.add_lesson)
+                        } else {
+                            stringResource(R.string.edit_lesson)
+                        },
                     )
                 } else {
                     ResultContent(result = lessonResult) { lesson ->
@@ -118,7 +120,11 @@ internal fun LessonFormScreen(
                             schoolClassName = schoolClassName,
                             name = name,
                             onNameChange = onNameChange,
-                            submitText = if (lesson == null) "Dodaj przedmiot" else "Edytuj przedmiot",
+                            submitText = if (lesson == null) {
+                                stringResource(R.string.add_lesson)
+                            } else {
+                                stringResource(R.string.edit_lesson)
+                            },
                             isSubmitEnabled = isSubmitEnabled,
                             onSubmit = onAddLessonClick,
                         )
@@ -140,7 +146,10 @@ private fun Content(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        Text(text = "Klasa $schoolClassName", style = MaterialTheme.typography.headlineMedium)
+        Text(
+            text = stringResource(R.string.school_class, schoolClassName),
+            style = MaterialTheme.typography.headlineMedium,
+        )
 
         val focusManager = LocalFocusManager.current
         val movePrev = { focusManager.moveFocus(FocusDirection.Up) }
@@ -169,9 +178,10 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = name,
             onValueChange = { onNameChange(it) },
-            label = "Przedmiot",
+            label = stringResource(R.string.lesson),
             leadingIcon = {
-                Icon(imageVector = Icons.Default.Subject, contentDescription = null)
+                val icon = TeacherIcons.subject()
+                Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
             },
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
@@ -179,11 +189,10 @@ private fun Content(
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
+            label = submitText,
             onClick = onSubmit,
             enabled = isSubmitEnabled,
-        ) {
-            Text(text = submitText)
-        }
+        )
     }
 }
 
@@ -206,7 +215,7 @@ private fun LessonFormScreenPreview(
                 formStatus = form.status,
                 name = form.name,
                 onNameChange = {},
-                isSubmitEnabled = form.isValid,
+                isSubmitEnabled = form.isSubmitEnabled,
                 schoolClassName = lesson.schoolClass.name,
                 onAddLessonClick = {},
                 showNavigationIcon = true,

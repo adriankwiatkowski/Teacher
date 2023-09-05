@@ -10,6 +10,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.schedule.data.EventFormViewModel
 import com.example.teacher.feature.schedule.nav.ScheduleNavigation.lessonIdArg
 import com.example.teacher.feature.schedule.nav.ScheduleNavigation.scheduleRoute
@@ -48,7 +49,7 @@ private fun NavController.navigateToLessonPickerRoute(navOptions: NavOptions? = 
 fun NavGraphBuilder.scheduleGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
 ) {
     composable(scheduleRoute) {
         ScheduleRoute(

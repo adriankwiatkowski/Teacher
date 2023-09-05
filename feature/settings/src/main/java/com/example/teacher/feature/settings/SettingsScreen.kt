@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.SettingsData
@@ -69,34 +70,34 @@ private fun SettingsPanel(
 ) {
     Column(modifier = modifier.padding(MaterialTheme.spacing.medium)) {
         Text(
-            text = "Ustawienia",
+            text = stringResource(R.string.settings),
             style = MaterialTheme.typography.titleLarge,
         )
 
         Column(Modifier.verticalScroll(rememberScrollState())) {
-            SectionTitle(text = "Motyw")
+            SectionTitle(text = stringResource(R.string.theme))
             Column(Modifier.selectableGroup()) {
                 TeacherRadioButton(
-                    label = "Ustawienie domyślne systemu",
+                    label = stringResource(R.string.system_default),
                     selected = theme == ThemeConfig.FollowSystem,
                     onClick = { onThemeChange(ThemeConfig.FollowSystem) },
                 )
                 TeacherRadioButton(
-                    label = "Jasny",
+                    label = stringResource(R.string.light),
                     selected = theme == ThemeConfig.Light,
                     onClick = { onThemeChange(ThemeConfig.Light) },
                 )
                 TeacherRadioButton(
-                    label = "Ciemny",
+                    label = stringResource(R.string.dark),
                     selected = theme == ThemeConfig.Dark,
                     onClick = { onThemeChange(ThemeConfig.Dark) },
                 )
             }
 
             if (supportDynamicColor) {
-                SectionTitle(text = "Dynamiczny motyw")
+                SectionTitle(text = stringResource(R.string.dynamic_theme))
                 TeacherSwitch(
-                    label = "Używaj dynamicznych kolorów",
+                    label = stringResource(R.string.use_dynamic_theme),
                     checked = useDynamicColor,
                     onCheckedChange = onDynamicColorChange,
                 )

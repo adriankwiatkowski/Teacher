@@ -13,10 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.TeacherTopBarWithTabs
-import com.example.teacher.core.ui.model.ActionItem
+import com.example.teacher.core.ui.model.StringResource
+import com.example.teacher.core.ui.model.TeacherAction
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.feature.student.tab.StudentTab
 import kotlinx.coroutines.launch
@@ -26,7 +28,7 @@ import kotlinx.coroutines.launch
 internal fun StudentScaffold(
     isScaffoldVisible: Boolean,
     title: String,
-    menuItems: List<ActionItem>,
+    menuItems: List<TeacherAction>,
     showNavigationIcon: Boolean,
     onNavigationIconClick: () -> Unit,
     tabs: List<StudentTab>,
@@ -36,12 +38,8 @@ internal fun StudentScaffold(
     modifier: Modifier = Modifier,
     content: @Composable (studentTab: StudentTab) -> Unit,
 ) {
-    val stringTabs = remember(tabs) {
-        tabs.map { tab -> tab.title }
-    }
-    val selectedTabIndex = remember(tabs, selectedTab) {
-        tabs.indexOf(selectedTab)
-    }
+    val stringTabs = remember(tabs) { tabs.map { tab -> StringResource(tab.title) } }
+    val selectedTabIndex = remember(tabs, selectedTab) { tabs.indexOf(selectedTab) }
 
     val scrollBehavior = TeacherTopBarDefaults.default()
 
@@ -68,7 +66,7 @@ internal fun StudentScaffold(
 private fun StudentScaffoldPreview() {
     TeacherTheme {
         Surface {
-            val tabs = remember { listOf(StudentTab.Grades, StudentTab.Detail, StudentTab.Notes) }
+            val tabs = remember { listOf(StudentTab.Detail, StudentTab.Grades, StudentTab.Notes) }
             val pagerState =
                 rememberPagerState(initialPage = tabs.indexOf(StudentTab.Detail)) { tabs.size }
             val selectedTab = tabs[pagerState.currentPage]
@@ -92,7 +90,7 @@ private fun StudentScaffoldPreview() {
                 pagerState = pagerState,
             ) { studentTab ->
                 Column(modifier = Modifier.fillMaxSize()) {
-                    Text(studentTab.title)
+                    Text(stringResource(studentTab.title))
                     repeat(10) {
                         Text("Details of tab...")
                     }

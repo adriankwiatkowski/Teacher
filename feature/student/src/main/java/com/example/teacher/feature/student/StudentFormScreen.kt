@@ -11,19 +11,14 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -32,6 +27,7 @@ import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -48,6 +44,7 @@ import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.paramprovider.StudentPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.student.data.StudentFormProvider
@@ -80,7 +77,7 @@ internal fun StudentFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Klasa $schoolClassName",
+                title = stringResource(R.string.school_class_name, schoolClassName),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -96,7 +93,7 @@ internal fun StudentFormScreen(
         ) { student ->
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = "Zapisywanie studenta...",
+                savingText = stringResource(R.string.saving_student),
             ) {
                 Content(
                     modifier = Modifier
@@ -111,7 +108,11 @@ internal fun StudentFormScreen(
                     phone = phone,
                     onPhoneChange = onPhoneChange,
                     isSubmitEnabled = isSubmitEnabled,
-                    submitText = if (student == null) "Dodaj studenta" else "Edytuj studenta",
+                    submitText = if (student == null) {
+                        stringResource(R.string.add_student)
+                    } else {
+                        stringResource(R.string.edit_student)
+                    },
                     onSubmit = onAddStudent,
                 )
             }
@@ -168,7 +169,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = name,
             onValueChange = { onNameChange(it) },
-            label = "Imię",
+            label = stringResource(R.string.name),
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Person, contentDescription = null)
             },
@@ -180,7 +181,7 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = surname,
             onValueChange = { onSurnameChange(it) },
-            label = "Nazwisko",
+            label = stringResource(R.string.surname),
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Person, contentDescription = null)
             },
@@ -192,14 +193,10 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = email,
             onValueChange = { onEmailChange(it) },
-            label = "Email",
+            label = stringResource(R.string.email),
             leadingIcon = {
-                Icon(imageVector = Icons.Default.Email, contentDescription = null)
-            },
-            trailingIcon = {
-                IconButton(onClick = {}) {
-                    Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
-                }
+                val icon = TeacherIcons.email()
+                Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
             },
             keyboardOptions = commonKeyboardOptions.copy(keyboardType = KeyboardType.Email),
             keyboardActions = commonKeyboardActions,
@@ -209,14 +206,10 @@ private fun Content(
             modifier = textFieldModifier,
             inputField = phone,
             onValueChange = { onPhoneChange(it) },
-            label = "Telefon",
+            label = stringResource(R.string.phone),
             leadingIcon = {
-                Icon(imageVector = Icons.Default.Phone, contentDescription = null)
-            },
-            trailingIcon = {
-                IconButton(onClick = {}) {
-                    Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
-                }
+                val icon = TeacherIcons.phone()
+                Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
             },
             keyboardOptions = commonKeyboardOptions.copy(keyboardType = KeyboardType.Phone),
             keyboardActions = commonKeyboardActions,
@@ -224,11 +217,10 @@ private fun Content(
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
+            label = submitText,
             onClick = onSubmit,
             enabled = isSubmitEnabled,
-        ) {
-            Text(text = submitText)
-        }
+        )
     }
 }
 
@@ -262,7 +254,7 @@ private fun StudentFormScreenPreview(
                 onEmailChange = {},
                 phone = form.phone,
                 onPhoneChange = {},
-                isSubmitEnabled = form.isValid,
+                isSubmitEnabled = form.isSubmitEnabled,
                 onAddStudent = {},
             )
         }

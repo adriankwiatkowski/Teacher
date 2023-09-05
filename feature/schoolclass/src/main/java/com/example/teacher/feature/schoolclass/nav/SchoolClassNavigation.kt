@@ -9,6 +9,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.schoolclass.data.SchoolClassesViewModel
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassGraphRoute
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassIdArg
@@ -48,7 +49,7 @@ private fun NavController.navigateToSchoolClassFormRoute(navOptions: NavOptions?
 fun NavGraphBuilder.schoolClassGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     navigateToSchoolYearForm: () -> Unit,
     navigateToStudentGraph: (schoolClassId: Long, studentId: Long) -> Unit,
     navigateToStudentFormRoute: (schoolClassId: Long, studentId: Long?) -> Unit,

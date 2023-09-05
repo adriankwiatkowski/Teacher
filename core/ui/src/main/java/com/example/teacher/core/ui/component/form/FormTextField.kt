@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -22,12 +20,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.teacher.core.ui.R
 import com.example.teacher.core.ui.component.TeacherTextField
 import com.example.teacher.core.ui.model.InputField
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 
@@ -105,7 +106,8 @@ private fun <T> trailingIcon(
 ): (@Composable () -> Unit)? {
     return if (trailingIcon == null && inputField.isValid) {
         {
-            Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
+            val icon = TeacherIcons.valid()
+            Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
         }
     } else {
         trailingIcon
@@ -128,6 +130,7 @@ private fun suffix(suffix: String?): (@Composable () -> Unit)? {
     }
 }
 
+@Composable
 private fun <T> supportingText(inputField: InputField<T>): (@Composable () -> Unit)? {
     if (inputField.supportingText == null && !inputField.isRequired) {
         return null
@@ -137,7 +140,7 @@ private fun <T> supportingText(inputField: InputField<T>): (@Composable () -> Un
         val isError = inputField.shouldShowError
         val counter = inputField.counter
         val supportingText = if (inputField.supportingText == null && isError) {
-            "Wymagane*"
+            R.string.required
         } else {
             inputField.supportingText
         }
@@ -154,7 +157,7 @@ private fun <T> supportingText(inputField: InputField<T>): (@Composable () -> Un
                     modifier = Modifier
                         .weight(3f)
                         .padding(start = MaterialTheme.spacing.large),
-                    text = supportingText,
+                    text = stringResource(supportingText),
                     color = textColor,
                     textAlign = TextAlign.Start,
                     style = MaterialTheme.typography.labelSmall,
@@ -186,7 +189,7 @@ private fun FormTextFieldErrorPreview() {
                     value = "Text",
                     isError = true,
                     isEdited = true,
-                    supportingText = "Very very very very very very very very long supportive text",
+                    supportingText = R.string.very_long_text,
                     counter = 30 to 20,
                 ),
                 onValueChange = {},
@@ -204,7 +207,7 @@ private fun FormTextFieldOkPreview() {
             FormTextField(
                 inputField = InputField(
                     value = "Text",
-                    supportingText = "Supportive Text",
+                    supportingText = R.string.supportive_text,
                     counter = 10 to 20,
                 ),
                 onValueChange = {},

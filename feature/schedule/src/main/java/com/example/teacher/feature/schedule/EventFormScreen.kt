@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -72,7 +73,7 @@ internal fun EventFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Dodaj termin",
+                title = stringResource(R.string.event_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -102,7 +103,11 @@ internal fun EventFormScreen(
             )
 
             DateForm(
-                title = if (lesson != null) "Termin zajęć" else "Termin",
+                title = if (lesson != null) {
+                    stringResource(R.string.class_date)
+                } else {
+                    stringResource(R.string.event_date)
+                },
                 day = eventForm.day,
                 onDayChange = onDayChange,
                 date = eventForm.date,
@@ -123,11 +128,10 @@ internal fun EventFormScreen(
 
             TeacherButton(
                 modifier = Modifier.fillMaxWidth(),
+                label = stringResource(R.string.add_event_date),
                 onClick = onSubmit,
                 enabled = isSubmitEnabled,
-            ) {
-                Text(text = "Dodaj termin zajęć")
-            }
+            )
         }
     }
 }
@@ -146,23 +150,28 @@ private fun Header(
             val schoolClassName = lesson.schoolClassName
             "$lessonName $schoolClassName"
         } else {
-            "Wybierz przedmiot"
+            stringResource(R.string.pick_lesson)
         }
 
         TeacherSwitch(
-            label = "Dodaj wydarzenie",
+            label = stringResource(R.string.add_event),
             checked = !isLessonForm,
             onCheckedChange = { onIsLessonFormChange(!it) },
         )
 
         if (isLessonForm) {
-            Text(text = "Przedmiot", style = MaterialTheme.typography.labelMedium)
-            TeacherButton(modifier = Modifier.fillMaxWidth(), onClick = onLessonPickerClick) {
-                Text(text = text)
-            }
+            Text(
+                text = stringResource(R.string.lesson),
+                style = MaterialTheme.typography.labelMedium,
+            )
+            TeacherButton(
+                modifier = Modifier.fillMaxWidth(),
+                label = text,
+                onClick = onLessonPickerClick,
+            )
             if (lesson == null) {
                 Text(
-                    text = "Nie wybrano przedmiotu!",
+                    text = stringResource(R.string.lesson_not_selected),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.error,
                 )

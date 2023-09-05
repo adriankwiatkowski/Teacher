@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.auth.nav.AuthNavigation
 import com.example.teacher.feature.auth.nav.authGraph
 import com.example.teacher.feature.auth.nav.navigateToAuthRoute
@@ -36,7 +37,7 @@ import com.example.teacher.ui.TeacherAppState
 fun TeacherNavGraph(
     appState: TeacherAppState,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     isAuthenticated: Boolean,
     authenticate: () -> Unit,
     isDeviceSecure: Boolean,
@@ -55,11 +56,7 @@ fun TeacherNavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
-        authGraph(
-            authenticate = authenticate,
-            isAuthenticated = isAuthenticated,
-            isDeviceSecure = isDeviceSecure,
-        )
+        authGraph(authenticate = authenticate, isDeviceSecure = isDeviceSecure)
 
         scheduleGraph(
             navController = navController,

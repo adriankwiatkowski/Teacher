@@ -17,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +28,7 @@ import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,9 +44,10 @@ import com.example.teacher.core.ui.component.form.FormTextField
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
-import com.example.teacher.core.ui.provider.ActionItemProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.gradetemplate.data.GradeTemplateFormProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,11 +80,11 @@ internal fun GradeTemplateFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Ocena",
+                title = stringResource(R.string.grade),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
-                    listOf(ActionItemProvider.delete(onDeleteClick))
+                    listOf(TeacherActions.delete(onDeleteClick))
                 } else {
                     emptyList()
                 },
@@ -97,11 +98,11 @@ internal fun GradeTemplateFormScreen(
                 .padding(MaterialTheme.spacing.small),
             result = gradeTemplateResult,
             isDeleted = isDeleted,
-            deletedMessage = "Usunięto ocenę",
+            deletedMessage = stringResource(R.string.grade_deleted),
         ) {
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = "Zapisywanie oceny...",
+                savingText = stringResource(R.string.saving_grade),
             ) {
                 MainContent(
                     modifier = Modifier
@@ -115,7 +116,11 @@ internal fun GradeTemplateFormScreen(
                     onWeightChange = onWeightChange,
                     isFirstTerm = isFirstTerm,
                     onIsFirstTermChange = onIsFirstTermChange,
-                    submitText = if (isEditMode) "Edytuj ocenę" else "Dodaj ocenę",
+                    submitText = if (isEditMode) {
+                        stringResource(R.string.edit_grade)
+                    } else {
+                        stringResource(R.string.save_grade)
+                    },
                     isSubmitEnabled = isSubmitEnabled,
                     onSubmit = onAddGrade,
                 )
@@ -186,7 +191,7 @@ private fun MainContent(
             modifier = textFieldModifier,
             inputField = name,
             onValueChange = { onNameChange(it) },
-            label = "Nazwa",
+            label = stringResource(R.string.name),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -195,7 +200,7 @@ private fun MainContent(
             modifier = textFieldModifier,
             inputField = description,
             onValueChange = { onDescriptionChange(it) },
-            label = "Opis",
+            label = stringResource(R.string.description),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -204,18 +209,17 @@ private fun MainContent(
             modifier = textFieldModifier,
             inputField = weight,
             onValueChange = { onWeightChange(it) },
-            label = "Waga",
+            label = stringResource(R.string.weight),
             keyboardOptions = commonKeyboardOptions.copy(keyboardType = KeyboardType.Number),
             keyboardActions = commonKeyboardActions,
         )
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
+            label = submitText,
             onClick = onSubmit,
             enabled = isSubmitEnabled,
-        ) {
-            Text(text = submitText)
-        }
+        )
     }
 }
 

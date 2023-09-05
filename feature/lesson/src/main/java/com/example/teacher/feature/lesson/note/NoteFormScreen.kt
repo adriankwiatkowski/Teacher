@@ -16,7 +16,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,6 +24,7 @@ import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,9 +41,10 @@ import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.paramprovider.LessonNotePreviewParameterProvider
-import com.example.teacher.core.ui.provider.ActionItemProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.note.data.NoteFormProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,11 +73,11 @@ internal fun NoteFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Notatka z zajęć",
+                title = stringResource(R.string.note_form_title),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 menuItems = if (isEditMode) {
-                    listOf(ActionItemProvider.delete(onDeleteNoteClick))
+                    listOf(TeacherActions.delete(onDeleteNoteClick))
                 } else {
                     emptyList()
                 },
@@ -91,11 +92,11 @@ internal fun NoteFormScreen(
                 .padding(MaterialTheme.spacing.small),
             result = noteResult,
             isDeleted = isNoteDeleted,
-            deletedMessage = "Usunięto notatkę z zajęć",
+            deletedMessage = stringResource(R.string.lesson_note_deleted),
         ) {
             FormStatusContent(
                 formStatus = formStatus,
-                savingText = "Zapisywanie notatki z zajęć...",
+                savingText = stringResource(R.string.saving_lesson_note),
             ) {
                 MainContent(
                     modifier = Modifier
@@ -106,7 +107,11 @@ internal fun NoteFormScreen(
                     text = text,
                     onTextChange = onTextChange,
                     isSubmitEnabled = isSubmitEnabled,
-                    submitText = if (isEditMode) "Edytuj notatkę" else "Dodaj notatkę",
+                    submitText = if (isEditMode) {
+                        stringResource(R.string.edit_note)
+                    } else {
+                        stringResource(R.string.add_note)
+                    },
                     onSubmit = onAddNote,
                 )
             }
@@ -157,7 +162,7 @@ private fun MainContent(
             modifier = textFieldModifier,
             inputField = title,
             onValueChange = onTitleChange,
-            label = "Tytuł",
+            label = stringResource(R.string.title),
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
         )
@@ -166,17 +171,16 @@ private fun MainContent(
             modifier = Modifier.fillMaxWidth(),
             inputField = text,
             onValueChange = onTextChange,
-            label = "Opis",
+            label = stringResource(R.string.description),
             minLines = 10,
         )
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
+            label = submitText,
             onClick = onSubmit,
             enabled = isSubmitEnabled,
-        ) {
-            Text(text = submitText)
-        }
+        )
     }
 }
 
@@ -203,7 +207,7 @@ private fun NoteFormScreenPreview(
                 onTitleChange = {},
                 text = form.text,
                 onTextChange = {},
-                isSubmitEnabled = form.isValid,
+                isSubmitEnabled = form.isSubmitEnabled,
                 onAddNote = {},
                 isEditMode = true,
                 isNoteDeleted = false,
@@ -230,7 +234,7 @@ private fun NoteFormScreenDeletedPreview() {
                 onTitleChange = {},
                 text = form.text,
                 onTextChange = {},
-                isSubmitEnabled = form.isValid,
+                isSubmitEnabled = form.isSubmitEnabled,
                 onAddNote = {},
                 isEditMode = true,
                 isNoteDeleted = true,

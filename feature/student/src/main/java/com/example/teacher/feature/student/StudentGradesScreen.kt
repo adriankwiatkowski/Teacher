@@ -9,8 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Divider
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -21,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -82,20 +82,16 @@ private fun MainScreen(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        itemsIndexed(
+        items(
             studentGradesByLesson,
-            key = { _, item -> item.lessonId },
-        ) { index, studentGrade ->
+            key = { item -> item.lessonId },
+        ) { studentGrade ->
             Text(studentGrade.lessonName)
-            Text("Średnia: ${studentGrade.average.toPlainString()}")
+            Text(stringResource(R.string.grade_average, studentGrade.average.toPlainString()))
             Grades(
                 grades = studentGrade.gradesByLessonId,
                 onGradeClick = { grade -> onShowGradeDialog(studentGrade, grade) }
             )
-
-            if (index != studentGradesByLesson.lastIndex) {
-                Divider()
-            }
         }
     }
 }
@@ -123,9 +119,7 @@ private fun Grade(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    TeacherButton(modifier = modifier, onClick = onClick) {
-        Text(grade)
-    }
+    TeacherButton(modifier = modifier, label = grade, onClick = onClick)
 }
 
 @Composable
@@ -136,8 +130,8 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Uczeń nie ma żadnej oceny",
-            style = MaterialTheme.typography.displayMedium
+            text = stringResource(R.string.empty_grades),
+            style = MaterialTheme.typography.displayMedium,
         )
     }
 }

@@ -12,11 +12,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.ui.component.picker.TeacherDatePicker
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import com.example.teacher.feature.schedule.R
 import java.time.LocalDate
 
 @Composable
@@ -29,16 +31,17 @@ internal fun LessonDatePicker(
             text = TimeUtils.getDisplayNameOfDayOfWeek(date),
             style = MaterialTheme.typography.labelMedium,
         )
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = "Data:")
+            Text(text = stringResource(R.string.date))
             Text(text = TimeUtils.format(date))
             TeacherDatePicker(
                 date = date,
                 onDateSelected = onDateSelected,
-                label = { Text("Wybierz datę") },
+                label = stringResource(R.string.pick_date),
             )
         }
     }

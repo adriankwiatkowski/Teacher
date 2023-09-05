@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -26,7 +27,7 @@ import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.SchoolClassPreviewParameterProvider
-import com.example.teacher.core.ui.provider.ActionItemProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.schoolclass.components.lessons
@@ -62,12 +63,10 @@ internal fun SchoolClassScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = "Klasa $schoolClassName",
+                title = stringResource(R.string.school_class, schoolClassName),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
-                menuItems = listOf(
-                    ActionItemProvider.delete(onDeleteSchoolClassClick)
-                ),
+                menuItems = listOf(TeacherActions.delete(onDeleteSchoolClassClick)),
                 scrollBehavior = scrollBehavior,
             )
         }
@@ -78,7 +77,7 @@ internal fun SchoolClassScreen(
                 .fillMaxSize(),
             result = schoolClassResult,
             isDeleted = isSchoolClassDeleted,
-            deletedMessage = "Usunięto pomyślnie klasę."
+            deletedMessage = stringResource(R.string.school_class_deleted),
         ) { schoolClass ->
             MainContent(
                 modifier = Modifier.fillMaxSize(),
@@ -107,6 +106,9 @@ private fun MainContent(
     isLessonsExpanded: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
+    val studentsLabel = stringResource(R.string.students, schoolClass.students.size)
+    val lessonsLabel = stringResource(R.string.lessons, schoolClass.lessons.size)
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
@@ -121,6 +123,7 @@ private fun MainContent(
         }
 
         students(
+            label = studentsLabel,
             students = schoolClass.students,
             onStudentClick = onStudentClick,
             onAddStudentClick = onAddStudentClick,
@@ -132,6 +135,7 @@ private fun MainContent(
         }
 
         lessons(
+            label = lessonsLabel,
             lessons = schoolClass.lessons,
             studentCount = schoolClass.students.size.toLong(),
             onLessonClick = onLessonClick,

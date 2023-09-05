@@ -19,16 +19,17 @@ internal class AuthImpl @Inject constructor() : Auth {
             return false
         }
 
-        val promptInfo = setBiometricPromptInfo()
+        val promptInfo =
+            setBiometricPromptInfo(title = activity.getString(R.string.identity_confirmation))
         val biometricPrompt = initBiometricPrompt(activity, listener)
         biometricPrompt.authenticate(promptInfo)
 
         return true
     }
 
-    private fun setBiometricPromptInfo(): BiometricPrompt.PromptInfo {
+    private fun setBiometricPromptInfo(title: String): BiometricPrompt.PromptInfo {
         val builder = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Potwierdź, że to Ty")
+            .setTitle(title)
             .setAllowedAuthenticators(authenticators)
 
         return builder.build()

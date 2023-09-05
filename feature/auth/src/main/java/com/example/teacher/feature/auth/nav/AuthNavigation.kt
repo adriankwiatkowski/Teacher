@@ -18,11 +18,7 @@ fun NavController.navigateToAuthRoute(navOptions: NavOptions? = null) {
     this.navigate(authScreen, navOptions)
 }
 
-fun NavGraphBuilder.authGraph(
-    authenticate: () -> Unit,
-    isAuthenticated: Boolean,
-    isDeviceSecure: Boolean,
-) {
+fun NavGraphBuilder.authGraph(authenticate: () -> Unit, isDeviceSecure: Boolean) {
     composable(authRoute) {
         // Don't allow back press when user is authenticating.
         BackPressHandler {

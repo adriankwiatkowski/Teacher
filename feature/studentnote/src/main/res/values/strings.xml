@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="saving_note">Zapisywanie uwagi…</string>
+    <string name="note_saved">Zapisano uwagę</string>
+    <string name="note_deleted">Usunięto uwagę</string>
+    <string name="student_note_form_title">Uwaga</string>
+    <string name="edit_note">Edytuj uwagę</string>
+    <string name="add_note">Dodaj uwagę</string>
+    <string name="title">Tytuł</string>
+    <string name="description">Opis</string>
+</resources>

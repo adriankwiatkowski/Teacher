@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.grade.nav.GradeNavigation.gradeIdArg
 import com.example.teacher.feature.grade.nav.GradeNavigation.gradeTemplateIdArg
 import com.example.teacher.feature.grade.nav.GradeNavigation.gradesRoute
@@ -49,7 +50,7 @@ private fun NavController.navigateToGradeFormRoute(
 fun NavGraphBuilder.gradeGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: (message: String) -> Unit,
+    onShowSnackbar: OnShowSnackbar,
     navigateToGradeTemplateFormRoute: (lessonId: Long, gradeTemplateId: Long?) -> Unit,
 ) {
     composable(
