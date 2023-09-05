@@ -8,8 +8,8 @@
     <string name="cannot_create_school_class_without_school_year">Żeby stworzyć klasę musisz najpierw dodać rok szkolny.</string>
     <string name="add_school_year">Dodaj nowy rok szkolny</string>
     <string name="school_year">Rok szkolny</string>
-    <string name="email">Email: %1$s</string>
-    <string name="phone">Telefon: %1$s</string>
+    <string name="email_with_label">Email: %1$s</string>
+    <string name="phone_with_label">Telefon: %1$s</string>
     <string name="saving_school_class">Zapisywanie klasy…</string>
     <string name="school_class_saved">Zapisano klasę</string>
     <string name="school_class_deleted">Usunięto klasę</string>
