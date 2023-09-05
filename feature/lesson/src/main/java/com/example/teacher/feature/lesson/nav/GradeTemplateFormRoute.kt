@@ -16,6 +16,7 @@ import com.example.teacher.feature.lesson.gradetemplate.data.GradeTemplateFormVi
 internal fun GradeTemplateFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    onDelete: () -> Unit,
     snackbarHostState: SnackbarHostState,
     onShowSnackbar: OnShowSnackbar,
     isEditMode: Boolean,
@@ -37,7 +38,7 @@ internal fun GradeTemplateFormRoute(
     LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
         if (isDeleted) {
             onShowSnackbar.onShowSnackbar(R.string.lesson_grade_deleted)
-            onNavBack()
+            onDelete()
         }
     }
 

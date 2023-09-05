@@ -192,6 +192,7 @@ fun NavGraphBuilder.lessonGraph(
             GradeTemplateFormRoute(
                 showNavigationIcon = true,
                 onNavBack = navController::popBackStack,
+                onDelete = { navController.popBackStack(route = lessonRoute, inclusive = false) },
                 snackbarHostState = snackbarHostState,
                 onShowSnackbar = onShowSnackbar,
                 isEditMode = isEditMode,

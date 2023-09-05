@@ -6,7 +6,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.grade.GradesScreen
 import com.example.teacher.feature.grade.R
@@ -29,12 +28,6 @@ internal fun GradesRoute(
     LaunchedEffect(isDeleted, onShowSnackbar, onNavBack) {
         if (isDeleted) {
             onShowSnackbar.onShowSnackbar(R.string.grade_grade_deleted)
-            onNavBack()
-        }
-    }
-    // TODO: GradeTemplate deletion should be observed from shared source like ViewModel.
-    LaunchedEffect(uiStateResult, onNavBack) {
-        if (uiStateResult is Result.Error) {
             onNavBack()
         }
     }
