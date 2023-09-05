@@ -3,6 +3,7 @@ package com.example.teacher.feature.student.data
 import androidx.core.text.trimmedLength
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
+import com.example.teacher.feature.student.R
 
 internal object StudentFormProvider {
 
@@ -33,6 +34,7 @@ internal object StudentFormProvider {
         val charCountLimit = 60
         return InputField(
             email,
+            supportingText = R.string.student_email_supporting_text,
             counter = trimmedLength to charCountLimit,
             isError = false,
             isEdited = isEdited,
@@ -45,6 +47,7 @@ internal object StudentFormProvider {
         val charCount = 9
         return InputField(
             phone,
+            supportingText = R.string.student_phone_supporting_text,
             counter = trimmedLength to charCount,
             isError = trimmedLength != 0 && trimmedLength != charCount,
             isEdited = isEdited,
