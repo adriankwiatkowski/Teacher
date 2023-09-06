@@ -30,6 +30,7 @@ import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.TeacherIconButton
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.picker.TeacherDatePicker
 import com.example.teacher.core.ui.component.result.ErrorScreen
 import com.example.teacher.core.ui.component.result.LoadingScreen
@@ -170,10 +171,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = stringResource(R.string.schedule_schedule_empty),
-            style = MaterialTheme.typography.headlineMedium,
-        )
+        TeacherLargeText(text = stringResource(R.string.schedule_schedule_empty))
     }
 }
 

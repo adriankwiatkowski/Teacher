@@ -101,10 +101,7 @@ private fun EmptyState(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = stringResource(R.string.lesson_empty_notes),
-            style = MaterialTheme.typography.displayMedium,
-        )
+        Text(text = stringResource(R.string.lesson_empty_notes))
     }
 }
 

@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -50,14 +53,29 @@ internal fun AuthScreen(
 
             if (!isDeviceSecure) {
                 Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
-                Text(
-                    text = stringResource(R.string.auth_device_not_secure),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
 
-                val icon = TeacherIcons.warning()
-                Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
-                Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
+                OutlinedCard {
+                    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.error) {
+                        Column(
+                            modifier = Modifier.padding(MaterialTheme.spacing.small),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+
+                            val icon = TeacherIcons.warning()
+                            Icon(
+                                imageVector = icon.icon,
+                                contentDescription = stringResource(icon.text)
+                            )
+                            Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
+
+                            Text(
+                                text = stringResource(R.string.auth_device_not_secure),
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                        }
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.padding(MaterialTheme.spacing.medium))

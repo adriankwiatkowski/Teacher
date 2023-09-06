@@ -31,6 +31,7 @@ import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.ui.component.TeacherChip
 import com.example.teacher.core.ui.component.TeacherFab
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.BasicSchoolClassesPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
@@ -161,10 +162,9 @@ private fun EmptyClasses(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
+        TeacherLargeText(
             modifier = Modifier.weight(9f),
             text = stringResource(R.string.school_classes_empty),
-            style = MaterialTheme.typography.displayLarge,
         )
 
         val icon = TeacherIcons.warning()

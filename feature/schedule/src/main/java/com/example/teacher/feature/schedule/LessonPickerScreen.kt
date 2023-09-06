@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.ResultContent
@@ -123,10 +124,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = stringResource(R.string.schedule_no_lesson_exists),
-            style = MaterialTheme.typography.headlineMedium,
-        )
+        TeacherLargeText(text = stringResource(R.string.schedule_no_lesson_exists))
     }
 }
 

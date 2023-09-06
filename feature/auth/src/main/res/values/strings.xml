@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="auth_sensitive_data">Dane wraźliwe</string>
-    <string name="auth_sensitive_data_explanation">Przechowywanie danych wraźliwych wymaga dodatkowego zabezpieczenia.\nDo korzystania z aplikacji musisz zalogować się na urządzeniu</string>
-    <string name="auth_device_not_secure">Nie można korzystać z aplikacji, ponieważ urządzenie nie jest zabezpieczone. Urządzenie musi posiadać PIN, albo inną formę zabezpieczenia</string>
+    <string name="auth_sensitive_data_explanation">Przechowywanie danych wraźliwych wymaga dodatkowego zabezpieczenia.\nDo korzystania z aplikacji musisz zalogować się na urządzeniu.</string>
+    <string name="auth_device_not_secure">Nie można korzystać z aplikacji, ponieważ urządzenie nie jest zabezpieczone. Urządzenie musi posiadać PIN, albo inną formę zabezpieczenia.</string>
     <string name="auth_unlock_app">Odblokuj aplikację</string>
 </resources>

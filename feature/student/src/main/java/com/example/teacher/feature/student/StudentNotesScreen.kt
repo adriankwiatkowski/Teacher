@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.BasicStudentNote
 import com.example.teacher.core.ui.component.TeacherFab
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.BasicStudentNotesPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
@@ -93,10 +94,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = stringResource(R.string.student_empty_notes),
-            style = MaterialTheme.typography.displayMedium,
-        )
+        TeacherLargeText(text = stringResource(R.string.student_empty_notes))
     }
 }
 
