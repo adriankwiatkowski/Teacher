@@ -1,5 +1,7 @@
 package com.example.teacher.feature.auth.nav
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -22,8 +24,12 @@ fun NavController.navigateToAuthRoute(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.authGraph(authenticate: () -> Unit, isDeviceSecure: Boolean) {
     composable(authRoute) {
         // Don't allow back press when user is authenticating.
+        val context = LocalContext.current
+        val activity = context as AppCompatActivity
+
         BackPressHandler {
-            // Do nothing.
+            // Allow back press to leave activity (in our case it's an app) without losing state.
+            activity.moveTaskToBack(false)
         }
         OnResume {
             authenticate()
