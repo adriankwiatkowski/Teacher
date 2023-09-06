@@ -18,7 +18,7 @@ fun <T> ResultContent(
     result: Result<T>,
     modifier: Modifier = Modifier,
     isDeleted: Boolean = false,
-    deletedMessage: String = stringResource(R.string.data_deleted),
+    deletedMessage: String = stringResource(R.string.ui_data_deleted),
     loadingContent: @Composable (() -> Unit)? = null,
     errorContent: @Composable (() -> Unit)? = null,
     content: @Composable (T) -> Unit,

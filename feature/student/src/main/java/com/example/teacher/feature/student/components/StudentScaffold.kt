@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.TeacherTopBarWithTabs
-import com.example.teacher.core.ui.model.StringResource
 import com.example.teacher.core.ui.model.TeacherAction
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.feature.student.tab.StudentTab
@@ -38,7 +37,7 @@ internal fun StudentScaffold(
     modifier: Modifier = Modifier,
     content: @Composable (studentTab: StudentTab) -> Unit,
 ) {
-    val stringTabs = remember(tabs) { tabs.map { tab -> StringResource(tab.title) } }
+    val stringTabs = remember(tabs) { tabs.map(StudentTab::icon) }
     val selectedTabIndex = remember(tabs, selectedTab) { tabs.indexOf(selectedTab) }
 
     val scrollBehavior = TeacherTopBarDefaults.default()
@@ -90,7 +89,7 @@ private fun StudentScaffoldPreview() {
                 pagerState = pagerState,
             ) { studentTab ->
                 Column(modifier = Modifier.fillMaxSize()) {
-                    Text(stringResource(studentTab.title))
+                    Text(stringResource(studentTab.icon.text))
                     repeat(10) {
                         Text("Details of tab...")
                     }

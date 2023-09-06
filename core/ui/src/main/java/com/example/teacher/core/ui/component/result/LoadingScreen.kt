@@ -17,7 +17,7 @@ import com.example.teacher.core.ui.theme.TeacherTheme
 @Composable
 fun LoadingScreen(
     modifier: Modifier = Modifier,
-    label: String = stringResource(R.string.loading),
+    label: String = stringResource(R.string.ui_loading),
 ) {
     LoadingScreen(
         modifier = modifier,

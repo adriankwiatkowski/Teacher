@@ -13,8 +13,8 @@ import com.example.teacher.core.ui.model.FormStatus
 fun FormStatusContent(
     formStatus: FormStatus,
     modifier: Modifier = Modifier,
-    savingText: String = stringResource(R.string.saving),
-    errorText: String = stringResource(R.string.form_error),
+    savingText: String = stringResource(R.string.ui_saving),
+    errorText: String = stringResource(R.string.ui_form_error),
     successContent: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {

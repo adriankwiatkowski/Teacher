@@ -16,7 +16,7 @@ import com.example.teacher.core.ui.theme.TeacherTheme
 @Composable
 fun DeletedScreen(
     modifier: Modifier = Modifier,
-    label: String = stringResource(R.string.data_deleted),
+    label: String = stringResource(R.string.ui_data_deleted),
 ) {
     Column(
         modifier = modifier.fillMaxSize(),

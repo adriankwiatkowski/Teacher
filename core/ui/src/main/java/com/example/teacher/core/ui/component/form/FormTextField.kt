@@ -140,7 +140,7 @@ private fun <T> supportingText(inputField: InputField<T>): (@Composable () -> Un
         val isError = inputField.shouldShowError
         val counter = inputField.counter
         val supportingText = if (inputField.supportingText == null && isError) {
-            R.string.required
+            R.string.ui_required
         } else {
             inputField.supportingText
         }
@@ -189,7 +189,7 @@ private fun FormTextFieldErrorPreview() {
                     value = "Text",
                     isError = true,
                     isEdited = true,
-                    supportingText = R.string.very_long_text,
+                    supportingText = R.string.ui_very_long_text,
                     counter = 30 to 20,
                 ),
                 onValueChange = {},
@@ -207,7 +207,7 @@ private fun FormTextFieldOkPreview() {
             FormTextField(
                 inputField = InputField(
                     value = "Text",
-                    supportingText = R.string.supportive_text,
+                    supportingText = R.string.ui_supportive_text,
                     counter = 10 to 20,
                 ),
                 onValueChange = {},

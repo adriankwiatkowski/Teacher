@@ -193,13 +193,13 @@ private fun AttendanceDialog(
         },
         dismissButton = {
             TeacherTextButton(
-                label = stringResource(com.example.teacher.core.ui.R.string.cancel),
+                label = stringResource(com.example.teacher.core.ui.R.string.ui_cancel),
                 onClick = onDismissRequest,
             )
         },
         confirmButton = {
             TeacherTextButton(
-                label = stringResource(com.example.teacher.core.ui.R.string.ok),
+                label = stringResource(com.example.teacher.core.ui.R.string.ui_ok),
                 onClick = {
                     onConfirmClick()
                     onDismissRequest()

@@ -24,7 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.ui.R
 import com.example.teacher.core.ui.component.tab.TeacherTabRow
 import com.example.teacher.core.ui.model.TeacherAction
-import com.example.teacher.core.ui.model.StringResource
+import com.example.teacher.core.ui.model.TeacherIcon
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -34,7 +35,7 @@ fun TeacherTopBarWithTabs(
     showNavigationIcon: Boolean,
     onNavigationIconClick: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior?,
-    tabs: List<StringResource>,
+    tabs: List<TeacherIcon>,
     selectedTabIndex: Int,
     onTabClick: (studentTabIndex: Int) -> Unit,
     pagerState: PagerState,
@@ -92,9 +93,9 @@ private fun TeacherTopBarWithTabsPreview() {
             var selectedTabIndex by remember { mutableIntStateOf(0) }
             val tabs = remember {
                 listOf(
-                    StringResource(R.string.tab_1),
-                    StringResource(R.string.tab_2),
-                    StringResource(R.string.tab_3),
+                    TeacherIcons.details(text = R.string.ui_tab_1),
+                    TeacherIcons.grades(text = R.string.ui_tab_2),
+                    TeacherIcons.notes(text = R.string.ui_tab_3),
                 )
             }
 

@@ -1,10 +1,11 @@
 package com.example.teacher.feature.student.tab
 
-import androidx.annotation.StringRes
+import com.example.teacher.core.ui.model.TeacherIcon
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.feature.student.R
 
-enum class StudentTab(@StringRes val title: Int) {
-    Detail(title = R.string.student_details),
-    Grades(title = R.string.student_grades),
-    Notes(title = R.string.student_notes),
+enum class StudentTab(val icon: TeacherIcon) {
+    Detail(TeacherIcons.details(R.string.student_details)),
+    Grades(TeacherIcons.grades(R.string.student_grades)),
+    Notes(TeacherIcons.notes(R.string.student_notes)),
 }

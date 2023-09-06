@@ -77,7 +77,7 @@ private fun DayPickerDialog(
         },
         confirmButton = {
             TextButton(onClick = onDismissRequest) {
-                Text(stringResource(R.string.ok))
+                Text(stringResource(R.string.ui_ok))
             }
         },
     )

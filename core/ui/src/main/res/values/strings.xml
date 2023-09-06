@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="navigate_back">Przejdź do poprzedniego ekranu</string>
-    <string name="add">Dodaj</string>
-    <string name="edit">Edytuj</string>
-    <string name="warning">Ostrzeżenie</string>
-    <string name="delete">Usuń</string>
-    <string name="schedule">Plan zajęć</string>
-    <string name="school_classes">Klasy</string>
-    <string name="notes">Notatki</string>
-    <string name="settings">Ustawienia</string>
-    <string name="loading">Wczytywanie…</string>
-    <string name="saving">Zapisywanie…</string>
-    <string name="form_error">Wystąpił nieoczekiwany błąd podczas zapisywania</string>
-    <string name="unexpected_error">Wystąpił nieoczekiwany błąd</string>
-    <string name="data_deleted">Usunięto dane</string>
-    <string name="required">Wymagane*</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Anuluj</string>
+    <string name="ui_navigate_back">Przejdź do poprzedniego ekranu</string>
+    <string name="ui_add">Dodaj</string>
+    <string name="ui_edit">Edytuj</string>
+    <string name="ui_warning">Ostrzeżenie</string>
+    <string name="ui_delete">Usuń</string>
+    <string name="ui_schedule">Plan zajęć</string>
+    <string name="ui_school_classes">Klasy</string>
+    <string name="ui_notes">Notatki</string>
+    <string name="ui_settings">Ustawienia</string>
+    <string name="ui_loading">Wczytywanie…</string>
+    <string name="ui_saving">Zapisywanie…</string>
+    <string name="ui_form_error">Wystąpił nieoczekiwany błąd podczas zapisywania</string>
+    <string name="ui_unexpected_error">Wystąpił nieoczekiwany błąd</string>
+    <string name="ui_data_deleted">Usunięto dane</string>
+    <string name="ui_required">Wymagane*</string>
+    <string name="ui_ok">OK</string>
+    <string name="ui_cancel">Anuluj</string>
+    <string name="ui_minus">Odejmij</string>
+    <string name="ui_plus">Dodaj</string>
+    <string name="ui_subject">Przedmiot</string>
+    <string name="ui_navigate_before">Cofnij się</string>
+    <string name="ui_navigate_next">Przejdź do przodu</string>
+    <string name="ui_person">Osoba</string>
+    <string name="ui_content_copy">Skopiuj zawartość</string>
+    <string name="ui_phone">Telefon</string>
+    <string name="ui_email">Email</string>
+    <string name="ui_details">Dane</string>
+    <string name="ui_grades">Oceny</string>
+    <string name="ui_attendance">Frekwencja</string>
+    <string name="ui_activity">Aktywność</string>
 
-    <string name="very_long_text" translatable="false">Very very very very very very very very long supportive text</string>
-    <string name="supportive_text" translatable="false">Supportive Text</string>
-    <string name="tab_1" translatable="false">Dane</string>
-    <string name="tab_2" translatable="false">Oceny</string>
-    <string name="tab_3" translatable="false">Uwagi</string>
-    <string name="minus">Odejmij</string>
-    <string name="plus">Dodaj</string>
-    <string name="subject">Przedmiot</string>
-    <string name="navigate_before">Cofnij się</string>
-    <string name="navigate_next">Przejdź do przodu</string>
-    <string name="person">Osoba</string>
-    <string name="content_copy">Skopiuj zawartość</string>
-    <string name="phone">Telefon</string>
-    <string name="email">Email</string>
+    <string name="ui_very_long_text" translatable="false">Very very very very very very very very long supportive text</string>
+    <string name="ui_supportive_text" translatable="false">Supportive Text</string>
+    <string name="ui_tab_1" translatable="false">Dane</string>
+    <string name="ui_tab_2" translatable="false">Oceny</string>
+    <string name="ui_tab_3" translatable="false">Uwagi</string>
 </resources>

@@ -53,12 +53,12 @@ fun TeacherDatePicker(
                     },
                     enabled = confirmEnabled.value,
                 ) {
-                    Text(stringResource(R.string.ok))
+                    Text(stringResource(R.string.ui_ok))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDialog = false }) {
-                    Text(stringResource(R.string.cancel))
+                    Text(stringResource(R.string.ui_cancel))
                 }
             }
         ) {

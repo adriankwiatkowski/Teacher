@@ -34,7 +34,7 @@ fun ErrorScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        TeacherLargeText(text = stringResource(R.string.unexpected_error))
+        TeacherLargeText(text = stringResource(R.string.ui_unexpected_error))
         label()
     }
 }
