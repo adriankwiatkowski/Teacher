@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.example.teacher.core.ui.util.BackPressHandler
+import com.example.teacher.core.ui.util.OnResume
 import com.example.teacher.feature.auth.AuthScreen
 import com.example.teacher.feature.auth.nav.AuthNavigation.authRoute
 
@@ -23,6 +24,9 @@ fun NavGraphBuilder.authGraph(authenticate: () -> Unit, isDeviceSecure: Boolean)
         // Don't allow back press when user is authenticating.
         BackPressHandler {
             // Do nothing.
+        }
+        OnResume {
+            authenticate()
         }
 
         AuthScreen(authenticate = authenticate, isDeviceSecure = isDeviceSecure)

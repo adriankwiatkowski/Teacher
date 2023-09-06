@@ -63,11 +63,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        authenticate()
-    }
-
     private fun authenticate() {
         if (!enableAuthentication) {
             return

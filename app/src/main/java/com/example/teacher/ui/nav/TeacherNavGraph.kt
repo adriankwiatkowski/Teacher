@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
+import com.example.teacher.core.ui.util.OnPause
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.auth.nav.AuthNavigation
 import com.example.teacher.feature.auth.nav.authGraph
@@ -49,6 +50,10 @@ fun TeacherNavGraph(
 
     if (enableAuthentication) {
         AuthenticationHandler(navController = navController, isAuthenticated = isAuthenticated)
+
+        OnPause {
+            navController.navigateToAuthRoute(navOptions { launchSingleTop = true })
+        }
     }
 
     NavHost(
