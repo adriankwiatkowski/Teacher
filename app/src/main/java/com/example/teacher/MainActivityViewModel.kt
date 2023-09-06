@@ -36,6 +36,10 @@ class MainActivityViewModel @Inject constructor(
         _authState.update { authState -> authState.copy(isDeviceSecured = canAuthenticate) }
     }
 
+    fun unAuthenticate() {
+        _authState.update { authState -> authState.copy(isAuthenticated = false) }
+    }
+
     override fun onSuccess() {
         _authState.update { authState -> authState.copy(isAuthenticated = true) }
     }

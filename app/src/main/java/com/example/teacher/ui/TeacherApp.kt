@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 fun TeacherApp(
     isAuthenticated: Boolean,
     authenticate: () -> Unit,
+    unAuthenticate: () -> Unit,
     isDeviceSecure: Boolean,
     enableAuthentication: Boolean,
     modifier: Modifier = Modifier,
@@ -90,6 +91,7 @@ fun TeacherApp(
             onShowSnackbar = onShowSnackbar,
             isAuthenticated = isAuthenticated,
             authenticate = authenticate,
+            unAuthenticate = unAuthenticate,
             isDeviceSecure = isDeviceSecure,
             enableAuthentication = enableAuthentication,
         )
@@ -104,6 +106,7 @@ private fun MainScreenPreview() {
             TeacherApp(
                 isAuthenticated = true,
                 authenticate = {},
+                unAuthenticate = {},
                 isDeviceSecure = true,
                 enableAuthentication = true,
             )

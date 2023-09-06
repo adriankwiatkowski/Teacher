@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                         appState = appState,
                         isAuthenticated = authState.isAuthenticated,
                         authenticate = ::authenticate,
+                        unAuthenticate = ::unAuthenticate,
                         isDeviceSecure = authState.isDeviceSecured,
                         enableAuthentication = enableAuthentication,
                     )
@@ -69,6 +70,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.authenticate(activity = this)
+    }
+
+    private fun unAuthenticate() {
+        viewModel.unAuthenticate()
     }
 }
 
@@ -96,6 +101,7 @@ private fun DefaultPreview() {
             TeacherApp(
                 isAuthenticated = true,
                 authenticate = {},
+                unAuthenticate = {},
                 isDeviceSecure = true,
                 enableAuthentication = true,
             )

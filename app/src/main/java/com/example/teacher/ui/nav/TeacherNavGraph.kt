@@ -41,6 +41,7 @@ fun TeacherNavGraph(
     onShowSnackbar: OnShowSnackbar,
     isAuthenticated: Boolean,
     authenticate: () -> Unit,
+    unAuthenticate: () -> Unit,
     isDeviceSecure: Boolean,
     enableAuthentication: Boolean,
     modifier: Modifier = Modifier,
@@ -52,6 +53,7 @@ fun TeacherNavGraph(
         AuthenticationHandler(navController = navController, isAuthenticated = isAuthenticated)
 
         OnPause {
+            unAuthenticate()
             navController.navigateToAuthRoute(navOptions { launchSingleTop = true })
         }
     }
