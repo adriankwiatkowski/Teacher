@@ -6,10 +6,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -33,6 +37,7 @@ import com.example.teacher.core.ui.paramprovider.StudentGradesByLessonPreviewPar
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.student.data.GradeDialogInfo
+import java.math.BigDecimal
 
 @Composable
 internal fun StudentGradesScreen(
@@ -86,18 +91,64 @@ private fun MainScreen(
         items(
             studentGradesByLesson,
             key = { item -> item.lessonId },
-        ) { studentGrade ->
-            Text(studentGrade.lessonName)
-            Text(
-                stringResource(
-                    R.string.student_grade_average,
-                    studentGrade.average.toPlainString()
-                )
+        ) { lessonGrades ->
+            LessonGradesCard(lessonGrades = lessonGrades, onShowGradeDialog = onShowGradeDialog)
+        }
+    }
+}
+
+@Composable
+private fun LessonGradesCard(
+    lessonGrades: StudentGradesByLesson,
+    onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGrade) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Card(modifier = modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(MaterialTheme.spacing.small)) {
+            Text(lessonGrades.lessonName)
+
+            Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
+
+            LessonTermGrades(
+                termLabel = "Pierwszy semestr",
+                grades = lessonGrades.firstTermGrades,
+                average = lessonGrades.firstTermAverage,
+                onShowGradeDialog = { grade -> onShowGradeDialog(lessonGrades, grade) },
             )
+
+            Divider()
+
+            Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
+
+            LessonTermGrades(
+                termLabel = "Drugi semestr",
+                grades = lessonGrades.secondTermGrades,
+                average = lessonGrades.secondTermAverage,
+                onShowGradeDialog = { grade -> onShowGradeDialog(lessonGrades, grade) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun LessonTermGrades(
+    termLabel: String,
+    grades: List<StudentGrade>,
+    average: BigDecimal?,
+    onShowGradeDialog: (grade: StudentGrade) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Text(text = termLabel, style = MaterialTheme.typography.labelMedium)
+
+        if (grades.isNotEmpty() && average != null) {
+            Text(text = stringResource(R.string.student_grade_average, average.toPlainString()))
             Grades(
-                grades = studentGrade.gradesByLessonId,
-                onGradeClick = { grade -> onShowGradeDialog(studentGrade, grade) }
+                grades = grades,
+                onGradeClick = { grade -> onShowGradeDialog(grade) }
             )
+        } else {
+            Text(stringResource(R.string.student_no_grades))
         }
     }
 }

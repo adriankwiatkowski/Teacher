@@ -18,6 +18,7 @@ import com.example.teacher.core.ui.paramprovider.StudentGradesByLessonPreviewPar
 import com.example.teacher.core.ui.paramprovider.StudentPreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
 
+// TODO: Dialog should provide better information about current grade.
 @Composable
 internal fun StudentGradeDialog(
     student: Student,
@@ -34,7 +35,7 @@ internal fun StudentGradeDialog(
             Column {
                 Text(text = gradeInfo.lessonName, style = MaterialTheme.typography.titleSmall)
                 Text(
-                    text = gradeInfo.average.toPlainString(),
+                    text = gradeInfo.firstTermAverage?.toPlainString().orEmpty(),
                     style = MaterialTheme.typography.titleSmall
                 )
                 Text(text = grade.gradeName, style = MaterialTheme.typography.bodyMedium)
@@ -63,7 +64,7 @@ private fun StudentGradeDialogPreview(
 ) {
     val student = StudentPreviewParameterProvider().values.first()
     val gradeInfo = studentGrades.first()
-    val grades = gradeInfo.gradesByLessonId
+    val grades = gradeInfo.firstTermGrades
     val grade = grades.first()
 
     TeacherTheme {

@@ -7,13 +7,16 @@ data class StudentGradesByLesson(
     val studentId: Long,
     val lessonId: Long,
     val lessonName: String,
-    val average: BigDecimal,
-    val gradesByLessonId: List<StudentGrade>,
+    val firstTermGrades: List<StudentGrade>,
+    val firstTermAverage: BigDecimal?,
+    val secondTermGrades: List<StudentGrade>,
+    val secondTermAverage: BigDecimal?,
 )
 
 data class StudentGrade(
     val studentId: Long,
     val lessonId: Long,
+    val isFirstTerm: Boolean,
     val gradeTemplateId: Long,
     val gradeName: String,
     val gradeId: Long,

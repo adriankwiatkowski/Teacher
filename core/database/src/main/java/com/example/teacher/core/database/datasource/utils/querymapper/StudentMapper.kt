@@ -67,30 +67,54 @@ internal fun toExternalStudentGrades(
     studentGrades: List<GetStudentGradesById>
 ): List<StudentGradesByLesson> = studentGrades
     .groupBy { grade -> grade.lesson_id }
-    .mapNotNull { (lessonId, grades) ->
-        val firstGrade = grades.firstOrNull() ?: return@mapNotNull null
-        val average = if (grades.isNotEmpty()) {
-            grades.sumOf { grade -> grade.grade }.divide(BigDecimal(grades.size))
-        } else {
-            BigDecimal("0.00")
-        }
+    .map { (lessonId, grades) ->
+        lessonId to grades.groupBy { grade -> grade.grade_is_first_term }
+    }
+    .map { (lessonId, gradesByTerm) ->
+        val firstTermGrades = gradesByTerm[true] ?: emptyList()
+        val firstTermAverage = calculateAverage(firstTermGrades)
+
+        val secondTermGrades = gradesByTerm[false] ?: emptyList()
+        val secondTermAverage = calculateAverage(secondTermGrades)
+
+        val firstGrade = firstTermGrades.firstOrNull() ?: secondTermGrades.first()
 
         StudentGradesByLesson(
             studentId = firstGrade.student_id,
             lessonId = lessonId,
             lessonName = firstGrade.lesson_name,
-            average = average,
-            gradesByLessonId = grades.map { grade ->
-                StudentGrade(
-                    studentId = grade.student_id,
-                    lessonId = grade.lesson_id,
-                    gradeTemplateId = grade.grade_template_id,
-                    gradeName = grade.grade_template_name,
-                    gradeId = grade.grade_id,
-                    grade = grade.grade,
-                    weight = grade.grade_template_weight,
-                    date = grade.grade_template_date,
-                )
-            }
+            firstTermGrades = firstTermGrades.mapNotNull { it.toStudentGrades() },
+            firstTermAverage = firstTermAverage,
+            secondTermGrades = secondTermGrades.mapNotNull { it.toStudentGrades() },
+            secondTermAverage = secondTermAverage,
         )
     }
+
+private fun calculateAverage(grades: List<GetStudentGradesById>): BigDecimal? {
+    return if (grades.isNotEmpty()) {
+        val studentGrades = grades.filter { grade -> grade.grade != null }
+        val average = studentGrades.sumOf { grade -> grade.grade!! }
+            .divide(BigDecimal.valueOf(studentGrades.size.toLong()))
+        average
+    } else {
+        null
+    }
+}
+
+private fun GetStudentGradesById.toStudentGrades(): StudentGrade? {
+    if (grade_id == null || grade == null) {
+        return null
+    }
+
+    return StudentGrade(
+        studentId = student_id,
+        lessonId = lesson_id,
+        isFirstTerm = grade_is_first_term,
+        gradeTemplateId = grade_template_id,
+        gradeName = grade_template_name,
+        gradeId = grade_id,
+        grade = grade,
+        weight = grade_template_weight,
+        date = grade_template_date,
+    )
+}
