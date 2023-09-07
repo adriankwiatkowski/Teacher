@@ -23,6 +23,7 @@ fun TeacherTabRow(
     selectedTabIndex: Int,
     onTabClick: (studentTabIndex: Int) -> Unit,
     modifier: Modifier = Modifier,
+    showIcon: Boolean = false,
 ) {
     Column(modifier = modifier) {
         // TODO: Fix divider doesn't fill full width.
@@ -34,7 +35,7 @@ fun TeacherTabRow(
             tabs.forEachIndexed { index, tab ->
                 TeacherTab(
                     text = stringResource(tab.text),
-                    icon = tab.icon,
+                    icon = if (showIcon) tab.icon else null,
                     contentDescription = null,
                     selected = index == selectedTabIndex,
                     onClick = { onTabClick(index) },

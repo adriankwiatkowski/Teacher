@@ -14,7 +14,7 @@ import com.example.teacher.core.ui.theme.TeacherTheme
 @Composable
 internal fun TeacherTab(
     text: String,
-    icon: ImageVector,
+    icon: ImageVector?,
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -22,7 +22,11 @@ internal fun TeacherTab(
 ) {
     Tab(
         modifier = modifier,
-        icon = { Icon(imageVector = icon, contentDescription = contentDescription) },
+        icon = if (icon != null) {
+            { Icon(imageVector = icon, contentDescription = contentDescription) }
+        } else {
+            null
+        },
         text = { Text(text) },
         selected = selected,
         onClick = onClick,
