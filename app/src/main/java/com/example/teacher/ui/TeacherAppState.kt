@@ -6,14 +6,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.teacher.feature.grade.nav.GradeNavigation
-import com.example.teacher.feature.lesson.nav.LessonNavigation
-import com.example.teacher.feature.note.nav.NoteNavigation
-import com.example.teacher.feature.schedule.nav.ScheduleNavigation
-import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation
-import com.example.teacher.feature.settings.nav.SettingsNavigation
-import com.example.teacher.feature.student.nav.StudentNavigation
 import com.example.teacher.ui.nav.TeacherBottomNavScreen
+import com.example.teacher.ui.nav.routeToActiveNavScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -40,33 +34,13 @@ class TeacherAppState(val navController: NavHostController, val coroutineScope: 
     val selectedBottomNavigationItem: StateFlow<TeacherBottomNavScreen?> =
         navController.currentBackStackEntryFlow
             .mapLatest { backStackEntry ->
-                when (backStackEntry.destination.route) {
-                    in scheduleRoutes -> TeacherBottomNavScreen.Schedule
-                    in schoolClassesRoutes -> TeacherBottomNavScreen.SchoolClasses
-                    in notesRoutes -> TeacherBottomNavScreen.Notes
-                    in settingsRoutes -> TeacherBottomNavScreen.Settings
-                    else -> null
-                }
+                routeToActiveNavScreen(backStackEntry.destination.route)
             }
             .stateIn(initialValue = null)
 
     val shouldShowBottomBar: StateFlow<Boolean> = selectedBottomNavigationItem
         .map { it != null }
         .stateIn(initialValue = false)
-
-    private val scheduleRoutes = setOf(ScheduleNavigation.scheduleRoute)
-
-    private val schoolClassesRoutes = setOf(
-        SchoolClassNavigation.schoolClassesRoute,
-        SchoolClassNavigation.schoolClassRoute,
-        StudentNavigation.studentRoute,
-        LessonNavigation.lessonRoute,
-        GradeNavigation.gradesRoute,
-    )
-
-    private val notesRoutes = setOf(NoteNavigation.notesRoute)
-
-    private val settingsRoutes = setOf(SettingsNavigation.settingsRoute)
 
     private fun <T> Flow<T>.stateIn(initialValue: T): StateFlow<T> = stateIn(
         scope = coroutineScope,
