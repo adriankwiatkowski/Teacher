@@ -40,34 +40,26 @@ fun routeToActiveNavScreen(route: String?): TeacherBottomNavScreen? = when (rout
 }
 
 fun NavController.navigateToScheduleRouteNavigationBar() {
-    this.navigateToScheduleRoute(bottomBarNavOptions(isReSelectingScreen(Schedule)))
+    this.navigateToScheduleRoute(bottomBarNavOptions())
 }
 
 fun NavController.navigateToSchoolClassesRouteNavigationBar() {
-    this.navigateToSchoolClassGraph(bottomBarNavOptions(isReSelectingScreen(SchoolClasses)))
+    this.navigateToSchoolClassGraph(bottomBarNavOptions())
 }
 
 fun NavController.navigateToNotesRouteNavigationBar() {
-    this.navigateToNotesRoute(bottomBarNavOptions(isReSelectingScreen(Notes)))
+    this.navigateToNotesRoute(bottomBarNavOptions())
 }
 
 fun NavController.navigateToSettingsRouteNavigationBar() {
-    this.navigateToSettingsRoute(bottomBarNavOptions(isReSelectingScreen(Settings)))
+    this.navigateToSettingsRoute(bottomBarNavOptions())
 }
 
-private fun NavController.bottomBarNavOptions(
-    isReSelectingScreen: Boolean
-): NavOptions = navOptions {
-    setBottomBarNavOptions(
-        this@bottomBarNavOptions.graph,
-        shouldRestoreState = !isReSelectingScreen,
-    )
+private fun NavController.bottomBarNavOptions(): NavOptions = navOptions {
+    setBottomBarNavOptions(this@bottomBarNavOptions.graph)
 }
 
-private fun NavOptionsBuilder.setBottomBarNavOptions(
-    graph: NavGraph,
-    shouldRestoreState: Boolean,
-) {
+private fun NavOptionsBuilder.setBottomBarNavOptions(graph: NavGraph) {
     // Pop up to the start destination of the graph to
     // avoid building up a large stack of destinations
     // on the back stack as users select items
@@ -78,11 +70,8 @@ private fun NavOptionsBuilder.setBottomBarNavOptions(
     // reselecting the same item
     launchSingleTop = true
     // Restore state when reselecting a previously selected item
-    restoreState = shouldRestoreState
+    restoreState = true
 }
-
-private fun NavController.isReSelectingScreen(screen: TeacherBottomNavScreen): Boolean =
-    routeToActiveNavScreen(this.currentDestination?.route) == screen
 
 private val scheduleRoutes = setOf(ScheduleNavigation.scheduleRoute)
 
