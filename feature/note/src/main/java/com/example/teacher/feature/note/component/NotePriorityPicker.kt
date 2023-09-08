@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.model.data.NotePriority
 import com.example.teacher.core.ui.component.TeacherInputChip
 import com.example.teacher.core.ui.theme.TeacherTheme
+import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.note.R
 import com.example.teacher.feature.note.util.priorityToName
 
@@ -33,13 +34,9 @@ internal fun NotePriorityPicker(
     onPriorityChange: (priority: NotePriority) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
-        modifier = modifier,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-        )
-    ) {
+    OutlinedCard(modifier = modifier) {
         Column(
+            modifier = Modifier.padding(MaterialTheme.spacing.small),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

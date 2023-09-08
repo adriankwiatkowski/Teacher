@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.model.data.BasicLesson
 import com.example.teacher.core.ui.component.TeacherIconButton
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.expandablelist.expandableItems
 import com.example.teacher.core.ui.paramprovider.BasicLessonsPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
@@ -58,6 +59,12 @@ internal fun LazyListScope.lessons(
             name = lesson.name,
             studentCount = studentCount,
         )
+    }
+
+    if (lessons.isEmpty()) {
+        item {
+            TeacherLargeText(stringResource(R.string.school_class_no_lessons_in_class))
+        }
     }
 }
 

@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.LessonEventAttendance
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonEventAttendancesPreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
@@ -83,6 +84,13 @@ private fun MainContent(
                 attendanceNotSetCount = scheduleAttendance.attendanceNotSetCount,
                 onClick = { onScheduleAttendanceClick(scheduleAttendance.eventId) },
             )
+        }
+
+        if (scheduleAttendances.isEmpty()) {
+            item {
+                // TODO: Add "go to" schedule button.
+                TeacherLargeText(stringResource(R.string.lesson_attendance_no_schedule))
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.model.data.BasicStudent
 import com.example.teacher.core.ui.component.TeacherIconButton
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.expandablelist.expandableItems
 import com.example.teacher.core.ui.paramprovider.BasicStudentsPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
@@ -50,6 +51,12 @@ internal fun LazyListScope.students(
             email = student.email,
             phone = student.phone,
         )
+    }
+
+    if (students.isEmpty()) {
+        item {
+            TeacherLargeText(stringResource(R.string.school_class_no_students_in_class))
+        }
     }
 }
 

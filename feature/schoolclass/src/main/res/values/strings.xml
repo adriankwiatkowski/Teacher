@@ -19,4 +19,6 @@
     <string name="school_class_form_title">Stwórz nową klasę</string>
     <string name="school_class_name_label">Nazwa klasy</string>
     <string name="school_class_prefix">"(Klasa) "</string>
+    <string name="school_class_no_students_in_class">Nie dodano uczniów do klasy</string>
+    <string name="school_class_no_lessons_in_class">Nie dodano przedmiotów do klasy</string>
 </resources>

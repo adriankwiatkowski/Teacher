@@ -36,6 +36,7 @@ import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.Attendance
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.LessonAttendance
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.component.TeacherTextButton
 import com.example.teacher.core.ui.component.TeacherTopBar
@@ -145,6 +146,12 @@ private fun MainContent(
                 attendance = attendance.attendance,
                 onClick = { onLessonAttendanceClick(attendance) },
             )
+        }
+
+        if (lessonAttendances.isEmpty()) {
+            item {
+                TeacherLargeText(stringResource(R.string.lesson_no_students_in_class))
+            }
         }
     }
 }

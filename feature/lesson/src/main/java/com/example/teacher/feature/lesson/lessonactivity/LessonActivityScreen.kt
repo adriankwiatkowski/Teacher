@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.LessonActivity
 import com.example.teacher.core.ui.component.TeacherIconButton
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonActivitiesPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
@@ -75,6 +76,12 @@ private fun MainContent(
                 onIncreaseLessonActivity = { onIncreaseLessonActivity(lessonActivity) },
                 onDecreaseLessonActivity = { onDecreaseLessonActivity(lessonActivity) },
             )
+        }
+
+        if (lessonActivities.isEmpty()) {
+            item {
+                TeacherLargeText(stringResource(R.string.lesson_no_students_in_class))
+            }
         }
     }
 }
