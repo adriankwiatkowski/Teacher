@@ -10,4 +10,6 @@
     <string name="grade_no_grade">brak oceny</string>
     <string name="grade_current_grade">Obecna ocena %1$s</string>
     <string name="grade_grades_title">Wystawienie ocen</string>
+    <string name="grade_new_grade">Nowa ocena: %1$s</string>
+    <string name="grade_grade_with_literal">%1$s (%2$s)</string>
 </resources>

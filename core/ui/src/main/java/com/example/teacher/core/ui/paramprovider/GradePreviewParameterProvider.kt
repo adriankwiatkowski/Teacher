@@ -1,12 +1,12 @@
 package com.example.teacher.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.example.teacher.core.common.utils.GradeUtils
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.BasicGrade
 import com.example.teacher.core.model.data.BasicGradeForTemplate
 import com.example.teacher.core.model.data.Grade
 import com.example.teacher.core.model.data.GradeTemplateInfo
-import java.math.BigDecimal
 
 class GradeTemplateInfoPreviewParameterProvider : PreviewParameterProvider<GradeTemplateInfo> {
     override val values: Sequence<GradeTemplateInfo> = sequenceOf(
@@ -27,7 +27,7 @@ class GradePreviewParameterProvider : PreviewParameterProvider<Grade> {
     override val values: Sequence<Grade> = sequenceOf(
         Grade(
             id = 1L,
-            grade = BigDecimal("4.75"),
+            grade = GradeUtils.FiveMinus,
             date = TimeUtils.currentDate(),
             studentId = 1L,
             studentFullName = "Jan Kowalski",
@@ -46,7 +46,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
         listOf(
             BasicGradeForTemplate(
                 id = 1L,
-                grade = BigDecimal("6.00"),
+                grade = GradeUtils.Six,
                 date = TimeUtils.currentDate(),
                 studentId = 1L,
                 studentFullName = "Jan Kowalski",
@@ -56,7 +56,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
             ),
             BasicGradeForTemplate(
                 id = 2L,
-                grade = BigDecimal("5.00"),
+                grade = GradeUtils.Five,
                 date = TimeUtils.currentDate(),
                 studentId = 2L,
                 studentFullName = "Jan Kowalski",
@@ -66,7 +66,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
             ),
             BasicGradeForTemplate(
                 id = 3L,
-                grade = BigDecimal("4.00"),
+                grade = GradeUtils.Four,
                 date = TimeUtils.currentDate(),
                 studentId = 3L,
                 studentFullName = "Jan Kowalski",
@@ -76,7 +76,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
             ),
             BasicGradeForTemplate(
                 id = 4L,
-                grade = BigDecimal("3.00"),
+                grade = GradeUtils.Three,
                 date = TimeUtils.currentDate(),
                 studentId = 4L,
                 studentFullName = "Jan Kowalski",
@@ -86,7 +86,7 @@ class BasicGradesForTemplatePreviewParameterProvider :
             ),
             BasicGradeForTemplate(
                 id = 5L,
-                grade = BigDecimal("2.00"),
+                grade = GradeUtils.Two,
                 date = TimeUtils.currentDate(),
                 studentId = 5L,
                 studentFullName = "Jan Kowalski",
@@ -118,7 +118,7 @@ class BasicGradePreviewParameterProvider : PreviewParameterProvider<BasicGrade> 
     override val values: Sequence<BasicGrade> = sequenceOf(
         BasicGrade(
             id = 1L,
-            grade = BigDecimal("4.75"),
+            grade = GradeUtils.FiveMinus,
             date = TimeUtils.currentDate(),
             studentId = 1L,
             lessonId = 1L,
@@ -128,7 +128,7 @@ class BasicGradePreviewParameterProvider : PreviewParameterProvider<BasicGrade> 
         ),
         BasicGrade(
             id = 2L,
-            grade = BigDecimal("5.0"),
+            grade = GradeUtils.Five,
             date = TimeUtils.currentDate(),
             studentId = 2L,
             lessonId = 1L,

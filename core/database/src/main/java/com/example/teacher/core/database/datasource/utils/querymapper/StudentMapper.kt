@@ -1,5 +1,6 @@
 package com.example.teacher.core.database.datasource.utils.querymapper
 
+import com.example.teacher.core.common.utils.GradeUtils
 import com.example.teacher.core.database.generated.queries.student.GetBasicStudentById
 import com.example.teacher.core.database.generated.queries.student.GetStudentById
 import com.example.teacher.core.database.generated.queries.student.GetStudentGradesById
@@ -91,14 +92,8 @@ internal fun toExternalStudentGrades(
     }
 
 private fun calculateAverage(grades: List<GetStudentGradesById>): BigDecimal? {
-    val studentGrades = grades.filter { grade -> grade.grade != null }
-    return if (studentGrades.isNotEmpty()) {
-        val average = studentGrades.sumOf { grade -> grade.grade!! }
-            .divide(BigDecimal.valueOf(studentGrades.size.toLong()))
-        average
-    } else {
-        null
-    }
+    val studentGrades = grades.mapNotNull { it.grade }
+    return GradeUtils.calculateAverage(studentGrades)
 }
 
 private fun GetStudentGradesById.toStudentGrades(): StudentGrade? {

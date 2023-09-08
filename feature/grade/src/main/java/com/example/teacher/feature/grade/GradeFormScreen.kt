@@ -1,5 +1,6 @@
 package com.example.teacher.feature.grade
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -29,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.common.utils.GradeUtils
 import com.example.teacher.core.model.data.BasicStudent
 import com.example.teacher.core.model.data.GradeTemplateInfo
 import com.example.teacher.core.ui.component.TeacherButton
@@ -130,12 +132,13 @@ private fun MainContent(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
-        StudentInfo(student = uiState.student)
-        GradeInfo(
+        Header(
+            student = uiState.student,
             gradeInfo = uiState.gradeTemplateInfo,
             initialGrade = initialGrade,
             inputGrade = inputGrade,
         )
+
         GradeInputs(onGradeChange = onGradeChange)
 
         TeacherButton(
@@ -148,35 +151,39 @@ private fun MainContent(
 }
 
 @Composable
-private fun StudentInfo(
+private fun Header(
     student: BasicStudent,
-    modifier: Modifier = Modifier,
-) {
-    Card(modifier = modifier) {
-        Text(text = student.fullName)
-    }
-}
-
-@Composable
-private fun GradeInfo(
     gradeInfo: GradeTemplateInfo,
     initialGrade: BigDecimal?,
     inputGrade: BigDecimal?,
     modifier: Modifier = Modifier,
 ) {
-    Card(modifier = modifier) {
-        Column {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+    ) {
+        Column(modifier = Modifier.padding(MaterialTheme.spacing.small)) {
+            Text(
+                modifier = modifier,
+                text = student.fullName,
+                style = MaterialTheme.typography.titleMedium,
+            )
+
             Text(gradeInfo.gradeName)
             Text(stringResource(R.string.grade_grade_weight, gradeInfo.gradeWeight))
             if (initialGrade != null) {
-                Text(stringResource(R.string.grade_current_grade, initialGrade))
+                Text(stringResource(R.string.grade_current_grade, toGradeWithLiteral(initialGrade)))
             }
-            Text("Nowa ocena: ${inputGrade?.toString() ?: stringResource(R.string.grade_no_grade)}")
+
+            // Don't show new grade if it's same as old one.
+            if (initialGrade == null || (initialGrade != inputGrade)) {
+                Text(stringResource(R.string.grade_new_grade, toGradeWithLiteral(inputGrade)))
+            }
         }
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun GradeInputs(
     onGradeChange: (grade: BigDecimal?) -> Unit,
@@ -187,32 +194,43 @@ private fun GradeInputs(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        GradeInput(grade = "1", onClick = { onGradeChange(BigDecimal("1.00")) })
+        GradeInputs(
+            grades = listOf(GradeUtils.One),
+            onGradeClick = onGradeChange,
+        )
+        GradeInputs(
+            grades = listOf(GradeUtils.TwoMinus, GradeUtils.Two, GradeUtils.TwoPlus),
+            onGradeClick = onGradeChange,
+        )
+        GradeInputs(
+            grades = listOf(GradeUtils.ThreeMinus, GradeUtils.Three, GradeUtils.ThreePlus),
+            onGradeClick = onGradeChange,
+        )
+        GradeInputs(
+            grades = listOf(GradeUtils.FourMinus, GradeUtils.Four, GradeUtils.FourPlus),
+            onGradeClick = onGradeChange,
+        )
+        GradeInputs(
+            grades = listOf(GradeUtils.FiveMinus, GradeUtils.Five, GradeUtils.FivePlus),
+            onGradeClick = onGradeChange,
+        )
+        GradeInputs(
+            grades = listOf(GradeUtils.SixMinus, GradeUtils.Six),
+            onGradeClick = onGradeChange,
+        )
+    }
+}
 
-        val rowArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
-
-        FlowRow(horizontalArrangement = rowArrangement) {
-            GradeInput(grade = "2-", onClick = { onGradeChange(BigDecimal("1.75")) })
-            GradeInput(grade = "2", onClick = { onGradeChange(BigDecimal("2.00")) })
-            GradeInput(grade = "2+", onClick = { onGradeChange(BigDecimal("2.50")) })
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun GradeInputs(
+    grades: List<BigDecimal>,
+    onGradeClick: (grade: BigDecimal?) -> Unit,
+) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
+        for (grade in grades) {
+            GradeInput(grade = GradeUtils.toGrade(grade), onClick = { onGradeClick(grade) })
         }
-        FlowRow(horizontalArrangement = rowArrangement) {
-            GradeInput(grade = "3-", onClick = { onGradeChange(BigDecimal("2.75")) })
-            GradeInput(grade = "3", onClick = { onGradeChange(BigDecimal("3.00")) })
-            GradeInput(grade = "3+", onClick = { onGradeChange(BigDecimal("3.50")) })
-        }
-        FlowRow(horizontalArrangement = rowArrangement) {
-            GradeInput(grade = "4-", onClick = { onGradeChange(BigDecimal("3.75")) })
-            GradeInput(grade = "4", onClick = { onGradeChange(BigDecimal("4.00")) })
-            GradeInput(grade = "4+", onClick = { onGradeChange(BigDecimal("4.50")) })
-        }
-        FlowRow(horizontalArrangement = rowArrangement) {
-            GradeInput(grade = "5-", onClick = { onGradeChange(BigDecimal("4.75")) })
-            GradeInput(grade = "5", onClick = { onGradeChange(BigDecimal("5.00")) })
-            GradeInput(grade = "5+", onClick = { onGradeChange(BigDecimal("5.50")) })
-        }
-
-        GradeInput(grade = "6", onClick = { onGradeChange(BigDecimal("6.00")) })
     }
 }
 
@@ -223,6 +241,19 @@ private fun GradeInput(
     modifier: Modifier = Modifier,
 ) {
     TeacherButton(modifier = modifier, label = grade, onClick = onClick)
+}
+
+@Composable
+private fun toGradeWithLiteral(grade: BigDecimal?): String {
+    return if (grade != null) {
+        stringResource(
+            R.string.grade_grade_with_literal,
+            GradeUtils.toGrade(grade),
+            GradeUtils.toLiteral(grade),
+        )
+    } else {
+        stringResource(R.string.grade_no_grade)
+    }
 }
 
 @Preview
