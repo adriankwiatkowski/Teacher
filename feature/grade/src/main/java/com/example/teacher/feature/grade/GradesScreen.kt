@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Divider
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +27,7 @@ import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.GradeUtils
 import com.example.teacher.core.model.data.BasicGradeForTemplate
 import com.example.teacher.core.model.data.GradeTemplateInfo
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.ResultContent
@@ -110,15 +110,17 @@ private fun MainContent(
             Text(text = gradeName)
         }
 
-        itemsIndexed(grades, key = { _, grade -> grade.studentId }) { index, grade ->
+        items(grades, key = { grade -> grade.studentId }) { grade ->
             GradeItem(
                 fullName = grade.studentFullName,
                 grade = gradeToName(grade.grade),
                 onClick = { onStudentClick(grade.studentId, grade.id) },
             )
+        }
 
-            if (index != grades.lastIndex) {
-                Divider()
+        if (grades.isEmpty()) {
+            item {
+                TeacherLargeText(stringResource(R.string.grade_no_students))
             }
         }
     }
@@ -134,8 +136,6 @@ private fun GradeItem(
     ListItem(
         modifier = modifier.clickable(onClick = onClick),
         headlineContent = { Text("$fullName ($grade)") },
-//        text = { Text(fullName) },
-//        secondaryText = { Text(grade) },
     )
 }
 

@@ -12,4 +12,5 @@
     <string name="grade_grades_title">Wystawienie ocen</string>
     <string name="grade_new_grade">Nowa ocena: %1$s</string>
     <string name="grade_grade_with_literal">%1$s (%2$s)</string>
+    <string name="grade_no_students">Nie dodano uczniów do klasy</string>
 </resources>
