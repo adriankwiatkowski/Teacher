@@ -1,6 +1,10 @@
 package com.example.teacher.feature.student
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -17,8 +21,8 @@ import com.example.teacher.core.model.data.StudentGradesByLesson
 import com.example.teacher.core.ui.paramprovider.StudentGradesByLessonPreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.StudentPreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
+import com.example.teacher.core.ui.theme.spacing
 
-// TODO: Dialog should provide better information about current grade.
 @Composable
 internal fun StudentGradeDialog(
     student: Student,
@@ -32,18 +36,27 @@ internal fun StudentGradeDialog(
         onDismissRequest = onDismissRequest,
         title = { Text(student.fullName) },
         text = {
-            Column {
-                Text(text = gradeInfo.lessonName, style = MaterialTheme.typography.titleSmall)
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                Text(text = gradeInfo.lessonName, style = MaterialTheme.typography.titleMedium)
+                Text(text = grade.gradeName, style = MaterialTheme.typography.titleMedium)
+
+                val termString = if (grade.isFirstTerm) {
+                    stringResource(R.string.student_first_term)
+                } else {
+                    stringResource(R.string.student_second_term)
+                }
+                Text(text = termString, style = MaterialTheme.typography.titleMedium)
+
+                Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
+
                 Text(
-                    text = gradeInfo.firstTermAverage?.toPlainString().orEmpty(),
-                    style = MaterialTheme.typography.titleSmall
+                    text = stringResource(R.string.student_grade, grade.grade.toPlainString()),
+                    style = MaterialTheme.typography.bodyLarge,
                 )
-                Text(text = grade.gradeName, style = MaterialTheme.typography.bodyMedium)
                 Text(
-                    text = grade.grade.toPlainString(),
-                    style = MaterialTheme.typography.bodyMedium
+                    text = stringResource(R.string.student_weight_with_data, grade.weight),
+                    style = MaterialTheme.typography.bodyLarge,
                 )
-                Text(text = grade.weight.toString(), style = MaterialTheme.typography.bodyMedium)
             }
         },
         confirmButton = {

@@ -91,8 +91,8 @@ internal fun toExternalStudentGrades(
     }
 
 private fun calculateAverage(grades: List<GetStudentGradesById>): BigDecimal? {
-    return if (grades.isNotEmpty()) {
-        val studentGrades = grades.filter { grade -> grade.grade != null }
+    val studentGrades = grades.filter { grade -> grade.grade != null }
+    return if (studentGrades.isNotEmpty()) {
         val average = studentGrades.sumOf { grade -> grade.grade!! }
             .divide(BigDecimal.valueOf(studentGrades.size.toLong()))
         average

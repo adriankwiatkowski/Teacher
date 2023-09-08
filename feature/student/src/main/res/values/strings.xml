@@ -20,4 +20,8 @@
     <string name="student_phone_supporting_text">Telefon musi zawierać 9 cyfr (może być pusty)</string>
     <string name="student_email_supporting_text">Może być pusty</string>
     <string name="student_no_grades">Brak ocen</string>
+    <string name="student_weight_with_data">Waga %1$s</string>
+    <string name="student_grade">Ocena %1$s</string>
+    <string name="student_first_term">Pierwszy semestr</string>
+    <string name="student_second_term">Drugi semestr</string>
 </resources>
