@@ -69,10 +69,6 @@ fun NavGraphBuilder.schoolClassGraph(
                 onClassClick = { schoolClassId ->
                     navController.navigateToSchoolClassRoute(schoolClassId = schoolClassId)
                 },
-                onStudentsClick = { schoolClassId ->
-                },
-                onLessonsClick = { schoolClassId ->
-                },
                 viewModel = viewModel,
             )
         }

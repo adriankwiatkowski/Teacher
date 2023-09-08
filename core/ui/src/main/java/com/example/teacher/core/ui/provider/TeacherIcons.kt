@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.NavigateBefore
 import androidx.compose.material.icons.filled.NavigateNext
 import androidx.compose.material.icons.filled.Notes
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PlusOne
@@ -107,6 +108,11 @@ object TeacherIcons {
 
     fun person(@StringRes text: Int = R.string.ui_person) = TeacherIcon(
         icon = TeacherIcons.Person,
+        text = text,
+    )
+
+    fun people(@StringRes text: Int = R.string.ui_group_of_people) = TeacherIcon(
+        icon = TeacherIcons.People,
         text = text,
     )
 

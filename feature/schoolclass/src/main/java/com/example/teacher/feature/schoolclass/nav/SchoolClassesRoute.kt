@@ -13,8 +13,6 @@ internal fun SchoolClassesRoute(
     snackbarHostState: SnackbarHostState,
     onAddSchoolClassClick: () -> Unit,
     onClassClick: (id: Long) -> Unit,
-    onStudentsClick: (classId: Long) -> Unit,
-    onLessonsClick: (classId: Long) -> Unit,
     viewModel: SchoolClassesViewModel = hiltViewModel(),
 ) {
     val schoolClassesResult by viewModel.schoolClassesResult.collectAsStateWithLifecycle()
@@ -24,7 +22,5 @@ internal fun SchoolClassesRoute(
         snackbarHostState = snackbarHostState,
         onAddSchoolClassClick = onAddSchoolClassClick,
         onClassClick = onClassClick,
-        onStudentsClick = onStudentsClick,
-        onLessonsClick = onLessonsClick,
     )
 }
