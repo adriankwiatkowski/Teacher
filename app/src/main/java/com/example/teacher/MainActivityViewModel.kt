@@ -1,5 +1,6 @@
 package com.example.teacher
 
+import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,6 +30,11 @@ class MainActivityViewModel @Inject constructor(
 
     private val _authState = MutableStateFlow(AuthState())
     val authState = _authState.asStateFlow()
+
+    fun checkIfCanAuthenticate(context: Context) {
+        val canAuthenticate = auth.canAuthenticate(context)
+        _authState.update { authState -> authState.copy(isDeviceSecured = canAuthenticate) }
+    }
 
     fun authenticate(activity: FragmentActivity) {
         _authState.update { authState -> authState.copy(isAuthenticated = false) }

@@ -64,6 +64,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.checkIfCanAuthenticate(context = this)
+    }
+
     private fun authenticate() {
         if (!enableAuthentication) {
             return
@@ -112,7 +117,7 @@ private fun DefaultPreview() {
 private val TonalElevation = 5.dp
 
 // Set whether authentication should be enabled in debug mode.
-private const val SHOULD_ENABLE_AUTHENTICATION = false
+private const val SHOULD_ENABLE_AUTHENTICATION = true
 
 // Don't apply authentication if in debug mode and
 // flag SHOULD_ENABLE_AUTHENTICATION is set to disabled.

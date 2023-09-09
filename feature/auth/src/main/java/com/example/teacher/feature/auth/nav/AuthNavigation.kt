@@ -32,7 +32,9 @@ fun NavGraphBuilder.authGraph(authenticate: () -> Unit, isDeviceSecure: Boolean)
             activity.moveTaskToBack(false)
         }
         OnResume {
-            authenticate()
+            if (isDeviceSecure) {
+                authenticate()
+            }
         }
 
         AuthScreen(authenticate = authenticate, isDeviceSecure = isDeviceSecure)

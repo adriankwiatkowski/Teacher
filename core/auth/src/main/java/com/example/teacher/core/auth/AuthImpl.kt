@@ -15,7 +15,7 @@ import javax.inject.Inject
 internal class AuthImpl @Inject constructor() : Auth {
 
     override fun authenticate(activity: FragmentActivity, listener: AuthListener): Boolean {
-        if (!canAuthenticate(activity)) {
+        if (!canAuthenticate(context = activity, launchBiometricSettings = true)) {
             return false
         }
 
@@ -63,7 +63,10 @@ internal class AuthImpl @Inject constructor() : Auth {
         return BiometricPrompt(activity, executor, callback)
     }
 
-    private fun canAuthenticate(context: Context): Boolean {
+    override fun canAuthenticate(context: Context): Boolean =
+        canAuthenticate(context = context, launchBiometricSettings = false)
+
+    private fun canAuthenticate(context: Context, launchBiometricSettings: Boolean): Boolean {
         val biometricManager = BiometricManager.from(context)
         val result = biometricManager.canAuthenticate(authenticators)
 
@@ -73,7 +76,9 @@ internal class AuthImpl @Inject constructor() : Auth {
 
         if (result == BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED) {
             // Prompts the user to create credentials that your app accepts.
-            lunchBiometricSettings(context)
+            if (launchBiometricSettings) {
+                lunchBiometricSettings(context)
+            }
         }
 
         return false
