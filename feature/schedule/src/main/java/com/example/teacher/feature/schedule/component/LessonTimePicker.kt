@@ -11,13 +11,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.ui.component.picker.TeacherTimePicker
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
-import com.example.teacher.feature.schedule.R
 import java.time.LocalTime
 
 @Composable
@@ -31,11 +29,10 @@ internal fun LessonTimePicker(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text = label)
-        Text(text = TimeUtils.format(time))
         TeacherTimePicker(
             time = time,
             onTimeSelected = onTimeSelected,
-            label = stringResource(R.string.schedule_pick_hour),
+            label = TimeUtils.format(time),
         )
     }
 }

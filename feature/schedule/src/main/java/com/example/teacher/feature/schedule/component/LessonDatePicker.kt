@@ -37,11 +37,10 @@ internal fun LessonDatePicker(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(text = stringResource(R.string.schedule_date))
-            Text(text = TimeUtils.format(date))
             TeacherDatePicker(
                 date = date,
                 onDateSelected = onDateSelected,
-                label = stringResource(R.string.schedule_pick_date),
+                label = TimeUtils.format(date),
             )
         }
     }

@@ -29,11 +29,11 @@ internal fun LessonDayPicker(
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(text = stringResource(R.string.schedule_day, TimeUtils.getDisplayNameOfDayOfWeek(day)))
+        Text(text = stringResource(R.string.schedule_day))
         TeacherDayPicker(
             day = day,
             onDaySelected = onDaySelected,
-            label = stringResource(R.string.schedule_pick_day),
+            label = TimeUtils.getDisplayNameOfDayOfWeek(day),
         )
     }
 }
