@@ -173,6 +173,10 @@ private fun MainContent(
             } else {
                 stringResource(R.string.schedule_event_date)
             },
+            firstTermName = lesson?.schoolYear?.firstTerm?.name
+                ?: stringResource(R.string.schedule_first_term),
+            secondTermName = lesson?.schoolYear?.secondTerm?.name
+                ?: stringResource(R.string.schedule_second_term),
             day = eventForm.day,
             onDayChange = onDayChange,
             date = eventForm.date,

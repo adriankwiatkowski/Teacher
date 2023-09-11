@@ -29,6 +29,7 @@ internal fun StudentGradeDialog(
     student: Student,
     gradeInfo: StudentGradesByLesson,
     grade: StudentGrade,
+    termString: @Composable () -> String,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -41,12 +42,7 @@ internal fun StudentGradeDialog(
                 Text(text = gradeInfo.lessonName, style = MaterialTheme.typography.titleMedium)
                 Text(text = grade.gradeName, style = MaterialTheme.typography.titleMedium)
 
-                val termString = if (grade.isFirstTerm) {
-                    stringResource(R.string.student_first_term)
-                } else {
-                    stringResource(R.string.student_second_term)
-                }
-                Text(text = termString, style = MaterialTheme.typography.titleMedium)
+                Text(text = termString(), style = MaterialTheme.typography.titleMedium)
 
                 Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
 
@@ -87,6 +83,7 @@ private fun StudentGradeDialogPreview(
                 student = student,
                 gradeInfo = gradeInfo,
                 grade = grade,
+                termString = { "Semestr ${if (grade.isFirstTerm) "I" else "II"}" },
                 onDismissRequest = {},
             )
         }

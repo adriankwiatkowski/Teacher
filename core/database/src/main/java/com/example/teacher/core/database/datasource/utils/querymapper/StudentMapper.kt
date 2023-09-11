@@ -106,6 +106,28 @@ internal fun toExternalStudentGrades(
             firstTermAverage = firstTermAverage,
             secondTermGrades = secondTermGrades.mapNotNull { it.toStudentGrades() },
             secondTermAverage = secondTermAverage,
+            schoolClass = BasicSchoolClass(
+                id = firstGrade.school_class_id,
+                name = firstGrade.school_class_name,
+                schoolYear = SchoolYear(
+                    id = firstGrade.school_year_id,
+                    name = firstGrade.school_year_name,
+                    firstTerm = Term(
+                        id = firstGrade.term_first_id,
+                        name = firstGrade.term_first_name,
+                        startDate = firstGrade.term_first_start_date,
+                        endDate = firstGrade.term_first_end_date,
+                    ),
+                    secondTerm = Term(
+                        id = firstGrade.term_second_id,
+                        name = firstGrade.term_second_name,
+                        startDate = firstGrade.term_second_start_date,
+                        endDate = firstGrade.term_second_end_date,
+                    ),
+                ),
+                studentCount = firstGrade.student_count,
+                lessonCount = firstGrade.lesson_count,
+            )
         )
     }
 

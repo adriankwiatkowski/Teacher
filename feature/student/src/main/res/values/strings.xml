@@ -24,4 +24,5 @@
     <string name="student_grade">Ocena %1$s</string>
     <string name="student_first_term">Pierwszy semestr</string>
     <string name="student_second_term">Drugi semestr</string>
+    <string name="student_term">Semestr %1$s</string>
 </resources>

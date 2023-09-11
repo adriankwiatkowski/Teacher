@@ -53,6 +53,7 @@ class StudentGradesByLessonPreviewParameterProvider :
                 ),
                 secondTermAverage = null,
                 secondTermGrades = emptyList(),
+                schoolClass = BasicSchoolClassPreviewParameterProvider().values.first(),
             ),
         )
     )

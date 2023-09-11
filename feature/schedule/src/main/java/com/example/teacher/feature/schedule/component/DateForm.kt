@@ -35,6 +35,8 @@ import java.time.LocalTime
 @Composable
 internal fun DateForm(
     title: String,
+    firstTermName: String,
+    secondTermName: String,
     day: DayOfWeek,
     onDayChange: (day: DayOfWeek) -> Unit,
     date: LocalDate,
@@ -73,12 +75,12 @@ internal fun DateForm(
                 )
                 Column(Modifier.selectableGroup()) {
                     TeacherRadioButton(
-                        label = stringResource(R.string.schedule_first_term),
+                        label = stringResource(R.string.schedule_term_with_data, firstTermName),
                         selected = isFirstTermSelected,
                         onClick = { onTermSelected(true) },
                     )
                     TeacherRadioButton(
-                        label = stringResource(R.string.schedule_second_term),
+                        label = stringResource(R.string.schedule_term_with_data, secondTermName),
                         selected = !isFirstTermSelected,
                         onClick = { onTermSelected(false) },
                     )
@@ -132,6 +134,8 @@ private fun DateFormPreview() {
 
             DateForm(
                 title = "Termin zajęć",
+                firstTermName = "I",
+                secondTermName = "II",
                 day = day,
                 onDayChange = { day = it },
                 date = date,

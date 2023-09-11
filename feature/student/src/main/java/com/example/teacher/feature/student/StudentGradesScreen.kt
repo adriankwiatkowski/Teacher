@@ -65,6 +65,14 @@ internal fun StudentGradesScreen(
                             student = gradeDialog.student,
                             gradeInfo = gradeDialog.gradeInfo,
                             grade = gradeDialog.grade,
+                            termString = {
+                                val term = if (gradeDialog.grade.isFirstTerm) {
+                                    gradeDialog.gradeInfo.schoolClass.schoolYear.firstTerm.name
+                                } else {
+                                    gradeDialog.gradeInfo.schoolClass.schoolYear.secondTerm.name
+                                }
+                                stringResource(R.string.student_term, term)
+                            },
                             onDismissRequest = onGradeDialogDismiss,
                         )
                     }
@@ -107,12 +115,14 @@ private fun LessonGradesCard(
 ) {
     Card(modifier = modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(MaterialTheme.spacing.small)) {
+            val year = lessonGrades.schoolClass.schoolYear
+
             Text(lessonGrades.lessonName)
 
             Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
 
             LessonTermGrades(
-                termLabel = "Pierwszy semestr",
+                termLabel = stringResource(R.string.student_term, year.firstTerm.name),
                 grades = lessonGrades.firstTermGrades,
                 average = lessonGrades.firstTermAverage,
                 onShowGradeDialog = { grade -> onShowGradeDialog(lessonGrades, grade) },
@@ -123,7 +133,7 @@ private fun LessonGradesCard(
             Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
 
             LessonTermGrades(
-                termLabel = "Drugi semestr",
+                termLabel = stringResource(R.string.student_term, year.secondTerm.name),
                 grades = lessonGrades.secondTermGrades,
                 average = lessonGrades.secondTermAverage,
                 onShowGradeDialog = { grade -> onShowGradeDialog(lessonGrades, grade) },
