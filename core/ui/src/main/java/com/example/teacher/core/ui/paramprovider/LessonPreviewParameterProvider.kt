@@ -2,7 +2,6 @@ package com.example.teacher.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacher.core.model.data.BasicLesson
-import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.model.data.LessonWithSchoolYear
 
@@ -25,12 +24,7 @@ class LessonPreviewParameterProvider : PreviewParameterProvider<Lesson> {
             )
         }
 
-    private val basicSchoolClass = BasicSchoolClass(
-        id = 1L,
-        name = "3A",
-        studentCount = 20,
-        lessonCount = 4,
-    )
+    private val basicSchoolClass = BasicSchoolClassPreviewParameterProvider().values.first()
 }
 
 class LessonWithSchoolYearPreviewParameterProvider :

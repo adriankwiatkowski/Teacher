@@ -2,7 +2,6 @@ package com.example.teacher.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacher.core.common.utils.TimeUtils
-import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.Lesson
 import java.time.LocalDate
@@ -45,12 +44,7 @@ private fun makeEvents(
                 lesson = Lesson(
                     id = 1L,
                     name = "Matematyka",
-                    schoolClass = BasicSchoolClass(
-                        id = 1L,
-                        name = "1A",
-                        studentCount = 20,
-                        lessonCount = 4,
-                    )
+                    schoolClass = BasicSchoolClassPreviewParameterProvider().values.first()
                 ),
                 date = simpleLessonCalendar.date,
                 startTime = simpleLessonCalendar.startTime,

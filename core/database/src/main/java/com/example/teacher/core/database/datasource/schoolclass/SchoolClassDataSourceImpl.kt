@@ -6,8 +6,8 @@ import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
 import com.example.teacher.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
-import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.SchoolClass
+import com.example.teacher.core.model.data.SchoolClassesByYear
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -46,7 +46,7 @@ internal class SchoolClassDataSourceImpl(
         ).flowOn(dispatcher)
     }
 
-    override fun getAllSchoolClasses(): Flow<List<BasicSchoolClass>> =
+    override fun getAllSchoolClasses(): Flow<List<SchoolClassesByYear>> =
         schoolClassQueries
             .getAllSchoolClasses()
             .asFlow()

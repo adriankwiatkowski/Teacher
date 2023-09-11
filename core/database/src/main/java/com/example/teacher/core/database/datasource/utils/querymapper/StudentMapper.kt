@@ -7,9 +7,11 @@ import com.example.teacher.core.database.generated.queries.student.GetStudentGra
 import com.example.teacher.core.database.generated.queries.student.GetStudentsBySchoolClassId
 import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.BasicStudent
+import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.model.data.Student
 import com.example.teacher.core.model.data.StudentGrade
 import com.example.teacher.core.model.data.StudentGradesByLesson
+import com.example.teacher.core.model.data.Term
 import java.math.BigDecimal
 
 internal fun toExternal(student: GetBasicStudentById?): BasicStudent? = run {
@@ -36,6 +38,22 @@ internal fun toExternal(student: GetStudentById?): Student? = run {
     val schoolClass = BasicSchoolClass(
         id = student.school_class_id,
         name = student.school_class_name,
+        schoolYear = SchoolYear(
+            id = student.school_year_id,
+            name = student.school_year_name,
+            firstTerm = Term(
+                id = student.term_first_id,
+                name = student.term_first_name,
+                startDate = student.term_first_start_date,
+                endDate = student.term_first_end_date,
+            ),
+            secondTerm = Term(
+                id = student.term_second_id,
+                name = student.term_second_name,
+                startDate = student.term_second_start_date,
+                endDate = student.term_second_end_date,
+            ),
+        ),
         studentCount = student.student_count,
         lessonCount = student.lesson_count,
     )

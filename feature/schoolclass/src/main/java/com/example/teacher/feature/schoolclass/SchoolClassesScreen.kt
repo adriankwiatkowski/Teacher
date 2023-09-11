@@ -1,5 +1,6 @@
 package com.example.teacher.feature.schoolclass
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -27,12 +28,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
-import com.example.teacher.core.model.data.BasicSchoolClass
+import com.example.teacher.core.model.data.SchoolClassesByYear
 import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.TextWithIcon
 import com.example.teacher.core.ui.component.result.ResultContent
-import com.example.teacher.core.ui.paramprovider.BasicSchoolClassesPreviewParameterProvider
+import com.example.teacher.core.ui.paramprovider.SchoolClassesByYearPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
@@ -40,7 +41,7 @@ import com.example.teacher.core.ui.theme.spacing
 
 @Composable
 internal fun SchoolClassesScreen(
-    schoolClassesResult: Result<List<BasicSchoolClass>>,
+    schoolClassesResult: Result<List<SchoolClassesByYear>>,
     snackbarHostState: SnackbarHostState,
     onAddSchoolClassClick: () -> Unit,
     onClassClick: (id: Long) -> Unit,
@@ -59,14 +60,15 @@ internal fun SchoolClassesScreen(
                 .fillMaxSize(),
             result = schoolClassesResult,
         ) { schoolClasses ->
-            MainContent(schoolClasses = schoolClasses, onClassClick = onClassClick)
+            MainContent(schoolClassesByYear = schoolClasses, onClassClick = onClassClick)
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainContent(
-    schoolClasses: List<BasicSchoolClass>,
+    schoolClassesByYear: List<SchoolClassesByYear>,
     onClassClick: (id: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -75,16 +77,27 @@ private fun MainContent(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        items(schoolClasses, key = { it.id }) { schoolClass ->
-            ClassItem(
-                name = schoolClass.name,
-                studentCount = schoolClass.studentCount,
-                lessonCount = schoolClass.lessonCount,
-                onClick = { onClassClick(schoolClass.id) },
-            )
+        for (schoolClasses in schoolClassesByYear) {
+            stickyHeader {
+                Surface(modifier = Modifier.fillParentMaxWidth()) {
+                    Text(
+                        modifier = Modifier.padding(MaterialTheme.spacing.small),
+                        style = MaterialTheme.typography.headlineSmall,
+                        text = schoolClasses.year.name,
+                    )
+                }
+            }
+            items(schoolClasses.schoolClasses, key = { it.id }) { schoolClass ->
+                ClassItem(
+                    name = schoolClass.name,
+                    studentCount = schoolClass.studentCount,
+                    lessonCount = schoolClass.lessonCount,
+                    onClick = { onClassClick(schoolClass.id) },
+                )
+            }
         }
 
-        if (schoolClasses.isEmpty()) {
+        if (schoolClassesByYear.isEmpty()) {
             item {
                 EmptyClasses(Modifier.fillMaxWidth())
             }
@@ -142,15 +155,15 @@ private fun EmptyClasses(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun SchoolClassesScreenPreview(
-    @PreviewParameter(BasicSchoolClassesPreviewParameterProvider::class)
-    basicSchoolClasses: List<BasicSchoolClass>,
+    @PreviewParameter(SchoolClassesByYearPreviewParameterProvider::class)
+    schoolClassesByYear: List<SchoolClassesByYear>,
 ) {
     TeacherTheme {
         Surface {
             SchoolClassesScreen(
                 modifier = Modifier.fillMaxSize(),
                 snackbarHostState = remember { SnackbarHostState() },
-                schoolClassesResult = Result.Success(basicSchoolClasses),
+                schoolClassesResult = Result.Success(schoolClassesByYear),
                 onAddSchoolClassClick = {},
                 onClassClick = {},
             )

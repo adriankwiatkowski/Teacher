@@ -6,8 +6,8 @@ import com.example.teacher.core.common.result.asResult
 import com.example.teacher.core.common.result.asResultNotNull
 import com.example.teacher.core.database.datasource.schoolclass.SchoolClassDataSource
 import com.example.teacher.core.database.datasource.schoolyear.SchoolYearDataSource
-import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.SchoolClass
+import com.example.teacher.core.model.data.SchoolClassesByYear
 import com.example.teacher.core.model.data.SchoolYear
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +20,7 @@ internal class DatabaseSchoolClassRepository @Inject constructor(
     @ApplicationScope private val scope: CoroutineScope,
 ) : SchoolClassRepository {
 
-    override fun getAllSchoolClasses(): Flow<Result<List<BasicSchoolClass>>> = dataSource
+    override fun getAllSchoolClasses(): Flow<Result<List<SchoolClassesByYear>>> = dataSource
         .getAllSchoolClasses()
         .asResult()
 

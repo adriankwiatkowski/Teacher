@@ -4,10 +4,23 @@ SELECT
     l.name AS 'lesson_name',
     l.school_class_id,
     sc.name AS 'school_class_name',
+    sy.id AS 'school_year_id',
+    sy.name AS 'school_year_name',
+    sy.term_first_id AS 'term_first_id',
+    sy.term_second_id AS 'term_second_id',
+    t1.name AS 'term_first_name',
+    t1.start_date AS 'term_first_start_date',
+    t1.end_date AS 'term_first_end_date',
+    t2.name AS 'term_second_name',
+    t2.start_date AS 'term_second_start_date',
+    t2.end_date AS 'term_second_end_date',
     (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
     (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
 FROM lesson l
-INNER JOIN school_class sc ON l.school_class_id = sc.id;
+INNER JOIN school_class sc ON l.school_class_id = sc.id
+INNER JOIN school_year sy ON sc.school_year_id = sy.id
+INNER JOIN term t1 ON sy.term_first_id = t1.id
+INNER JOIN term t2 ON sy.term_second_id = t2.id;
 
 getLessonById:
 SELECT
@@ -15,10 +28,23 @@ SELECT
     l.name AS 'lesson_name',
     l.school_class_id,
     sc.name AS 'school_class_name',
+    sy.id AS 'school_year_id',
+    sy.name AS 'school_year_name',
+    sy.term_first_id AS 'term_first_id',
+    sy.term_second_id AS 'term_second_id',
+    t1.name AS 'term_first_name',
+    t1.start_date AS 'term_first_start_date',
+    t1.end_date AS 'term_first_end_date',
+    t2.name AS 'term_second_name',
+    t2.start_date AS 'term_second_start_date',
+    t2.end_date AS 'term_second_end_date',
     (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
     (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
 FROM lesson l
 INNER JOIN school_class sc ON l.school_class_id = sc.id
+INNER JOIN school_year sy ON sc.school_year_id = sy.id
+INNER JOIN term t1 ON sy.term_first_id = t1.id
+INNER JOIN term t2 ON sy.term_second_id = t2.id
 WHERE l.id = :id;
 
 getLessonWithSchoolYearById:

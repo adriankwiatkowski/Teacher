@@ -5,6 +5,8 @@ import com.example.teacher.core.database.generated.queries.event.GetEvents
 import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.model.data.SchoolYear
+import com.example.teacher.core.model.data.Term
 
 internal fun toExternal(events: List<GetEvents>): List<Event> = events.map { event ->
     Event(
@@ -15,6 +17,22 @@ internal fun toExternal(events: List<GetEvents>): List<Event> = events.map { eve
             schoolClass = BasicSchoolClass(
                 id = event.school_class_id!!,
                 name = event.school_class_name!!,
+                schoolYear = SchoolYear(
+                    id = event.school_year_id!!,
+                    name = event.school_year_name!!,
+                    firstTerm = Term(
+                        id = event.term_first_id!!,
+                        name = event.term_first_name!!,
+                        startDate = event.term_first_start_date!!,
+                        endDate = event.term_first_end_date!!,
+                    ),
+                    secondTerm = Term(
+                        id = event.term_second_id!!,
+                        name = event.term_second_name!!,
+                        startDate = event.term_second_start_date!!,
+                        endDate = event.term_second_end_date!!,
+                    ),
+                ),
                 studentCount = event.student_count,
                 lessonCount = event.lesson_count,
             ),
@@ -39,6 +57,22 @@ internal fun toExternal(event: GetEventById?): Event? = run {
             schoolClass = BasicSchoolClass(
                 id = event.school_class_id!!,
                 name = event.school_class_name!!,
+                schoolYear = SchoolYear(
+                    id = event.school_year_id!!,
+                    name = event.school_year_name!!,
+                    firstTerm = Term(
+                        id = event.term_first_id!!,
+                        name = event.term_first_name!!,
+                        startDate = event.term_first_start_date!!,
+                        endDate = event.term_first_end_date!!,
+                    ),
+                    secondTerm = Term(
+                        id = event.term_second_id!!,
+                        name = event.term_second_name!!,
+                        startDate = event.term_second_start_date!!,
+                        endDate = event.term_second_end_date!!,
+                    ),
+                ),
                 studentCount = event.student_count,
                 lessonCount = event.lesson_count,
             ),

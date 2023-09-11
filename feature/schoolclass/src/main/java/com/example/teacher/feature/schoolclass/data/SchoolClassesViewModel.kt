@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.data.repository.schoolclass.SchoolClassRepository
-import com.example.teacher.core.model.data.BasicSchoolClass
+import com.example.teacher.core.model.data.SchoolClassesByYear
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,7 @@ internal class SchoolClassesViewModel @Inject constructor(
     repository: SchoolClassRepository,
 ) : ViewModel() {
 
-    val schoolClassesResult: StateFlow<Result<List<BasicSchoolClass>>> = repository
+    val schoolClassesResult: StateFlow<Result<List<SchoolClassesByYear>>> = repository
         .getAllSchoolClasses()
         .stateIn(
             scope = viewModelScope,

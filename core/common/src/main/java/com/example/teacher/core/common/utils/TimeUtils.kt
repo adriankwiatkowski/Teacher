@@ -45,6 +45,11 @@ object TimeUtils {
     fun encodeLocalTime(localTime: LocalTime): String =
         localTime.format(DateTimeFormatter.ISO_LOCAL_TIME)
 
+    fun plusYears(date: LocalDate, yearsToAdd: Long): LocalDate = date.plusYears(yearsToAdd)
+
+    fun minusYears(date: LocalDate, yearsToSubtract: Long): LocalDate =
+        date.minusYears(yearsToSubtract)
+
     fun plusDays(date: LocalDate, daysToAdd: Long): LocalDate = date.plusDays(daysToAdd)
 
     fun minusDays(date: LocalDate, daysToSubtract: Long): LocalDate = date.minusDays(daysToSubtract)

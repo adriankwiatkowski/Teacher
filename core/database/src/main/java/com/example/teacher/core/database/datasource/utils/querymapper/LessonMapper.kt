@@ -30,6 +30,22 @@ internal fun toExternalLessons(
         schoolClass = BasicSchoolClass(
             id = lesson.school_class_id,
             name = lesson.school_class_name,
+            schoolYear = SchoolYear(
+                id = lesson.school_year_id,
+                name = lesson.school_year_name,
+                firstTerm = Term(
+                    id = lesson.term_first_id,
+                    name = lesson.term_first_name,
+                    startDate = lesson.term_first_start_date,
+                    endDate = lesson.term_first_end_date,
+                ),
+                secondTerm = Term(
+                    id = lesson.term_second_id,
+                    name = lesson.term_second_name,
+                    startDate = lesson.term_second_start_date,
+                    endDate = lesson.term_second_end_date,
+                ),
+            ),
             studentCount = lesson.student_count,
             lessonCount = lesson.lesson_count,
         ),
@@ -76,6 +92,22 @@ internal fun toExternal(lesson: GetLessonById?): Lesson? = run {
         schoolClass = BasicSchoolClass(
             id = lesson.school_class_id,
             name = lesson.school_class_name,
+            schoolYear = SchoolYear(
+                id = lesson.school_year_id,
+                name = lesson.school_year_name,
+                firstTerm = Term(
+                    id = lesson.term_first_id,
+                    name = lesson.term_first_name,
+                    startDate = lesson.term_first_start_date,
+                    endDate = lesson.term_first_end_date,
+                ),
+                secondTerm = Term(
+                    id = lesson.term_second_id,
+                    name = lesson.term_second_name,
+                    startDate = lesson.term_second_start_date,
+                    endDate = lesson.term_second_end_date,
+                ),
+            ),
             studentCount = lesson.student_count,
             lessonCount = lesson.lesson_count,
         ),
