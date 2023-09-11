@@ -87,6 +87,7 @@ private fun MainScreen(
 ) {
     LazyColumn(
         modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
         items(
