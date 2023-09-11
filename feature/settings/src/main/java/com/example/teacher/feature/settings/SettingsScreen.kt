@@ -101,6 +101,11 @@ private fun SettingsPanel(
                     checked = useDynamicColor,
                     onCheckedChange = onDynamicColorChange,
                 )
+                Text(
+                    modifier = Modifier.padding(horizontal = MaterialTheme.spacing.medium),
+                    text = stringResource(R.string.settings_dynamic_theme_info),
+                    style = MaterialTheme.typography.bodySmall,
+                )
             }
         }
     }
