@@ -22,10 +22,12 @@ internal fun EventFormRoute(
     snackbarHostState: SnackbarHostState,
     onShowSnackbar: OnShowSnackbar,
     onLessonPickerClick: () -> Unit,
+    isEditMode: Boolean,
     viewModel: EventFormViewModel = hiltViewModel(),
 ) {
     val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
     val isLessonForm by viewModel.isLessonForm.collectAsStateWithLifecycle()
+    val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
     val form = viewModel.form
 
     // Observe save.
@@ -35,21 +37,33 @@ internal fun EventFormRoute(
             onSave()
         }
     }
-
-    val showDayPicker = remember(isLessonForm, form.type) {
-        isLessonForm && (form.type == EventType.Weekly || form.type == EventType.EveryTwoWeeks)
+    // Observe deletion.
+    LaunchedEffect(isDeleted) {
+        if (isDeleted) {
+            onShowSnackbar.onShowSnackbar(R.string.schedule_event_deleted)
+            onNavBack()
+        }
     }
+
+    val showDayPicker = remember(isEditMode, isLessonForm, form.type) {
+        val isDayPickerFormType =
+            (form.type == EventType.Weekly || form.type == EventType.EveryTwoWeeks)
+        !isEditMode && isLessonForm && isDayPickerFormType
+    }
+    val showTypeControls = remember(isEditMode, isLessonForm) { !isEditMode && isLessonForm }
 
     EventFormScreen(
         lessonResult = lessonResult,
         snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
+        onDeleteClick = viewModel::onDelete,
         onLessonPickerClick = onLessonPickerClick,
         eventForm = form,
         isLessonForm = isLessonForm,
         showTermPicker = showDayPicker,
         showDayPicker = showDayPicker,
+        showTypeControls = showTypeControls,
         onIsLessonFormChange = viewModel::onIsLessonFormChange,
         onDayChange = viewModel::onDayChange,
         onDateChange = viewModel::onDateChange,
@@ -59,5 +73,7 @@ internal fun EventFormRoute(
         onTypeChange = viewModel::onTypeChange,
         isSubmitEnabled = form.isSubmitEnabled,
         onSubmit = viewModel::onSubmit,
+        isEditMode = isEditMode,
+        isDeleted = isDeleted,
     )
 }

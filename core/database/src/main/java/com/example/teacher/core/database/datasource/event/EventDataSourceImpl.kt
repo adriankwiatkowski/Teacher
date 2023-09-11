@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import java.time.LocalTime
 import javax.inject.Inject
 
 internal class EventDataSourceImpl @Inject constructor(
@@ -54,6 +55,24 @@ internal class EventDataSourceImpl @Inject constructor(
                 )
             }
         }
+    }
+
+    override suspend fun updateEvent(
+        id: Long,
+        lessonId: Long?,
+        date: LocalDate,
+        startTime: LocalTime,
+        endTime: LocalTime,
+        isValid: Boolean
+    ) {
+        queries.updateEvent(
+            id = id,
+            lesson_id = lessonId,
+            date = date,
+            start_time = startTime,
+            end_time = endTime,
+            is_valid = isValid,
+        )
     }
 
     override suspend fun deleteEventById(id: Long): Unit = withContext(dispatcher) {

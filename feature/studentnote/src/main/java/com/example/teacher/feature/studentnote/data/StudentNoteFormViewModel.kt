@@ -49,10 +49,10 @@ internal class StudentNoteFormViewModel @Inject constructor(
 
     init {
         studentNoteResult
-            .onEach { studentNoteResource ->
-                val studentNote = (studentNoteResource as? Result.Success)?.data
+            .onEach { studentNoteResult ->
+                val studentNote = (studentNoteResult as? Result.Success)?.data
                 if (studentNote == null) {
-                    form = StudentNoteFormProvider.createDefaultForm(status = FormStatus.Idle)
+                    form = StudentNoteFormProvider.createDefaultForm()
                     return@onEach
                 }
 

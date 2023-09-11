@@ -66,6 +66,16 @@ INSERT OR FAIL
 INTO event
 VALUES (?, ?, ?, ?, ?, ?);
 
+updateEvent:
+UPDATE event
+SET
+    lesson_id = :lesson_id,
+    `date` = :date,
+    start_time = :start_time,
+    end_time = :end_time,
+    is_valid = :is_valid
+WHERE id = :id;
+
 deleteEventById:
 DELETE FROM event
 WHERE id = :id;

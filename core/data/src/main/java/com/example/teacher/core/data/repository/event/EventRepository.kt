@@ -13,6 +13,8 @@ interface EventRepository {
 
     fun getEvents(date: LocalDate): Flow<Result<List<Event>>>
 
+    fun getEventOrNullById(id: Long): Flow<Result<Event?>>
+
     fun getLessonWithSchoolYearOrNullById(lessonId: Long): Flow<Result<LessonWithSchoolYear?>>
 
     suspend fun insertEvent(
@@ -30,6 +32,14 @@ interface EventRepository {
         endTime: LocalTime,
         isFirstTermSelected: Boolean,
         type: EventType,
+    )
+
+    suspend fun updateEvent(
+        id: Long,
+        lessonId: Long?,
+        date: LocalDate,
+        startTime: LocalTime,
+        endTime: LocalTime,
     )
 
     suspend fun deleteEventById(id: Long)

@@ -33,7 +33,9 @@ import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherSwitch
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
+import com.example.teacher.core.ui.component.result.DeletedScreen
 import com.example.teacher.core.ui.paramprovider.LessonWithSchoolYearPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.schedule.component.DateForm
@@ -50,11 +52,94 @@ internal fun EventFormScreen(
     snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    onDeleteClick: () -> Unit,
     onLessonPickerClick: () -> Unit,
     eventForm: EventForm,
     isLessonForm: Boolean,
     showTermPicker: Boolean,
     showDayPicker: Boolean,
+    showTypeControls: Boolean,
+    onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
+    onDayChange: (day: DayOfWeek) -> Unit,
+    onDateChange: (date: LocalDate) -> Unit,
+    onStartTimeChange: (date: LocalTime) -> Unit,
+    onEndTimeChange: (date: LocalTime) -> Unit,
+    onTermSelected: (isFirstTermSelected: Boolean) -> Unit,
+    onTypeChange: (type: EventType) -> Unit,
+    isSubmitEnabled: Boolean,
+    onSubmit: () -> Unit,
+    isEditMode: Boolean,
+    isDeleted: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    val scrollBehavior = TeacherTopBarDefaults.default()
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
+            TeacherTopBar(
+                title = if (isEditMode) {
+                    stringResource(R.string.schedule_event_form_edit_title)
+                } else {
+                    stringResource(R.string.schedule_event_form_title)
+                },
+                showNavigationIcon = showNavigationIcon,
+                onNavigationIconClick = onNavBack,
+                menuItems = if (isEditMode) {
+                    listOf(TeacherActions.delete(onDeleteClick))
+                } else {
+                    emptyList()
+                },
+                scrollBehavior = scrollBehavior,
+            )
+        }
+    ) { innerPadding ->
+        if (isDeleted) {
+            DeletedScreen(
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(MaterialTheme.spacing.medium),
+                label = stringResource(R.string.schedule_event_deleted)
+            )
+        } else {
+            MainContent(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(MaterialTheme.spacing.medium),
+                lessonResult = lessonResult,
+                onLessonPickerClick = onLessonPickerClick,
+                eventForm = eventForm,
+                isLessonForm = isLessonForm,
+                showTermPicker = showTermPicker,
+                showDayPicker = showDayPicker,
+                showTypeControls = showTypeControls,
+                onIsLessonFormChange = onIsLessonFormChange,
+                onDayChange = onDayChange,
+                onDateChange = onDateChange,
+                onStartTimeChange = onStartTimeChange,
+                onEndTimeChange = onEndTimeChange,
+                onTermSelected = onTermSelected,
+                onTypeChange = onTypeChange,
+                isSubmitEnabled = isSubmitEnabled,
+                onSubmit = onSubmit,
+            )
+        }
+    }
+}
+
+@Composable
+private fun MainContent(
+    lessonResult: Result<LessonWithSchoolYear?>,
+    onLessonPickerClick: () -> Unit,
+    eventForm: EventForm,
+    isLessonForm: Boolean,
+    showTermPicker: Boolean,
+    showDayPicker: Boolean,
+    showTypeControls: Boolean,
     onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
     onDayChange: (day: DayOfWeek) -> Unit,
     onDateChange: (date: LocalDate) -> Unit,
@@ -66,73 +151,52 @@ internal fun EventFormScreen(
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val scrollBehavior = TeacherTopBarDefaults.default()
-
-    Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        topBar = {
-            TeacherTopBar(
-                title = stringResource(R.string.schedule_event_form_title),
-                showNavigationIcon = showNavigationIcon,
-                onNavigationIconClick = onNavBack,
-                scrollBehavior = scrollBehavior,
-            )
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-                .padding(MaterialTheme.spacing.medium),
-        ) {
-            val lesson = remember(lessonResult) {
-                if (lessonResult is Result.Success) {
-                    lessonResult.data
-                } else {
-                    null
-                }
+    Column(modifier = modifier) {
+        val lesson = remember(lessonResult) {
+            if (lessonResult is Result.Success) {
+                lessonResult.data
+            } else {
+                null
             }
-
-            Header(
-                lesson = lesson,
-                onLessonPickerClick = onLessonPickerClick,
-                isLessonForm = isLessonForm,
-                onIsLessonFormChange = onIsLessonFormChange,
-            )
-
-            DateForm(
-                title = if (lesson != null) {
-                    stringResource(R.string.schedule_class_date)
-                } else {
-                    stringResource(R.string.schedule_event_date)
-                },
-                day = eventForm.day,
-                onDayChange = onDayChange,
-                date = eventForm.date,
-                onDateChange = onDateChange,
-                startTime = eventForm.startTime,
-                onStartTimeChange = onStartTimeChange,
-                endTime = eventForm.endTime,
-                onEndTimeChange = onEndTimeChange,
-                showTermPicker = showTermPicker,
-                showDayPicker = showDayPicker,
-                showTypeControls = isLessonForm,
-                isFirstTermSelected = eventForm.isFirstTermSelected,
-                onTermSelected = onTermSelected,
-                type = eventForm.type,
-                onTypeChange = onTypeChange,
-            )
-            Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
-
-            TeacherButton(
-                modifier = Modifier.fillMaxWidth(),
-                label = stringResource(R.string.schedule_add_event_date),
-                onClick = onSubmit,
-                enabled = isSubmitEnabled,
-            )
         }
+
+        Header(
+            lesson = lesson,
+            onLessonPickerClick = onLessonPickerClick,
+            isLessonForm = isLessonForm,
+            onIsLessonFormChange = onIsLessonFormChange,
+        )
+
+        DateForm(
+            title = if (lesson != null) {
+                stringResource(R.string.schedule_class_date)
+            } else {
+                stringResource(R.string.schedule_event_date)
+            },
+            day = eventForm.day,
+            onDayChange = onDayChange,
+            date = eventForm.date,
+            onDateChange = onDateChange,
+            startTime = eventForm.startTime,
+            onStartTimeChange = onStartTimeChange,
+            endTime = eventForm.endTime,
+            onEndTimeChange = onEndTimeChange,
+            showTermPicker = showTermPicker,
+            showDayPicker = showDayPicker,
+            showTypeControls = showTypeControls,
+            isFirstTermSelected = eventForm.isFirstTermSelected,
+            onTermSelected = onTermSelected,
+            type = eventForm.type,
+            onTypeChange = onTypeChange,
+        )
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+
+        TeacherButton(
+            modifier = Modifier.fillMaxWidth(),
+            label = stringResource(R.string.schedule_add_event_date),
+            onClick = onSubmit,
+            enabled = isSubmitEnabled,
+        )
     }
 }
 
@@ -203,11 +267,13 @@ private fun EventFormScreenPreview(
                 snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
+                onDeleteClick = {},
                 onLessonPickerClick = {},
                 eventForm = form,
                 isLessonForm = isLessonForm,
                 showTermPicker = showDayPicker,
                 showDayPicker = showDayPicker,
+                showTypeControls = isLessonForm,
                 onIsLessonFormChange = { isLessonForm = it },
                 onDayChange = {
                     form = form.copy(day = EventFormProvider.sanitizeDay(it))
@@ -232,6 +298,8 @@ private fun EventFormScreenPreview(
                 onTermSelected = { form = form.copy(isFirstTermSelected = it) },
                 onTypeChange = { form = form.copy(type = it) },
                 isSubmitEnabled = form.isSubmitEnabled,
+                isEditMode = true,
+                isDeleted = false,
                 onSubmit = {},
             )
         }

@@ -12,7 +12,9 @@
     <string name="schedule_date">Data</string>
     <string name="schedule_day">Dzień</string>
     <string name="schedule_event_saved">Zapisano termin</string>
+    <string name="schedule_event_deleted">Usunięto termin</string>
     <string name="schedule_event_form_title">Dodaj termin</string>
+    <string name="schedule_event_form_edit_title">Edytuj termin</string>
     <string name="schedule_class_date">Termin zajęć</string>
     <string name="schedule_event_date">Termin</string>
     <string name="schedule_add_event_date">Dodaj termin zajęć</string>

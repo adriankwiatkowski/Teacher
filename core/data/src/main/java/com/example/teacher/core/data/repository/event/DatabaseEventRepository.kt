@@ -35,6 +35,10 @@ internal class DatabaseEventRepository @Inject constructor(
         .getEvents(date)
         .asResult()
 
+    override fun getEventOrNullById(id: Long): Flow<Result<Event?>> = eventDataSource
+        .getEventById(id)
+        .asResult()
+
     override fun getLessonWithSchoolYearOrNullById(
         lessonId: Long
     ): Flow<Result<LessonWithSchoolYear?>> = lessonDataSource
@@ -113,6 +117,25 @@ internal class DatabaseEventRepository @Inject constructor(
 
                 eventDataSource.insertEvents(eventDtos)
             }
+        }
+    }
+
+    override suspend fun updateEvent(
+        id: Long,
+        lessonId: Long?,
+        date: LocalDate,
+        startTime: LocalTime,
+        endTime: LocalTime,
+    ) {
+        scope.launch {
+            eventDataSource.updateEvent(
+                id = id,
+                lessonId = lessonId,
+                date = date,
+                startTime = startTime,
+                endTime = endTime,
+                isValid = true,
+            )
         }
     }
 

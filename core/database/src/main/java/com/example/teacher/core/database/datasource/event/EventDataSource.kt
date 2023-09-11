@@ -4,6 +4,7 @@ import com.example.teacher.core.database.model.EventDto
 import com.example.teacher.core.model.data.Event
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
+import java.time.LocalTime
 
 interface EventDataSource {
 
@@ -12,6 +13,15 @@ interface EventDataSource {
     fun getEventById(eventId: Long): Flow<Event?>
 
     suspend fun insertEvents(eventDtos: List<EventDto>)
+
+    suspend fun updateEvent(
+        id: Long,
+        lessonId: Long?,
+        date: LocalDate,
+        startTime: LocalTime,
+        endTime: LocalTime,
+        isValid: Boolean,
+    )
 
     suspend fun deleteEventById(id: Long)
 }

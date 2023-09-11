@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.schedule.data.EventFormViewModel
+import com.example.teacher.feature.schedule.nav.ScheduleNavigation.eventIdArg
 import com.example.teacher.feature.schedule.nav.ScheduleNavigation.lessonIdArg
 import com.example.teacher.feature.schedule.nav.ScheduleNavigation.scheduleRoute
 import kotlinx.coroutines.flow.launchIn
@@ -22,12 +23,14 @@ private const val eventFormScreen = "event-form"
 private const val lessonPickerScreen = "lesson-picker"
 
 object ScheduleNavigation {
+    internal const val eventIdArg = "event-id"
     internal const val lessonIdArg = "lesson-id"
 
     const val scheduleRoute = scheduleScreen
 }
 
-private const val eventFormRoute = "$eventFormScreen?$lessonIdArg={$lessonIdArg}"
+private const val eventFormRoute =
+    "$eventFormScreen?$eventIdArg={$eventIdArg}&$lessonIdArg={$lessonIdArg}"
 private const val lessonPickerRoute = lessonPickerScreen
 
 fun NavController.navigateToScheduleRoute(navOptions: NavOptions? = null) {
@@ -35,10 +38,19 @@ fun NavController.navigateToScheduleRoute(navOptions: NavOptions? = null) {
 }
 
 private fun NavController.navigateToEventFormRoute(
+    eventId: Long? = null,
     lessonId: Long? = null,
     navOptions: NavOptions? = null,
 ) {
-    val query = if (lessonId != null) "?$lessonIdArg=$lessonId" else ""
+    val query = buildString {
+        if (eventId != null) {
+            append("?$eventIdArg=$eventId")
+        }
+        if (lessonId != null) {
+            append(if (eventId != null) "&" else "?")
+            append("$lessonIdArg=$lessonId")
+        }
+    }
     this.navigate("$eventFormScreen$query", navOptions)
 }
 
@@ -54,6 +66,9 @@ fun NavGraphBuilder.scheduleGraph(
     composable(scheduleRoute) {
         ScheduleRoute(
             snackbarHostState = snackbarHostState,
+            onScheduleClick = { eventId ->
+                navController.navigateToEventFormRoute(eventId = eventId)
+            },
             onAddScheduleClick = navController::navigateToEventFormRoute,
         )
     }
@@ -61,6 +76,10 @@ fun NavGraphBuilder.scheduleGraph(
     composable(
         eventFormRoute,
         arguments = listOf(
+            navArgument(eventIdArg) {
+                type = NavType.LongType
+                defaultValue = 0L
+            },
             navArgument(lessonIdArg) {
                 type = NavType.LongType
                 defaultValue = 0L
@@ -70,10 +89,17 @@ fun NavGraphBuilder.scheduleGraph(
         val viewModel = hiltViewModel<EventFormViewModel>()
         val scope = rememberCoroutineScope()
 
+        val args = backStackEntry.arguments!!
+        val isEditMode = args.getLong(eventIdArg) != 0L
+
         // Workaround for hilt ViewModel SavedStateHandle not receiving updates.
         LaunchedEffect(scope) {
             backStackEntry.savedStateHandle.getStateFlow(lessonIdArg, 0L)
-                .onEach { lessonId -> viewModel.setLessonId(lessonId) }
+                .onEach { lessonId ->
+                    if (lessonId != 0L) {
+                        viewModel.setLessonId(lessonId)
+                    }
+                }
                 .launchIn(scope)
         }
 
@@ -84,6 +110,7 @@ fun NavGraphBuilder.scheduleGraph(
             onSave = { navController.popBackStack(scheduleRoute, inclusive = false) },
             onShowSnackbar = onShowSnackbar,
             onLessonPickerClick = navController::navigateToLessonPickerRoute,
+            isEditMode = isEditMode,
             viewModel = viewModel,
         )
     }

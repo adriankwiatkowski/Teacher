@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.data.repository.event.EventRepository
+import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.model.data.LessonWithSchoolYear
 import com.example.teacher.core.ui.model.FormStatus
@@ -37,15 +38,22 @@ internal class EventFormViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
+    private val eventId = savedStateHandle.getStateFlow(EVENT_ID_KEY, DEFAULT_ID)
     private val lessonId = savedStateHandle.getStateFlow(LESSON_ID_KEY, DEFAULT_ID)
+    val isDeleted = savedStateHandle.getStateFlow(IS_DELETED_KEY, false)
 
-    private val _isLessonForm = MutableStateFlow(true)
-    val isLessonForm = _isLessonForm.asStateFlow()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val eventResult: StateFlow<Result<Event?>> = eventId
+        .flatMapLatest { eventId -> repository.getEventOrNullById(eventId) }
+        .stateIn(initialValue = Result.Loading)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val lessonResult: StateFlow<Result<LessonWithSchoolYear?>> = lessonId
         .flatMapLatest { lessonId -> repository.getLessonWithSchoolYearOrNullById(lessonId) }
         .stateIn(Result.Loading)
+
+    private val _isLessonForm = MutableStateFlow(true)
+    val isLessonForm = _isLessonForm.asStateFlow()
 
     var form by mutableStateOf(EventFormProvider.createDefaultForm())
         private set
@@ -54,6 +62,28 @@ internal class EventFormViewModel @Inject constructor(
         combine(lessonId, isLessonForm) { lessonId, isLessonForm ->
             !(isLessonForm && lessonId == DEFAULT_ID)
         }.onEach { isValid -> form = form.copy(isValid = isValid) }.launchIn(viewModelScope)
+
+        eventResult
+            .onEach { eventResult ->
+                val event = (eventResult as? Result.Success)?.data
+                if (event == null) {
+                    form = EventFormProvider.createDefaultForm()
+                    return@onEach
+                }
+
+                val lessonId = event.lesson?.id
+                setLessonId(lessonId ?: DEFAULT_ID)
+                _isLessonForm.value = lessonId != null
+
+                form = form.copy(
+                    date = event.date,
+                    startTime = event.startTime,
+                    endTime = event.endTime,
+                    isValid = event.isValid,
+                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                )
+            }
+            .launchIn(viewModelScope)
     }
 
     fun onDayChange(day: DayOfWeek) {
@@ -92,6 +122,10 @@ internal class EventFormViewModel @Inject constructor(
         _isLessonForm.value = isLessonForm
     }
 
+    fun setLessonId(lessonId: Long) {
+        savedStateHandle[LESSON_ID_KEY] = lessonId
+    }
+
     fun onSubmit() {
         if (!form.isSubmitEnabled) {
             return
@@ -100,11 +134,20 @@ internal class EventFormViewModel @Inject constructor(
         if (isLessonForm.value && lessonId.value == DEFAULT_ID) {
             return
         }
+        val eventId = eventId.value
         val lessonId = lessonId.value
 
         form = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-            if (isLessonForm.value) {
+            if (eventId != DEFAULT_ID) {
+                repository.updateEvent(
+                    id = eventId,
+                    lessonId = if (isLessonForm.value) lessonId else null,
+                    date = form.date,
+                    startTime = form.startTime,
+                    endTime = form.endTime,
+                )
+            } else if (isLessonForm.value) {
                 repository.insertLessonSchedule(
                     lessonId = lessonId,
                     day = form.day,
@@ -129,8 +172,11 @@ internal class EventFormViewModel @Inject constructor(
         }
     }
 
-    fun setLessonId(lessonId: Long) {
-        savedStateHandle[LESSON_ID_KEY] = lessonId
+    fun onDelete() {
+        viewModelScope.launch {
+            repository.deleteEventById(eventId.value)
+            savedStateHandle[IS_DELETED_KEY] = true
+        }
     }
 
     private fun <T> Flow<T>.stateIn(initialValue: T): StateFlow<T> = stateIn(
@@ -140,7 +186,9 @@ internal class EventFormViewModel @Inject constructor(
     )
 
     companion object {
+        private const val EVENT_ID_KEY = ScheduleNavigation.eventIdArg
         private const val LESSON_ID_KEY = ScheduleNavigation.lessonIdArg
         private const val DEFAULT_ID = 0L
+        private const val IS_DELETED_KEY = "is-deleted"
     }
 }

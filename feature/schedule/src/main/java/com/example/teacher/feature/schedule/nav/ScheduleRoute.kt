@@ -11,6 +11,7 @@ import com.example.teacher.feature.schedule.data.ScheduleViewModel
 @Composable
 internal fun ScheduleRoute(
     snackbarHostState: SnackbarHostState,
+    onScheduleClick: (eventId: Long) -> Unit,
     onAddScheduleClick: () -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel(),
 ) {
@@ -24,7 +25,7 @@ internal fun ScheduleRoute(
         onDateSelected = viewModel::onDateSelected,
         onPrevDateClick = viewModel::onPrevDateClick,
         onNextDateClick = viewModel::onNextDateClick,
-        onScheduleClick = {}, // TODO: Handle click.
+        onScheduleClick = onScheduleClick,
         onAddScheduleClick = onAddScheduleClick,
     )
 }
