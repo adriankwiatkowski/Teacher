@@ -10,7 +10,7 @@ import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.data.repository.event.EventRepository
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.EventType
-import com.example.teacher.core.model.data.LessonWithSchoolYear
+import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.feature.schedule.nav.ScheduleNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -48,8 +48,8 @@ internal class EventFormViewModel @Inject constructor(
         .stateIn(initialValue = Result.Loading)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lessonResult: StateFlow<Result<LessonWithSchoolYear?>> = lessonId
-        .flatMapLatest { lessonId -> repository.getLessonWithSchoolYearOrNullById(lessonId) }
+    val lessonResult: StateFlow<Result<Lesson?>> = lessonId
+        .flatMapLatest { lessonId -> repository.getLessonOrNullById(lessonId) }
         .stateIn(Result.Loading)
 
     private val _isLessonForm = MutableStateFlow(true)

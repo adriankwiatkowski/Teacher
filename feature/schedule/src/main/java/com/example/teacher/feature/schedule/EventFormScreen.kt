@@ -28,13 +28,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.EventType
-import com.example.teacher.core.model.data.LessonWithSchoolYear
+import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherSwitch
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.DeletedScreen
-import com.example.teacher.core.ui.paramprovider.LessonWithSchoolYearPreviewParameterProvider
+import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
@@ -48,7 +48,7 @@ import java.time.LocalTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun EventFormScreen(
-    lessonResult: Result<LessonWithSchoolYear?>,
+    lessonResult: Result<Lesson?>,
     snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
@@ -133,7 +133,7 @@ internal fun EventFormScreen(
 
 @Composable
 private fun MainContent(
-    lessonResult: Result<LessonWithSchoolYear?>,
+    lessonResult: Result<Lesson?>,
     onLessonPickerClick: () -> Unit,
     eventForm: EventForm,
     isLessonForm: Boolean,
@@ -167,15 +167,16 @@ private fun MainContent(
             onIsLessonFormChange = onIsLessonFormChange,
         )
 
+        val schoolYear = lesson?.schoolClass?.schoolYear
         DateForm(
             title = if (lesson != null) {
                 stringResource(R.string.schedule_class_date)
             } else {
                 stringResource(R.string.schedule_event_date)
             },
-            firstTermName = lesson?.schoolYear?.firstTerm?.name
+            firstTermName = schoolYear?.firstTerm?.name
                 ?: stringResource(R.string.schedule_first_term),
-            secondTermName = lesson?.schoolYear?.secondTerm?.name
+            secondTermName = schoolYear?.secondTerm?.name
                 ?: stringResource(R.string.schedule_second_term),
             day = eventForm.day,
             onDayChange = onDayChange,
@@ -206,7 +207,7 @@ private fun MainContent(
 
 @Composable
 private fun Header(
-    lesson: LessonWithSchoolYear?,
+    lesson: Lesson?,
     onLessonPickerClick: () -> Unit,
     isLessonForm: Boolean,
     onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
@@ -215,7 +216,7 @@ private fun Header(
     Column(modifier = modifier.animateContentSize()) {
         val text = if (lesson != null) {
             val lessonName = lesson.name
-            val schoolClassName = lesson.schoolClassName
+            val schoolClassName = lesson.schoolClass.name
             "$lessonName $schoolClassName"
         } else {
             stringResource(R.string.schedule_pick_lesson)
@@ -253,9 +254,9 @@ private fun Header(
 @Composable
 private fun EventFormScreenPreview(
     @PreviewParameter(
-        LessonWithSchoolYearPreviewParameterProvider::class,
+        LessonPreviewParameterProvider::class,
         limit = 1,
-    ) lesson: LessonWithSchoolYear,
+    ) lesson: Lesson,
 ) {
     TeacherTheme {
         Surface {

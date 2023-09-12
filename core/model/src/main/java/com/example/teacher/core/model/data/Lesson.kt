@@ -11,11 +11,3 @@ data class BasicLesson(
     val name: String,
     val schoolClassId: Long,
 )
-
-data class LessonWithSchoolYear(
-    val id: Long,
-    val name: String,
-    val schoolClassId: Long,
-    val schoolClassName: String,
-    val schoolYear: SchoolYear,
-)

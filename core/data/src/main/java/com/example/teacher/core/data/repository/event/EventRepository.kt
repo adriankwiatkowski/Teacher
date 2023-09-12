@@ -3,7 +3,7 @@ package com.example.teacher.core.data.repository.event
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.EventType
-import com.example.teacher.core.model.data.LessonWithSchoolYear
+import com.example.teacher.core.model.data.Lesson
 import kotlinx.coroutines.flow.Flow
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -15,7 +15,7 @@ interface EventRepository {
 
     fun getEventOrNullById(id: Long): Flow<Result<Event?>>
 
-    fun getLessonWithSchoolYearOrNullById(lessonId: Long): Flow<Result<LessonWithSchoolYear?>>
+    fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>>
 
     suspend fun insertEvent(
         date: LocalDate,

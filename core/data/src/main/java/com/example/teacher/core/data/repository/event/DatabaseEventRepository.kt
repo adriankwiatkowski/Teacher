@@ -11,7 +11,7 @@ import com.example.teacher.core.database.datasource.schoolyear.SchoolYearDataSou
 import com.example.teacher.core.database.model.EventDto
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.EventType
-import com.example.teacher.core.model.data.LessonWithSchoolYear
+import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.model.data.Term
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -39,10 +39,8 @@ internal class DatabaseEventRepository @Inject constructor(
         .getEventById(id)
         .asResult()
 
-    override fun getLessonWithSchoolYearOrNullById(
-        lessonId: Long
-    ): Flow<Result<LessonWithSchoolYear?>> = lessonDataSource
-        .getLessonWithSchoolYearById(lessonId)
+    override fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>> = lessonDataSource
+        .getLessonById(lessonId)
         .asResult()
 
     override suspend fun insertEvent(

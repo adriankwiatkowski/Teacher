@@ -9,7 +9,6 @@ import com.example.teacher.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.model.data.BasicLesson
 import com.example.teacher.core.model.data.Lesson
-import com.example.teacher.core.model.data.LessonWithSchoolYear
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -35,14 +34,6 @@ internal class LessonDataSourceImpl(
     override fun getLessonById(id: Long): Flow<Lesson?> =
         queries
             .getLessonById(id)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
-
-    override fun getLessonWithSchoolYearById(lessonId: Long): Flow<LessonWithSchoolYear?> =
-        queries
-            .getLessonWithSchoolYearById(lessonId)
             .asFlow()
             .mapToOneOrNull(dispatcher)
             .map(::toExternal)

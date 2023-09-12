@@ -15,3 +15,8 @@ data class BasicSchoolClass(
     val studentCount: Long,
     val lessonCount: Long,
 )
+
+data class SchoolClassesByYear(
+    val year: SchoolYear,
+    val schoolClasses: List<BasicSchoolClass>,
+)
