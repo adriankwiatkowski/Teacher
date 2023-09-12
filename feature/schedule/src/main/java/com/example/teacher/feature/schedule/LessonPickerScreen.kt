@@ -5,10 +5,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -23,22 +25,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.model.data.LessonsByYear
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.ResultContent
-import com.example.teacher.core.ui.paramprovider.LessonsPreviewParameterProvider
+import com.example.teacher.core.ui.paramprovider.LessonsByYearPreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LessonPickerScreen(
-    lessonsResult: Result<List<Lesson>>,
+    lessonsByYearResult: Result<List<LessonsByYear>>,
     snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
@@ -61,14 +65,14 @@ internal fun LessonPickerScreen(
     ) { innerPadding ->
         ResultContent(
             modifier = modifier,
-            result = lessonsResult,
-        ) { lessons ->
+            result = lessonsByYearResult,
+        ) { lessonsByYear ->
             MainScreen(
                 modifier = modifier
                     .padding(innerPadding)
                     .fillMaxSize()
                     .padding(MaterialTheme.spacing.small),
-                lessons = lessons,
+                lessonsByYear = lessonsByYear,
                 onLessonClick = onLessonClick,
             )
         }
@@ -78,11 +82,11 @@ internal fun LessonPickerScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainScreen(
-    lessons: List<Lesson>,
+    lessonsByYear: List<LessonsByYear>,
     onLessonClick: (lessonId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (lessons.isEmpty()) {
+    if (lessonsByYear.isEmpty()) {
         EmptyState(modifier = modifier)
         return
     }
@@ -91,15 +95,51 @@ private fun MainScreen(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        stickyHeader {
+        item {
             Text(
+                modifier = Modifier.padding(MaterialTheme.spacing.small),
                 text = stringResource(R.string.schedule_pick_lesson),
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.titleLarge,
             )
         }
 
-        items(items = lessons, key = { lessons -> lessons.id }) { lesson ->
-            LessonItem(lesson = lesson, onClick = { onLessonClick(lesson.id) })
+        for ((yearIndex, lessonsInYear) in lessonsByYear.withIndex()) {
+            val lessonsBySchoolClass = lessonsInYear.lessonsBySchoolClass
+
+            stickyHeader(key = "sy-${lessonsInYear.year.id}") {
+                Text(
+                    modifier = Modifier
+                        .fillParentMaxWidth()
+                        .padding(horizontal = MaterialTheme.spacing.small),
+                    text = lessonsInYear.year.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                )
+            }
+
+            for ((schoolClassIndex, lessonInSchoolClass) in lessonsBySchoolClass.withIndex()) {
+                val isFirstIndex = schoolClassIndex == 0
+                val isLastIndex = schoolClassIndex == lessonsBySchoolClass.lastIndex
+                if (!isFirstIndex && !isLastIndex) {
+                    item(key = "sc-${lessonInSchoolClass.schoolClass.id}") {
+                        Divider()
+                    }
+                }
+
+                items(
+                    items = lessonInSchoolClass.lessons,
+                    key = { lessons -> lessons.id },
+                ) { lesson ->
+                    LessonItem(lesson = lesson, onClick = { onLessonClick(lesson.id) })
+                }
+            }
+
+            if (yearIndex != lessonsByYear.lastIndex) {
+                item {
+                    Divider()
+                    Spacer(Modifier.padding(MaterialTheme.spacing.small))
+                }
+            }
         }
     }
 }
@@ -112,8 +152,7 @@ private fun LessonItem(
 ) {
     ListItem(
         modifier = modifier.clickable(onClick = onClick),
-        headlineContent = { Text(lesson.name) },
-        supportingContent = { Text(lesson.schoolClass.name) },
+        headlineContent = { Text("${lesson.name} ${lesson.schoolClass.name}") },
     )
 }
 
@@ -131,12 +170,14 @@ private fun EmptyState(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun LessonPickerScreenPreview(
-    @PreviewParameter(LessonsPreviewParameterProvider::class) lessons: List<Lesson>,
+    @PreviewParameter(
+        LessonsByYearPreviewParameterProvider::class
+    ) lessonsByYear: List<LessonsByYear>,
 ) {
     TeacherTheme {
         Surface {
             LessonPickerScreen(
-                lessonsResult = Result.Success(lessons),
+                lessonsByYearResult = Result.Success(lessonsByYear),
                 snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},

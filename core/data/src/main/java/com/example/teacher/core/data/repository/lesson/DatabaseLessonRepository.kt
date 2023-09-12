@@ -7,6 +7,7 @@ import com.example.teacher.core.common.result.asResult
 import com.example.teacher.core.common.result.asResultNotNull
 import com.example.teacher.core.database.datasource.lesson.LessonDataSource
 import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.model.data.LessonsByYear
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,10 @@ internal class DatabaseLessonRepository @Inject constructor(
 
     override fun getLessons(): Flow<Result<List<Lesson>>> = dataSource
         .getLessons()
+        .asResult()
+
+    override fun getLessonsByYear(): Flow<Result<List<LessonsByYear>>> = dataSource
+        .getLessonsByYear()
         .asResult()
 
     override fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>> = dataSource

@@ -6,9 +6,11 @@ import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
 import com.example.teacher.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacher.core.database.datasource.utils.querymapper.toExternalLessons
+import com.example.teacher.core.database.datasource.utils.querymapper.toExternalLessonsByYear
 import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.model.data.BasicLesson
 import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.model.data.LessonsByYear
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -29,6 +31,14 @@ internal class LessonDataSourceImpl(
             .asFlow()
             .mapToList(dispatcher)
             .map(::toExternalLessons)
+            .flowOn(dispatcher)
+
+    override fun getLessonsByYear(): Flow<List<LessonsByYear>> =
+        queries
+            .getLessons()
+            .asFlow()
+            .mapToList(dispatcher)
+            .map(::toExternalLessonsByYear)
             .flowOn(dispatcher)
 
     override fun getLessonById(id: Long): Flow<Lesson?> =

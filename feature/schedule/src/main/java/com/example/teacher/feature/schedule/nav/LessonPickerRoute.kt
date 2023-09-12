@@ -16,10 +16,10 @@ internal fun LessonPickerRoute(
     onLessonClick: (lessonId: Long) -> Unit,
     viewModel: LessonPickerViewModel = hiltViewModel(),
 ) {
-    val lessonResult by viewModel.lessonsResult.collectAsStateWithLifecycle()
+    val lessonsByYearResult by viewModel.lessonsByYearResult.collectAsStateWithLifecycle()
 
     LessonPickerScreen(
-        lessonsResult = lessonResult,
+        lessonsByYearResult = lessonsByYearResult,
         snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,

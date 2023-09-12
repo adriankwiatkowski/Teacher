@@ -11,3 +11,13 @@ data class BasicLesson(
     val name: String,
     val schoolClassId: Long,
 )
+
+data class LessonsByYear(
+    val year: SchoolYear,
+    val lessonsBySchoolClass: List<LessonsBySchoolClass>,
+)
+
+data class LessonsBySchoolClass(
+    val schoolClass: BasicSchoolClass,
+    val lessons: List<Lesson>,
+)

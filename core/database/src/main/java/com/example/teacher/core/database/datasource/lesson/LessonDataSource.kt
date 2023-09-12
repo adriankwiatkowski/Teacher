@@ -2,11 +2,14 @@ package com.example.teacher.core.database.datasource.lesson
 
 import com.example.teacher.core.model.data.BasicLesson
 import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.model.data.LessonsByYear
 import kotlinx.coroutines.flow.Flow
 
 interface LessonDataSource {
 
     fun getLessons(): Flow<List<Lesson>>
+
+    fun getLessonsByYear(): Flow<List<LessonsByYear>>
 
     fun getLessonById(id: Long): Flow<Lesson?>
 
