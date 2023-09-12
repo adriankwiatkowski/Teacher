@@ -19,11 +19,12 @@
     <string name="schedule_class_date">Termin zajęć</string>
     <string name="schedule_event_date">Termin</string>
     <string name="schedule_add_event_date">Dodaj termin zajęć</string>
+    <string name="schedule_edit_event_date">Edytuj termin zajęć</string>
     <string name="schedule_pick_lesson">Wybierz przedmiot</string>
-    <string name="schedule_add_event">Dodaj wydarzenie</string>
     <string name="schedule_lesson_not_selected">Nie wybrano przedmiotu!</string>
     <string name="schedule_lesson">Przedmiot</string>
     <string name="schedule_no_lesson_exists">Nie istnieje jeszcze żaden przedmiot. Musi istnieć przedmiot, żeby można było stworzyć plan zajęć.</string>
     <string name="schedule_schedule_empty">Brak zajęć</string>
     <string name="schedule_event">Wydarzenie</string>
+    <string name="schedule_event_switch_info">Wydarzenie czy termin zajęć?</string>
 </resources>

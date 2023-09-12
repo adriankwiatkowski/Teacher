@@ -24,6 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.EventType
+import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
@@ -35,6 +37,8 @@ import java.time.LocalTime
 @Composable
 internal fun DateForm(
     title: String,
+    lesson: Lesson?,
+    onLessonPickerClick: () -> Unit,
     firstTermName: String,
     secondTermName: String,
     day: DayOfWeek,
@@ -45,6 +49,7 @@ internal fun DateForm(
     onStartTimeChange: (date: LocalTime) -> Unit,
     endTime: LocalTime,
     onEndTimeChange: (date: LocalTime) -> Unit,
+    showLessonPicker: Boolean,
     showTermPicker: Boolean,
     showDayPicker: Boolean,
     showTypeControls: Boolean,
@@ -67,6 +72,46 @@ internal fun DateForm(
                 )
             }
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+
+            if (showLessonPicker) {
+                val text = if (lesson != null) {
+                    val lessonName = lesson.name
+                    val schoolClassName = lesson.schoolClass.name
+                    "$lessonName $schoolClassName"
+                } else {
+                    stringResource(R.string.schedule_pick_lesson)
+                }
+
+                Text(
+                    text = stringResource(R.string.schedule_lesson),
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                Column(Modifier.padding(MaterialTheme.spacing.small)) {
+                    if (lesson != null) {
+                        Text(
+                            text = lesson.schoolClass.schoolYear.name,
+                            style = MaterialTheme.typography.labelMedium,
+                        )
+                    }
+
+                    TeacherButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        label = text,
+                        onClick = onLessonPickerClick,
+                    )
+
+                    if (lesson == null) {
+                        Text(
+                            text = stringResource(R.string.schedule_lesson_not_selected),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
+                }
+
+                Divider()
+                Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+            }
 
             if (showTermPicker) {
                 Text(
@@ -134,6 +179,8 @@ private fun DateFormPreview() {
 
             DateForm(
                 title = "Termin zajęć",
+                lesson = null,
+                onLessonPickerClick = {},
                 firstTermName = "I",
                 secondTermName = "II",
                 day = day,
@@ -144,6 +191,7 @@ private fun DateFormPreview() {
                 onStartTimeChange = { startTime = it },
                 endTime = endTime,
                 onEndTimeChange = { endTime = it },
+                showLessonPicker = true,
                 showTermPicker = type == EventType.Weekly || type == EventType.EveryTwoWeeks,
                 showDayPicker = type in setOf(EventType.Weekly, EventType.EveryTwoWeeks),
                 isFirstTermSelected = isFirstTermSelected,

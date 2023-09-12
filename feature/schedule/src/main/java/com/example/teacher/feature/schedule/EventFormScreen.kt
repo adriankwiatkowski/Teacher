@@ -124,6 +124,11 @@ internal fun EventFormScreen(
                 onEndTimeChange = onEndTimeChange,
                 onTermSelected = onTermSelected,
                 onTypeChange = onTypeChange,
+                submitText = if (isEditMode) {
+                    stringResource(R.string.schedule_edit_event_date)
+                } else {
+                    stringResource(R.string.schedule_add_event_date)
+                },
                 isSubmitEnabled = isSubmitEnabled,
                 onSubmit = onSubmit,
             )
@@ -147,6 +152,7 @@ private fun MainContent(
     onEndTimeChange: (date: LocalTime) -> Unit,
     onTermSelected: (isFirstTermSelected: Boolean) -> Unit,
     onTypeChange: (type: EventType) -> Unit,
+    submitText: String,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
@@ -161,19 +167,19 @@ private fun MainContent(
         }
 
         Header(
-            lesson = lesson,
-            onLessonPickerClick = onLessonPickerClick,
             isLessonForm = isLessonForm,
             onIsLessonFormChange = onIsLessonFormChange,
         )
 
         val schoolYear = lesson?.schoolClass?.schoolYear
         DateForm(
-            title = if (lesson != null) {
+            title = if (isLessonForm) {
                 stringResource(R.string.schedule_class_date)
             } else {
                 stringResource(R.string.schedule_event_date)
             },
+            lesson = lesson,
+            onLessonPickerClick = onLessonPickerClick,
             firstTermName = schoolYear?.firstTerm?.name
                 ?: stringResource(R.string.schedule_first_term),
             secondTermName = schoolYear?.secondTerm?.name
@@ -186,6 +192,7 @@ private fun MainContent(
             onStartTimeChange = onStartTimeChange,
             endTime = eventForm.endTime,
             onEndTimeChange = onEndTimeChange,
+            showLessonPicker = isLessonForm,
             showTermPicker = showTermPicker,
             showDayPicker = showDayPicker,
             showTypeControls = showTypeControls,
@@ -198,7 +205,7 @@ private fun MainContent(
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
-            label = stringResource(R.string.schedule_add_event_date),
+            label = submitText,
             onClick = onSubmit,
             enabled = isSubmitEnabled,
         )
@@ -207,45 +214,21 @@ private fun MainContent(
 
 @Composable
 private fun Header(
-    lesson: Lesson?,
-    onLessonPickerClick: () -> Unit,
     isLessonForm: Boolean,
     onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.animateContentSize()) {
-        val text = if (lesson != null) {
-            val lessonName = lesson.name
-            val schoolClassName = lesson.schoolClass.name
-            "$lessonName $schoolClassName"
-        } else {
-            stringResource(R.string.schedule_pick_lesson)
-        }
-
         TeacherSwitch(
-            label = stringResource(R.string.schedule_add_event),
+            label = stringResource(R.string.schedule_event),
             checked = !isLessonForm,
             onCheckedChange = { onIsLessonFormChange(!it) },
         )
-
-        if (isLessonForm) {
-            Text(
-                text = stringResource(R.string.schedule_lesson),
-                style = MaterialTheme.typography.labelMedium,
-            )
-            TeacherButton(
-                modifier = Modifier.fillMaxWidth(),
-                label = text,
-                onClick = onLessonPickerClick,
-            )
-            if (lesson == null) {
-                Text(
-                    text = stringResource(R.string.schedule_lesson_not_selected),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.error,
-                )
-            }
-        }
+        Text(
+            modifier = Modifier.padding(horizontal = MaterialTheme.spacing.large),
+            text = stringResource(R.string.schedule_event_switch_info),
+            style = MaterialTheme.typography.bodySmall,
+        )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
     }
 }
@@ -303,7 +286,7 @@ private fun EventFormScreenPreview(
                 onTermSelected = { form = form.copy(isFirstTermSelected = it) },
                 onTypeChange = { form = form.copy(type = it) },
                 isSubmitEnabled = form.isSubmitEnabled,
-                isEditMode = true,
+                isEditMode = false,
                 isDeleted = false,
                 onSubmit = {},
             )
