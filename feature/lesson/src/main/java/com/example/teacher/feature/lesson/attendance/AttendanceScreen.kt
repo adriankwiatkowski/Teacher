@@ -40,6 +40,7 @@ import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.Attendance
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.LessonAttendance
+import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.component.TeacherTextButton
@@ -67,6 +68,7 @@ internal fun AttendanceScreen(
     onAttendanceSelect: (attendance: Attendance?) -> Unit,
     onAttendanceDismissRequest: () -> Unit,
     onAttendanceConfirmClick: () -> Unit,
+    onEventEditClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TeacherTopBarDefaults.default()
@@ -103,6 +105,7 @@ internal fun AttendanceScreen(
                     eventResult = eventResult,
                     lessonAttendances = lessonAttendances,
                     onLessonAttendanceClick = onLessonAttendanceClick,
+                    onEventEditClick = onEventEditClick,
                 )
             }
         }
@@ -114,13 +117,14 @@ private fun MainContent(
     eventResult: Result<Event>,
     lessonAttendances: List<LessonAttendance>,
     onLessonAttendanceClick: (lessonAttendance: LessonAttendance) -> Unit,
+    onEventEditClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        header(eventResult = eventResult)
+        header(eventResult = eventResult, onEventEditClick = onEventEditClick)
 
         items(
             lessonAttendances,
@@ -141,7 +145,10 @@ private fun MainContent(
     }
 }
 
-private fun LazyListScope.header(eventResult: Result<Event>) {
+private fun LazyListScope.header(
+    eventResult: Result<Event>,
+    onEventEditClick: () -> Unit,
+) {
     if (eventResult is Result.Success) {
         item {
             val event = eventResult.data
@@ -166,6 +173,12 @@ private fun LazyListScope.header(eventResult: Result<Event>) {
                     Text(TimeUtils.getDisplayNameOfDayOfWeek(event.date).capitalize(Locale.current))
                     Text(stringResource(R.string.lesson_date, TimeUtils.format(event.date)))
                     Text(stringResource(R.string.lesson_time, TimeUtils.format(startTime, endTime)))
+
+                    TeacherButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        label = stringResource(R.string.attendance_edit_event),
+                        onClick = onEventEditClick,
+                    )
                 }
             }
         }
@@ -292,6 +305,7 @@ private fun AttendanceScreenPreview(
                 selectedAttendance = selectedAttendance,
                 onAttendanceSelect = { selectedAttendance = it },
                 onAttendanceDismissRequest = { showDialog = false },
+                onEventEditClick = {},
                 onAttendanceConfirmClick = {},
             )
         }

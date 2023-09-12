@@ -122,7 +122,12 @@ fun TeacherNavGraph(
             navigateToGradesRoute = navController::navigateToGradesRoute,
             onAddScheduleClick = { lessonId ->
                 navController.navigateToEventFormRoute(lessonId = lessonId)
-            }
+            },
+            onEventEditClick = { eventId ->
+                // User can change the lesson assigned to event, so to be safe navigate back.
+                navController.popBackStack()
+                navController.navigateToEventFormRoute(eventId = eventId)
+            },
         )
         gradeGraph(
             navController = navController,

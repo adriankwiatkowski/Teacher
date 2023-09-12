@@ -13,6 +13,7 @@ internal fun AttendanceRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
+    onEventEditClick: () -> Unit,
     viewModel: AttendanceViewModel = hiltViewModel(),
 ) {
     val eventResult by viewModel.eventResult.collectAsStateWithLifecycle()
@@ -32,5 +33,6 @@ internal fun AttendanceRoute(
         onAttendanceSelect = viewModel::onAttendanceSelect,
         onAttendanceDismissRequest = viewModel::onAttendanceDismissRequest,
         onAttendanceConfirmClick = viewModel::onAttendanceConfirmClick,
+        onEventEditClick = onEventEditClick,
     )
 }

@@ -97,6 +97,7 @@ fun NavGraphBuilder.lessonGraph(
     onShowSnackbar: OnShowSnackbar,
     navigateToGradesRoute: (lessonId: Long, gradeTemplateId: Long) -> Unit,
     onAddScheduleClick: (lessonId: Long) -> Unit,
+    onEventEditClick: (eventId: Long) -> Unit,
 ) {
     navigation(
         startDestination = lessonRoute,
@@ -234,11 +235,15 @@ fun NavGraphBuilder.lessonGraph(
                 type = NavType.LongType
             },
         ),
-    ) {
+    ) { backStackEntry ->
+        val args = backStackEntry.arguments!!
+        val eventId = args.getLong(eventIdArg)
+
         AttendanceRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
             snackbarHostState = snackbarHostState,
+            onEventEditClick = { onEventEditClick(eventId) }
         )
     }
 
