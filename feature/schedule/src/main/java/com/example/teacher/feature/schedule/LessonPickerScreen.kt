@@ -101,6 +101,7 @@ private fun MainScreen(
                 text = stringResource(R.string.schedule_pick_lesson),
                 style = MaterialTheme.typography.titleLarge,
             )
+            Spacer(Modifier.padding(MaterialTheme.spacing.small))
         }
 
         for ((yearIndex, lessonsInYear) in lessonsByYear.withIndex()) {
