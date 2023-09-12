@@ -63,7 +63,9 @@ internal class SchoolClassFormViewModel @Inject constructor(
             .onEach { schoolClassResult ->
                 val schoolClass = (schoolClassResult as? Result.Success)?.data
                 if (schoolClass == null) {
-                    form = SchoolClassFormProvider.createDefaultForm()
+                    form = SchoolClassFormProvider.createDefaultForm(
+                        schoolYear = form.schoolYear.value,
+                    )
                     return@onEach
                 }
 
