@@ -23,7 +23,6 @@ internal fun StudentItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     ListItem(
         modifier = modifier.clickable(onClick = onClick),
         leadingContent = {

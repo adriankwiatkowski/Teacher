@@ -53,6 +53,7 @@ internal fun SchoolClassScaffoldWrapper(
         }
     }
 
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
     // Observe deletion.
@@ -63,7 +64,6 @@ internal fun SchoolClassScaffoldWrapper(
         }
     }
 
-    val context = LocalContext.current
     val title = remember(schoolClassResult) {
         val result = (schoolClassResult as? Result.Success)
             ?: return@remember context.getString(R.string.school_class_label)

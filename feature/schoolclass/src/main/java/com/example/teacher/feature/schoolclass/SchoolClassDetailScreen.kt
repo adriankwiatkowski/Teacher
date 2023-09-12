@@ -96,23 +96,6 @@ private fun TermItem(
 
 @Preview
 @Composable
-private fun TermItemPreview(
-    @PreviewParameter(SchoolYearPreviewParameterProvider::class) schoolYear: SchoolYear,
-) {
-    TeacherTheme {
-        Surface {
-            val term = schoolYear.firstTerm
-            TermItem(
-                name = term.name,
-                startDate = term.startDate,
-                endDate = term.endDate,
-            )
-        }
-    }
-}
-
-@Preview
-@Composable
 private fun SchoolClassDetailScreenPreview(
     @PreviewParameter(
         SchoolYearPreviewParameterProvider::class,
