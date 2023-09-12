@@ -2,6 +2,7 @@ package com.example.teacher.feature.lesson.attendance
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -28,9 +30,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.LessonEventAttendance
+import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonEventAttendancesPreviewParameterProvider
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.R
@@ -42,11 +46,14 @@ internal fun AttendancesScreen(
     scheduleAttendancesResult: Result<List<LessonEventAttendance>>,
     snackbarHostState: SnackbarHostState,
     onScheduleAttendanceClick: (id: Long) -> Unit,
+    onAddScheduleClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        floatingActionButton = { TeacherFab(TeacherActions.add(onAddScheduleClick)) },
+        floatingActionButtonPosition = FabPosition.End,
     ) { innerPadding ->
         ResultContent(
             modifier = Modifier.padding(innerPadding),
@@ -88,8 +95,12 @@ private fun MainContent(
 
         if (scheduleAttendances.isEmpty()) {
             item {
-                // TODO: Add "go to" schedule button.
-                TeacherLargeText(stringResource(R.string.lesson_attendance_no_schedule))
+                Column(Modifier.padding(MaterialTheme.spacing.small)) {
+                    TeacherLargeText(
+                        modifier = Modifier.padding(MaterialTheme.spacing.small),
+                        text = stringResource(R.string.lesson_attendance_no_schedule),
+                    )
+                }
             }
         }
     }
@@ -188,6 +199,7 @@ private fun AttendancesScreenPreview(
                 scheduleAttendancesResult = Result.Success(data),
                 snackbarHostState = remember { SnackbarHostState() },
                 onScheduleAttendanceClick = {},
+                onAddScheduleClick = {},
             )
         }
     }

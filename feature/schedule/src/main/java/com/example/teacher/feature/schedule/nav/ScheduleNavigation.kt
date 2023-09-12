@@ -37,7 +37,7 @@ fun NavController.navigateToScheduleRoute(navOptions: NavOptions? = null) {
     this.navigate(scheduleScreen, navOptions)
 }
 
-private fun NavController.navigateToEventFormRoute(
+fun NavController.navigateToEventFormRoute(
     eventId: Long? = null,
     lessonId: Long? = null,
     navOptions: NavOptions? = null,

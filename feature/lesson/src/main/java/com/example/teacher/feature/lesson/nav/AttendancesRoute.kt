@@ -12,6 +12,7 @@ import com.example.teacher.feature.lesson.attendance.data.AttendancesViewModel
 internal fun AttendancesRoute(
     snackbarHostState: SnackbarHostState,
     onScheduleAttendanceClick: (lessonScheduleId: Long) -> Unit,
+    onAddScheduleClick: () -> Unit,
     viewModel: AttendancesViewModel = hiltViewModel(),
 ) {
     val attendancesResult by viewModel.attendancesResult.collectAsStateWithLifecycle()
@@ -20,5 +21,6 @@ internal fun AttendancesRoute(
         scheduleAttendancesResult = attendancesResult,
         snackbarHostState = snackbarHostState,
         onScheduleAttendanceClick = onScheduleAttendanceClick,
+        onAddScheduleClick = onAddScheduleClick,
     )
 }

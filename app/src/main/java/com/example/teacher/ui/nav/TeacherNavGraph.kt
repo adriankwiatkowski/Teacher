@@ -21,6 +21,7 @@ import com.example.teacher.feature.lesson.nav.navigateToGradeTemplateFormRoute
 import com.example.teacher.feature.lesson.nav.navigateToLessonFormRoute
 import com.example.teacher.feature.lesson.nav.navigateToLessonGraph
 import com.example.teacher.feature.note.nav.noteGraph
+import com.example.teacher.feature.schedule.nav.navigateToEventFormRoute
 import com.example.teacher.feature.schedule.nav.scheduleGraph
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation
 import com.example.teacher.feature.schoolclass.nav.schoolClassGraph
@@ -119,6 +120,9 @@ fun TeacherNavGraph(
             snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             navigateToGradesRoute = navController::navigateToGradesRoute,
+            onAddScheduleClick = { lessonId ->
+                navController.navigateToEventFormRoute(lessonId = lessonId)
+            }
         )
         gradeGraph(
             navController = navController,

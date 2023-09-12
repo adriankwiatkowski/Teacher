@@ -96,6 +96,7 @@ fun NavGraphBuilder.lessonGraph(
     snackbarHostState: SnackbarHostState,
     onShowSnackbar: OnShowSnackbar,
     navigateToGradesRoute: (lessonId: Long, gradeTemplateId: Long) -> Unit,
+    onAddScheduleClick: (lessonId: Long) -> Unit,
 ) {
     navigation(
         startDestination = lessonRoute,
@@ -152,6 +153,7 @@ fun NavGraphBuilder.lessonGraph(
                     LessonTab.Attendance -> AttendancesRoute(
                         snackbarHostState = snackbarHostState,
                         onScheduleAttendanceClick = navController::navigateToLessonAttendanceFormRoute,
+                        onAddScheduleClick = { onAddScheduleClick(lessonId) }
                     )
 
                     LessonTab.Activity -> LessonActivityRoute(snackbarHostState = snackbarHostState)
