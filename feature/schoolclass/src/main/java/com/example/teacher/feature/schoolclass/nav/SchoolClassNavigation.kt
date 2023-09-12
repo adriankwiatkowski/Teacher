@@ -1,9 +1,13 @@
 package com.example.teacher.feature.schoolclass.nav
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -11,15 +15,15 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.ui.util.OnShowSnackbar
+import com.example.teacher.feature.schoolclass.data.SchoolClassFormViewModel
 import com.example.teacher.feature.schoolclass.data.SchoolClassesViewModel
-import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.isSchoolYearDeletedArg
+import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.deletedSchoolYearIdArg
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassGraphRoute
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassIdArg
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassRoute
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassesRoute
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 
 private const val schoolClassesScreen = "school-classes"
 private const val schoolClassScreen = "school-class"
@@ -29,13 +33,14 @@ object SchoolClassNavigation {
     const val schoolClassGraphRoute = "school-class"
 
     internal const val schoolClassIdArg = "school-class-id"
-    internal const val isSchoolYearDeletedArg = "is-school-year-deleted"
+    internal const val deletedSchoolYearIdArg = "deleted-school-year-id"
 
     const val schoolClassesRoute = schoolClassesScreen
     const val schoolClassRoute = "$schoolClassScreen/{$schoolClassIdArg}"
 
-    fun onDeleteSchoolYear(navController: NavController) {
-        navController.previousBackStackEntry?.savedStateHandle?.set(isSchoolYearDeletedArg, true)
+    fun onDeleteSchoolYear(navController: NavController, schoolYearId: Long) {
+        val prevBackStack = navController.previousBackStackEntry
+        prevBackStack?.savedStateHandle?.set(deletedSchoolYearIdArg, schoolYearId)
     }
 }
 
@@ -65,6 +70,7 @@ fun NavGraphBuilder.schoolClassGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
     onShowSnackbar: OnShowSnackbar,
+    onSchoolClassDeleted: () -> Unit,
     navigateToSchoolYearForm: () -> Unit,
     navigateToSchoolYearEditForm: (schoolYearId: Long) -> Unit,
     navigateToStudentGraph: (schoolClassId: Long, studentId: Long) -> Unit,
@@ -133,20 +139,25 @@ fun NavGraphBuilder.schoolClassGraph(
             },
         ),
     ) { backStackEntry ->
-        val scope = rememberCoroutineScope()
+        val viewModel: SchoolClassFormViewModel = hiltViewModel()
 
         val args = backStackEntry.arguments!!
         val isEditMode = args.getLong(schoolClassIdArg) != 0L
 
+        val schoolYearId = getSchoolYearId(viewModel, backStackEntry.savedStateHandle)
+
+        val deletedSchoolYearId by backStackEntry
+            .savedStateHandle
+            .getStateFlow(deletedSchoolYearIdArg, 0L)
+            .collectAsState()
+
         // Observe school year deletion.
-        LaunchedEffect(scope) {
-            backStackEntry.savedStateHandle.getStateFlow(isSchoolYearDeletedArg, false)
-                .onEach { isSchoolYearDeleted ->
-                    if (isEditMode && isSchoolYearDeleted) {
-                        navController.popBackStack()
-                    }
-                }
-                .launchIn(scope)
+        LaunchedEffect(isEditMode, schoolYearId, deletedSchoolYearId) {
+            // Only navigate to previous screen if
+            // current school class was in deleted school year.
+            if (isEditMode && schoolYearId == deletedSchoolYearId) {
+                onSchoolClassDeleted()
+            }
         }
 
         SchoolClassFormRoute(
@@ -157,6 +168,27 @@ fun NavGraphBuilder.schoolClassGraph(
             isEditMode = isEditMode,
             onAddSchoolYear = navigateToSchoolYearForm,
             onEditSchoolYear = navigateToSchoolYearEditForm,
+            viewModel = viewModel,
         )
     }
+}
+
+@Composable
+private fun getSchoolYearId(
+    viewModel: SchoolClassFormViewModel,
+    savedStateHandle: SavedStateHandle,
+): Long? {
+    // Save local copy of id, so we will know if  school year form deleted our year.
+    val localSchoolYearIdKey = "local-school-year-id"
+
+    val schoolClassResult by viewModel.schoolClassResult.collectAsState()
+    val schoolClass =
+        remember(schoolClassResult) { (schoolClassResult as? Result.Success)?.data }
+    val schoolYearId = schoolClass?.schoolYear?.id
+
+    if (schoolYearId != null) {
+        savedStateHandle[localSchoolYearIdKey] = schoolYearId
+    }
+
+    return savedStateHandle[localSchoolYearIdKey]
 }

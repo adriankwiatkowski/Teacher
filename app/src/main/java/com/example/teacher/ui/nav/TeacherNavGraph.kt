@@ -75,6 +75,12 @@ fun TeacherNavGraph(
             navController = navController,
             snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
+            onSchoolClassDeleted = {
+                navController.popBackStack(
+                    route = SchoolClassNavigation.schoolClassesRoute,
+                    inclusive = false,
+                )
+            },
             navigateToSchoolYearForm = navController::navigateToSchoolYearFormRoute,
             navigateToSchoolYearEditForm = { schoolYearId ->
                 navController.navigateToSchoolYearFormRoute(schoolYearId = schoolYearId)
@@ -88,7 +94,12 @@ fun TeacherNavGraph(
             navController = navController,
             snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
-            onDelete = { SchoolClassNavigation.onDeleteSchoolYear(navController = navController) },
+            onDelete = { schoolYearId ->
+                SchoolClassNavigation.onDeleteSchoolYear(
+                    navController = navController,
+                    schoolYearId = schoolYearId,
+                )
+            },
         )
 
         studentGraph(

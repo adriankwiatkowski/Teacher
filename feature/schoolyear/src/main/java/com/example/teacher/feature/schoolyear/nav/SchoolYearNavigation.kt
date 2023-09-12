@@ -30,7 +30,7 @@ fun NavGraphBuilder.schoolYearGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
     onShowSnackbar: OnShowSnackbar,
-    onDelete: () -> Unit,
+    onDelete: (schoolYearId: Long) -> Unit,
 ) {
     composable(
         schoolYearFormRoute,
@@ -42,12 +42,13 @@ fun NavGraphBuilder.schoolYearGraph(
         ),
     ) { backStackEntry ->
         val args = backStackEntry.arguments!!
-        val isEditMode = args.getLong(schoolYearIdArg) != 0L
+        val schoolYearId = args.getLong(schoolYearIdArg)
+        val isEditMode = schoolYearId != 0L
 
         SchoolYearFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
-            onDelete = onDelete,
+            onDelete = { onDelete(schoolYearId) },
             snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             isEditMode = isEditMode,
