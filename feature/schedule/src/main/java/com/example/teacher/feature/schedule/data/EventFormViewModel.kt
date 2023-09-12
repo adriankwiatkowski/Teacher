@@ -60,16 +60,12 @@ internal class EventFormViewModel @Inject constructor(
 
     init {
         combine(lessonId, isLessonForm) { lessonId, isLessonForm ->
-            !(isLessonForm && lessonId == DEFAULT_ID)
+            !isLessonForm || lessonId != DEFAULT_ID
         }.onEach { isValid -> form = form.copy(isValid = isValid) }.launchIn(viewModelScope)
 
         eventResult
             .onEach { eventResult ->
-                val event = (eventResult as? Result.Success)?.data
-                if (event == null) {
-                    form = EventFormProvider.createDefaultForm()
-                    return@onEach
-                }
+                val event = (eventResult as? Result.Success)?.data ?: return@onEach
 
                 val lessonId = event.lesson?.id
                 setLessonId(lessonId ?: DEFAULT_ID)
@@ -79,7 +75,6 @@ internal class EventFormViewModel @Inject constructor(
                     date = event.date,
                     startTime = event.startTime,
                     endTime = event.endTime,
-                    isValid = event.isValid,
                     status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
                 )
             }
