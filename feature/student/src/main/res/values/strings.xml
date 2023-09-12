@@ -25,4 +25,6 @@
     <string name="student_first_term">Pierwszy semestr</string>
     <string name="student_second_term">Drugi semestr</string>
     <string name="student_term">Semestr %1$s</string>
+    <string name="student_send_email">Wyślij email</string>
+    <string name="student_phone_call">Zadzwoń</string>
 </resources>

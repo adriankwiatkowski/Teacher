@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.model.data.Student
+import com.example.teacher.core.ui.model.TeacherIcon
 import com.example.teacher.core.ui.paramprovider.StudentPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
@@ -33,8 +34,8 @@ import com.example.teacher.core.ui.theme.spacing
 internal fun StudentDetailScreen(
     snackbarHostState: SnackbarHostState,
     student: Student,
-    onEmailClick: (email: String) -> Unit,
-    onPhoneClick: (phone: String) -> Unit,
+    onEmailClick: () -> Unit,
+    onPhoneClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }) { innerPadding ->
@@ -48,14 +49,14 @@ internal fun StudentDetailScreen(
             onEmailClick = {
                 val email = student.email
                 if (!email.isNullOrEmpty()) {
-                    onEmailClick(email)
+                    onEmailClick()
                 }
             },
             phone = student.phone,
             onPhoneClick = {
                 val phone = student.phone
                 if (!phone.isNullOrEmpty()) {
-                    onPhoneClick(phone)
+                    onPhoneClick()
                 }
             },
         )
@@ -75,27 +76,30 @@ private fun MainScreen(
         modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
         Text(text = studentName, style = MaterialTheme.typography.titleLarge)
-        CopyableText(
+        TextWithAction(
             label = stringResource(R.string.student_email),
             text = email,
+            icon = TeacherIcons.email(),
             onClick = onEmailClick
         )
-        CopyableText(
+        TextWithAction(
             label = stringResource(R.string.student_phone),
             text = phone,
+            icon = TeacherIcons.phone(),
             onClick = onPhoneClick
         )
     }
 }
 
 @Composable
-private fun CopyableText(
+private fun TextWithAction(
     label: String,
     text: String?,
+    icon: TeacherIcon,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (text == null) {
+    if (text.isNullOrBlank()) {
         return
     }
 
@@ -106,10 +110,10 @@ private fun CopyableText(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
     ) {
-        Text(text = "$label: $text", style = MaterialTheme.typography.bodyLarge)
+        Text(text = "$label:", style = MaterialTheme.typography.labelMedium)
+        Text(text = text, style = MaterialTheme.typography.bodyLarge)
 
-        val icon = TeacherIcons.copy()
-        Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
+        Icon(imageVector = icon.icon, contentDescription = null)
     }
 }
 
