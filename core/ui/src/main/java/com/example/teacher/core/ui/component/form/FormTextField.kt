@@ -156,7 +156,7 @@ private fun <T> supportingText(inputField: InputField<T>): (@Composable () -> Un
                 Text(
                     modifier = Modifier
                         .weight(3f)
-                        .padding(start = MaterialTheme.spacing.large),
+                        .padding(start = MaterialTheme.spacing.extraSmall),
                     text = stringResource(supportingText),
                     color = textColor,
                     textAlign = TextAlign.Start,
@@ -168,7 +168,7 @@ private fun <T> supportingText(inputField: InputField<T>): (@Composable () -> Un
                 Text(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = MaterialTheme.spacing.large),
+                        .padding(end = MaterialTheme.spacing.extraSmall),
                     text = "${counter.first}/${counter.second}",
                     color = textColor,
                     textAlign = TextAlign.End,
