@@ -72,6 +72,9 @@ internal class StudentDataSourceImpl(
     ): Unit = withContext(dispatcher) {
         val defaultOrderInClass = 1L
 
+        @Suppress("NAME_SHADOWING") val email = if (email.isNullOrBlank()) null else email
+        @Suppress("NAME_SHADOWING") val phone = if (phone.isNullOrBlank()) null else phone
+
         if (id == null) {
             queries.insertStudent(
                 id = null,
