@@ -1,6 +1,7 @@
 package com.example.teacher.feature.schoolclass
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -110,6 +111,8 @@ private fun MainContent(
             onSchoolClassNameChange = onSchoolClassNameChange,
         )
 
+        Spacer(Modifier.padding(MaterialTheme.spacing.small))
+
         Card {
             SchoolYearInput(
                 modifier = Modifier
@@ -121,6 +124,8 @@ private fun MainContent(
                 onAddSchoolYear = onAddSchoolYear,
             )
         }
+
+        Spacer(Modifier.padding(MaterialTheme.spacing.small))
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
