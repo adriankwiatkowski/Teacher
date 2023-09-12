@@ -6,6 +6,7 @@ import com.example.teacher.core.common.result.asResult
 import com.example.teacher.core.common.result.asResultNotNull
 import com.example.teacher.core.database.datasource.schoolclass.SchoolClassDataSource
 import com.example.teacher.core.database.datasource.schoolyear.SchoolYearDataSource
+import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.SchoolClass
 import com.example.teacher.core.model.data.SchoolClassesByYear
 import com.example.teacher.core.model.data.SchoolYear
@@ -24,6 +25,12 @@ internal class DatabaseSchoolClassRepository @Inject constructor(
         .getAllSchoolClasses()
         .asResult()
 
+    override fun getBasicSchoolClassOrNullById(
+        id: Long
+    ): Flow<Result<BasicSchoolClass?>> = dataSource
+        .getBasicSchoolClassById(id)
+        .asResult()
+
     override fun getSchoolClassById(id: Long): Flow<Result<SchoolClass>> = dataSource
         .getSchoolClassById(id)
         .asResultNotNull()
@@ -31,9 +38,9 @@ internal class DatabaseSchoolClassRepository @Inject constructor(
     override fun getAllSchoolYears(): Flow<List<SchoolYear>> =
         schoolYearDataSource.getAllSchoolYears()
 
-    override suspend fun insertSchoolClass(schoolYearId: Long, name: String) {
+    override suspend fun insertOrUpdateSchoolClass(id: Long?, schoolYearId: Long, name: String) {
         scope.launch {
-            dataSource.insertSchoolClass(schoolYearId = schoolYearId, name = name)
+            dataSource.insertOrUpdateSchoolClass(id = id, schoolYearId = schoolYearId, name = name)
         }
     }
 

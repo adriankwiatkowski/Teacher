@@ -33,14 +33,12 @@ internal object SchoolClassFormProvider {
     }
 
     fun createDefaultForm(
-        id: Long? = null,
         schoolClassName: String = "",
         schoolYear: SchoolYear? = null,
         isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): SchoolClassForm {
         return SchoolClassForm(
-            id = id,
             schoolClassName = validateSchoolClassName(name = schoolClassName, isEdited = isEdited),
             schoolYear = validateSchoolYear(schoolYear, isEdited = isEdited),
             status = status,

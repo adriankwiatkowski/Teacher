@@ -29,7 +29,8 @@ object SchoolClassNavigation {
     const val schoolClassRoute = "$schoolClassScreen/{$schoolClassIdArg}"
 }
 
-private const val schoolClassFormRoute = schoolClassFormScreen
+private const val schoolClassFormRoute =
+    "$schoolClassFormScreen?$schoolClassIdArg={$schoolClassIdArg}"
 
 fun NavController.navigateToSchoolClassGraph(navOptions: NavOptions? = null) {
     this.navigate(schoolClassGraphRoute, navOptions)
@@ -42,8 +43,12 @@ private fun NavController.navigateToSchoolClassRoute(
     this.navigate("$schoolClassScreen/$schoolClassId", navOptions)
 }
 
-private fun NavController.navigateToSchoolClassFormRoute(navOptions: NavOptions? = null) {
-    this.navigate(schoolClassFormScreen, navOptions)
+private fun NavController.navigateToSchoolClassFormRoute(
+    schoolClassId: Long? = null,
+    navOptions: NavOptions? = null,
+) {
+    val query = if (schoolClassId != null) "?$schoolClassIdArg=$schoolClassId" else ""
+    this.navigate("$schoolClassFormScreen$query", navOptions)
 }
 
 fun NavGraphBuilder.schoolClassGraph(
@@ -89,6 +94,9 @@ fun NavGraphBuilder.schoolClassGraph(
                 onNavBack = navController::popBackStack,
                 snackbarHostState = snackbarHostState,
                 onShowSnackbar = onShowSnackbar,
+                onEditSchoolClassClick = {
+                    navController.navigateToSchoolClassFormRoute(schoolClassId = schoolClassId)
+                },
                 onStudentClick = { studentId ->
                     navigateToStudentGraph(schoolClassId, studentId)
                 },
@@ -105,12 +113,24 @@ fun NavGraphBuilder.schoolClassGraph(
         }
     }
 
-    composable(schoolClassFormRoute) {
+    composable(
+        schoolClassFormRoute,
+        arguments = listOf(
+            navArgument(schoolClassIdArg) {
+                type = NavType.LongType
+                defaultValue = 0L
+            },
+        ),
+    ) { backStackEntry ->
+        val args = backStackEntry.arguments!!
+        val isEditMode = args.getLong(schoolClassIdArg) != 0L
+
         SchoolClassFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
             snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
+            isEditMode = isEditMode,
             onAddSchoolYear = navigateToSchoolYearForm,
         )
     }

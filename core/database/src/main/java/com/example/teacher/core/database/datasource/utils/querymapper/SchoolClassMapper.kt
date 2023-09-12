@@ -61,6 +61,35 @@ internal fun toExternal(
     )
 }
 
+internal fun toExternal(schoolClass: GetSchoolClassById?): BasicSchoolClass? {
+    if (schoolClass == null) {
+        return null
+    }
+
+    return BasicSchoolClass(
+        id = schoolClass.id,
+        name = schoolClass.school_class_name,
+        schoolYear = SchoolYear(
+            id = schoolClass.school_year_id,
+            name = schoolClass.school_year_name,
+            firstTerm = Term(
+                id = schoolClass.term_first_id,
+                name = schoolClass.term_first_name,
+                startDate = schoolClass.term_first_start_date,
+                endDate = schoolClass.term_first_end_date,
+            ),
+            secondTerm = Term(
+                id = schoolClass.term_second_id,
+                name = schoolClass.term_second_name,
+                startDate = schoolClass.term_second_start_date,
+                endDate = schoolClass.term_second_end_date,
+            ),
+        ),
+        studentCount = schoolClass.student_count,
+        lessonCount = schoolClass.lesson_count,
+    )
+}
+
 internal fun toExternal(
     schoolClasses: List<GetAllSchoolClasses>
 ): List<SchoolClassesByYear> = schoolClasses

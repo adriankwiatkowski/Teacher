@@ -6,6 +6,7 @@ import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
 import com.example.teacher.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
+import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.SchoolClass
 import com.example.teacher.core.model.data.SchoolClassesByYear
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,6 +24,14 @@ internal class SchoolClassDataSourceImpl(
     private val schoolClassQueries = db.schoolClassQueries
     private val studentQueries = db.studentQueries
     private val lessonQueries = db.lessonQueries
+
+    override fun getBasicSchoolClassById(id: Long): Flow<BasicSchoolClass?> =
+        schoolClassQueries
+            .getSchoolClassById(id)
+            .asFlow()
+            .mapToOneOrNull(dispatcher)
+            .map(::toExternal)
+            .flowOn(dispatcher)
 
     override fun getSchoolClassById(id: Long): Flow<SchoolClass?> {
         val schoolClassFlow = schoolClassQueries
@@ -54,15 +63,24 @@ internal class SchoolClassDataSourceImpl(
             .map(::toExternal)
             .flowOn(dispatcher)
 
-    override suspend fun insertSchoolClass(
+    override suspend fun insertOrUpdateSchoolClass(
+        id: Long?,
         schoolYearId: Long,
         name: String,
     ): Unit = withContext(dispatcher) {
-        schoolClassQueries.insertSchoolClass(
-            id = null,
-            school_year_id = schoolYearId,
-            name = name,
-        )
+        if (id == null) {
+            schoolClassQueries.insertSchoolClass(
+                id = null,
+                school_year_id = schoolYearId,
+                name = name,
+            )
+        } else {
+            schoolClassQueries.updateSchoolClass(
+                id = id,
+                school_year_id = schoolYearId,
+                name = name,
+            )
+        }
     }
 
     override suspend fun deleteSchoolClassById(id: Long): Unit = withContext(dispatcher) {

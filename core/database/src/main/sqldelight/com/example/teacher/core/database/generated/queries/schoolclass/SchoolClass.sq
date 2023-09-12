@@ -33,7 +33,9 @@ SELECT
     t1.end_date AS 'term_first_end_date',
     t2.name AS 'term_second_name',
     t2.start_date AS 'term_second_start_date',
-    t2.end_date AS 'term_second_end_date'
+    t2.end_date AS 'term_second_end_date',
+    (SELECT COUNT(*) FROM student s WHERE s.school_class_id = sc.id) AS 'student_count',
+    (SELECT COUNT(*) FROM lesson l WHERE l.school_class_id = sc.id) AS 'lesson_count'
 FROM school_class sc
 INNER JOIN school_year sy ON sc.school_year_id = sy.id
 INNER JOIN term t1 ON sy.term_first_id = t1.id
@@ -49,6 +51,13 @@ insertSchoolClass:
 INSERT OR FAIL
 INTO school_class
 VALUES (?, ?, ?);
+
+updateSchoolClass:
+UPDATE school_class
+SET
+    name = :name,
+    school_year_id = :school_year_id
+WHERE id = :id;
 
 deleteSchoolClassById:
 DELETE FROM school_class

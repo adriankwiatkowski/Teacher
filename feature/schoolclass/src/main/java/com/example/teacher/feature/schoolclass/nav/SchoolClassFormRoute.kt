@@ -18,13 +18,15 @@ internal fun SchoolClassFormRoute(
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
     onShowSnackbar: OnShowSnackbar,
+    isEditMode: Boolean,
     onAddSchoolYear: () -> Unit,
+    viewModel: SchoolClassFormViewModel = hiltViewModel(),
 ) {
-    val viewModel = hiltViewModel<SchoolClassFormViewModel>()
     val schoolYears by viewModel.schoolYears.collectAsStateWithLifecycle()
     val form = viewModel.form
     val status = form.status
 
+    // Observe save.
     LaunchedEffect(status) {
         if (status == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.school_class_school_class_saved)
@@ -34,6 +36,9 @@ internal fun SchoolClassFormRoute(
 
     SchoolClassFormScreen(
         snackbarHostState = snackbarHostState,
+        showNavigationIcon = showNavigationIcon,
+        onNavBack = onNavBack,
+        isEditMode = isEditMode,
         schoolClassName = form.schoolClassName,
         onSchoolClassNameChange = viewModel::onSchoolClassNameChange,
         schoolYears = schoolYears,
@@ -43,7 +48,5 @@ internal fun SchoolClassFormRoute(
         isSubmitEnabled = form.isSubmitEnabled,
         onAddSchoolYear = onAddSchoolYear,
         onAddSchoolClass = viewModel::onSubmit,
-        showNavigationIcon = showNavigationIcon,
-        onNavBack = onNavBack,
     )
 }

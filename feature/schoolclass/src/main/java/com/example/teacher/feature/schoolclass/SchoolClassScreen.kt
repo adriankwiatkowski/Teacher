@@ -41,6 +41,7 @@ internal fun SchoolClassScreen(
     snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    onEditSchoolClassClick: () -> Unit,
     onStudentClick: (id: Long) -> Unit,
     onAddStudentClick: () -> Unit,
     onLessonClick: (id: Long) -> Unit,
@@ -66,7 +67,10 @@ internal fun SchoolClassScreen(
                 title = stringResource(R.string.school_class, schoolClassName),
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
-                menuItems = listOf(TeacherActions.delete(onDeleteSchoolClassClick)),
+                menuItems = listOf(
+                    TeacherActions.edit(onEditSchoolClassClick),
+                    TeacherActions.delete(onDeleteSchoolClassClick)
+                ),
                 scrollBehavior = scrollBehavior,
             )
         }
@@ -164,6 +168,7 @@ private fun SchoolClassScreenPreview(
                 snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
+                onEditSchoolClassClick = {},
                 onStudentClick = {},
                 onAddStudentClick = {},
                 onLessonClick = {},
@@ -192,6 +197,7 @@ private fun SchoolClassScreenDeletedPreview() {
                 snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},
+                onEditSchoolClassClick = {},
                 onStudentClick = {},
                 onAddStudentClick = {},
                 onLessonClick = {},

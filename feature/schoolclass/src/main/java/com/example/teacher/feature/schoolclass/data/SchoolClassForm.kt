@@ -5,7 +5,6 @@ import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
 
 internal data class SchoolClassForm(
-    val id: Long?,
     val schoolClassName: InputField<String>,
     val schoolYear: InputField<SchoolYear?>,
     val status: FormStatus,

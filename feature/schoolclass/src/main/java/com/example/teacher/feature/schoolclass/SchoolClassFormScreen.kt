@@ -39,6 +39,9 @@ import com.example.teacher.feature.schoolclass.data.SchoolClassFormProvider
 @Composable
 internal fun SchoolClassFormScreen(
     snackbarHostState: SnackbarHostState,
+    showNavigationIcon: Boolean,
+    onNavBack: () -> Unit,
+    isEditMode: Boolean,
     schoolClassName: InputField<String>,
     onSchoolClassNameChange: (String) -> Unit,
     schoolYears: List<SchoolYear>,
@@ -48,8 +51,6 @@ internal fun SchoolClassFormScreen(
     isSubmitEnabled: Boolean,
     onAddSchoolYear: () -> Unit,
     onAddSchoolClass: () -> Unit,
-    showNavigationIcon: Boolean,
-    onNavBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TeacherTopBarDefaults.default()
@@ -59,7 +60,11 @@ internal fun SchoolClassFormScreen(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TeacherTopBar(
-                title = stringResource(R.string.school_class_form_title),
+                title = if (isEditMode) {
+                    stringResource(R.string.school_class_form_edit_title)
+                } else {
+                    stringResource(R.string.school_class_form_title)
+                },
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -80,6 +85,11 @@ internal fun SchoolClassFormScreen(
                 schoolYears = schoolYears,
                 schoolYear = schoolYear,
                 onSchoolYearChange = onSchoolYearChange,
+                submitText = if (isEditMode) {
+                    stringResource(R.string.school_class_edit_school_class)
+                } else {
+                    stringResource(R.string.school_class_add_school_class)
+                },
                 isSubmitEnabled = isSubmitEnabled,
                 onSubmit = onAddSchoolClass,
                 onAddSchoolYear = onAddSchoolYear,
@@ -95,6 +105,7 @@ private fun MainContent(
     schoolYears: List<SchoolYear>,
     schoolYear: InputField<SchoolYear?>,
     onSchoolYearChange: (SchoolYear?) -> Unit,
+    submitText: String,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
     onAddSchoolYear: () -> Unit,
@@ -129,7 +140,7 @@ private fun MainContent(
 
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
-            label = stringResource(R.string.school_class_add_school_class),
+            label = submitText,
             onClick = onSubmit,
             enabled = isSubmitEnabled,
         )
@@ -161,6 +172,9 @@ private fun SchoolClassFormScreenPreview(
             val form = SchoolClassFormProvider.createDefaultForm()
             SchoolClassFormScreen(
                 snackbarHostState = remember { SnackbarHostState() },
+                showNavigationIcon = true,
+                onNavBack = {},
+                isEditMode = true,
                 schoolClassName = form.schoolClassName,
                 onSchoolClassNameChange = {},
                 schoolYears = schoolYears,
@@ -170,8 +184,6 @@ private fun SchoolClassFormScreenPreview(
                 isSubmitEnabled = form.isSubmitEnabled,
                 onAddSchoolYear = {},
                 onAddSchoolClass = {},
-                showNavigationIcon = true,
-                onNavBack = {},
             )
         }
     }
