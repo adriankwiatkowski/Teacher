@@ -92,7 +92,7 @@ internal class SchoolClassFormViewModel @Inject constructor(
         form = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
             repository.insertOrUpdateSchoolClass(
-                id = schoolClassId.value,
+                id = schoolClassId.value.let { id -> if (id != 0L) id else null },
                 schoolYearId = form.schoolYear.value!!.id,
                 name = form.schoolClassName.value,
             )

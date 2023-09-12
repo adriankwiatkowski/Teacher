@@ -55,6 +55,12 @@ INSERT OR FAIL
 INTO school_year
 VALUES (?, ?, ?, ?);
 
+updateSchoolYear:
+UPDATE school_year
+SET
+    name = :name
+WHERE id = :id;
+
 deleteSchoolYearById:
 DELETE FROM school_year
 WHERE id = :id;
@@ -63,3 +69,11 @@ insertTerm:
 INSERT OR FAIL
 INTO term
 VALUES (?, ?, ?, ?);
+
+updateTerm:
+UPDATE term
+SET
+    name = :name,
+    start_date = :start_date,
+    end_date = :end_date
+WHERE id = :id;

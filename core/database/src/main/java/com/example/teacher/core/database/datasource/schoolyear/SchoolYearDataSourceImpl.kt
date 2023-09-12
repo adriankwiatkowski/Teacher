@@ -47,38 +47,59 @@ internal class SchoolYearDataSourceImpl(
                 .let(::toExternal)
         }
 
-    override suspend fun insertSchoolYear(
+    override suspend fun insertOrUpdateSchoolYear(
+        id: Long?,
         schoolYearName: String,
+        termFirstId: Long?,
         termFirstName: String,
         termFirstStartDate: LocalDate,
         termFirstEndDate: LocalDate,
+        termSecondId: Long?,
         termSecondName: String,
         termSecondStartDate: LocalDate,
         termSecondEndDate: LocalDate,
     ): Unit = withContext(dispatcher) {
         queries.transaction {
-            val termFirstId = common.insertAndGetId {
-                queries.insertTerm(
-                    id = null,
-                    name = termFirstName,
-                    start_date = termFirstStartDate,
-                    end_date = termFirstEndDate,
-                )
-            }
-            val termSecondId = common.insertAndGetId {
-                queries.insertTerm(
-                    id = null,
-                    name = termSecondName,
-                    start_date = termSecondStartDate,
-                    end_date = termSecondEndDate,
-                )
-            }
+            if (id == null) {
+                @Suppress("NAME_SHADOWING") val termFirstId = common.insertAndGetId {
+                    queries.insertTerm(
+                        id = null,
+                        name = termFirstName,
+                        start_date = termFirstStartDate,
+                        end_date = termFirstEndDate,
+                    )
+                }
+                @Suppress("NAME_SHADOWING") val termSecondId = common.insertAndGetId {
+                    queries.insertTerm(
+                        id = null,
+                        name = termSecondName,
+                        start_date = termSecondStartDate,
+                        end_date = termSecondEndDate,
+                    )
+                }
 
-            common.insertAndGetId {
                 queries.insertSchoolYear(
                     id = null,
                     term_first_id = termFirstId,
                     term_second_id = termSecondId,
+                    name = schoolYearName,
+                )
+            } else {
+                queries.updateTerm(
+                    id = termFirstId!!,
+                    name = termFirstName,
+                    start_date = termFirstStartDate,
+                    end_date = termFirstEndDate,
+                )
+                queries.updateTerm(
+                    id = termSecondId!!,
+                    name = termSecondName,
+                    start_date = termSecondStartDate,
+                    end_date = termSecondEndDate,
+                )
+
+                queries.updateSchoolYear(
+                    id = id,
                     name = schoolYearName,
                 )
             }

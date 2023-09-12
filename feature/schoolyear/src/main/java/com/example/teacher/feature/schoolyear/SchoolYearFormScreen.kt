@@ -45,6 +45,7 @@ internal fun SchoolYearFormScreen(
     termForms: List<TermForm>,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
+    isEditMode: Boolean,
     schoolYearName: InputField<String>,
     onSchoolYearNameChange: (String) -> Unit,
     onTermNameChange: (index: Int, name: String) -> Unit,
@@ -61,8 +62,13 @@ internal fun SchoolYearFormScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
+            // TODO: Add delete menu action.
             TeacherTopBar(
-                title = stringResource(R.string.school_year_form_title),
+                title = if (isEditMode) {
+                    stringResource(R.string.school_year_form_edit_title)
+                } else {
+                    stringResource(R.string.school_year_form_title)
+                },
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
@@ -81,6 +87,11 @@ internal fun SchoolYearFormScreen(
                 onTermNameChange = onTermNameChange,
                 onStartDateChange = onStartDateChange,
                 onEndDateChange = onEndDateChange,
+                submitText = if (isEditMode) {
+                    stringResource(R.string.school_year_edit_school_year)
+                } else {
+                    stringResource(R.string.school_year_add_school_year)
+                },
                 isSubmitEnabled = isSubmitEnabled,
                 onSubmit = onAddSchoolYear
             )
@@ -96,6 +107,7 @@ private fun MainContent(
     onTermNameChange: (index: Int, name: String) -> Unit,
     onStartDateChange: (index: Int, date: LocalDate) -> Unit,
     onEndDateChange: (index: Int, date: LocalDate) -> Unit,
+    submitText: String,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
@@ -132,7 +144,7 @@ private fun MainContent(
         item {
             TeacherButton(
                 modifier = Modifier.fillMaxWidth(),
-                label = stringResource(R.string.school_year_add_school_year),
+                label = submitText,
                 onClick = onSubmit,
                 enabled = isSubmitEnabled,
             )
@@ -211,6 +223,7 @@ private fun SchoolYearFormScreenPreview() {
                 termForms = form.termForms,
                 showNavigationIcon = true,
                 onNavBack = {},
+                isEditMode = true,
                 schoolYearName = form.schoolYearName,
                 onSchoolYearNameChange = {},
                 onTermNameChange = { _, _ -> },

@@ -97,6 +97,7 @@ internal object SchoolYearFormProvider {
         val date = LocalDate.now()
 
         return TermForm(
+            id = null,
             name = validateTermName(name = term, isEdited = false),
             startDate = InputDate(date, TimeUtils.format(date)),
             endDate = InputDate(date, TimeUtils.format(date)),

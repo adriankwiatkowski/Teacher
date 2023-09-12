@@ -69,7 +69,7 @@ internal fun SchoolClassScreen(
                 onNavigationIconClick = onNavBack,
                 menuItems = listOf(
                     TeacherActions.edit(onEditSchoolClassClick),
-                    TeacherActions.delete(onDeleteSchoolClassClick)
+                    TeacherActions.delete(onDeleteSchoolClassClick),
                 ),
                 scrollBehavior = scrollBehavior,
             )

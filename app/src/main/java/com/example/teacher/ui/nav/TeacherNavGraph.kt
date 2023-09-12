@@ -76,6 +76,9 @@ fun TeacherNavGraph(
             snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             navigateToSchoolYearForm = navController::navigateToSchoolYearFormRoute,
+            navigateToSchoolYearEditForm = { schoolYearId ->
+                navController.navigateToSchoolYearFormRoute(schoolYearId = schoolYearId)
+            },
             navigateToStudentGraph = navController::navigateToStudentGraph,
             navigateToStudentFormRoute = navController::navigateToStudentFormRoute,
             navigateToLessonGraph = navController::navigateToLessonGraph,

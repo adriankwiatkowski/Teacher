@@ -4,6 +4,7 @@ import com.example.teacher.core.ui.model.InputField
 import java.util.UUID
 
 internal data class TermForm(
+    val id: Long?,
     val name: InputField<String>,
     val startDate: InputDate,
     val endDate: InputDate,

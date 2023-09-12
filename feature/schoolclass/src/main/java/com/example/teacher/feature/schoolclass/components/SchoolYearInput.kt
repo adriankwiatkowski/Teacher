@@ -26,6 +26,7 @@ internal fun SchoolYearInput(
     schoolYear: InputField<SchoolYear?>,
     onSchoolYearChange: (SchoolYear?) -> Unit,
     onAddSchoolYear: () -> Unit,
+    onEditSchoolYear: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -66,6 +67,14 @@ internal fun SchoolYearInput(
                 suggestionToString = stringifySchoolYear,
                 label = stringResource(R.string.school_class_school_year),
                 readOnly = true,
+            )
+        }
+
+        if (schoolYear.value != null) {
+            TeacherButton(
+                modifier = Modifier.fillMaxWidth(),
+                label = stringResource(R.string.school_class_edit_school_year),
+                onClick = onEditSchoolYear,
             )
         }
 

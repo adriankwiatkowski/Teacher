@@ -20,6 +20,7 @@ internal fun SchoolClassFormRoute(
     onShowSnackbar: OnShowSnackbar,
     isEditMode: Boolean,
     onAddSchoolYear: () -> Unit,
+    onEditSchoolYear: (schoolYearId: Long) -> Unit,
     viewModel: SchoolClassFormViewModel = hiltViewModel(),
 ) {
     val schoolYears by viewModel.schoolYears.collectAsStateWithLifecycle()
@@ -48,5 +49,6 @@ internal fun SchoolClassFormRoute(
         isSubmitEnabled = form.isSubmitEnabled,
         onAddSchoolYear = onAddSchoolYear,
         onAddSchoolClass = viewModel::onSubmit,
+        onEditSchoolYear = { onEditSchoolYear(form.schoolYear.value!!.id) }
     )
 }

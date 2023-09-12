@@ -49,6 +49,7 @@ internal fun SchoolClassFormScreen(
     onSchoolYearChange: (SchoolYear?) -> Unit,
     formStatus: FormStatus,
     isSubmitEnabled: Boolean,
+    onEditSchoolYear: () -> Unit,
     onAddSchoolYear: () -> Unit,
     onAddSchoolClass: () -> Unit,
     modifier: Modifier = Modifier,
@@ -93,6 +94,7 @@ internal fun SchoolClassFormScreen(
                 isSubmitEnabled = isSubmitEnabled,
                 onSubmit = onAddSchoolClass,
                 onAddSchoolYear = onAddSchoolYear,
+                onEditSchoolYear = onEditSchoolYear,
             )
         }
     }
@@ -109,6 +111,7 @@ private fun MainContent(
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
     onAddSchoolYear: () -> Unit,
+    onEditSchoolYear: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -133,6 +136,7 @@ private fun MainContent(
                 schoolYear = schoolYear,
                 onSchoolYearChange = onSchoolYearChange,
                 onAddSchoolYear = onAddSchoolYear,
+                onEditSchoolYear = onEditSchoolYear,
             )
         }
 
@@ -184,6 +188,7 @@ private fun SchoolClassFormScreenPreview(
                 isSubmitEnabled = form.isSubmitEnabled,
                 onAddSchoolYear = {},
                 onAddSchoolClass = {},
+                onEditSchoolYear = {},
             )
         }
     }

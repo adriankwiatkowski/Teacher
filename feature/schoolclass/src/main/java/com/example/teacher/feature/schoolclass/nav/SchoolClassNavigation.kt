@@ -56,6 +56,7 @@ fun NavGraphBuilder.schoolClassGraph(
     snackbarHostState: SnackbarHostState,
     onShowSnackbar: OnShowSnackbar,
     navigateToSchoolYearForm: () -> Unit,
+    navigateToSchoolYearEditForm: (schoolYearId: Long) -> Unit,
     navigateToStudentGraph: (schoolClassId: Long, studentId: Long) -> Unit,
     navigateToStudentFormRoute: (schoolClassId: Long, studentId: Long?) -> Unit,
     navigateToLessonGraph: (schoolClassId: Long, lessonId: Long) -> Unit,
@@ -132,6 +133,7 @@ fun NavGraphBuilder.schoolClassGraph(
             onShowSnackbar = onShowSnackbar,
             isEditMode = isEditMode,
             onAddSchoolYear = navigateToSchoolYearForm,
+            onEditSchoolYear = navigateToSchoolYearEditForm,
         )
     }
 }

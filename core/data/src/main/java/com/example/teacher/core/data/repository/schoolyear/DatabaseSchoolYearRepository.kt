@@ -22,21 +22,27 @@ internal class DatabaseSchoolYearRepository @Inject constructor(
 
     override fun getAllSchoolYears(): Flow<List<SchoolYear>> = dataSource.getAllSchoolYears()
 
-    override suspend fun insertSchoolYear(
+    override suspend fun insertOrUpdateSchoolYear(
+        id: Long?,
         schoolYearName: String,
+        termFirstId: Long?,
         termFirstName: String,
         termFirstStartDate: LocalDate,
         termFirstEndDate: LocalDate,
+        termSecondId: Long?,
         termSecondName: String,
         termSecondStartDate: LocalDate,
         termSecondEndDate: LocalDate,
     ) {
         scope.launch {
-            dataSource.insertSchoolYear(
+            dataSource.insertOrUpdateSchoolYear(
+                id = id,
                 schoolYearName = schoolYearName,
+                termFirstId = termFirstId,
                 termFirstName = termFirstName,
                 termFirstStartDate = termFirstStartDate,
                 termFirstEndDate = termFirstEndDate,
+                termSecondId = termSecondId,
                 termSecondName = termSecondName,
                 termSecondStartDate = termSecondStartDate,
                 termSecondEndDate = termSecondEndDate,

@@ -7,6 +7,7 @@
     <string name="school_class_term_end">"Zakończenie semestru: "</string>
     <string name="school_class_no_school_year">Żeby stworzyć klasę musisz najpierw dodać rok szkolny.</string>
     <string name="school_class_add_school_year">Dodaj nowy rok szkolny</string>
+    <string name="school_class_edit_school_year">Edytuj rok szkolny</string>
     <string name="school_class_school_year">Rok szkolny</string>
     <string name="school_class_email">Email: %1$s</string>
     <string name="school_class_phone">Telefon: %1$s</string>
