@@ -31,6 +31,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
@@ -161,6 +163,7 @@ private fun LazyListScope.header(eventResult: Result<Event>) {
                         )
                     }
 
+                    Text(TimeUtils.getDisplayNameOfDayOfWeek(event.date).capitalize(Locale.current))
                     Text(stringResource(R.string.lesson_date, TimeUtils.format(event.date)))
                     Text(stringResource(R.string.lesson_time, TimeUtils.format(startTime, endTime)))
                 }

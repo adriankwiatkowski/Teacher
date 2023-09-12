@@ -107,7 +107,7 @@ fun NavGraphBuilder.scheduleGraph(
             showNavigationIcon = true,
             snackbarHostState = snackbarHostState,
             onNavBack = navController::popBackStack,
-            onSave = { navController.popBackStack(scheduleRoute, inclusive = false) },
+            onSave = navController::popBackStack,
             onShowSnackbar = onShowSnackbar,
             onLessonPickerClick = navController::navigateToLessonPickerRoute,
             isEditMode = isEditMode,
