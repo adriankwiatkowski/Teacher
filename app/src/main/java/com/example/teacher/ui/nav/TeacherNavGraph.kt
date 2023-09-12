@@ -88,6 +88,7 @@ fun TeacherNavGraph(
             navController = navController,
             snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
+            onDelete = { SchoolClassNavigation.onDeleteSchoolYear(navController = navController) },
         )
 
         studentGraph(

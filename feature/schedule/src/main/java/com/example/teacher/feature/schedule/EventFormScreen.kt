@@ -97,11 +97,11 @@ internal fun EventFormScreen(
     ) { innerPadding ->
         if (isDeleted) {
             DeletedScreen(
-                Modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
                     .padding(MaterialTheme.spacing.medium),
-                label = stringResource(R.string.schedule_event_deleted)
+                label = stringResource(R.string.schedule_event_deleted),
             )
         } else {
             MainContent(

@@ -30,6 +30,7 @@ fun NavGraphBuilder.schoolYearGraph(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
     onShowSnackbar: OnShowSnackbar,
+    onDelete: () -> Unit,
 ) {
     composable(
         schoolYearFormRoute,
@@ -46,6 +47,7 @@ fun NavGraphBuilder.schoolYearGraph(
         SchoolYearFormRoute(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
+            onDelete = onDelete,
             snackbarHostState = snackbarHostState,
             onShowSnackbar = onShowSnackbar,
             isEditMode = isEditMode,

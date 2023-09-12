@@ -28,10 +28,11 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SchoolYearFormViewModel @Inject constructor(
     private val repository: SchoolYearRepository,
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val schoolYearId = savedStateHandle.getStateFlow(SCHOOL_YEAR_ID_KEY, 0L)
+    val isDeleted = savedStateHandle.getStateFlow(IS_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val schoolYearResult: StateFlow<Result<SchoolYear?>> = schoolYearId
@@ -128,6 +129,13 @@ internal class SchoolYearFormViewModel @Inject constructor(
         }
     }
 
+    fun onDeleteSchoolYear() {
+        viewModelScope.launch {
+            repository.deleteSchoolYearById(schoolYearId.value)
+            savedStateHandle[IS_DELETED_KEY] = true
+        }
+    }
+
     private fun sanitizeDates(
         changedIndex: Int,
         isStartDateChanged: Boolean,
@@ -149,5 +157,6 @@ internal class SchoolYearFormViewModel @Inject constructor(
 
     companion object {
         private const val SCHOOL_YEAR_ID_KEY = SchoolYearNavigation.schoolYearIdArg
+        private const val IS_DELETED_KEY = "is-deleted"
     }
 }

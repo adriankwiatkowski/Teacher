@@ -28,8 +28,10 @@ import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.form.FormStatusContent
 import com.example.teacher.core.ui.component.form.FormTextField
+import com.example.teacher.core.ui.component.result.DeletedScreen
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.schoolyear.components.TermForm
@@ -46,6 +48,7 @@ internal fun SchoolYearFormScreen(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     isEditMode: Boolean,
+    isDeleted: Boolean,
     schoolYearName: InputField<String>,
     onSchoolYearNameChange: (String) -> Unit,
     onTermNameChange: (index: Int, name: String) -> Unit,
@@ -54,6 +57,7 @@ internal fun SchoolYearFormScreen(
     status: FormStatus,
     isSubmitEnabled: Boolean,
     onAddSchoolYear: () -> Unit,
+    onDeleteSchoolYear: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TeacherTopBarDefaults.default()
@@ -62,7 +66,6 @@ internal fun SchoolYearFormScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
-            // TODO: Add delete menu action.
             TeacherTopBar(
                 title = if (isEditMode) {
                     stringResource(R.string.school_year_form_edit_title)
@@ -71,6 +74,11 @@ internal fun SchoolYearFormScreen(
                 },
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
+                menuItems = if (isEditMode) {
+                    listOf(TeacherActions.delete(onDeleteSchoolYear))
+                } else {
+                    emptyList()
+                },
                 scrollBehavior = scrollBehavior,
             )
         },
@@ -80,21 +88,30 @@ internal fun SchoolYearFormScreen(
             formStatus = status,
             savingText = stringResource(R.string.school_year_saving_school_year),
         ) {
-            MainContent(
-                termForms = termForms,
-                schoolYearName = schoolYearName,
-                onSchoolYearNameChange = onSchoolYearNameChange,
-                onTermNameChange = onTermNameChange,
-                onStartDateChange = onStartDateChange,
-                onEndDateChange = onEndDateChange,
-                submitText = if (isEditMode) {
-                    stringResource(R.string.school_year_edit_school_year)
-                } else {
-                    stringResource(R.string.school_year_add_school_year)
-                },
-                isSubmitEnabled = isSubmitEnabled,
-                onSubmit = onAddSchoolYear
-            )
+            if (isDeleted) {
+                DeletedScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(MaterialTheme.spacing.medium),
+                    label = stringResource(R.string.school_year_deleted),
+                )
+            } else {
+                MainContent(
+                    termForms = termForms,
+                    schoolYearName = schoolYearName,
+                    onSchoolYearNameChange = onSchoolYearNameChange,
+                    onTermNameChange = onTermNameChange,
+                    onStartDateChange = onStartDateChange,
+                    onEndDateChange = onEndDateChange,
+                    submitText = if (isEditMode) {
+                        stringResource(R.string.school_year_edit_school_year)
+                    } else {
+                        stringResource(R.string.school_year_add_school_year)
+                    },
+                    isSubmitEnabled = isSubmitEnabled,
+                    onSubmit = onAddSchoolYear
+                )
+            }
         }
     }
 }
@@ -224,6 +241,7 @@ private fun SchoolYearFormScreenPreview() {
                 showNavigationIcon = true,
                 onNavBack = {},
                 isEditMode = true,
+                isDeleted = false,
                 schoolYearName = form.schoolYearName,
                 onSchoolYearNameChange = {},
                 onTermNameChange = { _, _ -> },
@@ -232,6 +250,7 @@ private fun SchoolYearFormScreenPreview() {
                 status = form.status,
                 isSubmitEnabled = form.isValid,
                 onAddSchoolYear = {},
+                onDeleteSchoolYear = {},
             )
         }
     }

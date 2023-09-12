@@ -6,6 +6,7 @@
     <string name="school_year_pick_date">Wybierz datę</string>
     <string name="school_year_saving_school_year">Zapisywanie roku szkolnego…</string>
     <string name="school_year_saved">Zapisano rok szkolny</string>
+    <string name="school_year_deleted">Usunięto rok szkolny</string>
     <string name="school_year_form_title">Stwórz nowy rok szkolny</string>
     <string name="school_year_form_edit_title">Edytuj rok szkolny</string>
     <string name="school_year_add_school_year">Dodaj rok szkolny</string>
