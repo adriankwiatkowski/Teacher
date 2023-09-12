@@ -133,10 +133,11 @@ fun NavGraphBuilder.lessonGraph(
                     TeacherActions.delete(viewModel::onDeleteLesson),
                 ),
                 viewModel = viewModel,
-            ) { selectedTab, _ ->
+            ) { selectedTab, lesson ->
                 when (selectedTab) {
                     LessonTab.Grades -> GradeTemplatesRoute(
                         snackbarHostState = snackbarHostState,
+                        lesson = lesson,
                         onGradeClick = { gradeTemplateId ->
                             navigateToGradesRoute(lessonId, gradeTemplateId)
                         },

@@ -54,4 +54,9 @@
     <string name="lesson_lesson">Przedmiot</string>
     <string name="lesson_attendance_no_schedule">Nie dodano planu zajęć.</string>
     <string name="lesson_no_students_in_class">Nie dodano uczniów do klasy</string>
+
+    <string name="lesson_term_label">Semestr</string>
+    <string name="lesson_term">Semestr %1$s</string>
+    <string name="lesson_first_term">I</string>
+    <string name="lesson_second_term">II</string>
 </resources>

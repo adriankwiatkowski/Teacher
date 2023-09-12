@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,8 +35,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.GradeTemplate
+import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.component.TeacherTopBar
@@ -45,6 +48,7 @@ import com.example.teacher.core.ui.component.form.FormTextField
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
+import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
@@ -55,6 +59,7 @@ import com.example.teacher.feature.lesson.gradetemplate.data.GradeTemplateFormPr
 @Composable
 internal fun GradeTemplateFormScreen(
     gradeTemplateResult: Result<GradeTemplate?>,
+    lesson: Lesson?,
     snackbarHostState: SnackbarHostState,
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
@@ -109,6 +114,7 @@ internal fun GradeTemplateFormScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState()),
+                    lesson = lesson,
                     name = name,
                     onNameChange = onNameChange,
                     description = description,
@@ -132,6 +138,7 @@ internal fun GradeTemplateFormScreen(
 
 @Composable
 private fun MainContent(
+    lesson: Lesson?,
     name: InputField<String>,
     onNameChange: (name: String) -> Unit,
     description: InputField<String?>,
@@ -173,21 +180,12 @@ private fun MainContent(
         )
         val commonKeyboardActions = KeyboardActions(onNext = { moveNext() })
 
-        // TODO: Don't hardcode term names.
-        OutlinedCard {
-            Column(Modifier.selectableGroup()) {
-                TeacherRadioButton(
-                    label = "Semestr I",
-                    selected = isFirstTerm,
-                    onClick = { onIsFirstTermChange(true) },
-                )
-                TeacherRadioButton(
-                    label = "Semestr II",
-                    selected = !isFirstTerm,
-                    onClick = { onIsFirstTermChange(false) },
-                )
-            }
-        }
+        Header(lesson = lesson)
+        TermPicker(
+            lesson = lesson,
+            isFirstTerm = isFirstTerm,
+            onIsFirstTermChange = onIsFirstTermChange,
+        )
 
         FormTextField(
             modifier = textFieldModifier,
@@ -225,9 +223,60 @@ private fun MainContent(
     }
 }
 
+@Composable
+private fun Header(
+    lesson: Lesson?,
+    modifier: Modifier = Modifier,
+) {
+    val lessonName = lesson?.name.orEmpty()
+    val schoolClassName = lesson?.schoolClass?.name.orEmpty()
+    Text(
+        modifier = modifier,
+        text = "$lessonName $schoolClassName",
+        style = MaterialTheme.typography.headlineSmall,
+    )
+}
+
+@Composable
+private fun TermPicker(
+    lesson: Lesson?,
+    isFirstTerm: Boolean,
+    onIsFirstTermChange: (isFirstTerm: Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    OutlinedCard {
+        Column(modifier = modifier.selectableGroup()) {
+            val schoolYear = lesson?.schoolClass?.schoolYear
+            val firstTerm = schoolYear?.firstTerm?.name
+                ?: stringResource(R.string.lesson_first_term)
+            val secondTerm = schoolYear?.secondTerm?.name
+                ?: stringResource(R.string.lesson_second_term)
+
+            Text(
+                modifier = Modifier.padding(MaterialTheme.spacing.small),
+                text = stringResource(R.string.lesson_term_label),
+                style = MaterialTheme.typography.labelMedium,
+            )
+
+            TeacherRadioButton(
+                label = stringResource(R.string.lesson_term, firstTerm),
+                selected = isFirstTerm,
+                onClick = { onIsFirstTermChange(true) },
+            )
+            TeacherRadioButton(
+                label = stringResource(R.string.lesson_term, secondTerm),
+                selected = !isFirstTerm,
+                onClick = { onIsFirstTermChange(false) },
+            )
+        }
+    }
+}
+
 @Preview
 @Composable
-private fun GradeTemplateFormScreenPreview() {
+private fun GradeTemplateFormScreenPreview(
+    @PreviewParameter(LessonPreviewParameterProvider::class, limit = 1) lesson: Lesson
+) {
     TeacherTheme {
         Surface {
             var form by remember {
@@ -236,6 +285,7 @@ private fun GradeTemplateFormScreenPreview() {
 
             GradeTemplateFormScreen(
                 gradeTemplateResult = Result.Success(null),
+                lesson = lesson,
                 snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,
                 onNavBack = {},

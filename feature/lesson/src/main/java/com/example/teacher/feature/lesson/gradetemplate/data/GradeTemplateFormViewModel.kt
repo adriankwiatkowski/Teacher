@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.data.repository.gradetemplate.GradeTemplateRepository
 import com.example.teacher.core.model.data.GradeTemplate
+import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.feature.lesson.nav.LessonNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,6 +38,11 @@ internal class GradeTemplateFormViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     val gradeTemplateResult: StateFlow<Result<GradeTemplate?>> = gradeTemplateId
         .flatMapLatest { gradeTemplateId -> repository.getGradeTemplateOrNullById(gradeTemplateId) }
+        .stateIn(initialValue = Result.Loading)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val lessonResult: StateFlow<Result<Lesson>> = lessonId
+        .flatMapLatest { lessonId -> repository.getLessonById(lessonId) }
         .stateIn(initialValue = Result.Loading)
 
     var form by mutableStateOf(GradeTemplateFormProvider.createDefaultForm())

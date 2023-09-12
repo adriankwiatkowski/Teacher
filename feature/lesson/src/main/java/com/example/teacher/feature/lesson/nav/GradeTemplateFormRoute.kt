@@ -4,8 +4,10 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.lesson.R
@@ -23,6 +25,7 @@ internal fun GradeTemplateFormRoute(
     viewModel: GradeTemplateFormViewModel = hiltViewModel(),
 ) {
     val gradeTemplateResult by viewModel.gradeTemplateResult.collectAsStateWithLifecycle()
+    val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
     val form = viewModel.form
     val formStatus = form.status
@@ -42,8 +45,11 @@ internal fun GradeTemplateFormRoute(
         }
     }
 
+    val lesson = remember(lessonResult) { (lessonResult as? Result.Success)?.data }
+
     GradeTemplateFormScreen(
         gradeTemplateResult = gradeTemplateResult,
+        lesson = lesson,
         snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
