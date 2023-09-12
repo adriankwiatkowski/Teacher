@@ -15,6 +15,9 @@
     <string name="lesson_exemption_short">zw</string>
     <string name="lesson_no_attendance_short">niezaznaczone</string>
 
+    <string name="lesson_date">Data %1$s</string>
+    <string name="lesson_time">Godzina %1$s</string>
+
     <string name="lesson_grades">Oceny</string>
     <string name="lesson_attendance">Obecność</string>
     <string name="lesson_activity">Aktywność</string>

@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -116,26 +118,7 @@ private fun MainContent(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        if (eventResult is Result.Success) {
-            item {
-                val event = eventResult.data
-                val lessonData =
-                    event.lesson?.let { lesson -> "${lesson.name} ${lesson.schoolClass.name}" }
-                val startTime = event.startTime
-                val endTime = event.endTime
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(MaterialTheme.spacing.medium),
-                ) {
-                    if (lessonData != null) {
-                        Text(lessonData)
-                    }
-                    Text(TimeUtils.format(event.date))
-                    Text(TimeUtils.format(startTime, endTime))
-                }
-            }
-        }
+        header(eventResult = eventResult)
 
         items(
             lessonAttendances,
@@ -151,6 +134,36 @@ private fun MainContent(
         if (lessonAttendances.isEmpty()) {
             item {
                 TeacherLargeText(stringResource(R.string.lesson_no_students_in_class))
+            }
+        }
+    }
+}
+
+private fun LazyListScope.header(eventResult: Result<Event>) {
+    if (eventResult is Result.Success) {
+        item {
+            val event = eventResult.data
+            val lessonNameWithClass =
+                event.lesson?.let { lesson -> "${lesson.name} ${lesson.schoolClass.name}" }
+            val startTime = event.startTime
+            val endTime = event.endTime
+
+            Card(Modifier.fillParentMaxWidth()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(MaterialTheme.spacing.medium),
+                ) {
+                    if (lessonNameWithClass != null) {
+                        Text(
+                            text = lessonNameWithClass,
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                    }
+
+                    Text(stringResource(R.string.lesson_date, TimeUtils.format(event.date)))
+                    Text(stringResource(R.string.lesson_time, TimeUtils.format(startTime, endTime)))
+                }
             }
         }
     }
