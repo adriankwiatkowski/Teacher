@@ -61,6 +61,13 @@ LEFT JOIN term t1 ON sy.term_first_id = t1.id
 LEFT JOIN term t2 ON sy.term_second_id = t2.id
 WHERE e.id = :id;
 
+getSchoolClassIdByLessonId:
+SELECT
+    sc.id AS 'school_class_id'
+FROM lesson l
+INNER JOIN school_class sc ON l.school_class_id = sc.id
+WHERE l.id = :id;
+
 insertEvent:
 INSERT OR FAIL
 INTO event
@@ -79,3 +86,7 @@ WHERE id = :id;
 deleteEventById:
 DELETE FROM event
 WHERE id = :id;
+
+deleteAttendancesByEventId:
+DELETE FROM lesson_attendance
+WHERE event_id = :event_id;

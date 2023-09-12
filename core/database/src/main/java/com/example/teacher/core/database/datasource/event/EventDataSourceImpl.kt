@@ -22,10 +22,10 @@ internal class EventDataSourceImpl @Inject constructor(
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
 ) : EventDataSource {
 
-    private val queries = db.eventQueries
+    private val eventQueries = db.eventQueries
 
     override fun getEvents(date: LocalDate): Flow<List<Event>> =
-        queries
+        eventQueries
             .getEvents(date)
             .asFlow()
             .mapToList(dispatcher)
@@ -33,7 +33,7 @@ internal class EventDataSourceImpl @Inject constructor(
             .flowOn(dispatcher)
 
     override fun getEventById(eventId: Long): Flow<Event?> =
-        queries
+        eventQueries
             .getEventById(eventId)
             .asFlow()
             .mapToOneOrNull(dispatcher)
@@ -43,9 +43,9 @@ internal class EventDataSourceImpl @Inject constructor(
     override suspend fun insertEvents(
         eventDtos: List<EventDto>,
     ): Unit = withContext(dispatcher) {
-        queries.transaction {
+        eventQueries.transaction {
             for (eventDto in eventDtos) {
-                queries.insertEvent(
+                eventQueries.insertEvent(
                     id = eventDto.id,
                     lesson_id = eventDto.lessonId,
                     date = eventDto.date,
@@ -64,18 +64,51 @@ internal class EventDataSourceImpl @Inject constructor(
         startTime: LocalTime,
         endTime: LocalTime,
         isValid: Boolean
-    ) {
-        queries.updateEvent(
-            id = id,
-            lesson_id = lessonId,
-            date = date,
-            start_time = startTime,
-            end_time = endTime,
-            is_valid = isValid,
-        )
+    ): Unit = withContext(dispatcher) {
+        eventQueries.transaction {
+            removeOldLessonAttendances(eventId = id, newLessonId = lessonId)
+
+            eventQueries.updateEvent(
+                id = id,
+                lesson_id = lessonId,
+                date = date,
+                start_time = startTime,
+                end_time = endTime,
+                is_valid = isValid,
+            )
+        }
     }
 
     override suspend fun deleteEventById(id: Long): Unit = withContext(dispatcher) {
-        queries.deleteEventById(id)
+        eventQueries.deleteAttendancesByEventId(id)
+        eventQueries.deleteEventById(id)
+    }
+
+    private fun removeOldLessonAttendances(eventId: Long, newLessonId: Long?) {
+        if (didSchoolClassChanged(eventId = eventId, newLessonId = newLessonId)) {
+            eventQueries.deleteAttendancesByEventId(eventId)
+        }
+    }
+
+    private fun didSchoolClassChanged(eventId: Long, newLessonId: Long?): Boolean {
+        val oldEvent = eventQueries.getEventById(eventId).executeAsOne()
+
+        if (newLessonId != oldEvent.lesson_id) {
+            // Previously had school class, and now don't.
+            if (newLessonId == null) {
+                return true
+            }
+
+            val oldSchoolClassId = oldEvent.school_class_id
+            val newSchoolClassId =
+                eventQueries.getSchoolClassIdByLessonId(newLessonId).executeAsOne()
+
+            // School id doesn't match.
+            if (oldSchoolClassId != newSchoolClassId) {
+                return true
+            }
+        }
+
+        return false
     }
 }
