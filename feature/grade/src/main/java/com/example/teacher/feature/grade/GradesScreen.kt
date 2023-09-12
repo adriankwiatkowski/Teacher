@@ -32,6 +32,7 @@ import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.BasicGradesForTemplatePreviewParameterProvider
+import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
@@ -56,7 +57,7 @@ internal fun GradesScreen(
 
     val title = remember(context, uiStateResult) {
         (uiStateResult as? Result.Success)?.data?.gradeTemplateInfo?.let { info ->
-            "${info.lessonName} ${info.schoolClassName}"
+            "${info.lesson.name} ${info.lesson.schoolClass.name}"
         } ?: context.getString(R.string.grade_grades_title)
     }
 
@@ -87,6 +88,11 @@ internal fun GradesScreen(
                     .fillMaxSize()
                     .padding(MaterialTheme.spacing.small),
                 gradeName = uiState.gradeTemplateInfo.gradeName,
+                gradeTermName = if (uiState.gradeTemplateInfo.isFirstTerm) {
+                    uiState.gradeTemplateInfo.lesson.schoolClass.schoolYear.firstTerm.name
+                } else {
+                    uiState.gradeTemplateInfo.lesson.schoolClass.schoolYear.secondTerm.name
+                },
                 grades = uiState.grades,
                 onStudentClick = onStudentClick,
             )
@@ -98,6 +104,7 @@ internal fun GradesScreen(
 @Composable
 private fun MainContent(
     gradeName: String,
+    gradeTermName: String,
     grades: List<BasicGradeForTemplate>,
     onStudentClick: (studentId: Long, gradeId: Long?) -> Unit,
     modifier: Modifier = Modifier,
@@ -107,7 +114,10 @@ private fun MainContent(
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
         stickyHeader {
-            Text(text = gradeName)
+            Text(
+                text = stringResource(R.string.grades_grade_with_term, gradeName, gradeTermName),
+                style = MaterialTheme.typography.titleMedium,
+            )
         }
 
         items(grades, key = { grade -> grade.studentId }) { grade ->
@@ -161,11 +171,8 @@ private fun GradesScreenPreview(
                         gradeTemplateId = 1L,
                         gradeName = "Dodawanie",
                         gradeWeight = 3,
-                        lessonId = 1L,
-                        lessonName = "Matematyka",
-                        schoolClassId = 1L,
-                        schoolClassName = "1A",
                         isFirstTerm = true,
+                        lesson = LessonPreviewParameterProvider().values.first(),
                     ),
                 )
             }

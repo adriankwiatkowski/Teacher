@@ -45,7 +45,8 @@ internal class GradeDataSourceImpl(
     override fun getGradeTemplateInfoByGradeTemplateId(
         gradeTemplateId: Long
     ): Flow<GradeTemplateInfo?> =
-        queries.getGradeTemplateInfoByGradeTemplateId(gradeTemplateId)
+        queries
+            .getGradeTemplateInfoByGradeTemplateId(gradeTemplateId)
             .asFlow()
             .mapToOneOrNull(dispatcher)
             .map(::toExternal)

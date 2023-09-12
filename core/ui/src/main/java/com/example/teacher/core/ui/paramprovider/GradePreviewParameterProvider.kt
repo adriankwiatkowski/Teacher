@@ -14,11 +14,8 @@ class GradeTemplateInfoPreviewParameterProvider : PreviewParameterProvider<Grade
             gradeTemplateId = 1L,
             gradeName = "Dodawanie",
             gradeWeight = 3,
-            lessonId = 1L,
-            lessonName = "Matematyka",
-            schoolClassId = 1L,
-            schoolClassName = "1A",
             isFirstTerm = true,
+            lesson = LessonPreviewParameterProvider().values.first(),
         ),
     )
 }

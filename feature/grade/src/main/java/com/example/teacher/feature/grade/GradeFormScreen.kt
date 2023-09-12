@@ -158,6 +158,13 @@ private fun Header(
     inputGrade: BigDecimal?,
     modifier: Modifier = Modifier,
 ) {
+    val gradeName = gradeInfo.gradeName
+    val gradeTermName = if (gradeInfo.isFirstTerm) {
+        gradeInfo.lesson.schoolClass.schoolYear.firstTerm.name
+    } else {
+        gradeInfo.lesson.schoolClass.schoolYear.secondTerm.name
+    }
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -169,8 +176,7 @@ private fun Header(
                 text = student.fullName,
                 style = MaterialTheme.typography.titleMedium,
             )
-
-            Text(gradeInfo.gradeName)
+            Text(stringResource(R.string.grades_grade_with_term, gradeName, gradeTermName))
             Text(stringResource(R.string.grade_grade_weight, gradeInfo.gradeWeight))
             if (initialGrade != null) {
                 Text(stringResource(R.string.grade_current_grade, toGradeWithLiteral(initialGrade)))

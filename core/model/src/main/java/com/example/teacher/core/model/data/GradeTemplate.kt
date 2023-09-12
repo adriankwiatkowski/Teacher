@@ -22,8 +22,5 @@ data class GradeTemplateInfo(
     val gradeName: String,
     val gradeWeight: Int,
     val isFirstTerm: Boolean,
-    val lessonId: Long,
-    val lessonName: String,
-    val schoolClassId: Long,
-    val schoolClassName: String,
+    val lesson: Lesson,
 )

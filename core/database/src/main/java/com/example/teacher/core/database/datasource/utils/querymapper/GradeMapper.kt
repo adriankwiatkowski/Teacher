@@ -4,9 +4,13 @@ import com.example.teacher.core.database.generated.queries.grade.GetGradeById
 import com.example.teacher.core.database.generated.queries.grade.GetGradeTemplateInfoByGradeTemplateId
 import com.example.teacher.core.database.generated.queries.grade.GetGradesByGradeTemplateId
 import com.example.teacher.core.model.data.BasicGradeForTemplate
+import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.Grade
 import com.example.teacher.core.model.data.GradeTemplate
 import com.example.teacher.core.model.data.GradeTemplateInfo
+import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.model.data.SchoolYear
+import com.example.teacher.core.model.data.Term
 
 internal fun toExternal(
     grade: GetGradeById?
@@ -62,10 +66,32 @@ internal fun toExternal(
         gradeTemplateId = gradeInfo.grade_template_id,
         gradeName = gradeInfo.grade_name,
         gradeWeight = gradeInfo.grade_weight.toInt(),
-        lessonId = gradeInfo.lessson_id,
-        lessonName = gradeInfo.lesson_name,
-        schoolClassId = gradeInfo.school_class_id,
-        schoolClassName = gradeInfo.school_class_name,
         isFirstTerm = gradeInfo.grade_is_first_term,
+        lesson = Lesson(
+            id = gradeInfo.lesson_id,
+            name = gradeInfo.lesson_name,
+            schoolClass = BasicSchoolClass(
+                id = gradeInfo.school_class_id,
+                name = gradeInfo.school_class_name,
+                schoolYear = SchoolYear(
+                    id = gradeInfo.school_year_id,
+                    name = gradeInfo.school_year_name,
+                    firstTerm = Term(
+                        id = gradeInfo.term_first_id,
+                        name = gradeInfo.term_first_name,
+                        startDate = gradeInfo.term_first_start_date,
+                        endDate = gradeInfo.term_first_end_date,
+                    ),
+                    secondTerm = Term(
+                        id = gradeInfo.term_second_id,
+                        name = gradeInfo.term_second_name,
+                        startDate = gradeInfo.term_second_start_date,
+                        endDate = gradeInfo.term_second_end_date,
+                    ),
+                ),
+                studentCount = gradeInfo.student_count,
+                lessonCount = gradeInfo.lesson_count,
+            ),
+        )
     )
 }
