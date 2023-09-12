@@ -5,7 +5,7 @@
     <string name="student_notes">Uwagi</string>
     <string name="student_saving_student">Zapisywanie studenta…</string>
     <string name="student_saved">Zapisano dane ucznia</string>
-    <string name="student_deleted">Usunięto ucznia</string>
+    <string name="student_deleted">Usunięto dane ucznia</string>
     <string name="student_email">Email</string>
     <string name="student_phone">Telefon</string>
     <string name="student_school_class_name">Klasa %1$s</string>
@@ -27,4 +27,5 @@
     <string name="student_term">Semestr %1$s</string>
     <string name="student_send_email">Wyślij email</string>
     <string name="student_phone_call">Zadzwoń</string>
+    <string name="student_student">Uczeń</string>
 </resources>

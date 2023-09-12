@@ -1,4 +1,4 @@
-package com.example.teacher.feature.lesson.nav
+package com.example.teacher.feature.schoolclass.nav
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.rememberPagerState
@@ -9,43 +9,44 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.common.result.Result
-import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.model.data.SchoolClass
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.TeacherAction
 import com.example.teacher.core.ui.util.OnShowSnackbar
-import com.example.teacher.feature.lesson.R
-import com.example.teacher.feature.lesson.components.LessonScaffold
-import com.example.teacher.feature.lesson.data.LessonScaffoldViewModel
-import com.example.teacher.feature.lesson.tab.LessonTab
+import com.example.teacher.feature.schoolclass.R
+import com.example.teacher.feature.schoolclass.components.SchoolClassScaffold
+import com.example.teacher.feature.schoolclass.data.SchoolClassScaffoldViewModel
+import com.example.teacher.feature.schoolclass.tab.SchoolClassTab
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun LessonScaffoldWrapper(
+internal fun SchoolClassScaffoldWrapper(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     onShowSnackbar: OnShowSnackbar,
     menuItems: List<TeacherAction>,
     modifier: Modifier = Modifier,
-    viewModel: LessonScaffoldViewModel = hiltViewModel(),
-    content: @Composable (selectedTab: LessonTab, lesson: Lesson) -> Unit,
+    viewModel: SchoolClassScaffoldViewModel = hiltViewModel(),
+    content: @Composable (selectedTab: SchoolClassTab, schoolClass: SchoolClass) -> Unit,
 ) {
-    val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
-    val isLessonDeleted by viewModel.isLessonDeleted.collectAsStateWithLifecycle()
+    val schoolClassResult by viewModel.schoolClassResult.collectAsStateWithLifecycle()
+    val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
 
     val tabs = remember {
         listOf(
-            LessonTab.Grades,
-            LessonTab.Attendance,
-            LessonTab.Activity,
-            LessonTab.Notes,
+            SchoolClassTab.Students,
+            SchoolClassTab.Subjects,
+            SchoolClassTab.Detail,
         )
     }
-    val pagerState = rememberPagerState(initialPage = tabs.indexOf(LessonTab.Grades)) { tabs.size }
+    val pagerState =
+        rememberPagerState(initialPage = tabs.indexOf(SchoolClassTab.Students)) { tabs.size }
     val selectedTab by remember {
         derivedStateOf {
             tabs[pagerState.currentPage]
@@ -55,24 +56,25 @@ internal fun LessonScaffoldWrapper(
     val coroutineScope = rememberCoroutineScope()
 
     // Observe deletion.
-    LaunchedEffect(isLessonDeleted) {
-        if (isLessonDeleted) {
-            onShowSnackbar.onShowSnackbar(R.string.lesson_lesson_deleted)
+    LaunchedEffect(isDeleted) {
+        if (isDeleted) {
+            onShowSnackbar.onShowSnackbar(R.string.school_class_school_class_deleted)
             onNavBack()
         }
     }
 
-    val lessonName = remember(lessonResult) {
-        (lessonResult as? Result.Success)?.data?.name.orEmpty()
-    }
-    val schoolClassName = remember(lessonResult) {
-        (lessonResult as? Result.Success)?.data?.schoolClass?.name.orEmpty()
+    val context = LocalContext.current
+    val title = remember(schoolClassResult) {
+        val result = (schoolClassResult as? Result.Success)
+            ?: return@remember context.getString(R.string.school_class_label)
+        val schoolClass = result.data
+        context.getString(R.string.school_class, schoolClass.name)
     }
 
-    LessonScaffold(
+    SchoolClassScaffold(
         modifier = modifier,
-        isScaffoldVisible = !isLessonDeleted,
-        title = "$lessonName $schoolClassName",
+        isScaffoldVisible = !isDeleted,
+        title = title,
         menuItems = menuItems,
         showNavigationIcon = showNavigationIcon,
         onNavigationIconClick = onNavBack,
@@ -86,11 +88,11 @@ internal fun LessonScaffoldWrapper(
         pagerState = pagerState,
     ) { pagerTab ->
         ResultContent(
-            result = lessonResult,
-            isDeleted = isLessonDeleted,
-            deletedMessage = stringResource(R.string.lesson_lesson_deleted),
-        ) { lesson ->
-            content(pagerTab, lesson)
+            result = schoolClassResult,
+            isDeleted = isDeleted,
+            deletedMessage = stringResource(R.string.school_class_school_class_deleted),
+        ) { schoolClass ->
+            content(pagerTab, schoolClass)
         }
     }
 }

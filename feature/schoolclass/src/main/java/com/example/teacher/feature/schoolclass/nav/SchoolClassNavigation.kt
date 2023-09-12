@@ -16,14 +16,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.schoolclass.data.SchoolClassFormViewModel
+import com.example.teacher.feature.schoolclass.data.SchoolClassScaffoldViewModel
 import com.example.teacher.feature.schoolclass.data.SchoolClassesViewModel
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.deletedSchoolYearIdArg
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassGraphRoute
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassIdArg
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassRoute
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassesRoute
+import com.example.teacher.feature.schoolclass.tab.SchoolClassTab
 
 private const val schoolClassesScreen = "school-classes"
 private const val schoolClassScreen = "school-class"
@@ -103,30 +106,53 @@ fun NavGraphBuilder.schoolClassGraph(
                 },
             ),
         ) { backStackEntry ->
+            val viewModel: SchoolClassScaffoldViewModel = hiltViewModel()
             val args = backStackEntry.arguments!!
             val schoolClassId = args.getLong(schoolClassIdArg)
 
-            SchoolClassRoute(
+            val onEditClick = {
+                navController.navigateToSchoolClassFormRoute(schoolClassId = schoolClassId)
+            }
+
+            SchoolClassScaffoldWrapper(
                 showNavigationIcon = true,
                 onNavBack = navController::popBackStack,
-                snackbarHostState = snackbarHostState,
                 onShowSnackbar = onShowSnackbar,
-                onEditSchoolClassClick = {
-                    navController.navigateToSchoolClassFormRoute(schoolClassId = schoolClassId)
-                },
-                onStudentClick = { studentId ->
-                    navigateToStudentGraph(schoolClassId, studentId)
-                },
-                onAddStudentClick = {
-                    navigateToStudentFormRoute(schoolClassId, null)
-                },
-                onLessonClick = { lessonId ->
-                    navigateToLessonGraph(schoolClassId, lessonId)
-                },
-                onAddLessonClick = {
-                    navigateToLessonFormRoute(schoolClassId, null)
-                },
-            )
+                menuItems = listOf(
+                    TeacherActions.edit(onClick = onEditClick),
+                    TeacherActions.delete(onClick = viewModel::onDelete),
+                ),
+                viewModel = viewModel,
+            ) { selectedTab, schoolClass ->
+                when (selectedTab) {
+                    SchoolClassTab.Detail -> SchoolClassDetailRoute(
+                        snackbarHostState = snackbarHostState,
+                        schoolYear = schoolClass.schoolYear,
+                    )
+
+                    SchoolClassTab.Students -> SchoolClassStudentsRoute(
+                        snackbarHostState = snackbarHostState,
+                        students = schoolClass.students,
+                        onStudentClick = { studentId ->
+                            navigateToStudentGraph(schoolClassId, studentId)
+                        },
+                        onAddStudentClick = {
+                            navigateToStudentFormRoute(schoolClassId, null)
+                        },
+                    )
+
+                    SchoolClassTab.Subjects -> SchoolClassLessonsRoute(
+                        snackbarHostState = snackbarHostState,
+                        lessons = schoolClass.lessons,
+                        onLessonClick = { lessonId ->
+                            navigateToLessonGraph(schoolClassId, lessonId)
+                        },
+                        onAddLessonClick = {
+                            navigateToLessonFormRoute(schoolClassId, null)
+                        },
+                    )
+                }
+            }
         }
     }
 

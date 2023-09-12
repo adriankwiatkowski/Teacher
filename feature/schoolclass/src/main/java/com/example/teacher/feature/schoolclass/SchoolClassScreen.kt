@@ -110,7 +110,8 @@ private fun MainContent(
     isLessonsExpanded: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
-    val studentsLabel = stringResource(R.string.school_class_students, schoolClass.students.size)
+    val studentsLabel =
+        stringResource(R.string.school_class_students_with_data, schoolClass.students.size)
     val lessonsLabel = stringResource(R.string.school_class_lessons, schoolClass.lessons.size)
 
     LazyColumn(

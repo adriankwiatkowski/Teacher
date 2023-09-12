@@ -1,21 +1,17 @@
 package com.example.teacher.feature.schoolclass.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
-import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.schoolclass.R
 
 @Composable
@@ -24,32 +20,36 @@ internal fun StudentItem(
     surname: String,
     email: String?,
     phone: String?,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        val icon = TeacherIcons.person()
-        Icon(
-            imageVector = icon.icon,
-            contentDescription = stringResource(icon.text),
-        )
 
-        Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
+    ListItem(
+        modifier = modifier.clickable(onClick = onClick),
+        leadingContent = {
+            val icon = TeacherIcons.person()
+            Icon(
+                imageVector = icon.icon,
+                contentDescription = null,
+            )
+        },
+        headlineContent = { Text("$name $surname") },
+        supportingContent = if (email != null || phone != null) {
+            {
+                Column {
+                    if (email != null) {
+                        Text(text = stringResource(R.string.school_class_email, email))
+                    }
 
-        Column {
-            Text(text = "$name $surname")
-
-            if (email != null) {
-                Text(text = stringResource(R.string.school_class_email, email))
+                    if (phone != null) {
+                        Text(text = stringResource(R.string.school_class_phone, phone))
+                    }
+                }
             }
-
-            if (phone != null) {
-                Text(text = stringResource(R.string.school_class_phone, phone))
-            }
+        } else {
+            null
         }
-    }
+    )
 }
 
 @Preview
@@ -62,6 +62,7 @@ private fun StudentItemPreview() {
                 surname = "Kowalski",
                 email = "jan.kowalski@domain.com",
                 phone = "123456789",
+                onClick = {},
             )
         }
     }

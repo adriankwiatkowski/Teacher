@@ -135,7 +135,7 @@ private fun ClassItem(
                 verticalArrangement = Arrangement.Center,
             ) {
                 TextWithIcon(
-                    text = stringResource(R.string.school_class_students, studentCount),
+                    text = stringResource(R.string.school_class_students_with_data, studentCount),
                     icon = TeacherIcons.people()
                 )
                 TextWithIcon(

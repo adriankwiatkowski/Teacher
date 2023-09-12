@@ -1,12 +1,10 @@
 package com.example.teacher.feature.schoolclass.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Surface
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -43,13 +41,12 @@ internal fun LazyListScope.students(
         StudentItem(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(onClick = { onStudentClick(student.id) })
-                .padding(contentPadding)
-                .minimumInteractiveComponentSize(),
+                .padding(contentPadding),
             name = student.name,
             surname = student.surname,
             email = student.email,
             phone = student.phone,
+            onClick = { onStudentClick(student.id) },
         )
     }
 
@@ -68,7 +65,7 @@ private fun StudentsPreview(
     TeacherTheme {
         Surface {
             val expanded = remember { mutableStateOf(false) }
-            val label = stringResource(R.string.school_class_students, students.size)
+            val label = stringResource(R.string.school_class_students_with_data, students.size)
 
             LazyColumn {
                 students(

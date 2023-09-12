@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.common.result.Result
@@ -54,8 +55,9 @@ internal fun StudentScaffoldWrapper(
         }
     }
 
-    val title = remember(studentResult) {
-        val result = (studentResult as? Result.Success) ?: return@remember "Uczeń"
+    val defaultTitle = stringResource(R.string.student_student)
+    val title = remember(studentResult, defaultTitle) {
+        val result = (studentResult as? Result.Success) ?: return@remember defaultTitle
         val data = result.data
         "${data.fullName} ${data.schoolClass.name}"
     }
@@ -79,7 +81,7 @@ internal fun StudentScaffoldWrapper(
         ResultContent(
             result = studentResult,
             isDeleted = isStudentDeleted,
-            deletedMessage = "Usunięto pomyślnie dane ucznia."
+            deletedMessage = stringResource(R.string.student_deleted),
         ) { student ->
             content(pagerTab, student)
         }

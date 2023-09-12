@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="school_class_students">Uczniowie (%1$s)</string>
+    <string name="school_class_students_with_data">Uczniowie (%1$s)</string>
     <string name="school_class_lessons">Zajęcia (%1$s)</string>
     <string name="school_class_term_name">Semestr %1$s</string>
     <string name="school_class_term_start">"Rozpoczęcie semestru: "</string>
@@ -24,4 +24,8 @@
     <string name="school_class_prefix">"(Klasa) "</string>
     <string name="school_class_no_students_in_class">Nie dodano uczniów do klasy</string>
     <string name="school_class_no_lessons_in_class">Nie dodano przedmiotów do klasy</string>
+    <string name="school_class_details">Dane</string>
+    <string name="school_class_students">Uczniowie</string>
+    <string name="school_class_subjects">Przedmioty</string>
+    <string name="school_class_label">Klasa</string>
 </resources>
