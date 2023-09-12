@@ -34,7 +34,8 @@ SELECT
 FROM event e
 INNER JOIN lesson l ON e.lesson_id = l.id
 INNER JOIN school_class sc ON l.school_class_id = sc.id
-WHERE e.lesson_id = :lesson_id;
+WHERE e.lesson_id = :lesson_id
+ORDER BY e.date ASC, e.start_time ASC;
 
 getLessonAttendancesByEventId:
 SELECT
