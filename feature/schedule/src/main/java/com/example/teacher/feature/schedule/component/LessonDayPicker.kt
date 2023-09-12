@@ -12,6 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.ui.component.picker.TeacherDayPicker
@@ -33,7 +35,7 @@ internal fun LessonDayPicker(
         TeacherDayPicker(
             day = day,
             onDaySelected = onDaySelected,
-            label = TimeUtils.getDisplayNameOfDayOfWeek(day),
+            label = TimeUtils.getDisplayNameOfDayOfWeek(day).capitalize(Locale.current),
         )
     }
 }
