@@ -6,6 +6,7 @@ import com.example.teacher.core.ui.model.FormStatus
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
+import kotlin.math.min
 
 internal object EventFormProvider {
 
@@ -19,15 +20,27 @@ internal object EventFormProvider {
 
     @Suppress("NAME_SHADOWING")
     fun sanitizeStartTime(startTime: LocalTime, endTime: LocalTime): TimeData {
+        require(DefaultMinuteDiff in 1..59)
+
         var startTime = startTime
         var endTime = endTime
 
-        if (TimeUtils.localTimeHour(startTime) == 23 && TimeUtils.localTimeMinute(startTime) == 59) {
+        val startTimeHour = TimeUtils.localTimeHour(startTime)
+        var startTimeMinute = TimeUtils.localTimeMinute(startTime)
+
+        if (startTimeHour == 23 && startTimeMinute == 59) {
             startTime = TimeUtils.localTimeOf(23, 58)
+            startTimeMinute = TimeUtils.localTimeMinute(startTime)
         }
 
         if (!TimeUtils.isBefore(startTime, endTime)) {
-            endTime = TimeUtils.plusTime(startTime, 0, 1)
+            // Don't allow end time to be before start time.
+            val minutesToAdd = if (startTimeHour == 23) {
+                min(DefaultMinuteDiff, 60 - 1 - startTimeMinute)
+            } else {
+                DefaultMinuteDiff
+            }.toLong()
+            endTime = TimeUtils.plusTime(startTime, 0, minutesToAdd)
         }
 
         return TimeData(startTime, endTime)
@@ -71,6 +84,8 @@ internal object EventFormProvider {
             status = status,
         )
     }
+
+    private const val DefaultMinuteDiff = 45
 }
 
 internal data class TimeData(val startTime: LocalTime, val endTime: LocalTime)
