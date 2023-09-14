@@ -2,10 +2,10 @@ package com.example.teacher.feature.lesson.attendance
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,7 +22,11 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,11 +34,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.LessonEventAttendance
+import com.example.teacher.core.model.data.StudentWithAttendance
+import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonEventAttendancesPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.R
@@ -44,6 +51,7 @@ import java.time.LocalTime
 @Composable
 internal fun AttendancesScreen(
     scheduleAttendancesResult: Result<List<LessonEventAttendance>>,
+    studentsWithAttendanceResult: Result<List<StudentWithAttendance>>,
     snackbarHostState: SnackbarHostState,
     onScheduleAttendanceClick: (id: Long) -> Unit,
     onAddScheduleClick: () -> Unit,
@@ -59,11 +67,22 @@ internal fun AttendancesScreen(
             modifier = Modifier.padding(innerPadding),
             result = scheduleAttendancesResult,
         ) { scheduleAttendances ->
+            var showStatisticsDialog by rememberSaveable { mutableStateOf(false) }
+            val onDismissStatisticDialogRequest = { showStatisticsDialog = false }
+
             MainContent(
                 modifier = Modifier.fillMaxSize(),
                 scheduleAttendances = scheduleAttendances,
                 onScheduleAttendanceClick = onScheduleAttendanceClick,
+                onShowStatisticsClick = { showStatisticsDialog = true },
             )
+
+            if (showStatisticsDialog) {
+                AttendanceStatisticsDialog(
+                    studentsWithAttendanceResult = studentsWithAttendanceResult,
+                    onDismissRequest = onDismissStatisticDialogRequest,
+                )
+            }
         }
     }
 }
@@ -72,12 +91,32 @@ internal fun AttendancesScreen(
 private fun MainContent(
     scheduleAttendances: List<LessonEventAttendance>,
     onScheduleAttendanceClick: (id: Long) -> Unit,
+    onShowStatisticsClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    if (scheduleAttendances.isEmpty()) {
+        TeacherLargeText(
+            modifier = modifier.padding(MaterialTheme.spacing.small),
+            text = stringResource(R.string.lesson_attendance_no_schedule),
+        )
+        return
+    }
+
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
+        item {
+            TeacherButton(
+                modifier = Modifier.fillParentMaxWidth(),
+                label = stringResource(R.string.lesson_attendance_statistics),
+                icon = TeacherIcons.chart(),
+                onClick = onShowStatisticsClick,
+            )
+
+            Spacer(Modifier.padding(MaterialTheme.spacing.small))
+        }
+
         items(scheduleAttendances, key = { it.eventId }) { scheduleAttendance ->
             AttendanceItem(
                 date = scheduleAttendance.date,
@@ -91,17 +130,6 @@ private fun MainContent(
                 attendanceNotSetCount = scheduleAttendance.attendanceNotSetCount,
                 onClick = { onScheduleAttendanceClick(scheduleAttendance.eventId) },
             )
-        }
-
-        if (scheduleAttendances.isEmpty()) {
-            item {
-                Column(Modifier.padding(MaterialTheme.spacing.small)) {
-                    TeacherLargeText(
-                        modifier = Modifier.padding(MaterialTheme.spacing.small),
-                        text = stringResource(R.string.lesson_attendance_no_schedule),
-                    )
-                }
-            }
         }
     }
 }
@@ -197,6 +225,7 @@ private fun AttendancesScreenPreview(
         Surface {
             AttendancesScreen(
                 scheduleAttendancesResult = Result.Success(data),
+                studentsWithAttendanceResult = Result.Loading,
                 snackbarHostState = remember { SnackbarHostState() },
                 onScheduleAttendanceClick = {},
                 onAddScheduleClick = {},

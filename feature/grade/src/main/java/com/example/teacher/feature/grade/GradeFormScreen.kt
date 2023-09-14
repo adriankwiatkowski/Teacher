@@ -30,7 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
-import com.example.teacher.core.common.utils.GradeUtils
+import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.BasicStudent
 import com.example.teacher.core.model.data.GradeTemplateInfo
 import com.example.teacher.core.ui.component.TeacherButton
@@ -201,27 +201,27 @@ private fun GradeInputs(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         GradeInputs(
-            grades = listOf(GradeUtils.One),
+            grades = listOf(DecimalUtils.One),
             onGradeClick = onGradeChange,
         )
         GradeInputs(
-            grades = listOf(GradeUtils.TwoMinus, GradeUtils.Two, GradeUtils.TwoPlus),
+            grades = listOf(DecimalUtils.TwoMinus, DecimalUtils.Two, DecimalUtils.TwoPlus),
             onGradeClick = onGradeChange,
         )
         GradeInputs(
-            grades = listOf(GradeUtils.ThreeMinus, GradeUtils.Three, GradeUtils.ThreePlus),
+            grades = listOf(DecimalUtils.ThreeMinus, DecimalUtils.Three, DecimalUtils.ThreePlus),
             onGradeClick = onGradeChange,
         )
         GradeInputs(
-            grades = listOf(GradeUtils.FourMinus, GradeUtils.Four, GradeUtils.FourPlus),
+            grades = listOf(DecimalUtils.FourMinus, DecimalUtils.Four, DecimalUtils.FourPlus),
             onGradeClick = onGradeChange,
         )
         GradeInputs(
-            grades = listOf(GradeUtils.FiveMinus, GradeUtils.Five, GradeUtils.FivePlus),
+            grades = listOf(DecimalUtils.FiveMinus, DecimalUtils.Five, DecimalUtils.FivePlus),
             onGradeClick = onGradeChange,
         )
         GradeInputs(
-            grades = listOf(GradeUtils.SixMinus, GradeUtils.Six),
+            grades = listOf(DecimalUtils.SixMinus, DecimalUtils.Six),
             onGradeClick = onGradeChange,
         )
     }
@@ -235,7 +235,7 @@ private fun GradeInputs(
 ) {
     FlowRow(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
         for (grade in grades) {
-            GradeInput(grade = GradeUtils.toGrade(grade), onClick = { onGradeClick(grade) })
+            GradeInput(grade = DecimalUtils.toGrade(grade), onClick = { onGradeClick(grade) })
         }
     }
 }
@@ -254,8 +254,8 @@ private fun toGradeWithLiteral(grade: BigDecimal?): String {
     return if (grade != null) {
         stringResource(
             R.string.grade_grade_with_literal,
-            GradeUtils.toGrade(grade),
-            GradeUtils.toLiteral(grade),
+            DecimalUtils.toGrade(grade),
+            DecimalUtils.toLiteral(grade),
         )
     } else {
         stringResource(R.string.grade_no_grade)

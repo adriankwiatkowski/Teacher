@@ -1,6 +1,6 @@
 package com.example.teacher.core.database.datasource.utils.querymapper
 
-import com.example.teacher.core.common.utils.GradeUtils
+import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.database.generated.queries.student.GetBasicStudentById
 import com.example.teacher.core.database.generated.queries.student.GetStudentById
 import com.example.teacher.core.database.generated.queries.student.GetStudentGradesById
@@ -142,7 +142,7 @@ private fun calculateAverage(grades: List<GetStudentGradesById>): BigDecimal? {
             GradeWithAverage(grade.grade, grade.grade_template_weight.toInt())
         }
 
-    return GradeUtils.calculateAverage(studentGrades)
+    return DecimalUtils.calculateWeightedAverage(studentGrades)
 }
 
 private fun GetStudentGradesById.toStudentGrades(): StudentGrade? {

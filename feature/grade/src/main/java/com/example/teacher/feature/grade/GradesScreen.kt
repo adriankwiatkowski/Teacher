@@ -24,7 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
-import com.example.teacher.core.common.utils.GradeUtils
+import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.BasicGradeForTemplate
 import com.example.teacher.core.model.data.GradeTemplateInfo
 import com.example.teacher.core.ui.component.TeacherLargeText
@@ -151,7 +151,7 @@ private fun GradeItem(
 
 @Composable
 private fun gradeToName(grade: BigDecimal?): String {
-    return grade?.let(GradeUtils::toGrade) ?: stringResource(R.string.grade_no_grade)
+    return grade?.let(DecimalUtils::toGrade) ?: stringResource(R.string.grade_no_grade)
 }
 
 @Preview

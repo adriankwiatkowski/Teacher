@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
-import com.example.teacher.core.common.utils.GradeUtils
+import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.StudentGrade
 import com.example.teacher.core.model.data.StudentGradesByLesson
 import com.example.teacher.core.ui.component.TeacherButton
@@ -157,7 +157,7 @@ private fun LessonTermGrades(
             Text(
                 text = stringResource(
                     R.string.student_grade_average,
-                    GradeUtils.toLiteral(average)
+                    DecimalUtils.toLiteral(average)
                 )
             )
             Grades(
@@ -182,7 +182,7 @@ private fun Grades(
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
         for (grade in grades) {
-            Grade(grade = GradeUtils.toGrade(grade.grade), onClick = { onGradeClick(grade) })
+            Grade(grade = DecimalUtils.toGrade(grade.grade), onClick = { onGradeClick(grade) })
         }
     }
 }

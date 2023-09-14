@@ -5,10 +5,12 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.example.teacher.core.common.di.DefaultDispatcher
 import com.example.teacher.core.database.datasource.utils.querymapper.toExternal
 import com.example.teacher.core.database.datasource.utils.querymapper.toExternalLessonEventAttendances
+import com.example.teacher.core.database.datasource.utils.querymapper.toStudentsWithAttendanceExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.model.data.Attendance
 import com.example.teacher.core.model.data.LessonAttendance
 import com.example.teacher.core.model.data.LessonEventAttendance
+import com.example.teacher.core.model.data.StudentWithAttendance
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -39,6 +41,16 @@ internal class LessonAttendanceDataSourceImpl @Inject constructor(
             .asFlow()
             .mapToList(dispatcher)
             .map(::toExternal)
+            .flowOn(dispatcher)
+
+    override fun getStudentsWithAttendanceByLessonId(
+        lessonId: Long
+    ): Flow<List<StudentWithAttendance>> =
+        queries
+            .getStudentsWithAttendanceByLessonId(lessonId)
+            .asFlow()
+            .mapToList(dispatcher)
+            .map(::toStudentsWithAttendanceExternal)
             .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateLessonAttendance(

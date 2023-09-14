@@ -10,6 +10,7 @@ import com.example.teacher.core.model.data.Attendance
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.LessonAttendance
 import com.example.teacher.core.model.data.LessonEventAttendance
+import com.example.teacher.core.model.data.StudentWithAttendance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -38,6 +39,12 @@ internal class DatabaseLessonAttendanceRepository @Inject constructor(
     ): Flow<Result<Event>> = eventDataSource
         .getEventById(eventId)
         .asResultNotNull()
+
+    override fun getStudentsWithAttendanceByLessonId(
+        lessonId: Long
+    ): Flow<Result<List<StudentWithAttendance>>> = dataSource
+        .getStudentsWithAttendanceByLessonId(lessonId)
+        .asResult()
 
     override suspend fun insertOrUpdateLessonAttendance(
         eventId: Long,

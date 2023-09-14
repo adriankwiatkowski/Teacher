@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -14,6 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.teacher.core.ui.model.TeacherIcon
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 
 @Composable
@@ -21,6 +24,7 @@ fun TeacherButton(
     label: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    icon: TeacherIcon? = null,
     enabled: Boolean = true,
     shape: Shape = ButtonDefaults.outlinedShape,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
@@ -39,7 +43,13 @@ fun TeacherButton(
         border = border,
         contentPadding = contentPadding,
         interactionSource = interactionSource,
-        content = { Text(text = label) },
+        content = {
+            if (icon != null) {
+                Icon(imageVector = icon.icon, contentDescription = null)
+            }
+
+            Text(text = label)
+        },
     )
 }
 
@@ -49,6 +59,16 @@ private fun TeacherButtonPreview() {
     TeacherTheme {
         Surface {
             TeacherButton(label = "Button", onClick = {})
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun TeacherButtonWithIconPreview() {
+    TeacherTheme {
+        Surface {
+            TeacherButton(label = "Button", icon = TeacherIcons.chart(), onClick = {})
         }
     }
 }

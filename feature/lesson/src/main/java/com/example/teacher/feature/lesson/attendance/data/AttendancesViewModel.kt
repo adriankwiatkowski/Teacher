@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.data.repository.lessonattendance.LessonAttendanceRepository
 import com.example.teacher.core.model.data.LessonEventAttendance
+import com.example.teacher.core.model.data.StudentWithAttendance
 import com.example.teacher.feature.lesson.nav.LessonNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,6 +28,11 @@ internal class AttendancesViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     val attendancesResult: StateFlow<Result<List<LessonEventAttendance>>> = lessonId
         .flatMapLatest { lessonId -> repository.getLessonEventAttendancesByLessonId(lessonId) }
+        .stateIn(initialValue = Result.Loading)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val studentsWithAttendanceResult: StateFlow<Result<List<StudentWithAttendance>>> = lessonId
+        .flatMapLatest { lessonId -> repository.getStudentsWithAttendanceByLessonId(lessonId) }
         .stateIn(initialValue = Result.Loading)
 
     private fun <T> Flow<T>.stateIn(initialValue: T): StateFlow<T> = stateIn(

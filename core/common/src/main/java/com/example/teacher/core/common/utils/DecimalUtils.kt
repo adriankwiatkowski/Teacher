@@ -2,8 +2,9 @@ package com.example.teacher.core.common.utils
 
 import com.example.teacher.core.model.data.GradeWithAverage
 import java.math.BigDecimal
+import java.math.RoundingMode
 
-object GradeUtils {
+object DecimalUtils {
 
     val One = BigDecimal("1.00")
 
@@ -61,15 +62,29 @@ object GradeUtils {
         return grade.toPlainString()
     }
 
-    fun calculateAverage(grades: List<GradeWithAverage>): BigDecimal? {
+    fun calculateWeightedAverage(grades: List<GradeWithAverage>): BigDecimal? {
         return if (grades.isNotEmpty()) {
             val weightSum = grades.sumOf { it.weight }
 
             grades
                 .sumOf { it.grade * BigDecimal(it.weight) }
-                .divide(BigDecimal(weightSum))
+                .safeDivide(BigDecimal(weightSum))
         } else {
             null
         }
     }
+
+    fun calculateArithmeticAverage(numbers: List<BigDecimal>): BigDecimal? {
+        return if (numbers.isNotEmpty()) {
+            numbers.sumOf { it }.divide(BigDecimal(numbers.size))
+        } else {
+            null
+        }
+    }
+
+    fun BigDecimal.safeDivide(divisor: BigDecimal): BigDecimal {
+        return this.divide(divisor, 2, RoundingMode.HALF_UP)
+    }
+
+    fun BigDecimal.toPercentage(): BigDecimal = this.times(BigDecimal.valueOf(100L))
 }
