@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -25,8 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.model.data.Lesson
-import com.example.teacher.core.ui.component.TeacherButton
-import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.schedule.R
@@ -74,62 +71,18 @@ internal fun DateForm(
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
             if (showLessonPicker) {
-                val text = if (lesson != null) {
-                    val lessonName = lesson.name
-                    val schoolClassName = lesson.schoolClass.name
-                    "$lessonName $schoolClassName"
-                } else {
-                    stringResource(R.string.schedule_pick_lesson)
-                }
-
-                Text(
-                    text = stringResource(R.string.schedule_lesson),
-                    style = MaterialTheme.typography.labelMedium,
-                )
-                Column(Modifier.padding(MaterialTheme.spacing.small)) {
-                    if (lesson != null) {
-                        Text(
-                            text = lesson.schoolClass.schoolYear.name,
-                            style = MaterialTheme.typography.labelMedium,
-                        )
-                    }
-
-                    TeacherButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        label = text,
-                        onClick = onLessonPickerClick,
-                    )
-
-                    if (lesson == null) {
-                        Text(
-                            text = stringResource(R.string.schedule_lesson_not_selected),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.error,
-                        )
-                    }
-                }
-
+                LessonPicker(lesson = lesson, onLessonPickerClick = onLessonPickerClick)
                 Divider()
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
             }
 
             if (showTermPicker) {
-                Text(
-                    text = stringResource(R.string.schedule_term),
-                    style = MaterialTheme.typography.labelLarge,
+                LessonTermPicker(
+                    firstTermName = firstTermName,
+                    secondTermName = secondTermName,
+                    isFirstTermSelected = isFirstTermSelected,
+                    onTermSelected = onTermSelected,
                 )
-                Column(Modifier.selectableGroup()) {
-                    TeacherRadioButton(
-                        label = stringResource(R.string.schedule_term_with_data, firstTermName),
-                        selected = isFirstTermSelected,
-                        onClick = { onTermSelected(true) },
-                    )
-                    TeacherRadioButton(
-                        label = stringResource(R.string.schedule_term_with_data, secondTermName),
-                        selected = !isFirstTermSelected,
-                        onClick = { onTermSelected(false) },
-                    )
-                }
                 Divider()
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
             }
