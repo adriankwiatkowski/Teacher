@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.data.repository.note.NoteRepository
+import com.example.teacher.core.domain.GenerateNoteTitleUseCase
 import com.example.teacher.core.model.data.Note
 import com.example.teacher.core.model.data.NotePriority
 import com.example.teacher.core.ui.model.FormStatus
@@ -29,6 +30,7 @@ import javax.inject.Inject
 internal class NoteFormViewModel @Inject constructor(
     private val repository: NoteRepository,
     private val savedStateHandle: SavedStateHandle,
+    generateNoteTitleUseCase: GenerateNoteTitleUseCase,
 ) : ViewModel() {
 
     private val noteId = savedStateHandle.getStateFlow(NOTE_ID_KEY, 0L)
@@ -39,17 +41,13 @@ internal class NoteFormViewModel @Inject constructor(
         .flatMapLatest { noteId -> repository.getNoteOrNullById(noteId) }
         .stateIn(initialValue = Result.Loading)
 
-    var form by mutableStateOf(NoteFormProvider.createDefaultForm())
+    var form by mutableStateOf(NoteFormProvider.createDefaultForm(title = generateNoteTitleUseCase()))
         private set
 
     init {
         noteResult
             .onEach { noteResource ->
-                val note = (noteResource as? Result.Success)?.data
-                if (note == null) {
-                    form = NoteFormProvider.createDefaultForm(status = FormStatus.Idle)
-                    return@onEach
-                }
+                val note = (noteResource as? Result.Success)?.data ?: return@onEach
 
                 form = form.copy(
                     title = NoteFormProvider.validateTitle(note.title),

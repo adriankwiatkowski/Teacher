@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.data.repository.studentnote.StudentNoteRepository
+import com.example.teacher.core.domain.GenerateNoteTitleUseCase
 import com.example.teacher.core.model.data.StudentNote
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.feature.studentnote.nav.StudentNoteNavigation
@@ -28,6 +29,7 @@ import javax.inject.Inject
 internal class StudentNoteFormViewModel @Inject constructor(
     private val repository: StudentNoteRepository,
     private val savedStateHandle: SavedStateHandle,
+    generateNoteTitleUseCase: GenerateNoteTitleUseCase,
 ) : ViewModel() {
 
     private val studentId = savedStateHandle.getStateFlow(STUDENT_ID_KEY, 0L)
@@ -39,7 +41,7 @@ internal class StudentNoteFormViewModel @Inject constructor(
         .flatMapLatest { studentNoteId -> repository.getStudentNoteOrNullById(studentNoteId) }
         .stateIn(initialValue = Result.Loading)
 
-    var form by mutableStateOf(StudentNoteFormProvider.createDefaultForm())
+    var form by mutableStateOf(StudentNoteFormProvider.createDefaultForm(title = generateNoteTitleUseCase()))
         private set
 
     @OptIn(ExperimentalCoroutinesApi::class)

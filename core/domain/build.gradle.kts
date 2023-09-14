@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.teacher.feature.lesson"
+    namespace = "com.example.teacher.core.domain"
     compileSdk = 34
 
     defaultConfig {
@@ -33,26 +33,13 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.get()
-    }
 }
 
 dependencies {
     implementation(project(":core:common"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:model"))
-    implementation(project(":core:data"))
-    implementation(project(":core:ui"))
 
-    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    // Hilt Navigation Compose
-    implementation(libs.hilt.nav.compose)
 
     implementation(libs.bundles.androidx)
 
