@@ -31,4 +31,6 @@
     <string name="student_send_email">Wyślij email</string>
     <string name="student_phone_call">Zadzwoń</string>
     <string name="student_student">Uczeń</string>
+    <string name="student_notes_neutral">Notatki</string>
+    <string name="student_notes_negative">Uwagi</string>
 </resources>
