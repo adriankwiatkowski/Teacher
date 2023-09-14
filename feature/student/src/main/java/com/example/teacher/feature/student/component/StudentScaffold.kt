@@ -1,4 +1,4 @@
-package com.example.teacher.feature.schoolclass.components
+package com.example.teacher.feature.student.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -19,25 +19,25 @@ import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.TeacherTopBarWithTabs
 import com.example.teacher.core.ui.model.TeacherAction
 import com.example.teacher.core.ui.theme.TeacherTheme
-import com.example.teacher.feature.schoolclass.tab.SchoolClassTab
+import com.example.teacher.feature.student.tab.StudentTab
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-internal fun SchoolClassScaffold(
+internal fun StudentScaffold(
     isScaffoldVisible: Boolean,
     title: String,
     menuItems: List<TeacherAction>,
     showNavigationIcon: Boolean,
     onNavigationIconClick: () -> Unit,
-    tabs: List<SchoolClassTab>,
-    selectedTab: SchoolClassTab,
-    onTabClick: (schoolClassTab: SchoolClassTab) -> Unit,
+    tabs: List<StudentTab>,
+    selectedTab: StudentTab,
+    onTabClick: (studentTab: StudentTab) -> Unit,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    content: @Composable (schoolClassTab: SchoolClassTab) -> Unit,
+    content: @Composable (studentTab: StudentTab) -> Unit,
 ) {
-    val tabIcons = remember(tabs) { tabs.map(SchoolClassTab::icon) }
+    val tabIcons = remember(tabs) { tabs.map(StudentTab::icon) }
     val selectedTabIndex = remember(tabs, selectedTab) { tabs.indexOf(selectedTab) }
 
     val scrollBehavior = TeacherTopBarDefaults.default()
@@ -62,23 +62,17 @@ internal fun SchoolClassScaffold(
 @OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
-private fun SchoolClassScaffoldPreview() {
+private fun StudentScaffoldPreview() {
     TeacherTheme {
         Surface {
-            val tabs = remember {
-                listOf(
-                    SchoolClassTab.Students,
-                    SchoolClassTab.Subjects,
-                    SchoolClassTab.Detail,
-                )
-            }
+            val tabs = remember { listOf(StudentTab.Grades, StudentTab.Notes, StudentTab.Detail) }
             val pagerState =
-                rememberPagerState(initialPage = tabs.indexOf(SchoolClassTab.Students)) { tabs.size }
+                rememberPagerState(initialPage = tabs.indexOf(StudentTab.Detail)) { tabs.size }
             val selectedTab = tabs[pagerState.currentPage]
 
             val coroutineScope = rememberCoroutineScope()
 
-            SchoolClassScaffold(
+            StudentScaffold(
                 modifier = Modifier.fillMaxSize(),
                 isScaffoldVisible = true,
                 title = "Jan Kowalski 3A",
@@ -93,9 +87,9 @@ private fun SchoolClassScaffoldPreview() {
                     }
                 },
                 pagerState = pagerState,
-            ) { lessonTab ->
+            ) { studentTab ->
                 Column(modifier = Modifier.fillMaxSize()) {
-                    Text(stringResource(lessonTab.icon.text))
+                    Text(stringResource(studentTab.icon.text))
                     repeat(10) {
                         Text("Details of tab...")
                     }

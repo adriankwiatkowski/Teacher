@@ -33,7 +33,7 @@ import com.example.teacher.core.ui.paramprovider.BasicStudentsPreviewParameterPr
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
-import com.example.teacher.feature.schoolclass.components.StudentItem
+import com.example.teacher.feature.schoolclass.component.StudentItem
 
 @Composable
 internal fun SchoolClassStudentsScreen(

@@ -27,7 +27,7 @@ import com.example.teacher.core.ui.paramprovider.BasicLessonsPreviewParameterPro
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
-import com.example.teacher.feature.schoolclass.components.LessonItem
+import com.example.teacher.feature.schoolclass.component.LessonItem
 
 @Composable
 internal fun SchoolClassLessonsScreen(

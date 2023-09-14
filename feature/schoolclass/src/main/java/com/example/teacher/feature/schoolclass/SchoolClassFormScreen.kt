@@ -32,7 +32,7 @@ import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.paramprovider.SchoolYearsPreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
-import com.example.teacher.feature.schoolclass.components.SchoolYearInput
+import com.example.teacher.feature.schoolclass.component.SchoolYearInput
 import com.example.teacher.feature.schoolclass.data.SchoolClassFormProvider
 
 @OptIn(ExperimentalMaterial3Api::class)

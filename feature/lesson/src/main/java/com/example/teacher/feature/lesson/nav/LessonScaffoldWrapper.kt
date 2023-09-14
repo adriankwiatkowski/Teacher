@@ -18,7 +18,7 @@ import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.TeacherAction
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.lesson.R
-import com.example.teacher.feature.lesson.components.LessonScaffold
+import com.example.teacher.feature.lesson.component.LessonScaffold
 import com.example.teacher.feature.lesson.data.LessonScaffoldViewModel
 import com.example.teacher.feature.lesson.tab.LessonTab
 import kotlinx.coroutines.launch

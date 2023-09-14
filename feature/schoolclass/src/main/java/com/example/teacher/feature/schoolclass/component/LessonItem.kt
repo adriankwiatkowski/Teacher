@@ -1,4 +1,4 @@
-package com.example.teacher.feature.schoolclass.components
+package com.example.teacher.feature.schoolclass.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Icon

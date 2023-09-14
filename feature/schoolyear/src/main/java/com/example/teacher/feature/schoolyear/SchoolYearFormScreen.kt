@@ -34,7 +34,7 @@ import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
-import com.example.teacher.feature.schoolyear.components.TermForm
+import com.example.teacher.feature.schoolyear.component.TermForm
 import com.example.teacher.feature.schoolyear.data.InputDate
 import com.example.teacher.feature.schoolyear.data.SchoolYearFormProvider
 import com.example.teacher.feature.schoolyear.data.TermForm

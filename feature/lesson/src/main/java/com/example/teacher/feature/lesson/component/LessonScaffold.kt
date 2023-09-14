@@ -1,4 +1,4 @@
-package com.example.teacher.feature.lesson.components
+package com.example.teacher.feature.lesson.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column

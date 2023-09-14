@@ -1,4 +1,4 @@
-package com.example.teacher.feature.schoolyear.components
+package com.example.teacher.feature.schoolyear.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
