@@ -58,8 +58,7 @@ object DecimalUtils {
     }
 
     fun toLiteral(grade: BigDecimal): String {
-        // TODO: Change it to behave like school average round up/down.
-        return grade.toPlainString()
+        return grade.setScale(2, RoundingMode.HALF_UP).toPlainString()
     }
 
     fun calculateWeightedAverage(grades: List<GradeWithAverage>): BigDecimal? {
@@ -76,7 +75,7 @@ object DecimalUtils {
 
     fun calculateArithmeticAverage(numbers: List<BigDecimal>): BigDecimal? {
         return if (numbers.isNotEmpty()) {
-            numbers.sumOf { it }.divide(BigDecimal(numbers.size))
+            numbers.sumOf { it }.safeDivide(BigDecimal(numbers.size))
         } else {
             null
         }
