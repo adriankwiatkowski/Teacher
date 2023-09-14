@@ -65,7 +65,7 @@ internal fun StudentScaffold(
 private fun StudentScaffoldPreview() {
     TeacherTheme {
         Surface {
-            val tabs = remember { listOf(StudentTab.Detail, StudentTab.Grades, StudentTab.Notes) }
+            val tabs = remember { listOf(StudentTab.Grades, StudentTab.Notes, StudentTab.Detail) }
             val pagerState =
                 rememberPagerState(initialPage = tabs.indexOf(StudentTab.Detail)) { tabs.size }
             val selectedTab = tabs[pagerState.currentPage]
