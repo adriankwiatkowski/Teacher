@@ -38,7 +38,7 @@ internal fun StudentScaffoldWrapper(
     val isStudentDeleted by viewModel.isStudentDeleted.collectAsStateWithLifecycle()
 
     val tabs = remember { listOf(StudentTab.Grades, StudentTab.Notes, StudentTab.Detail) }
-    val pagerState = rememberPagerState(initialPage = tabs.indexOf(StudentTab.Detail)) { tabs.size }
+    val pagerState = rememberPagerState(initialPage = tabs.indexOf(StudentTab.Grades)) { tabs.size }
     val selectedTab by remember {
         derivedStateOf {
             tabs[pagerState.currentPage]
