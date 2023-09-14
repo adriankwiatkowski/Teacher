@@ -193,8 +193,7 @@ private fun Content(
             inputField = description,
             onValueChange = { onDescriptionChange(it) },
             label = stringResource(R.string.student_note_description),
-            keyboardOptions = commonKeyboardOptions,
-            keyboardActions = commonKeyboardActions,
+            minLines = 10,
         )
 
         TeacherButton(

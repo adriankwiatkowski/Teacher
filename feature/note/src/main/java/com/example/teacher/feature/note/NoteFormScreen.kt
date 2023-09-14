@@ -196,10 +196,7 @@ private fun Content(
 @Preview
 @Composable
 private fun NoteFormScreenPreview(
-    @PreviewParameter(
-        NotePreviewParameterProvider::class,
-        limit = 1
-    ) note: Note,
+    @PreviewParameter(NotePreviewParameterProvider::class, limit = 1) note: Note,
 ) {
     TeacherTheme {
         Surface {
