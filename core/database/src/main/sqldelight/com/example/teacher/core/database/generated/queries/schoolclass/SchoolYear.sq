@@ -50,6 +50,13 @@ INNER JOIN school_class sc ON sy.id = sc.school_year_id
 INNER JOIN lesson l ON l.school_class_id = sc.id
 WHERE l.id = :id;
 
+getTermIdsBySchoolYearId:
+SELECT
+    sy.term_first_id AS 'term_first_id',
+    sy.term_second_id AS 'term_second_id'
+FROM school_year sy
+WHERE sy.id = :id;
+
 insertSchoolYear:
 INSERT OR FAIL
 INTO school_year

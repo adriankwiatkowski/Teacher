@@ -50,18 +50,16 @@ internal class SchoolYearDataSourceImpl(
     override suspend fun insertOrUpdateSchoolYear(
         id: Long?,
         schoolYearName: String,
-        termFirstId: Long?,
         termFirstName: String,
         termFirstStartDate: LocalDate,
         termFirstEndDate: LocalDate,
-        termSecondId: Long?,
         termSecondName: String,
         termSecondStartDate: LocalDate,
         termSecondEndDate: LocalDate,
     ): Unit = withContext(dispatcher) {
         queries.transaction {
             if (id == null) {
-                @Suppress("NAME_SHADOWING") val termFirstId = common.insertAndGetId {
+                val termFirstId = common.insertAndGetId {
                     queries.insertTerm(
                         id = null,
                         name = termFirstName,
@@ -69,7 +67,7 @@ internal class SchoolYearDataSourceImpl(
                         end_date = termFirstEndDate,
                     )
                 }
-                @Suppress("NAME_SHADOWING") val termSecondId = common.insertAndGetId {
+                val termSecondId = common.insertAndGetId {
                     queries.insertTerm(
                         id = null,
                         name = termSecondName,
@@ -85,14 +83,18 @@ internal class SchoolYearDataSourceImpl(
                     name = schoolYearName,
                 )
             } else {
+                val termIds = queries.getTermIdsBySchoolYearId(id).executeAsOne()
+                val termFirstId = termIds.term_first_id
+                val termSecondId = termIds.term_second_id
+
                 queries.updateTerm(
-                    id = termFirstId!!,
+                    id = termFirstId,
                     name = termFirstName,
                     start_date = termFirstStartDate,
                     end_date = termFirstEndDate,
                 )
                 queries.updateTerm(
-                    id = termSecondId!!,
+                    id = termSecondId,
                     name = termSecondName,
                     start_date = termSecondStartDate,
                     end_date = termSecondEndDate,

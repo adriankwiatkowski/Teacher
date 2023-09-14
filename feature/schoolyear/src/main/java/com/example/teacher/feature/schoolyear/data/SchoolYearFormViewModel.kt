@@ -55,7 +55,6 @@ internal class SchoolYearFormViewModel @Inject constructor(
                     schoolYearName = SchoolYearFormProvider.validateSchoolYearName(schoolYear.name),
                     termForms = listOf(schoolYear.firstTerm, schoolYear.secondTerm).map { term ->
                         TermForm(
-                            id = term.id,
                             name = SchoolYearFormProvider.validateTermName(term.name),
                             startDate = SchoolYearFormProvider.validateStartDate(term.startDate),
                             endDate = SchoolYearFormProvider.validateEndDate(term.endDate),
@@ -113,11 +112,9 @@ internal class SchoolYearFormViewModel @Inject constructor(
             repository.insertOrUpdateSchoolYear(
                 id = schoolYearId.value.let { id -> if (id != 0L) id else null },
                 schoolYearName = schoolYearName,
-                termFirstId = firstTerm.id,
                 termFirstName = firstTerm.name.value,
                 termFirstStartDate = firstTerm.startDate.date,
                 termFirstEndDate = firstTerm.endDate.date,
-                termSecondId = secondTerm.id,
                 termSecondName = secondTerm.name.value,
                 termSecondStartDate = secondTerm.startDate.date,
                 termSecondEndDate = secondTerm.endDate.date,

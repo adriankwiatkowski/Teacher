@@ -25,11 +25,9 @@ internal class DatabaseSchoolYearRepository @Inject constructor(
     override suspend fun insertOrUpdateSchoolYear(
         id: Long?,
         schoolYearName: String,
-        termFirstId: Long?,
         termFirstName: String,
         termFirstStartDate: LocalDate,
         termFirstEndDate: LocalDate,
-        termSecondId: Long?,
         termSecondName: String,
         termSecondStartDate: LocalDate,
         termSecondEndDate: LocalDate,
@@ -38,11 +36,9 @@ internal class DatabaseSchoolYearRepository @Inject constructor(
             dataSource.insertOrUpdateSchoolYear(
                 id = id,
                 schoolYearName = schoolYearName,
-                termFirstId = termFirstId,
                 termFirstName = termFirstName,
                 termFirstStartDate = termFirstStartDate,
                 termFirstEndDate = termFirstEndDate,
-                termSecondId = termSecondId,
                 termSecondName = termSecondName,
                 termSecondStartDate = termSecondStartDate,
                 termSecondEndDate = termSecondEndDate,
