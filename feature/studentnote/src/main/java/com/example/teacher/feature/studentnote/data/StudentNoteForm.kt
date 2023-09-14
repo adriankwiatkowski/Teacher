@@ -6,6 +6,7 @@ import com.example.teacher.core.ui.model.InputField
 internal data class StudentNoteForm(
     val title: InputField<String>,
     val description: InputField<String?>,
+    val isNegative: Boolean,
     val status: FormStatus,
 ) {
     private val isValid: Boolean

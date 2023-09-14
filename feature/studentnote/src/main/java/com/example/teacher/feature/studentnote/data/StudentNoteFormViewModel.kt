@@ -50,15 +50,12 @@ internal class StudentNoteFormViewModel @Inject constructor(
     init {
         studentNoteResult
             .onEach { studentNoteResult ->
-                val studentNote = (studentNoteResult as? Result.Success)?.data
-                if (studentNote == null) {
-                    form = StudentNoteFormProvider.createDefaultForm()
-                    return@onEach
-                }
+                val studentNote = (studentNoteResult as? Result.Success)?.data ?: return@onEach
 
                 form = form.copy(
                     title = StudentNoteFormProvider.validateTitle(studentNote.title),
                     description = StudentNoteFormProvider.validateDescription(studentNote.description),
+                    isNegative = studentNote.isNegative,
                     status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
                 )
             }
@@ -73,6 +70,10 @@ internal class StudentNoteFormViewModel @Inject constructor(
         form = form.copy(description = StudentNoteFormProvider.validateDescription(description))
     }
 
+    fun onIsNoteNegativeChange(isNegative: Boolean) {
+        form = form.copy(isNegative = isNegative)
+    }
+
     fun onSubmit() {
         if (!form.isSubmitEnabled) {
             return
@@ -85,7 +86,7 @@ internal class StudentNoteFormViewModel @Inject constructor(
                 studentId = studentId.value,
                 title = form.title.value.trim(),
                 description = form.description.value?.trim().orEmpty(),
-                isNegative = true,
+                isNegative = form.isNegative,
             )
 
             if (isActive) {

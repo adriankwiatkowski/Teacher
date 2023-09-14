@@ -32,12 +32,14 @@ internal object StudentNoteFormProvider {
     fun createDefaultForm(
         title: String = "",
         description: String? = null,
+        isNegative: Boolean = true,
         isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): StudentNoteForm {
         return StudentNoteForm(
             title = validateTitle(title, isEdited = isEdited),
             description = validateDescription(description, isEdited = isEdited),
+            isNegative = isNegative,
             status = status,
         )
     }

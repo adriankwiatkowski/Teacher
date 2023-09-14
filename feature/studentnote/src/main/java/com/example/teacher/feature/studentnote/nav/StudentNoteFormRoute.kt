@@ -53,6 +53,8 @@ internal fun StudentNoteFormRoute(
         onTitleChange = viewModel::onTitleChange,
         description = form.description,
         onDescriptionChange = viewModel::onDescriptionChange,
+        isNoteNegative = form.isNegative,
+        onIsNoteNegativeChange = viewModel::onIsNoteNegativeChange,
         isSubmitEnabled = form.isSubmitEnabled,
         onAddStudentNote = viewModel::onSubmit,
         isEditMode = isEditMode,

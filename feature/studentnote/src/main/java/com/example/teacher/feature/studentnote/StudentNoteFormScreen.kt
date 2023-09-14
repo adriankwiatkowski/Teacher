@@ -3,10 +3,12 @@ package com.example.teacher.feature.studentnote
 import android.view.KeyEvent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -34,6 +36,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.StudentNote
 import com.example.teacher.core.ui.component.TeacherButton
+import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.form.FormStatusContent
@@ -61,6 +64,8 @@ internal fun StudentNoteFormScreen(
     onTitleChange: (title: String) -> Unit,
     description: InputField<String?>,
     onDescriptionChange: (description: String) -> Unit,
+    isNoteNegative: Boolean,
+    onIsNoteNegativeChange: (isNegative: Boolean) -> Unit,
     isSubmitEnabled: Boolean,
     onAddStudentNote: () -> Unit,
     isEditMode: Boolean,
@@ -108,6 +113,8 @@ internal fun StudentNoteFormScreen(
                     onTitleChange = onTitleChange,
                     description = description,
                     onDescriptionChange = onDescriptionChange,
+                    isNoteNegative = isNoteNegative,
+                    onIsNoteNegativeChange = onIsNoteNegativeChange,
                     isSubmitEnabled = isSubmitEnabled,
                     submitText = if (isEditMode) {
                         stringResource(R.string.student_note_edit_note)
@@ -128,6 +135,8 @@ private fun Content(
     onTitleChange: (title: String) -> Unit,
     description: InputField<String?>,
     onDescriptionChange: (description: String) -> Unit,
+    isNoteNegative: Boolean,
+    onIsNoteNegativeChange: (isNegative: Boolean) -> Unit,
     isSubmitEnabled: Boolean,
     submitText: String,
     onSubmit: () -> Unit,
@@ -161,7 +170,13 @@ private fun Content(
         )
         val commonKeyboardActions = KeyboardActions(onNext = { moveNext() })
 
-        Text(studentFullName)
+        Text(text = studentFullName, style = MaterialTheme.typography.headlineSmall)
+        Spacer(Modifier.padding(MaterialTheme.spacing.small))
+
+        StudentNoteTypePicker(
+            isNoteNegative = isNoteNegative,
+            onIsNoteNegativeChange = onIsNoteNegativeChange,
+        )
 
         FormTextField(
             modifier = textFieldModifier,
@@ -187,6 +202,33 @@ private fun Content(
             onClick = onSubmit,
             enabled = isSubmitEnabled,
         )
+    }
+}
+
+@Composable
+private fun StudentNoteTypePicker(
+    isNoteNegative: Boolean,
+    onIsNoteNegativeChange: (isNegative: Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(R.string.student_note_type),
+            style = MaterialTheme.typography.labelLarge,
+        )
+
+        Column(Modifier.selectableGroup()) {
+            TeacherRadioButton(
+                label = stringResource(R.string.student_note_neutral_type),
+                selected = !isNoteNegative,
+                onClick = { onIsNoteNegativeChange(false) },
+            )
+            TeacherRadioButton(
+                label = stringResource(R.string.student_note_negative_type),
+                selected = isNoteNegative,
+                onClick = { onIsNoteNegativeChange(true) },
+            )
+        }
     }
 }
 
@@ -217,6 +259,8 @@ private fun StudentNoteFormScreenPreview(
                 onTitleChange = {},
                 description = form.description,
                 onDescriptionChange = {},
+                isNoteNegative = form.isNegative,
+                onIsNoteNegativeChange = {},
                 isSubmitEnabled = form.isSubmitEnabled,
                 onAddStudentNote = {},
                 isEditMode = true,
@@ -248,6 +292,8 @@ private fun StudentNoteFormScreenDeletedPreview() {
                 onTitleChange = {},
                 description = form.description,
                 onDescriptionChange = {},
+                isNoteNegative = form.isNegative,
+                onIsNoteNegativeChange = {},
                 isSubmitEnabled = form.isSubmitEnabled,
                 onAddStudentNote = {},
                 isEditMode = true,
