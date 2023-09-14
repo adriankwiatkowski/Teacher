@@ -33,5 +33,5 @@
     <string name="student_student">Uczeń</string>
     <string name="student_notes_neutral">Notatki</string>
     <string name="student_notes_negative">Uwagi</string>
-    <string name="student_register_number_with_data">Numer w dzienniku, %1$s</string>
+    <string name="student_register_number_with_data">Numer w dzienniku: %1$s</string>
 </resources>

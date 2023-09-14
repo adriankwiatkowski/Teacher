@@ -1,25 +1,22 @@
 package com.example.teacher.feature.student
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -78,10 +75,17 @@ private fun MainScreen(
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
-        Text(text = studentName, style = MaterialTheme.typography.titleLarge)
+        Text(
+            modifier = Modifier.padding(start = MaterialTheme.spacing.small),
+            text = studentName,
+            style = MaterialTheme.typography.titleLarge,
+        )
         Spacer(Modifier.padding(MaterialTheme.spacing.small))
 
-        Text(text = stringResource(R.string.student_register_number_with_data, registerNumber))
+        Text(
+            modifier = Modifier.padding(start = MaterialTheme.spacing.small),
+            text = stringResource(R.string.student_register_number_with_data, registerNumber),
+        )
         Spacer(Modifier.padding(MaterialTheme.spacing.small))
 
         TextWithAction(
@@ -111,18 +115,12 @@ private fun TextWithAction(
         return
     }
 
-    Row(
-        modifier = modifier
-            .clickable(onClick = onClick)
-            .minimumInteractiveComponentSize(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)
-    ) {
-        Text(text = "$label:", style = MaterialTheme.typography.labelMedium)
-        Text(text = text, style = MaterialTheme.typography.bodyLarge)
-
-        Icon(imageVector = icon.icon, contentDescription = null)
-    }
+    ListItem(
+        modifier = modifier.clickable(onClick = onClick),
+        overlineContent = { Text(text = label) },
+        headlineContent = { Text(text = text, style = MaterialTheme.typography.bodyLarge) },
+        trailingContent = { Icon(imageVector = icon.icon, contentDescription = null) },
+    )
 }
 
 @Preview
