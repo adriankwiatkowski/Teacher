@@ -73,11 +73,10 @@ private fun TermDatePicker(
         verticalArrangement = Arrangement.Center,
     ) {
         Text(text = label)
-        Text(text = dateString)
         TeacherDatePicker(
             date = date,
             onDateSelected = onDateSelected,
-            label = stringResource(R.string.school_year_pick_date),
+            label = dateString,
         )
     }
 }

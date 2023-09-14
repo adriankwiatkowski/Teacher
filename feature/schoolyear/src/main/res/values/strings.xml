@@ -3,7 +3,6 @@
     <string name="school_year_term_name_label">Nazwa semestru</string>
     <string name="school_year_term_start_date_label">Data rozpoczęcia semestru</string>
     <string name="school_year_term_end_date_label">Data zakończenia semestru</string>
-    <string name="school_year_pick_date">Wybierz datę</string>
     <string name="school_year_saving_school_year">Zapisywanie roku szkolnego…</string>
     <string name="school_year_saved">Zapisano rok szkolny</string>
     <string name="school_year_deleted">Usunięto rok szkolny</string>
