@@ -154,12 +154,6 @@ CREATE TABLE note
     priority INTEGER NOT NULL
 );
 
-CREATE TABLE password
-(
-    id       INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    password TEXT    NOT NULL
-);
-
 INSERT OR FAIL INTO attendance (text) VALUES
     ('nb'),
     ('u'),
