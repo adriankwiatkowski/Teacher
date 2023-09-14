@@ -1,5 +1,6 @@
 package com.example.teacher.core.common.utils
 
+import com.example.teacher.core.model.data.GradeWithAverage
 import java.math.BigDecimal
 
 object GradeUtils {
@@ -60,9 +61,13 @@ object GradeUtils {
         return grade.toPlainString()
     }
 
-    fun calculateAverage(grades: List<BigDecimal>): BigDecimal? {
+    fun calculateAverage(grades: List<GradeWithAverage>): BigDecimal? {
         return if (grades.isNotEmpty()) {
-            grades.sumOf { it }.divide(BigDecimal(grades.size.toLong()))
+            val weightSum = grades.sumOf { it.weight }
+
+            grades
+                .sumOf { it.grade * BigDecimal(it.weight) }
+                .divide(BigDecimal(weightSum))
         } else {
             null
         }

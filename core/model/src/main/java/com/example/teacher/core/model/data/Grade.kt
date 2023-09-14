@@ -45,3 +45,5 @@ data class BasicGradeForTemplate(
     val gradeWeight: Int,
     val isFirstTerm: Boolean,
 )
+
+data class GradeWithAverage(val grade: BigDecimal, val weight: Int)
