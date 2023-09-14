@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -72,8 +73,12 @@ private fun TermDatePicker(
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         verticalArrangement = Arrangement.Center,
     ) {
-        Text(text = label)
+        Text(
+            modifier = Modifier.align(Alignment.CenterVertically),
+            text = label,
+        )
         TeacherDatePicker(
+            modifier = Modifier.align(Alignment.CenterVertically),
             date = date,
             onDateSelected = onDateSelected,
             label = dateString,
