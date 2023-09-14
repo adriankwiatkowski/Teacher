@@ -1,7 +1,8 @@
-package com.example.teacher.feature.student.data
+package com.example.teacher.feature.student.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.BasicStudentNotesPreviewParameterProvider
+import com.example.teacher.feature.student.data.StudentNotes
 
 internal class StudentNotesPreviewParameterProvider :
     PreviewParameterProvider<StudentNotes> {

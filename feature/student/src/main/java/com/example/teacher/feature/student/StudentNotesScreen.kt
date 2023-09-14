@@ -35,7 +35,7 @@ import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.student.data.StudentNotes
-import com.example.teacher.feature.student.data.StudentNotesPreviewParameterProvider
+import com.example.teacher.feature.student.paramprovider.StudentNotesPreviewParameterProvider
 
 @Composable
 internal fun StudentNotesScreen(
