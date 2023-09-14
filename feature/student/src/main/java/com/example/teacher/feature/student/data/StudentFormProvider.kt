@@ -55,12 +55,49 @@ internal object StudentFormProvider {
         )
     }
 
+    fun validateRegisterNumber(
+        registerNumber: String?,
+        usedRegisterNumbers: List<Long>?,
+        isEdited: Boolean = true,
+    ): InputField<String?> {
+        var supportingText = R.string.student_register_number_supporting_text
+
+        val isError = when {
+            // Register numbers not loaded yet, show as error.
+            usedRegisterNumbers == null -> true
+
+            // Empty register number is allowed.
+            registerNumber.isNullOrBlank() -> false
+
+            // Check if register number is in fact number and is not used by other student.
+            else -> registerNumber.toLongOrNull()?.let { number ->
+                val isNotUniqueNumber = number in usedRegisterNumbers
+
+                if (isNotUniqueNumber) {
+                    supportingText = R.string.student_register_number_supporting_text_error
+                }
+
+                isNotUniqueNumber
+            } ?: true
+        }
+
+        return InputField(
+            registerNumber,
+            supportingText = supportingText,
+            isError = isError,
+            isEdited = isEdited,
+            isRequired = false,
+        )
+    }
+
     fun createDefaultForm(
+        usedRegisterNumbers: List<Long>?,
         id: Long? = null,
         name: String = "",
         surname: String = "",
         email: String? = null,
         phone: String? = null,
+        registerNumber: String? = null,
         isEdited: Boolean = false,
         status: FormStatus = FormStatus.Idle,
     ): StudentForm {
@@ -70,6 +107,11 @@ internal object StudentFormProvider {
             surname = validateSurname(surname, isEdited = isEdited),
             email = validateEmail(email, isEdited = isEdited),
             phone = validatePhone(phone, isEdited = isEdited),
+            registerNumber = validateRegisterNumber(
+                registerNumber,
+                usedRegisterNumbers,
+                isEdited = isEdited,
+            ),
             status = status,
         )
     }

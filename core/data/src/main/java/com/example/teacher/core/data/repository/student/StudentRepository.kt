@@ -11,6 +11,8 @@ interface StudentRepository {
 
     fun getStudentById(id: Long): Flow<Result<Student>>
 
+    fun getUsedRegisterNumbersBySchoolClassId(schoolClassId: Long): Flow<Result<List<Long>>>
+
     fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?>
 
     fun getStudentGradesById(studentId: Long): Flow<Result<List<StudentGradesByLesson>>>

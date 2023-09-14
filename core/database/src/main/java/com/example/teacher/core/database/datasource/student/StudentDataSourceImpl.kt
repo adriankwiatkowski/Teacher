@@ -48,6 +48,11 @@ internal class StudentDataSourceImpl(
             .map(::toExternal)
             .flowOn(dispatcher)
 
+    override fun getUsedRegisterNumbersBySchoolClassId(schoolClassId: Long): Flow<List<Long>> =
+        queries.getUsedRegisterNumbersBySchoolClassId(schoolClassId)
+            .asFlow()
+            .mapToList(dispatcher)
+
     override fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> =
         schoolClassQueries.getSchoolClassNameById(schoolClassId)
             .asFlow()
@@ -79,6 +84,7 @@ internal class StudentDataSourceImpl(
         val actualPhone = if (phone.isNullOrBlank()) null else phone
         val actualRegisterNumber = registerNumber ?: defaultRegisterNumber
 
+        // TODO: Allow register number swap.
         if (actualRegisterNumber in usedRegisterNumbers) {
             throw IllegalArgumentException("Register number is already taken. Called with: $registerNumber, computed register number was $actualRegisterNumber")
         }

@@ -13,6 +13,8 @@ interface StudentDataSource {
 
     fun getStudentsBySchoolClassId(schoolClassId: Long): Flow<List<BasicStudent>>
 
+    fun getUsedRegisterNumbersBySchoolClassId(schoolClassId: Long): Flow<List<Long>>
+
     fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?>
 
     fun getStudentGradesById(studentId: Long): Flow<List<StudentGradesByLesson>>

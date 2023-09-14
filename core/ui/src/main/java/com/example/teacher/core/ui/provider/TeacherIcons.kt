@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Delete
@@ -114,6 +115,11 @@ object TeacherIcons {
 
     fun people(@StringRes text: Int = R.string.ui_group_of_people) = TeacherIcon(
         icon = TeacherIcons.People,
+        text = text,
+    )
+
+    fun registerBook(@StringRes text: Int = R.string.ui_register_book) = TeacherIcon(
+        icon = TeacherIcons.Book,
         text = text,
     )
 

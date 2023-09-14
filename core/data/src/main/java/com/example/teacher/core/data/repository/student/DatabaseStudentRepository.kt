@@ -25,6 +25,12 @@ internal class DatabaseStudentRepository @Inject constructor(
         .getStudentById(id)
         .asResultNotNull()
 
+    override fun getUsedRegisterNumbersBySchoolClassId(
+        schoolClassId: Long
+    ): Flow<Result<List<Long>>> = dataSource
+        .getUsedRegisterNumbersBySchoolClassId(schoolClassId)
+        .asResult()
+
     override fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> = dataSource
         .getStudentSchoolClassNameById(schoolClassId)
 

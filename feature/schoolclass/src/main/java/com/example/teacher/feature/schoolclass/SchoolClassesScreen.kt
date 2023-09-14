@@ -99,6 +99,7 @@ private fun MainContent(
 
         if (schoolClassesByYear.isEmpty()) {
             item {
+                // TODO: Center Empty state.
                 EmptyClasses(Modifier.fillMaxWidth())
             }
         }

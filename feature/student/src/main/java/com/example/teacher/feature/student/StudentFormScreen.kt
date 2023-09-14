@@ -10,8 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -66,6 +64,8 @@ internal fun StudentFormScreen(
     onEmailChange: (email: String) -> Unit,
     phone: InputField<String?>,
     onPhoneChange: (phone: String) -> Unit,
+    registerNumber: InputField<String?>,
+    onRegisterNumberChange: (registerNumber: String) -> Unit,
     isSubmitEnabled: Boolean,
     onAddStudent: () -> Unit,
     modifier: Modifier = Modifier,
@@ -107,6 +107,8 @@ internal fun StudentFormScreen(
                     onEmailChange = onEmailChange,
                     phone = phone,
                     onPhoneChange = onPhoneChange,
+                    registerNumber = registerNumber,
+                    onRegisterNumberChange = onRegisterNumberChange,
                     isSubmitEnabled = isSubmitEnabled,
                     submitText = if (student == null) {
                         stringResource(R.string.add_student)
@@ -130,6 +132,8 @@ private fun Content(
     onEmailChange: (email: String) -> Unit,
     phone: InputField<String?>,
     onPhoneChange: (phone: String) -> Unit,
+    registerNumber: InputField<String?>,
+    onRegisterNumberChange: (registerNumber: String) -> Unit,
     isSubmitEnabled: Boolean,
     submitText: String,
     onSubmit: () -> Unit,
@@ -171,7 +175,8 @@ private fun Content(
             onValueChange = { onNameChange(it) },
             label = stringResource(R.string.student_name),
             leadingIcon = {
-                Icon(imageVector = Icons.Default.Person, contentDescription = null)
+                val icon = TeacherIcons.person()
+                Icon(imageVector = icon.icon, contentDescription = null)
             },
             keyboardOptions = nameKeyboardOptions,
             keyboardActions = commonKeyboardActions,
@@ -183,9 +188,23 @@ private fun Content(
             onValueChange = { onSurnameChange(it) },
             label = stringResource(R.string.student_surname),
             leadingIcon = {
-                Icon(imageVector = Icons.Default.Person, contentDescription = null)
+                val icon = TeacherIcons.person()
+                Icon(imageVector = icon.icon, contentDescription = null)
             },
             keyboardOptions = nameKeyboardOptions,
+            keyboardActions = commonKeyboardActions,
+        )
+
+        FormTextField(
+            modifier = textFieldModifier,
+            inputField = registerNumber,
+            onValueChange = { onRegisterNumberChange(it) },
+            label = stringResource(R.string.student_register_number),
+            leadingIcon = {
+                val icon = TeacherIcons.registerBook()
+                Icon(imageVector = icon.icon, contentDescription = null)
+            },
+            keyboardOptions = nameKeyboardOptions.copy(keyboardType = KeyboardType.Number),
             keyboardActions = commonKeyboardActions,
         )
 
@@ -196,7 +215,7 @@ private fun Content(
             label = stringResource(R.string.student_email),
             leadingIcon = {
                 val icon = TeacherIcons.email()
-                Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
+                Icon(imageVector = icon.icon, contentDescription = null)
             },
             keyboardOptions = commonKeyboardOptions.copy(keyboardType = KeyboardType.Email),
             keyboardActions = commonKeyboardActions,
@@ -209,7 +228,7 @@ private fun Content(
             label = stringResource(R.string.student_phone),
             leadingIcon = {
                 val icon = TeacherIcons.phone()
-                Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
+                Icon(imageVector = icon.icon, contentDescription = null)
             },
             keyboardOptions = commonKeyboardOptions.copy(keyboardType = KeyboardType.Phone),
             keyboardActions = commonKeyboardActions,
@@ -237,6 +256,7 @@ private fun StudentFormScreenPreview(
                 surname = student.surname,
                 email = student.email,
                 phone = student.phone,
+                usedRegisterNumbers = emptyList(),
             )
 
             StudentFormScreen(
@@ -254,6 +274,8 @@ private fun StudentFormScreenPreview(
                 onEmailChange = {},
                 phone = form.phone,
                 onPhoneChange = {},
+                registerNumber = form.registerNumber,
+                onRegisterNumberChange = {},
                 isSubmitEnabled = form.isSubmitEnabled,
                 onAddStudent = {},
             )
