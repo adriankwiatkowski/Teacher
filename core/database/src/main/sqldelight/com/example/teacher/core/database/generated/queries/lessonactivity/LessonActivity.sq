@@ -15,7 +15,8 @@ FROM lesson l
 INNER JOIN school_class sc ON sc.id = l.school_class_id
 INNER JOIN student s ON s.school_class_id = sc.id
 LEFT JOIN lesson_activity la ON la.student_id = s.id AND la.lesson_id = l.id
-WHERE l.id = :id;
+WHERE l.id = :id
+ORDER BY s.register_number;
 
 insertLessonActivity:
 INSERT OR FAIL

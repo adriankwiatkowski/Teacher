@@ -55,7 +55,8 @@ INNER JOIN school_class sc ON l.school_class_id = sc.id
 INNER JOIN student s ON sc.id = s.school_class_id
 LEFT JOIN lesson_attendance la ON e.id = la.event_id AND s.id = la.student_id
 LEFT JOIN attendance a ON a.id = la.attendance_id
-WHERE e.id = :event_id;
+WHERE e.id = :event_id
+ORDER BY s.register_number;
 
 getStudentsWithAttendanceByLessonId:
 SELECT
@@ -74,7 +75,8 @@ INNER JOIN school_class sc ON l.school_class_id = sc.id
 INNER JOIN student s ON sc.id = s.school_class_id
 LEFT JOIN lesson_attendance la ON e.id = la.event_id AND s.id = la.student_id
 LEFT JOIN attendance a ON a.id = la.attendance_id
-WHERE e.lesson_id = :lesson_id;
+WHERE e.lesson_id = :lesson_id
+ORDER BY s.register_number;
 
 getAttendanceByText:
 SELECT

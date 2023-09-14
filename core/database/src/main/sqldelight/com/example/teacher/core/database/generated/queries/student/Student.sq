@@ -50,7 +50,8 @@ SELECT
     s.phone
 FROM student s
 INNER JOIN school_class sc ON s.school_class_id = sc.id
-WHERE sc.id = :id;
+WHERE sc.id = :id
+ORDER BY s.register_number;
 
 getStudentByRegisterNumber:
 SELECT

@@ -1,52 +1,52 @@
 getAllSchoolYears:
 SELECT
-    s.id,
-    s.name AS 'school_year_name',
-    s.term_first_id AS 'term_first_id',
-    s.term_second_id AS 'term_second_id',
+    sy.id,
+    sy.name AS 'school_year_name',
+    sy.term_first_id AS 'term_first_id',
+    sy.term_second_id AS 'term_second_id',
     t1.name AS 'term_first_name',
     t1.start_date AS 'term_first_start_date',
     t1.end_date AS 'term_first_end_date',
     t2.name AS 'term_second_name',
     t2.start_date AS 'term_second_start_date',
     t2.end_date AS 'term_second_end_date'
-FROM school_year s
-INNER JOIN term t1 ON s.term_first_id = t1.id
-INNER JOIN term t2 ON s.term_second_id = t2.id;
+FROM school_year sy
+INNER JOIN term t1 ON sy.term_first_id = t1.id
+INNER JOIN term t2 ON sy.term_second_id = t2.id;
 
 getSchoolYearById:
 SELECT
-    s.id,
-    s.name AS 'school_year_name',
-    s.term_first_id AS 'term_first_id',
-    s.term_second_id AS 'term_second_id',
+    sy.id,
+    sy.name AS 'school_year_name',
+    sy.term_first_id AS 'term_first_id',
+    sy.term_second_id AS 'term_second_id',
     t1.name AS 'term_first_name',
     t1.start_date AS 'term_first_start_date',
     t1.end_date AS 'term_first_end_date',
     t2.name AS 'term_second_name',
     t2.start_date AS 'term_second_start_date',
     t2.end_date AS 'term_second_end_date'
-FROM school_year s
-INNER JOIN term t1 ON s.term_first_id = t1.id
-INNER JOIN term t2 ON s.term_second_id = t2.id
-WHERE s.id = :id;
+FROM school_year sy
+INNER JOIN term t1 ON sy.term_first_id = t1.id
+INNER JOIN term t2 ON sy.term_second_id = t2.id
+WHERE sy.id = :id;
 
 getSchoolYearByLessonId:
 SELECT
-    s.id,
-    s.name AS 'school_year_name',
-    s.term_first_id AS 'term_first_id',
-    s.term_second_id AS 'term_second_id',
+    sy.id,
+    sy.name AS 'school_year_name',
+    sy.term_first_id AS 'term_first_id',
+    sy.term_second_id AS 'term_second_id',
     t1.name AS 'term_first_name',
     t1.start_date AS 'term_first_start_date',
     t1.end_date AS 'term_first_end_date',
     t2.name AS 'term_second_name',
     t2.start_date AS 'term_second_start_date',
     t2.end_date AS 'term_second_end_date'
-FROM school_year s
-INNER JOIN term t1 ON s.term_first_id = t1.id
-INNER JOIN term t2 ON s.term_second_id = t2.id
-INNER JOIN school_class sc ON s.id = sc.school_year_id
+FROM school_year sy
+INNER JOIN term t1 ON sy.term_first_id = t1.id
+INNER JOIN term t2 ON sy.term_second_id = t2.id
+INNER JOIN school_class sc ON sy.id = sc.school_year_id
 INNER JOIN lesson l ON l.school_class_id = sc.id
 WHERE l.id = :id;
 
