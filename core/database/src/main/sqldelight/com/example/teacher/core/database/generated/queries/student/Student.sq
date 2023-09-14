@@ -52,6 +52,18 @@ FROM student s
 INNER JOIN school_class sc ON s.school_class_id = sc.id
 WHERE sc.id = :id;
 
+getUsedRegisterNumbersBySchoolClassId:
+SELECT
+    s.register_number AS 'register_number'
+FROM student s
+INNER JOIN school_class sc ON s.school_class_id = sc.id
+WHERE sc.id = :id;
+
+getStudentMaxRegisterNumber:
+SELECT
+    MAX(s.register_number) AS 'max_register_number'
+FROM student s;
+
 getStudentNameById:
 SELECT
     s.name,

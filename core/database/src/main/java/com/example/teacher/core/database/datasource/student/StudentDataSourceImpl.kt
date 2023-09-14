@@ -70,28 +70,36 @@ internal class StudentDataSourceImpl(
         email: String?,
         phone: String?,
     ): Unit = withContext(dispatcher) {
-        val defaultRegisterNumber = 1L // TODO: Register number should be unique.
+        val defaultRegisterNumber =
+            (queries.getStudentMaxRegisterNumber().executeAsOne().max_register_number ?: 0L) + 1L
+        val usedRegisterNumbers =
+            queries.getUsedRegisterNumbersBySchoolClassId(schoolClassId).executeAsList()
 
-        @Suppress("NAME_SHADOWING") val email = if (email.isNullOrBlank()) null else email
-        @Suppress("NAME_SHADOWING") val phone = if (phone.isNullOrBlank()) null else phone
+        val actualEmail = if (email.isNullOrBlank()) null else email
+        val actualPhone = if (phone.isNullOrBlank()) null else phone
+        val actualRegisterNumber = registerNumber ?: defaultRegisterNumber
+
+        if (actualRegisterNumber in usedRegisterNumbers) {
+            throw IllegalArgumentException("Register number is already taken. Called with: $registerNumber, computed register number was $actualRegisterNumber")
+        }
 
         if (id == null) {
             queries.insertStudent(
                 id = null,
                 school_class_id = schoolClassId,
-                register_number = registerNumber ?: defaultRegisterNumber,
+                register_number = actualRegisterNumber,
                 name = name,
                 surname = surname,
-                email = email,
-                phone = phone,
+                email = actualEmail,
+                phone = actualPhone,
             )
         } else {
             queries.updateStudent(
                 name = name,
                 surname = surname,
-                email = email,
-                phone = phone,
-                register_number = registerNumber ?: defaultRegisterNumber,
+                email = actualEmail,
+                phone = actualPhone,
+                register_number = actualRegisterNumber,
                 id = id,
             )
         }
