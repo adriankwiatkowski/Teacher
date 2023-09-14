@@ -2,6 +2,7 @@ package com.example.teacher.feature.schoolclass
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -60,7 +61,11 @@ internal fun SchoolClassesScreen(
                 .fillMaxSize(),
             result = schoolClassesResult,
         ) { schoolClasses ->
-            MainContent(schoolClassesByYear = schoolClasses, onClassClick = onClassClick)
+            if (schoolClasses.isEmpty()) {
+                EmptyClasses()
+            } else {
+                MainContent(schoolClassesByYear = schoolClasses, onClassClick = onClassClick)
+            }
         }
     }
 }
@@ -94,13 +99,6 @@ private fun MainContent(
                     lessonCount = schoolClass.lessonCount,
                     onClick = { onClassClick(schoolClass.id) },
                 )
-            }
-        }
-
-        if (schoolClassesByYear.isEmpty()) {
-            item {
-                // TODO: Center Empty state.
-                EmptyClasses(Modifier.fillMaxWidth())
             }
         }
     }
@@ -150,7 +148,9 @@ private fun ClassItem(
 
 @Composable
 private fun EmptyClasses(modifier: Modifier = Modifier) {
-    TeacherLargeText(modifier = modifier, text = stringResource(R.string.school_classes_empty))
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        TeacherLargeText(modifier = modifier, text = stringResource(R.string.school_classes_empty))
+    }
 }
 
 @Preview
@@ -164,7 +164,8 @@ private fun SchoolClassesScreenPreview(
             SchoolClassesScreen(
                 modifier = Modifier.fillMaxSize(),
                 snackbarHostState = remember { SnackbarHostState() },
-                schoolClassesResult = Result.Success(schoolClassesByYear),
+//                schoolClassesResult = Result.Success(schoolClassesByYear),
+                schoolClassesResult = Result.Success(emptyList()),
                 onAddSchoolClassClick = {},
                 onClassClick = {},
             )
