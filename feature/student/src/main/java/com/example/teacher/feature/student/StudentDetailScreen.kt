@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -45,6 +46,7 @@ internal fun StudentDetailScreen(
                 .padding(innerPadding)
                 .padding(MaterialTheme.spacing.small),
             studentName = student.fullName,
+            registerNumber = student.registerNumber,
             email = student.email,
             onEmailClick = {
                 val email = student.email
@@ -66,6 +68,7 @@ internal fun StudentDetailScreen(
 @Composable
 private fun MainScreen(
     studentName: String,
+    registerNumber: Long,
     email: String?,
     onEmailClick: () -> Unit,
     phone: String?,
@@ -76,6 +79,11 @@ private fun MainScreen(
         modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
         Text(text = studentName, style = MaterialTheme.typography.titleLarge)
+        Spacer(Modifier.padding(MaterialTheme.spacing.small))
+
+        Text(text = stringResource(R.string.student_register_number_with_data, registerNumber))
+        Spacer(Modifier.padding(MaterialTheme.spacing.small))
+
         TextWithAction(
             label = stringResource(R.string.student_email),
             text = email,
