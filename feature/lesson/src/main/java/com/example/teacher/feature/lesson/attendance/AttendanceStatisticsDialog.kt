@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.StudentWithAttendance
+import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.StudentsWithAttendancePreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
@@ -41,36 +42,63 @@ internal fun AttendanceStatisticsDialog(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    modifier = Modifier.padding(MaterialTheme.spacing.small),
-                    text = stringResource(R.string.lesson_attendance_statistics_title),
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
+                Title()
 
                 ResultContent(result = studentsWithAttendanceResult) { studentsWithAttendance ->
-                    LazyColumn(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentPadding = PaddingValues(MaterialTheme.spacing.small),
-                    ) {
-                        items(
-                            studentsWithAttendance,
-                            key = { student -> student.student.id },
-                        ) { student ->
-                            val studentName = student.student.fullName
-                            val averagePercent =
-                                DecimalUtils.toLiteral(student.averageAttendancePercentage)
-
-                            ListItem(
-                                headlineContent = {
-                                    Text("$studentName - $averagePercent%")
-                                },
-                            )
-                        }
+                    if (studentsWithAttendance.isEmpty()) {
+                        EmptyState()
+                    } else {
+                        MainContent(studentsWithAttendance = studentsWithAttendance)
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun MainContent(
+    studentsWithAttendance: List<StudentWithAttendance>,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(MaterialTheme.spacing.small),
+    ) {
+        items(
+            studentsWithAttendance,
+            key = { student -> student.student.id },
+        ) { student ->
+            val studentName = student.student.fullName
+            val averagePercent =
+                DecimalUtils.toLiteral(student.averageAttendancePercentage)
+
+            ListItem(
+                headlineContent = {
+                    Text("$studentName - $averagePercent%")
+                },
+            )
+        }
+    }
+}
+
+@Composable
+private fun EmptyState(modifier: Modifier = Modifier) {
+    TeacherLargeText(
+        modifier = modifier.padding(MaterialTheme.spacing.medium),
+        text = stringResource(R.string.lesson_no_students_in_class),
+    )
+}
+
+@Composable
+private fun Title(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
+        Text(
+            modifier = Modifier.padding(MaterialTheme.spacing.small),
+            text = stringResource(R.string.lesson_attendance_statistics_title),
+            style = MaterialTheme.typography.titleLarge,
+        )
+        Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
     }
 }
 
