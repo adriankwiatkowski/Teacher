@@ -52,6 +52,13 @@ FROM student s
 INNER JOIN school_class sc ON s.school_class_id = sc.id
 WHERE sc.id = :id;
 
+getStudentByRegisterNumber:
+SELECT
+    s.id,
+    s.register_number
+FROM student s
+WHERE s.register_number = :register_number;
+
 getUsedRegisterNumbersBySchoolClassId:
 SELECT
     s.register_number AS 'register_number'
@@ -59,10 +66,12 @@ FROM student s
 INNER JOIN school_class sc ON s.school_class_id = sc.id
 WHERE sc.id = :id;
 
-getStudentMaxRegisterNumber:
+getStudentMaxRegisterNumberBySchoolClassId:
 SELECT
     MAX(s.register_number) AS 'max_register_number'
-FROM student s;
+FROM student s
+INNER JOIN school_class sc ON s.school_class_id = sc.id
+WHERE sc.id = :id;
 
 getStudentNameById:
 SELECT
@@ -121,6 +130,12 @@ SET
     phone = :phone,
     register_number = :register_number
 WHERE id = :id;
+
+updateStudentRegisterNumberById:
+UPDATE student
+SET
+    register_number = :register_number
+WHERE id= :id;
 
 deleteStudentById:
 DELETE FROM student

@@ -1,5 +1,6 @@
 package com.example.teacher.core.database.datasource.student
 
+import app.cash.sqldelight.TransactionWithoutReturn
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
@@ -75,43 +76,83 @@ internal class StudentDataSourceImpl(
         email: String?,
         phone: String?,
     ): Unit = withContext(dispatcher) {
-        val defaultRegisterNumber =
-            (queries.getStudentMaxRegisterNumber().executeAsOne().max_register_number ?: 0L) + 1L
-        val usedRegisterNumbers =
-            queries.getUsedRegisterNumbersBySchoolClassId(schoolClassId).executeAsList()
-
-        val actualEmail = if (email.isNullOrBlank()) null else email
-        val actualPhone = if (phone.isNullOrBlank()) null else phone
-        val actualRegisterNumber = registerNumber ?: defaultRegisterNumber
-
-        // TODO: Allow register number swap.
-        if (actualRegisterNumber in usedRegisterNumbers) {
-            throw IllegalArgumentException("Register number is already taken. Called with: $registerNumber, computed register number was $actualRegisterNumber")
-        }
-
-        if (id == null) {
-            queries.insertStudent(
-                id = null,
-                school_class_id = schoolClassId,
-                register_number = actualRegisterNumber,
-                name = name,
-                surname = surname,
-                email = actualEmail,
-                phone = actualPhone,
-            )
-        } else {
-            queries.updateStudent(
-                name = name,
-                surname = surname,
-                email = actualEmail,
-                phone = actualPhone,
-                register_number = actualRegisterNumber,
+        queries.transaction {
+            val actualEmail = if (email.isNullOrBlank()) null else email
+            val actualPhone = if (phone.isNullOrBlank()) null else phone
+            val actualRegisterNumber = swapRegisterNumbersIfUsedAndGetAvailableNumber(
                 id = id,
+                schoolClassId = schoolClassId,
+                registerNumber = registerNumber,
             )
+
+            if (id == null) {
+                queries.insertStudent(
+                    id = null,
+                    school_class_id = schoolClassId,
+                    register_number = actualRegisterNumber,
+                    name = name,
+                    surname = surname,
+                    email = actualEmail,
+                    phone = actualPhone,
+                )
+            } else {
+                queries.updateStudent(
+                    name = name,
+                    surname = surname,
+                    email = actualEmail,
+                    phone = actualPhone,
+                    register_number = actualRegisterNumber,
+                    id = id,
+                )
+            }
         }
     }
 
     override suspend fun deleteStudentById(id: Long): Unit = withContext(dispatcher) {
         queries.deleteStudentById(id)
+    }
+
+    // Make sure this method is only used inside transaction.
+    @Suppress("UnusedReceiverParameter")
+    private fun TransactionWithoutReturn.swapRegisterNumbersIfUsedAndGetAvailableNumber(
+        id: Long?,
+        schoolClassId: Long,
+        registerNumber: Long?,
+    ): Long {
+        val studentMaxRegisterNumberQuery =
+            queries.getStudentMaxRegisterNumberBySchoolClassId(schoolClassId)
+        val availableRegisterNumber =
+            (studentMaxRegisterNumberQuery.executeAsOne().max_register_number ?: 0L) + 1L
+        val usedRegisterNumbers =
+            queries.getUsedRegisterNumbersBySchoolClassId(schoolClassId).executeAsList()
+
+        var actualRegisterNumber = registerNumber ?: availableRegisterNumber
+
+        // Register number collision.
+        if (registerNumber != null && registerNumber in usedRegisterNumbers) {
+            val otherStudent = queries.getStudentByRegisterNumber(registerNumber).executeAsOne()
+
+            if (id == null) {
+                // Current student doesn't exist, so we can't simply swap register numbers.
+                // Instead set other student register number to new available register number.
+                queries.updateStudentRegisterNumberById(
+                    register_number = availableRegisterNumber,
+                    id = otherStudent.id
+                )
+            } else if (id != otherStudent.id) {
+                // Update other student register number to current student register number.
+                val currentRegisterNumber =
+                    queries.getBasicStudentById(id).executeAsOne().register_number
+                queries.updateStudentRegisterNumberById(
+                    register_number = currentRegisterNumber,
+                    id = otherStudent.id,
+                )
+            }
+
+            // Current student should set `registerNumber` (previously used register number).
+            actualRegisterNumber = registerNumber
+        }
+
+        return actualRegisterNumber
     }
 }

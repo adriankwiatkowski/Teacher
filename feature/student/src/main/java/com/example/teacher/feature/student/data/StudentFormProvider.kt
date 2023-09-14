@@ -71,13 +71,18 @@ internal object StudentFormProvider {
 
             // Check if register number is in fact number and is not used by other student.
             else -> registerNumber.toLongOrNull()?.let { number ->
-                val isNotUniqueNumber = number in usedRegisterNumbers
+                // Don't allow negative register number.
+                if (number < 0) {
+                    return@let true
+                }
 
+                val isNotUniqueNumber = number in usedRegisterNumbers
                 if (isNotUniqueNumber) {
                     supportingText = R.string.student_register_number_supporting_text_error
                 }
 
-                isNotUniqueNumber
+                // Allow swapping register numbers.
+                false
             } ?: true
         }
 
