@@ -255,7 +255,7 @@ private fun TermPicker(
             Text(
                 modifier = Modifier.padding(MaterialTheme.spacing.small),
                 text = stringResource(R.string.lesson_term_label),
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelLarge,
             )
 
             TeacherRadioButton(
