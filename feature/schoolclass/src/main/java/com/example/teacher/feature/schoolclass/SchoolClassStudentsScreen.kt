@@ -1,11 +1,15 @@
 package com.example.teacher.feature.schoolclass
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
@@ -13,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.model.data.BasicStudent
+import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.paramprovider.BasicStudentsPreviewParameterProvider
@@ -33,6 +39,8 @@ import com.example.teacher.feature.schoolclass.components.StudentItem
 internal fun SchoolClassStudentsScreen(
     snackbarHostState: SnackbarHostState,
     students: List<BasicStudent>,
+    randomStudent: BasicStudent?,
+    pickRandomStudent: () -> Unit,
     onStudentClick: (studentId: Long) -> Unit,
     onAddStudentClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -49,6 +57,8 @@ internal fun SchoolClassStudentsScreen(
                 .fillMaxSize()
                 .padding(MaterialTheme.spacing.small),
             students = students,
+            randomStudent = randomStudent,
+            pickRandomStudent = pickRandomStudent,
             onStudentClick = onStudentClick,
         )
     }
@@ -57,6 +67,8 @@ internal fun SchoolClassStudentsScreen(
 @Composable
 private fun MainScreen(
     students: List<BasicStudent>,
+    randomStudent: BasicStudent?,
+    pickRandomStudent: () -> Unit,
     onStudentClick: (studentId: Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -69,6 +81,11 @@ private fun MainScreen(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
+        randomStudentPicker(
+            randomStudent = randomStudent,
+            pickRandomStudent = pickRandomStudent,
+        )
+
         items(items = students, key = { student -> student.id }) { student ->
             StudentItem(
                 name = student.name,
@@ -78,6 +95,34 @@ private fun MainScreen(
                 onClick = { onStudentClick(student.id) },
             )
         }
+    }
+}
+
+private fun LazyListScope.randomStudentPicker(
+    randomStudent: BasicStudent?,
+    pickRandomStudent: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    item {
+        Column(modifier = modifier.animateContentSize()) {
+            Text(
+                text = stringResource(R.string.school_class_pick_random_student_title),
+                style = MaterialTheme.typography.titleLarge,
+            )
+
+            if (randomStudent != null) {
+                Spacer(Modifier.padding(MaterialTheme.spacing.small))
+                Text(stringResource(R.string.school_class_random_student, randomStudent.fullName))
+            }
+
+            Spacer(Modifier.padding(MaterialTheme.spacing.small))
+            TeacherButton(
+                modifier = Modifier.fillMaxWidth(),
+                label = stringResource(R.string.school_class_pick_random_student),
+                onClick = pickRandomStudent,
+            )
+        }
+        Spacer(Modifier.padding(MaterialTheme.spacing.medium))
     }
 }
 
@@ -105,6 +150,8 @@ private fun SchoolClassStudentsScreenPreview(
             SchoolClassStudentsScreen(
                 snackbarHostState = remember { SnackbarHostState() },
                 students = students,
+                randomStudent = students.firstOrNull(),
+                pickRandomStudent = {},
                 onStudentClick = {},
                 onAddStudentClick = {},
             )

@@ -28,4 +28,7 @@
     <string name="school_class_students">Uczniowie</string>
     <string name="school_class_subjects">Przedmioty</string>
     <string name="school_class_label">Klasa</string>
+    <string name="school_class_pick_random_student_title">Losowanie ucznia</string>
+    <string name="school_class_pick_random_student">Wylosuj ucznia</string>
+    <string name="school_class_random_student">Wylosowany uczeń: %1$s</string>
 </resources>

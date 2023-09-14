@@ -139,6 +139,7 @@ fun NavGraphBuilder.schoolClassGraph(
                         onAddStudentClick = {
                             navigateToStudentFormRoute(schoolClassId, null)
                         },
+                        service = viewModel,
                     )
 
                     SchoolClassTab.Subjects -> SchoolClassLessonsRoute(
