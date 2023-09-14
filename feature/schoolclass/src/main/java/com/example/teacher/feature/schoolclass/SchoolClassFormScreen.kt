@@ -173,7 +173,9 @@ private fun SchoolClassFormScreenPreview(
 ) {
     TeacherTheme {
         Surface {
-            val form = SchoolClassFormProvider.createDefaultForm()
+            val form =
+                SchoolClassFormProvider.createDefaultForm(schoolYear = schoolYears.firstOrNull())
+
             SchoolClassFormScreen(
                 snackbarHostState = remember { SnackbarHostState() },
                 showNavigationIcon = true,

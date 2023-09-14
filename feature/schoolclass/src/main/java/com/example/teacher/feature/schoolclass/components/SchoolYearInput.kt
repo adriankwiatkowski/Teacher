@@ -18,6 +18,7 @@ import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.form.FormAutoCompleteTextField
 import com.example.teacher.core.ui.model.InputField
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.feature.schoolclass.R
 
 @Composable
@@ -74,6 +75,7 @@ internal fun SchoolYearInput(
             TeacherButton(
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.school_class_edit_school_year),
+                icon = TeacherIcons.edit(),
                 onClick = onEditSchoolYear,
             )
         }
@@ -81,6 +83,7 @@ internal fun SchoolYearInput(
         TeacherButton(
             modifier = Modifier.fillMaxWidth(),
             label = stringResource(R.string.school_class_add_school_year),
+            icon = TeacherIcons.add(),
             onClick = onAddSchoolYear,
         )
     }
