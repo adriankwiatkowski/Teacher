@@ -90,6 +90,7 @@ private fun MainScreen(
             StudentItem(
                 name = student.name,
                 surname = student.surname,
+                registerNumber = student.registerNumber,
                 email = student.email,
                 phone = student.phone,
                 onClick = { onStudentClick(student.id) },

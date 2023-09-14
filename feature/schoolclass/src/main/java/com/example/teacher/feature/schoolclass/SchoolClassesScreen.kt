@@ -164,8 +164,7 @@ private fun SchoolClassesScreenPreview(
             SchoolClassesScreen(
                 modifier = Modifier.fillMaxSize(),
                 snackbarHostState = remember { SnackbarHostState() },
-//                schoolClassesResult = Result.Success(schoolClassesByYear),
-                schoolClassesResult = Result.Success(emptyList()),
+                schoolClassesResult = Result.Success(schoolClassesByYear),
                 onAddSchoolClassClick = {},
                 onClassClick = {},
             )

@@ -18,6 +18,7 @@ import com.example.teacher.feature.schoolclass.R
 internal fun StudentItem(
     name: String,
     surname: String,
+    registerNumber: Long,
     email: String?,
     phone: String?,
     onClick: () -> Unit,
@@ -32,7 +33,7 @@ internal fun StudentItem(
                 contentDescription = null,
             )
         },
-        headlineContent = { Text("$name $surname") },
+        headlineContent = { Text("$name $surname ($registerNumber)") },
         supportingContent = if (email != null || phone != null) {
             {
                 Column {
@@ -59,6 +60,7 @@ private fun StudentItemPreview() {
             StudentItem(
                 name = "Jan",
                 surname = "Kowalski",
+                registerNumber = 1L,
                 email = "jan.kowalski@domain.com",
                 phone = "123456789",
                 onClick = {},
