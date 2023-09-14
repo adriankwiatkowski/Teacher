@@ -94,7 +94,7 @@ internal class StudentFormViewModel @Inject constructor(
             repository.insertOrUpdateStudent(
                 id = form.id,
                 schoolClassId = schoolClassId.value,
-                orderInClass = null,
+                registerNumber = null, // TODO: Should get register number from form.
                 name = form.name.value.trim(),
                 surname = form.surname.value.trim(),
                 email = form.email.value?.trim(),

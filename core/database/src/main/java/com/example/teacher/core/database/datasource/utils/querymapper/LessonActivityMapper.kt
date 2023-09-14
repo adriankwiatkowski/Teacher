@@ -18,7 +18,7 @@ internal fun toExternal(
         student = BasicStudent(
             id = lessonActivity.student_id,
             classId = lessonActivity.school_class_id,
-            orderInClass = lessonActivity.student_order_in_class,
+            registerNumber = lessonActivity.student_register_number,
             name = lessonActivity.student_name,
             surname = lessonActivity.student_surname,
             email = lessonActivity.student_email,

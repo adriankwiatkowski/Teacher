@@ -23,7 +23,7 @@ internal fun toExternal(
         student = BasicStudent(
             id = lessonAttendance.student_id,
             classId = lessonAttendance.school_class_id,
-            orderInClass = lessonAttendance.student_order_in_class,
+            registerNumber = lessonAttendance.student_register_number,
             name = lessonAttendance.student_name,
             surname = lessonAttendance.student_surname,
             email = lessonAttendance.student_email,
@@ -92,7 +92,7 @@ internal fun toStudentsWithAttendanceExternal(
                 student = BasicStudent(
                     id = studentData.student_id,
                     classId = studentData.school_class_id,
-                    orderInClass = studentData.student_order_in_class,
+                    registerNumber = studentData.student_register_number,
                     name = studentData.student_name,
                     surname = studentData.student_surname,
                     email = studentData.student_email,

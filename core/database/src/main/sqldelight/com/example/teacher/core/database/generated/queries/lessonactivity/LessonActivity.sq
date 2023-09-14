@@ -5,7 +5,7 @@ SELECT
     l.id AS 'lesson_id',
     l.name AS 'lesson_name',
     l.school_class_id AS 'school_class_id',
-    s.order_in_class AS 'student_order_in_class',
+    s.register_number AS 'student_register_number',
     s.id AS 'student_id',
     s.name AS 'student_name',
     s.surname AS 'student_surname',

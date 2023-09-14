@@ -11,7 +11,7 @@ class StudentPreviewParameterProvider : PreviewParameterProvider<Student> {
             Student(
                 id = basicStudent.id,
                 name = basicStudent.name,
-                orderInClass = basicStudent.orderInClass,
+                registerNumber = basicStudent.registerNumber,
                 surname = basicStudent.surname,
                 email = basicStudent.email,
                 phone = basicStudent.phone,
@@ -37,8 +37,8 @@ class BasicStudentPreviewParameterProvider : PreviewParameterProvider<BasicStude
     ).mapIndexed { index, (name, surname) ->
         BasicStudent(
             id = index + 1L,
-            classId = index + 1L,
-            orderInClass = index + 1L,
+            classId = index.toLong(),
+            registerNumber = index + 1L,
             name = name,
             surname = surname,
             email = if (index % 2 == 0) "$name.$surname@email.com" else null,

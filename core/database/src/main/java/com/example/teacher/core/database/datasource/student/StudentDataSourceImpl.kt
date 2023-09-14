@@ -64,13 +64,13 @@ internal class StudentDataSourceImpl(
     override suspend fun insertOrUpdateStudent(
         id: Long?,
         schoolClassId: Long,
-        orderInClass: Long?,
+        registerNumber: Long?,
         name: String,
         surname: String,
         email: String?,
         phone: String?,
     ): Unit = withContext(dispatcher) {
-        val defaultOrderInClass = 1L
+        val defaultRegisterNumber = 1L // TODO: Register number should be unique.
 
         @Suppress("NAME_SHADOWING") val email = if (email.isNullOrBlank()) null else email
         @Suppress("NAME_SHADOWING") val phone = if (phone.isNullOrBlank()) null else phone
@@ -79,7 +79,7 @@ internal class StudentDataSourceImpl(
             queries.insertStudent(
                 id = null,
                 school_class_id = schoolClassId,
-                order_in_class = orderInClass ?: defaultOrderInClass,
+                register_number = registerNumber ?: defaultRegisterNumber,
                 name = name,
                 surname = surname,
                 email = email,
@@ -91,7 +91,7 @@ internal class StudentDataSourceImpl(
                 surname = surname,
                 email = email,
                 phone = phone,
-                order_in_class = orderInClass ?: defaultOrderInClass,
+                register_number = registerNumber ?: defaultRegisterNumber,
                 id = id,
             )
         }

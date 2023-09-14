@@ -1,7 +1,7 @@
 getBasicStudentById:
 SELECT
     s.id,
-    s.order_in_class,
+    s.register_number,
     s.school_class_id,
     s.name,
     s.surname,
@@ -13,7 +13,7 @@ WHERE s.id = :id;
 getStudentById:
 SELECT
     s.id,
-    s.order_in_class,
+    s.register_number,
     s.school_class_id,
     s.name,
     s.surname,
@@ -42,7 +42,7 @@ WHERE s.id = :id;
 getStudentsBySchoolClassId:
 SELECT
     s.id,
-    s.order_in_class,
+    s.register_number,
     s.school_class_id,
     s.name,
     s.surname,
@@ -107,7 +107,7 @@ SET
     surname = :surname,
     email = :email,
     phone = :phone,
-    order_in_class = :order_in_class
+    register_number = :register_number
 WHERE id = :id;
 
 deleteStudentById:

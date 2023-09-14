@@ -37,7 +37,7 @@ internal class DatabaseStudentRepository @Inject constructor(
     override suspend fun insertOrUpdateStudent(
         id: Long?,
         schoolClassId: Long,
-        orderInClass: Long?,
+        registerNumber: Long?,
         name: String,
         surname: String,
         email: String?,
@@ -47,7 +47,7 @@ internal class DatabaseStudentRepository @Inject constructor(
             dataSource.insertOrUpdateStudent(
                 id = id,
                 schoolClassId = schoolClassId,
-                orderInClass = orderInClass,
+                registerNumber = registerNumber,
                 name = name,
                 surname = surname,
                 email = email,

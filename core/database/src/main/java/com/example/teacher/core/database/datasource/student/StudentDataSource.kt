@@ -20,7 +20,7 @@ interface StudentDataSource {
     suspend fun insertOrUpdateStudent(
         id: Long?,
         schoolClassId: Long,
-        orderInClass: Long?,
+        registerNumber: Long?,
         name: String,
         surname: String,
         email: String?,
