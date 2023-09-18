@@ -1,7 +1,6 @@
 package com.example.teacher.feature.lesson
 
 import android.view.KeyEvent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -92,52 +91,31 @@ internal fun LessonFormScreen(
             },
             floatingActionButtonPosition = FabPosition.End,
         ) { innerPadding ->
-            // TODO: For some reason, sometimes ResourceContent doesn't get updated on Resource.Success.
-            Box(Modifier.padding(innerPadding)) {
-                if (lessonResult is Result.Success) {
-                    Content(
-                        modifier = Modifier
-                            .padding(MaterialTheme.spacing.small)
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState()),
-                        schoolClassName = schoolClassName,
-                        name = name,
-                        onNameChange = onNameChange,
-                        onSubmit = onAddLessonClick,
-                        isSubmitEnabled = isSubmitEnabled,
-                        submitText = if (lessonResult.data == null) {
-                            stringResource(R.string.lesson_add_lesson)
-                        } else {
-                            stringResource(R.string.lesson_edit_lesson)
-                        },
-                    )
-                } else {
-                    ResultContent(result = lessonResult) { lesson ->
-                        Content(
-                            modifier = Modifier
-                                .padding(MaterialTheme.spacing.small)
-                                .fillMaxSize()
-                                .verticalScroll(rememberScrollState()),
-                            schoolClassName = schoolClassName,
-                            name = name,
-                            onNameChange = onNameChange,
-                            submitText = if (lesson == null) {
-                                stringResource(R.string.lesson_add_lesson)
-                            } else {
-                                stringResource(R.string.lesson_edit_lesson)
-                            },
-                            isSubmitEnabled = isSubmitEnabled,
-                            onSubmit = onAddLessonClick,
-                        )
-                    }
-                }
+            ResultContent(result = lessonResult) { lesson ->
+                MainContent(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(MaterialTheme.spacing.small)
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    schoolClassName = schoolClassName,
+                    name = name,
+                    onNameChange = onNameChange,
+                    submitText = if (lesson == null) {
+                        stringResource(R.string.lesson_add_lesson)
+                    } else {
+                        stringResource(R.string.lesson_edit_lesson)
+                    },
+                    isSubmitEnabled = isSubmitEnabled,
+                    onSubmit = onAddLessonClick,
+                )
             }
         }
     }
 }
 
 @Composable
-private fun Content(
+private fun MainContent(
     schoolClassName: String,
     name: InputField<String>,
     onNameChange: (String) -> Unit,
