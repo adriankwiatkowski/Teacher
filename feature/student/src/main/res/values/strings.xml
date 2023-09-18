@@ -23,6 +23,8 @@
     <string name="student_register_number_supporting_text">Numer ucznia musi być liczbą (może być pusty)</string>
     <string name="student_register_number_supporting_text_error">Inny uczeń ma już ten numer w dzienniku (stary numer zostanie nadpisany)</string>
     <string name="student_no_grades">Brak ocen</string>
+    <string name="student_empty_grade">Brak</string>
+    <string name="student_empty_average">brak</string>
     <string name="student_weight_with_data">Waga %1$s</string>
     <string name="student_grade">Ocena %1$s</string>
     <string name="student_first_term">Pierwszy semestr</string>

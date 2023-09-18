@@ -21,6 +21,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.DecimalUtils
-import com.example.teacher.core.model.data.StudentGrade
+import com.example.teacher.core.model.data.StudentGradeInfo
 import com.example.teacher.core.model.data.StudentGradesByLesson
 import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherLargeText
@@ -45,7 +46,7 @@ internal fun StudentGradesScreen(
     studentGradesResult: Result<List<StudentGradesByLesson>>,
     snackbarHostState: SnackbarHostState,
     gradeDialog: GradeDialogInfo?,
-    onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGrade) -> Unit,
+    onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGradeInfo) -> Unit,
     onGradeDialogDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -90,7 +91,7 @@ internal fun StudentGradesScreen(
 @Composable
 private fun MainScreen(
     studentGradesByLesson: List<StudentGradesByLesson>,
-    onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGrade) -> Unit,
+    onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGradeInfo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -98,10 +99,9 @@ private fun MainScreen(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        // TODO: Show all grades, even if they are not set.
         items(
             studentGradesByLesson,
-            key = { item -> item.lessonId },
+            key = { item -> "l-${item.lessonId}" },
         ) { lessonGrades ->
             LessonGradesCard(lessonGrades = lessonGrades, onShowGradeDialog = onShowGradeDialog)
         }
@@ -111,7 +111,7 @@ private fun MainScreen(
 @Composable
 private fun LessonGradesCard(
     lessonGrades: StudentGradesByLesson,
-    onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGrade) -> Unit,
+    onShowGradeDialog: (gradeInfo: StudentGradesByLesson, grade: StudentGradeInfo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(modifier = modifier.fillMaxWidth()) {
@@ -146,21 +146,22 @@ private fun LessonGradesCard(
 @Composable
 private fun LessonTermGrades(
     termLabel: String,
-    grades: List<StudentGrade>,
+    grades: List<StudentGradeInfo>,
     average: BigDecimal?,
-    onShowGradeDialog: (grade: StudentGrade) -> Unit,
+    onShowGradeDialog: (grade: StudentGradeInfo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         Text(text = termLabel, style = MaterialTheme.typography.labelMedium)
 
-        if (grades.isNotEmpty() && average != null) {
-            Text(
-                text = stringResource(
-                    R.string.student_grade_average,
-                    DecimalUtils.toLiteral(average)
-                )
-            )
+        if (grades.isNotEmpty()) {
+            val averageStr = if (average != null) {
+                DecimalUtils.toLiteral(average)
+            } else {
+                stringResource(R.string.student_empty_average)
+            }
+
+            Text(text = stringResource(R.string.student_grade_average, averageStr))
             Grades(
                 grades = grades,
                 onGradeClick = { grade -> onShowGradeDialog(grade) }
@@ -174,16 +175,25 @@ private fun LessonTermGrades(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Grades(
-    grades: List<StudentGrade>,
-    onGradeClick: (studentGrade: StudentGrade) -> Unit,
+    grades: List<StudentGradeInfo>,
+    onGradeClick: (studentGradeInfo: StudentGradeInfo) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
     ) {
-        for (grade in grades) {
-            Grade(grade = DecimalUtils.toGrade(grade.grade), onClick = { onGradeClick(grade) })
+        for (gradeInfo in grades) {
+            key(gradeInfo.gradeTemplateId) {
+                val grade = gradeInfo.grade?.grade
+                val gradeText = if (grade != null) {
+                    DecimalUtils.toGrade(grade)
+                } else {
+                    stringResource(R.string.student_empty_grade)
+                }
+
+                Grade(grade = gradeText, onClick = { onGradeClick(gradeInfo) })
+            }
         }
     }
 }

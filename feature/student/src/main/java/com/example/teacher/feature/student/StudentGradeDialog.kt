@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.Student
-import com.example.teacher.core.model.data.StudentGrade
+import com.example.teacher.core.model.data.StudentGradeInfo
 import com.example.teacher.core.model.data.StudentGradesByLesson
 import com.example.teacher.core.ui.paramprovider.StudentGradesByLessonPreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.StudentPreviewParameterProvider
@@ -28,7 +28,7 @@ import com.example.teacher.core.ui.theme.spacing
 internal fun StudentGradeDialog(
     student: Student,
     gradeInfo: StudentGradesByLesson,
-    grade: StudentGrade,
+    grade: StudentGradeInfo,
     termString: @Composable () -> String,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
@@ -46,8 +46,15 @@ internal fun StudentGradeDialog(
 
                 Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
 
+                val actualGrade = grade.grade?.grade
+                val gradeString = if (actualGrade != null) {
+                    DecimalUtils.toGrade(actualGrade)
+                } else {
+                    stringResource(R.string.student_empty_grade)
+                }
+
                 Text(
-                    text = stringResource(R.string.student_grade, DecimalUtils.toGrade(grade.grade)),
+                    text = stringResource(R.string.student_grade, gradeString),
                     style = MaterialTheme.typography.bodyLarge,
                 )
                 Text(

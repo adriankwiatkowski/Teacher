@@ -11,6 +11,7 @@ import com.example.teacher.core.model.data.GradeWithAverage
 import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.model.data.Student
 import com.example.teacher.core.model.data.StudentGrade
+import com.example.teacher.core.model.data.StudentGradeInfo
 import com.example.teacher.core.model.data.StudentGradesByLesson
 import com.example.teacher.core.model.data.Term
 import java.math.BigDecimal
@@ -103,9 +104,9 @@ internal fun toExternalStudentGrades(
             studentId = firstGrade.student_id,
             lessonId = lessonId,
             lessonName = firstGrade.lesson_name,
-            firstTermGrades = firstTermGrades.mapNotNull { it.toStudentGrades() },
+            firstTermGrades = firstTermGrades.map { it.toStudentGrades() },
             firstTermAverage = firstTermAverage,
-            secondTermGrades = secondTermGrades.mapNotNull { it.toStudentGrades() },
+            secondTermGrades = secondTermGrades.map { it.toStudentGrades() },
             secondTermAverage = secondTermAverage,
             schoolClass = BasicSchoolClass(
                 id = firstGrade.school_class_id,
@@ -145,18 +146,19 @@ private fun calculateAverage(grades: List<GetStudentGradesById>): BigDecimal? {
     return DecimalUtils.calculateWeightedAverage(studentGrades)
 }
 
-private fun GetStudentGradesById.toStudentGrades(): StudentGrade? {
-    if (grade_id == null || grade == null) {
-        return null
+private fun GetStudentGradesById.toStudentGrades(): StudentGradeInfo {
+    val grade = if (grade_id != null && grade != null) {
+        StudentGrade(gradeId = grade_id, grade = grade)
+    } else {
+        null
     }
 
-    return StudentGrade(
+    return StudentGradeInfo(
         studentId = student_id,
         lessonId = lesson_id,
         isFirstTerm = grade_is_first_term,
         gradeTemplateId = grade_template_id,
         gradeName = grade_template_name,
-        gradeId = grade_id,
         grade = grade,
         weight = grade_template_weight,
         date = grade_template_date,
