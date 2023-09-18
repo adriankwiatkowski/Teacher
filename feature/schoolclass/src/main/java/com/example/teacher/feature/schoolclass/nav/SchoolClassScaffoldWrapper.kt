@@ -20,7 +20,7 @@ import com.example.teacher.core.ui.model.TeacherAction
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.schoolclass.R
 import com.example.teacher.feature.schoolclass.component.SchoolClassScaffold
-import com.example.teacher.feature.schoolclass.data.SchoolClassScaffoldViewModel
+import com.example.teacher.feature.schoolclass.data.SchoolClassViewModel
 import com.example.teacher.feature.schoolclass.tab.SchoolClassTab
 import kotlinx.coroutines.launch
 
@@ -32,7 +32,7 @@ internal fun SchoolClassScaffoldWrapper(
     onShowSnackbar: OnShowSnackbar,
     menuItems: List<TeacherAction>,
     modifier: Modifier = Modifier,
-    viewModel: SchoolClassScaffoldViewModel = hiltViewModel(),
+    viewModel: SchoolClassViewModel = hiltViewModel(),
     content: @Composable (selectedTab: SchoolClassTab, schoolClass: SchoolClass) -> Unit,
 ) {
     val schoolClassResult by viewModel.schoolClassResult.collectAsStateWithLifecycle()

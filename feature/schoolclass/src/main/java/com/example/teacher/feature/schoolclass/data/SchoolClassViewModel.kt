@@ -20,14 +20,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class SchoolClassScaffoldViewModel @Inject constructor(
+internal class SchoolClassViewModel @Inject constructor(
     private val repository: SchoolClassRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(), SchoolClassStudentsService {
 
     private val schoolClassId = savedStateHandle.getStateFlow(SCHOOL_CLASS_ID_KEY, 0L)
     val isDeleted = savedStateHandle.getStateFlow(IS_DELETED_KEY, false)
-    private val randomStudentId = savedStateHandle.getStateFlow(RANDOM_STUDENT_ID_KEY, 0L)
+    private val randomStudentNumber = savedStateHandle.getStateFlow(RANDOM_STUDENT_NUMBER, 0L)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val schoolClassResult: StateFlow<Result<SchoolClass>> = schoolClassId
@@ -39,9 +39,9 @@ internal class SchoolClassScaffoldViewModel @Inject constructor(
         )
 
     override val randomStudent: StateFlow<BasicStudent?> =
-        combine(schoolClassResult, randomStudentId) { schoolClassResult, luckyNumber ->
+        combine(schoolClassResult, randomStudentNumber) { schoolClassResult, registerNumber ->
             val schoolClass = (schoolClassResult as? Result.Success)?.data ?: return@combine null
-            schoolClass.students.firstOrNull { student -> student.id == luckyNumber }
+            schoolClass.students.firstOrNull { student -> student.registerNumber == registerNumber }
         }.stateIn(initialValue = null)
 
     override fun pickRandomStudent() {
@@ -51,7 +51,7 @@ internal class SchoolClassScaffoldViewModel @Inject constructor(
             return
         }
 
-        savedStateHandle[RANDOM_STUDENT_ID_KEY] = students.random().id
+        savedStateHandle[RANDOM_STUDENT_NUMBER] = students.random().registerNumber
     }
 
     fun onDelete() {
@@ -74,6 +74,6 @@ internal class SchoolClassScaffoldViewModel @Inject constructor(
     companion object {
         private const val SCHOOL_CLASS_ID_KEY = SchoolClassNavigation.schoolClassIdArg
         private const val IS_DELETED_KEY = "is-deleted"
-        private const val RANDOM_STUDENT_ID_KEY = "random-student-id"
+        private const val RANDOM_STUDENT_NUMBER = "random-student-number"
     }
 }

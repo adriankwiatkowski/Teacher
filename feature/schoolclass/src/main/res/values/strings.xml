@@ -30,5 +30,5 @@
     <string name="school_class_label">Klasa</string>
     <string name="school_class_pick_random_student_title">Losowanie ucznia</string>
     <string name="school_class_pick_random_student">Wylosuj ucznia</string>
-    <string name="school_class_random_student">Wylosowany uczeń: %1$s</string>
+    <string name="school_class_random_student_label">Wylosowany uczeń:</string>
 </resources>

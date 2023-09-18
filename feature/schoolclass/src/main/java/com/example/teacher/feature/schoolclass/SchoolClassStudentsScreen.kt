@@ -113,7 +113,11 @@ private fun LazyListScope.randomStudentPicker(
 
             if (randomStudent != null) {
                 Spacer(Modifier.padding(MaterialTheme.spacing.small))
-                Text(stringResource(R.string.school_class_random_student, randomStudent.fullName))
+                Text(
+                    stringResource(R.string.school_class_random_student_label),
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                Text("${randomStudent.fullName} (${randomStudent.registerNumber})")
             }
 
             Spacer(Modifier.padding(MaterialTheme.spacing.small))

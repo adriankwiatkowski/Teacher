@@ -19,7 +19,7 @@ import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.schoolclass.data.SchoolClassFormViewModel
-import com.example.teacher.feature.schoolclass.data.SchoolClassScaffoldViewModel
+import com.example.teacher.feature.schoolclass.data.SchoolClassViewModel
 import com.example.teacher.feature.schoolclass.data.SchoolClassesViewModel
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.deletedSchoolYearIdArg
 import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation.schoolClassGraphRoute
@@ -106,7 +106,7 @@ fun NavGraphBuilder.schoolClassGraph(
                 },
             ),
         ) { backStackEntry ->
-            val viewModel: SchoolClassScaffoldViewModel = hiltViewModel()
+            val viewModel: SchoolClassViewModel = hiltViewModel()
             val args = backStackEntry.arguments!!
             val schoolClassId = args.getLong(schoolClassIdArg)
 
