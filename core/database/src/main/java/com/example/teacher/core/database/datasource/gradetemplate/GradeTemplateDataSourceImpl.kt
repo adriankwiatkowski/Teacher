@@ -46,12 +46,14 @@ internal class GradeTemplateDataSourceImpl(
         isFirstTerm: Boolean,
         lessonId: Long,
     ): Unit = withContext(dispatcher) {
+        val actualDescription = if (description.isNullOrBlank()) null else description
+
         if (id == null) {
             queries.insertGradeTemplate(
                 id = null,
                 lesson_id = lessonId,
                 name = name,
-                description = description,
+                description = actualDescription,
                 date = TimeUtils.currentDate(),
                 weight = weight.toLong(),
                 is_first_term = isFirstTerm,
@@ -61,7 +63,7 @@ internal class GradeTemplateDataSourceImpl(
                 id = id,
                 lesson_id = lessonId,
                 name = name,
-                description = description,
+                description = actualDescription,
                 date = TimeUtils.currentDate(),
                 weight = weight.toLong(),
                 is_first_term = isFirstTerm,
