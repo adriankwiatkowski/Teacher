@@ -132,7 +132,7 @@ private fun LazyListScope.events(
     onScheduleClick: (id: Long) -> Unit,
 ) {
     items(events, key = { it.id }) { event ->
-        Surface(tonalElevation = if (event.isCancelled) 8.dp else 0.dp) {
+        Surface(tonalElevation = if (event.isCancelled) 5.dp else 0.dp) {
             EventItem(
                 event = event,
                 onClick = { onScheduleClick(event.id) },

@@ -28,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -163,6 +164,14 @@ private fun LazyListScope.header(
                         .fillMaxWidth()
                         .padding(MaterialTheme.spacing.medium),
                 ) {
+                    if (event.isCancelled) {
+                        Text(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            text = stringResource(R.string.lesson_attendance_cancelled),
+                            style = MaterialTheme.typography.headlineSmall,
+                        )
+                    }
+
                     if (lessonNameWithClass != null) {
                         Text(
                             text = lessonNameWithClass,
@@ -176,7 +185,7 @@ private fun LazyListScope.header(
 
                     TeacherButton(
                         modifier = Modifier.fillMaxWidth(),
-                        label = stringResource(R.string.attendance_edit_event),
+                        label = stringResource(R.string.lesson_attendance_edit_event),
                         onClick = onEventEditClick,
                     )
                 }

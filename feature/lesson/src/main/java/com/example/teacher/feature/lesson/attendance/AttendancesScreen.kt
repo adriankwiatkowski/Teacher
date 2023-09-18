@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.LessonEventAttendance
@@ -118,18 +119,21 @@ private fun MainContent(
         }
 
         items(scheduleAttendances, key = { it.eventId }) { scheduleAttendance ->
-            AttendanceItem(
-                date = scheduleAttendance.date,
-                startTime = scheduleAttendance.startTime,
-                endTime = scheduleAttendance.endTime,
-                presentCount = scheduleAttendance.presentCount,
-                lateCount = scheduleAttendance.lateCount,
-                absentCount = scheduleAttendance.absentCount,
-                excusedAbsenceCount = scheduleAttendance.excusedAbsenceCount,
-                exemptionCount = scheduleAttendance.exemptionCount,
-                attendanceNotSetCount = scheduleAttendance.attendanceNotSetCount,
-                onClick = { onScheduleAttendanceClick(scheduleAttendance.eventId) },
-            )
+            Surface(tonalElevation = if (scheduleAttendance.isCancelled) 5.dp else 0.dp) {
+                AttendanceItem(
+                    date = scheduleAttendance.date,
+                    startTime = scheduleAttendance.startTime,
+                    endTime = scheduleAttendance.endTime,
+                    isCancelled = scheduleAttendance.isCancelled,
+                    presentCount = scheduleAttendance.presentCount,
+                    lateCount = scheduleAttendance.lateCount,
+                    absentCount = scheduleAttendance.absentCount,
+                    excusedAbsenceCount = scheduleAttendance.excusedAbsenceCount,
+                    exemptionCount = scheduleAttendance.exemptionCount,
+                    attendanceNotSetCount = scheduleAttendance.attendanceNotSetCount,
+                    onClick = { onScheduleAttendanceClick(scheduleAttendance.eventId) },
+                )
+            }
         }
     }
 }
@@ -140,6 +144,7 @@ private fun AttendanceItem(
     date: LocalDate,
     startTime: LocalTime,
     endTime: LocalTime,
+    isCancelled: Boolean,
     presentCount: Long,
     lateCount: Long,
     absentCount: Long,
@@ -151,7 +156,15 @@ private fun AttendanceItem(
 ) {
     ListItem(
         modifier = modifier.clickable(onClick = onClick),
-        overlineContent = { Text(text = TimeUtils.format(date)) },
+        overlineContent = {
+            val formattedDate = TimeUtils.format(date)
+            val text = if (isCancelled) {
+                stringResource(R.string.lesson_attendance_cancelled_with_date, formattedDate)
+            } else {
+                formattedDate
+            }
+            Text(text)
+        },
         headlineContent = { Text(text = TimeUtils.format(startTime, endTime)) },
         supportingContent = {
             FlowRow(
