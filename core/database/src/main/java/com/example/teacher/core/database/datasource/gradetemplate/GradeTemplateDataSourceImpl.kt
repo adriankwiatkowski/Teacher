@@ -5,7 +5,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
 import com.example.teacher.core.common.utils.TimeUtils
-import com.example.teacher.core.database.datasource.utils.querymapper.toExternal
+import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.model.data.BasicGradeTemplate
 import com.example.teacher.core.model.data.GradeTemplate

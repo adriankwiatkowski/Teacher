@@ -3,7 +3,7 @@ package com.example.teacher.core.database.datasource.lessonactivity
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.example.teacher.core.common.di.DefaultDispatcher
-import com.example.teacher.core.database.datasource.utils.querymapper.toExternal
+import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.model.data.LessonActivity
 import kotlinx.coroutines.CoroutineDispatcher

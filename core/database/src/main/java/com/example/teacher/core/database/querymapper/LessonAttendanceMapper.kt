@@ -1,4 +1,4 @@
-package com.example.teacher.core.database.datasource.utils.querymapper
+package com.example.teacher.core.database.querymapper
 
 import com.example.teacher.core.common.utils.DecimalUtils.safeDivide
 import com.example.teacher.core.common.utils.DecimalUtils.toPercentage

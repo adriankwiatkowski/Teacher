@@ -1,4 +1,4 @@
-package com.example.teacher.core.database.datasource.utils.querymapper
+package com.example.teacher.core.database.querymapper
 
 import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.database.generated.queries.student.GetBasicStudentById

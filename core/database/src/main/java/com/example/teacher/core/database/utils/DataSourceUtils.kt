@@ -1,4 +1,4 @@
-package com.example.teacher.core.database.datasource.utils
+package com.example.teacher.core.database.utils
 
 import com.example.teacher.core.database.generated.queries.CommonQueries
 

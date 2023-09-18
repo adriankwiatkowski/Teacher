@@ -1,4 +1,4 @@
-package com.example.teacher.core.database.datasource.utils.querymapper
+package com.example.teacher.core.database.querymapper
 
 import com.example.teacher.core.model.data.Note
 import com.example.teacher.core.model.data.NotePriority

@@ -4,7 +4,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
-import com.example.teacher.core.database.datasource.utils.querymapper.toExternal
+import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.model.data.BasicStudentNote
 import com.example.teacher.core.model.data.StudentNote
