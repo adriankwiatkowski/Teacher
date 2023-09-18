@@ -1,5 +1,6 @@
 package com.example.teacher.feature.lesson.nav
 
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.util.BackPressDiscardDialogHandler
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.gradetemplate.GradeTemplateFormScreen
@@ -45,7 +47,11 @@ internal fun GradeTemplateFormRoute(
         }
     }
 
-    // TODO: Handle back press to prevent accidentally closing form.
+    val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    BackPressDiscardDialogHandler(
+        backPressedDispatcher = backPressedDispatcher,
+        onDiscard = onNavBack,
+    )
 
     val lesson = remember(lessonResult) { (lessonResult as? Result.Success)?.data }
 
@@ -54,7 +60,7 @@ internal fun GradeTemplateFormRoute(
         lesson = lesson,
         snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
-        onNavBack = onNavBack,
+        onNavBack = { backPressedDispatcher?.onBackPressed() },
         formStatus = form.status,
         name = form.name,
         onNameChange = viewModel::onNameChange,

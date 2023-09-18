@@ -1,5 +1,6 @@
 package com.example.teacher.feature.schoolyear.nav
 
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -7,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.util.BackPressDiscardDialogHandler
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.schoolyear.R
 import com.example.teacher.feature.schoolyear.SchoolYearFormScreen
@@ -42,13 +44,17 @@ internal fun SchoolYearFormRoute(
         }
     }
 
-    // TODO: Handle back press to prevent accidentally closing form.
+    val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    BackPressDiscardDialogHandler(
+        backPressedDispatcher = backPressedDispatcher,
+        onDiscard = onNavBack,
+    )
 
     SchoolYearFormScreen(
         snackbarHostState = snackbarHostState,
         termForms = form.termForms,
         showNavigationIcon = showNavigationIcon,
-        onNavBack = onNavBack,
+        onNavBack = { backPressedDispatcher?.onBackPressed() },
         isEditMode = isEditMode,
         isDeleted = isDeleted,
         schoolYearName = form.schoolYearName,
