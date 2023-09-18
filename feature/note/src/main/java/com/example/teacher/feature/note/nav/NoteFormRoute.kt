@@ -40,6 +40,8 @@ internal fun NoteFormRoute(
         }
     }
 
+    // TODO: Handle back press to prevent accidentally closing form.
+
     NoteFormScreen(
         noteResult = noteResult,
         snackbarHostState = snackbarHostState,

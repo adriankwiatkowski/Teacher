@@ -89,6 +89,7 @@ internal fun StudentNoteFormScreen(
                     emptyList()
                 },
                 scrollBehavior = scrollBehavior,
+                closeIcon = true,
             )
         }
     ) { innerPadding ->

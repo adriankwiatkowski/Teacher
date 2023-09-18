@@ -93,6 +93,7 @@ internal fun EventFormScreen(
                     emptyList()
                 },
                 scrollBehavior = scrollBehavior,
+                closeIcon = true,
             )
         }
     ) { innerPadding ->

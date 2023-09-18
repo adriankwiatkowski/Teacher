@@ -25,12 +25,15 @@ internal fun LessonFormRoute(
     val form = viewModel.form
     val formStatus = form.status
 
+    // Observe save.
     LaunchedEffect(formStatus) {
         if (formStatus == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.lesson_lesson_saved)
             onNavBack()
         }
     }
+
+    // TODO: Handle back press to prevent accidentally closing form.
 
     LessonFormScreen(
         lessonResult = lessonResult,

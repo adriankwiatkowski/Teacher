@@ -32,6 +32,7 @@ fun TeacherTopBar(
     scrollBehavior: TopAppBarScrollBehavior?,
     modifier: Modifier = Modifier,
     visible: Boolean = true,
+    closeIcon: Boolean = false,
     menuItems: List<TeacherAction> = emptyList(),
 ) {
     if (!visible) {
@@ -46,8 +47,9 @@ fun TeacherTopBar(
         navigationIcon = {
             if (showNavigationIcon) {
                 IconButton(onClick = onNavigationIconClick) {
-                    val icon = TeacherIcons.navigateBack()
-                    Icon(icon.icon, contentDescription = stringResource(icon.text))
+                    val navigateBack = TeacherIcons.navigateBack()
+                    val icon = if (closeIcon) TeacherIcons.close() else TeacherIcons.navigateBack()
+                    Icon(icon.icon, contentDescription = stringResource(navigateBack.text))
                 }
             }
         },
@@ -76,6 +78,23 @@ private fun TeacherTopBarPreview() {
                 showNavigationIcon = true,
                 onNavigationIconClick = {},
                 scrollBehavior = TeacherTopBarDefaults.default(),
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+private fun TeacherTopBarCloseIconPreview() {
+    TeacherTheme {
+        Surface {
+            TeacherTopBar(
+                title = "Title",
+                showNavigationIcon = true,
+                onNavigationIconClick = {},
+                scrollBehavior = TeacherTopBarDefaults.default(),
+                closeIcon = true,
             )
         }
     }

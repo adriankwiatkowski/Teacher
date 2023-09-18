@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ui_navigate_back">Przejdź do poprzedniego ekranu</string>
+    <string name="ui_close">Zamknij</string>
     <string name="ui_add">Dodaj</string>
     <string name="ui_edit">Edytuj</string>
     <string name="ui_warning">Ostrzeżenie</string>

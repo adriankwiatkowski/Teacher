@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Details
@@ -35,6 +36,11 @@ object TeacherIcons {
 
     fun navigateBack(@StringRes text: Int = R.string.ui_navigate_back) = TeacherIcon(
         icon = TeacherIcons.ArrowBack,
+        text = text,
+    )
+
+    fun close(@StringRes text: Int = R.string.ui_navigate_back) = TeacherIcon(
+        icon = TeacherIcons.Close,
         text = text,
     )
 

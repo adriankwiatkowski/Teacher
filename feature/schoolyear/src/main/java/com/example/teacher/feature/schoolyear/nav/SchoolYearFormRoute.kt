@@ -42,6 +42,8 @@ internal fun SchoolYearFormRoute(
         }
     }
 
+    // TODO: Handle back press to prevent accidentally closing form.
+
     SchoolYearFormScreen(
         snackbarHostState = snackbarHostState,
         termForms = form.termForms,

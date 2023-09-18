@@ -45,6 +45,8 @@ internal fun EventFormRoute(
         }
     }
 
+    // TODO: Handle back press to prevent accidentally closing form.
+
     val showDayPicker = remember(isEditMode, isLessonForm, form.type) {
         val isDayPickerFormType =
             (form.type == EventType.Weekly || form.type == EventType.EveryTwoWeeks)

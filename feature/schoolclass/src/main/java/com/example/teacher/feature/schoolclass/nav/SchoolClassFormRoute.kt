@@ -35,6 +35,8 @@ internal fun SchoolClassFormRoute(
         }
     }
 
+    // TODO: Handle back press to prevent accidentally closing form.
+
     SchoolClassFormScreen(
         snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,

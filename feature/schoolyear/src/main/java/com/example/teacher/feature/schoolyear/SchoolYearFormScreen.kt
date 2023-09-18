@@ -80,6 +80,7 @@ internal fun SchoolYearFormScreen(
                     emptyList()
                 },
                 scrollBehavior = scrollBehavior,
+                closeIcon = true,
             )
         },
     ) { innerPadding ->

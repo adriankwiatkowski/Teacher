@@ -81,6 +81,7 @@ internal fun LessonFormScreen(
                     showNavigationIcon = showNavigationIcon,
                     onNavigationIconClick = onNavBack,
                     scrollBehavior = scrollBehavior,
+                    closeIcon = true,
                 )
             },
             floatingActionButton = {

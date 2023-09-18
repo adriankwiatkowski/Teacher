@@ -69,6 +69,7 @@ internal fun SchoolClassFormScreen(
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
+                closeIcon = true,
             )
         }
     ) { innerPadding ->

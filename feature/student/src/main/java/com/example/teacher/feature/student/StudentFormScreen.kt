@@ -81,6 +81,7 @@ internal fun StudentFormScreen(
                 showNavigationIcon = showNavigationIcon,
                 onNavigationIconClick = onNavBack,
                 scrollBehavior = scrollBehavior,
+                closeIcon = true,
             )
         }
     ) { innerPadding ->

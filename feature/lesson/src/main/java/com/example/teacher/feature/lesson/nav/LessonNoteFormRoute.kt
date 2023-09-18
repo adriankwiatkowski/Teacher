@@ -41,6 +41,8 @@ internal fun LessonNoteFormRoute(
         }
     }
 
+    // TODO: Handle back press to prevent accidentally closing form.
+
     NoteFormScreen(
         noteResult = lessonNoteResult,
         snackbarHostState = snackbarHostState,

@@ -81,6 +81,7 @@ internal fun GradeFormScreen(
                     emptyList()
                 },
                 scrollBehavior = scrollBehavior,
+                closeIcon = true,
             )
         }
     ) { innerPadding ->

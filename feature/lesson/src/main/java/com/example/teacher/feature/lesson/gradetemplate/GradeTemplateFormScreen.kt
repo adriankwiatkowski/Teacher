@@ -95,6 +95,7 @@ internal fun GradeTemplateFormScreen(
                     emptyList()
                 },
                 scrollBehavior = scrollBehavior,
+                closeIcon = true,
             )
         },
     ) { innerPadding ->
