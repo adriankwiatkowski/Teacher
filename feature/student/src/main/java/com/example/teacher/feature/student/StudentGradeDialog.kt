@@ -9,7 +9,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,6 +18,7 @@ import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.Student
 import com.example.teacher.core.model.data.StudentGradeInfo
 import com.example.teacher.core.model.data.StudentGradesByLesson
+import com.example.teacher.core.ui.component.TeacherTextButton
 import com.example.teacher.core.ui.paramprovider.StudentGradesByLessonPreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.StudentPreviewParameterProvider
 import com.example.teacher.core.ui.theme.TeacherTheme
@@ -64,9 +64,7 @@ internal fun StudentGradeDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(stringResource(R.string.ok))
-            }
+            TeacherTextButton(label = stringResource(R.string.ok), onClick = onDismissRequest)
         }
     )
 }

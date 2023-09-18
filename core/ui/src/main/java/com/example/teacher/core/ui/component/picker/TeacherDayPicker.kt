@@ -7,7 +7,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +22,7 @@ import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.ui.R
 import com.example.teacher.core.ui.component.TeacherChip
 import com.example.teacher.core.ui.component.TeacherRadioButton
+import com.example.teacher.core.ui.component.TeacherTextButton
 import com.example.teacher.core.ui.theme.TeacherTheme
 import java.time.DayOfWeek
 
@@ -78,9 +78,7 @@ private fun DayPickerDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(stringResource(R.string.ui_ok))
-            }
+            TeacherTextButton(label = stringResource(R.string.ui_ok), onClick = onDismissRequest)
         },
     )
 }
