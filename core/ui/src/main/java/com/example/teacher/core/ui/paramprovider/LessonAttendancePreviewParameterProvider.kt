@@ -14,6 +14,7 @@ private val data: List<LessonAttendance> = BasicStudentsPreviewParameterProvider
     .mapIndexed { index, student ->
         LessonAttendance(
             eventId = 1L,
+            isCancelled = index % 2 == 1,
             student = student,
             attendance = Attendance.entries[index % Attendance.entries.size],
         )

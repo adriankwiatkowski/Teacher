@@ -8,7 +8,7 @@ data class LessonEventAttendance(
     val date: LocalDate,
     val startTime: LocalTime,
     val endTime: LocalTime,
-    val isValid: Boolean,
+    val isCancelled: Boolean,
     val presentCount: Long,
     val lateCount: Long,
     val absentCount: Long,

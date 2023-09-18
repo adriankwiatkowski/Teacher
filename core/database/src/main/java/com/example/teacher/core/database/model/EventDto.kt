@@ -9,4 +9,5 @@ data class EventDto(
     val date: LocalDate,
     val startTime: LocalTime,
     val endTime: LocalTime,
+    val isCancelled: Boolean,
 )

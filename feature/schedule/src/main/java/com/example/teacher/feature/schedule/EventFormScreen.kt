@@ -66,6 +66,7 @@ internal fun EventFormScreen(
     onEndTimeChange: (date: LocalTime) -> Unit,
     onTermSelected: (isFirstTermSelected: Boolean) -> Unit,
     onTypeChange: (type: EventType) -> Unit,
+    onIsCancelledChange: (isCancelled: Boolean) -> Unit,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
     isEditMode: Boolean,
@@ -124,6 +125,7 @@ internal fun EventFormScreen(
                 onEndTimeChange = onEndTimeChange,
                 onTermSelected = onTermSelected,
                 onTypeChange = onTypeChange,
+                onIsCancelledChange = onIsCancelledChange,
                 submitText = if (isEditMode) {
                     stringResource(R.string.schedule_edit_event_date)
                 } else {
@@ -152,6 +154,7 @@ private fun MainContent(
     onEndTimeChange: (date: LocalTime) -> Unit,
     onTermSelected: (isFirstTermSelected: Boolean) -> Unit,
     onTypeChange: (type: EventType) -> Unit,
+    onIsCancelledChange: (isCancelled: Boolean) -> Unit,
     submitText: String,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
@@ -200,6 +203,8 @@ private fun MainContent(
             onTermSelected = onTermSelected,
             type = eventForm.type,
             onTypeChange = onTypeChange,
+            isCancelled = eventForm.isCancelled,
+            onIsCancelledChange = onIsCancelledChange,
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
@@ -285,6 +290,7 @@ private fun EventFormScreenPreview(
                 },
                 onTermSelected = { form = form.copy(isFirstTermSelected = it) },
                 onTypeChange = { form = form.copy(type = it) },
+                onIsCancelledChange = { form = form.copy(isCancelled = it) },
                 isSubmitEnabled = form.isSubmitEnabled,
                 isEditMode = false,
                 isDeleted = false,

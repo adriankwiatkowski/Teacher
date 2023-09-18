@@ -75,6 +75,7 @@ internal class EventFormViewModel @Inject constructor(
                     date = event.date,
                     startTime = event.startTime,
                     endTime = event.endTime,
+                    isCancelled = event.isCancelled,
                     status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
                 )
             }
@@ -113,6 +114,10 @@ internal class EventFormViewModel @Inject constructor(
         form = form.copy(type = type)
     }
 
+    fun onIsCancelledChange(isCancelled: Boolean) {
+        form = form.copy(isCancelled = isCancelled)
+    }
+
     fun onIsLessonFormChange(isLessonForm: Boolean) {
         _isLessonForm.value = isLessonForm
     }
@@ -141,6 +146,7 @@ internal class EventFormViewModel @Inject constructor(
                     date = form.date,
                     startTime = form.startTime,
                     endTime = form.endTime,
+                    isCancelled = form.isCancelled,
                 )
             } else if (isLessonForm.value) {
                 repository.insertLessonSchedule(
@@ -151,6 +157,7 @@ internal class EventFormViewModel @Inject constructor(
                     endTime = form.endTime,
                     isFirstTermSelected = form.isFirstTermSelected,
                     type = form.type,
+                    isCancelled = form.isCancelled,
                 )
             } else {
                 repository.insertEvent(
@@ -158,6 +165,7 @@ internal class EventFormViewModel @Inject constructor(
                     startTime = form.startTime,
                     endTime = form.endTime,
                     type = form.type,
+                    isCancelled = form.isCancelled,
                 )
             }
 

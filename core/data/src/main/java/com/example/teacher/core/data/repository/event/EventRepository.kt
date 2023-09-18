@@ -21,6 +21,7 @@ interface EventRepository {
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
+        isCancelled: Boolean,
         type: EventType,
     )
 
@@ -30,6 +31,7 @@ interface EventRepository {
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
+        isCancelled: Boolean,
         isFirstTermSelected: Boolean,
         type: EventType,
     )
@@ -40,6 +42,7 @@ interface EventRepository {
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
+        isCancelled: Boolean,
     )
 
     suspend fun deleteEventById(id: Long)

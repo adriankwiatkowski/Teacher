@@ -9,5 +9,5 @@ data class Event(
     val date: LocalDate,
     val startTime: LocalTime,
     val endTime: LocalTime,
-    val isValid: Boolean,
+    val isCancelled: Boolean,
 )

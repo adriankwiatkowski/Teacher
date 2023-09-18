@@ -76,7 +76,7 @@ private fun makeData(
             date = TimeUtils.plusDays(TimeUtils.currentDate(), index.toLong()),
             startTime = simpleLessonScheduleAttendance.startTime,
             endTime = TimeUtils.plusTime(simpleLessonScheduleAttendance.startTime, 0, 45),
-            isValid = index % 2 == 0,
+            isCancelled = index % 2 == 0,
             presentCount = simpleLessonScheduleAttendance.presentCount,
             lateCount = simpleLessonScheduleAttendance.lateCount,
             absentCount = simpleLessonScheduleAttendance.absentCount,

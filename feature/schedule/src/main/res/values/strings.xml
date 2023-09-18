@@ -27,4 +27,5 @@
     <string name="schedule_schedule_empty">Brak zajęć</string>
     <string name="schedule_event">Wydarzenie</string>
     <string name="schedule_event_switch_info">Wydarzenie czy termin zajęć?</string>
+    <string name="schedule_is_cancelled">Czy odwołane?</string>
 </resources>

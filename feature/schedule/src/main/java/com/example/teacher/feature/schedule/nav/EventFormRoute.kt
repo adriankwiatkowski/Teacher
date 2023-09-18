@@ -71,6 +71,7 @@ internal fun EventFormRoute(
         onEndTimeChange = viewModel::onEndTimeChange,
         onTermSelected = viewModel::onTermSelected,
         onTypeChange = viewModel::onTypeChange,
+        onIsCancelledChange = viewModel::onIsCancelledChange,
         isSubmitEnabled = form.isSubmitEnabled,
         onSubmit = viewModel::onSubmit,
         isEditMode = isEditMode,

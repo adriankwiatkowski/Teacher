@@ -4,9 +4,9 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
-import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.database.model.EventDto
+import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.model.data.Event
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -51,7 +51,7 @@ internal class EventDataSourceImpl @Inject constructor(
                     date = eventDto.date,
                     start_time = eventDto.startTime,
                     end_time = eventDto.endTime,
-                    is_valid = true,
+                    is_cancelled = eventDto.isCancelled,
                 )
             }
         }
@@ -63,7 +63,7 @@ internal class EventDataSourceImpl @Inject constructor(
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
-        isValid: Boolean
+        isCancelled: Boolean
     ): Unit = withContext(dispatcher) {
         eventQueries.transaction {
             removeOldLessonAttendances(eventId = id, newLessonId = lessonId)
@@ -74,7 +74,7 @@ internal class EventDataSourceImpl @Inject constructor(
                 date = date,
                 start_time = startTime,
                 end_time = endTime,
-                is_valid = isValid,
+                is_cancelled = isCancelled,
             )
         }
     }

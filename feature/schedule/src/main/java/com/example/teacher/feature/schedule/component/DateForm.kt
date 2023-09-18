@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.model.data.Lesson
+import com.example.teacher.core.ui.component.TeacherSwitch
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.schedule.R
@@ -54,6 +55,8 @@ internal fun DateForm(
     onTermSelected: (isFirstTermSelected: Boolean) -> Unit,
     type: EventType,
     onTypeChange: (type: EventType) -> Unit,
+    isCancelled: Boolean,
+    onIsCancelledChange: (isCancelled: Boolean) -> Unit,
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(
@@ -114,6 +117,14 @@ internal fun DateForm(
                 )
                 EventTypeControls(type = type, onTypeChange = onTypeChange)
             }
+
+            Divider()
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+            TeacherSwitch(
+                label = stringResource(R.string.schedule_is_cancelled),
+                checked = isCancelled,
+                onCheckedChange = onIsCancelledChange,
+            )
         }
     }
 }
@@ -127,6 +138,7 @@ private fun DateFormPreview() {
             var date by remember { mutableStateOf(TimeUtils.currentDate()) }
             var startTime by remember { mutableStateOf(TimeUtils.localTimeOf(8, 0)) }
             var endTime by remember { mutableStateOf(TimeUtils.localTimeOf(8, 45)) }
+            var isCancelled by remember { mutableStateOf(false) }
             var isFirstTermSelected by remember { mutableStateOf(true) }
             var type by remember { mutableStateOf(EventType.Weekly) }
 
@@ -152,6 +164,8 @@ private fun DateFormPreview() {
                 showTypeControls = true,
                 type = type,
                 onTypeChange = { type = it },
+                isCancelled = isCancelled,
+                onIsCancelledChange = { isCancelled = it },
             )
         }
     }

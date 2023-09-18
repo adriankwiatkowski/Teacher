@@ -20,7 +20,7 @@ interface EventDataSource {
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
-        isValid: Boolean,
+        isCancelled: Boolean,
     )
 
     suspend fun deleteEventById(id: Long)

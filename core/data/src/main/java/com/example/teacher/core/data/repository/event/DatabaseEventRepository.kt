@@ -47,6 +47,7 @@ internal class DatabaseEventRepository @Inject constructor(
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
+        isCancelled: Boolean,
         type: EventType,
     ) {
         scope.launch {
@@ -58,6 +59,7 @@ internal class DatabaseEventRepository @Inject constructor(
                         date = date,
                         startTime = startTime,
                         endTime = endTime,
+                        isCancelled = isCancelled,
                     ),
                 )
             )
@@ -70,6 +72,7 @@ internal class DatabaseEventRepository @Inject constructor(
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
+        isCancelled: Boolean,
         isFirstTermSelected: Boolean,
         type: EventType
     ) {
@@ -88,6 +91,7 @@ internal class DatabaseEventRepository @Inject constructor(
                             date = date,
                             startTime = startTime,
                             endTime = endTime,
+                            isCancelled = isCancelled,
                         )
                     )
                 }
@@ -124,6 +128,7 @@ internal class DatabaseEventRepository @Inject constructor(
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
+        isCancelled: Boolean,
     ) {
         scope.launch {
             eventDataSource.updateEvent(
@@ -132,7 +137,7 @@ internal class DatabaseEventRepository @Inject constructor(
                 date = date,
                 startTime = startTime,
                 endTime = endTime,
-                isValid = true,
+                isCancelled = isCancelled,
             )
         }
     }

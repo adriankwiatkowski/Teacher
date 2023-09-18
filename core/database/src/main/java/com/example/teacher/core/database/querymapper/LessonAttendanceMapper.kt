@@ -20,6 +20,7 @@ internal fun toExternal(
 
     LessonAttendance(
         eventId = lessonAttendance.event_id,
+        isCancelled = lessonAttendance.event_is_cancelled,
         student = BasicStudent(
             id = lessonAttendance.student_id,
             classId = lessonAttendance.school_class_id,
@@ -50,7 +51,7 @@ internal fun toExternalLessonEventAttendances(
         date = event.event_date,
         startTime = event.event_start_time,
         endTime = event.event_end_time,
-        isValid = event.event_is_valid,
+        isCancelled = event.event_is_cancelled,
         presentCount = event.present_count,
         lateCount = event.late_count,
         absentCount = event.absent_count,

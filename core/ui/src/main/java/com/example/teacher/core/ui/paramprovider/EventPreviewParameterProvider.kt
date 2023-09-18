@@ -49,7 +49,7 @@ private fun makeEvents(
                 date = simpleLessonCalendar.date,
                 startTime = simpleLessonCalendar.startTime,
                 endTime = simpleLessonCalendar.endTime,
-                isValid = true,
+                isCancelled = false,
             ),
             Event(
                 id = index.toLong() * 2 + 1,
@@ -57,7 +57,7 @@ private fun makeEvents(
                 date = simpleLessonCalendar.date,
                 startTime = simpleLessonCalendar.startTime,
                 endTime = simpleLessonCalendar.endTime,
-                isValid = true,
+                isCancelled = false,
             )
         )
     }.flatten()

@@ -40,7 +40,7 @@ internal fun toExternal(events: List<GetEvents>): List<Event> = events.map { eve
         date = event.date,
         startTime = event.start_time,
         endTime = event.end_time,
-        isValid = event.is_valid,
+        isCancelled = event.is_cancelled,
     )
 }
 
@@ -80,6 +80,6 @@ internal fun toExternal(event: GetEventById?): Event? = run {
         date = event.date,
         startTime = event.start_time,
         endTime = event.end_time,
-        isValid = event.is_valid,
+        isCancelled = event.is_cancelled,
     )
 }
