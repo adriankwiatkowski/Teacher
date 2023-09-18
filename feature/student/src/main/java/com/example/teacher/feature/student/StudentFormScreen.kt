@@ -197,19 +197,6 @@ private fun Content(
 
         FormTextField(
             modifier = textFieldModifier,
-            inputField = registerNumber,
-            onValueChange = { onRegisterNumberChange(it) },
-            label = stringResource(R.string.student_register_number),
-            leadingIcon = {
-                val icon = TeacherIcons.registerBook()
-                Icon(imageVector = icon.icon, contentDescription = null)
-            },
-            keyboardOptions = nameKeyboardOptions.copy(keyboardType = KeyboardType.Number),
-            keyboardActions = commonKeyboardActions,
-        )
-
-        FormTextField(
-            modifier = textFieldModifier,
             inputField = email,
             onValueChange = { onEmailChange(it) },
             label = stringResource(R.string.student_email),
@@ -231,6 +218,19 @@ private fun Content(
                 Icon(imageVector = icon.icon, contentDescription = null)
             },
             keyboardOptions = commonKeyboardOptions.copy(keyboardType = KeyboardType.Phone),
+            keyboardActions = commonKeyboardActions,
+        )
+
+        FormTextField(
+            modifier = textFieldModifier,
+            inputField = registerNumber,
+            onValueChange = { onRegisterNumberChange(it) },
+            label = stringResource(R.string.student_register_number),
+            leadingIcon = {
+                val icon = TeacherIcons.registerBook()
+                Icon(imageVector = icon.icon, contentDescription = null)
+            },
+            keyboardOptions = nameKeyboardOptions.copy(keyboardType = KeyboardType.Number),
             keyboardActions = commonKeyboardActions,
         )
 
