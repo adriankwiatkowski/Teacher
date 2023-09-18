@@ -70,8 +70,9 @@ internal fun toStudentsWithAttendanceExternal(
     return attendances
         .groupBy { attendance -> attendance.student_id }
         .map { (_, attendances) ->
-            val notEmptyAttendances =
-                attendances.filter { attendance -> attendance.attendance_text != null }
+            val notEmptyAttendances = attendances.filter { attendance ->
+                attendance.attendance_text != null && !attendance.event_is_cancelled
+            }
 
             val attendanceAveragePercentage = if (notEmptyAttendances.isEmpty()) {
                 BigDecimal.valueOf(1L).toPercentage()

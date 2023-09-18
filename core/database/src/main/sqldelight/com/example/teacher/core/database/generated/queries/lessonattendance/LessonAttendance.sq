@@ -61,6 +61,7 @@ ORDER BY s.register_number;
 
 getStudentsWithAttendanceByLessonId:
 SELECT
+    e.is_cancelled AS 'event_is_cancelled',
     la.attendance_id,
     a.text AS 'attendance_text',
     s.id AS 'student_id',
