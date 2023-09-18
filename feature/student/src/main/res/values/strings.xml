@@ -3,12 +3,12 @@
     <string name="student_details">Dane</string>
     <string name="student_grades">Oceny</string>
     <string name="student_notes">Uwagi</string>
-    <string name="student_saving_student">Zapisywanie studenta…</string>
+    <string name="student_saving_student">Zapisywanie ucznia…</string>
     <string name="student_saved">Zapisano dane ucznia</string>
     <string name="student_deleted">Usunięto dane ucznia</string>
     <string name="student_school_class_name">Klasa %1$s</string>
-    <string name="add_student">Dodaj studenta</string>
-    <string name="edit_student">Edytuj studenta</string>
+    <string name="add_student">Dodaj ucznia</string>
+    <string name="edit_student">Edytuj ucznia</string>
     <string name="student_name">Imię</string>
     <string name="student_surname">Nazwisko</string>
     <string name="student_register_number">Numer w dzienniku</string>
