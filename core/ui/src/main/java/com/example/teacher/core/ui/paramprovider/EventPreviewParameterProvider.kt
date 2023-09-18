@@ -37,7 +37,9 @@ private val events = makeEvents(
 private fun makeEvents(
     vararg lesson: SimpleEvent,
 ): List<Event> {
-    return lesson.mapIndexed { index, simpleLessonCalendar ->
+    return lesson.mapIndexed { index, simpleEvent ->
+        val isCancelled = index % 2 == 1
+
         listOf(
             Event(
                 id = index.toLong() * 2,
@@ -46,18 +48,18 @@ private fun makeEvents(
                     name = "Matematyka",
                     schoolClass = BasicSchoolClassPreviewParameterProvider().values.first()
                 ),
-                date = simpleLessonCalendar.date,
-                startTime = simpleLessonCalendar.startTime,
-                endTime = simpleLessonCalendar.endTime,
-                isCancelled = false,
+                date = simpleEvent.date,
+                startTime = simpleEvent.startTime,
+                endTime = simpleEvent.endTime,
+                isCancelled = isCancelled,
             ),
             Event(
                 id = index.toLong() * 2 + 1,
                 lesson = null,
-                date = simpleLessonCalendar.date,
-                startTime = simpleLessonCalendar.startTime,
-                endTime = simpleLessonCalendar.endTime,
-                isCancelled = false,
+                date = simpleEvent.date,
+                startTime = simpleEvent.startTime,
+                endTime = simpleEvent.endTime,
+                isCancelled = isCancelled,
             )
         )
     }.flatten()

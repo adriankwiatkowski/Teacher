@@ -28,4 +28,5 @@
     <string name="schedule_event">Wydarzenie</string>
     <string name="schedule_event_switch_info">Wydarzenie czy termin zajęć?</string>
     <string name="schedule_is_cancelled">Czy odwołane?</string>
+    <string name="schedule_event_cancelled">Odwołane</string>
 </resources>

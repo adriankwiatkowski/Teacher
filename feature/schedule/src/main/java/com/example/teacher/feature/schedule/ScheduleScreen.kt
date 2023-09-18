@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.Event
@@ -131,10 +132,12 @@ private fun LazyListScope.events(
     onScheduleClick: (id: Long) -> Unit,
 ) {
     items(events, key = { it.id }) { event ->
-        EventItem(
-            event = event,
-            onClick = { onScheduleClick(event.id) },
-        )
+        Surface(tonalElevation = if (event.isCancelled) 8.dp else 0.dp) {
+            EventItem(
+                event = event,
+                onClick = { onScheduleClick(event.id) },
+            )
+        }
     }
 }
 
@@ -147,6 +150,12 @@ private fun Header(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
+        Text(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            text = TimeUtils.getDisplayNameOfDayOfWeek(date),
+            style = MaterialTheme.typography.headlineSmall,
+        )
+
         Row(verticalAlignment = Alignment.CenterVertically) {
             TeacherIconButton(TeacherActions.previous(onClick = onPrevDateClick))
             TeacherDatePicker(
@@ -156,12 +165,31 @@ private fun Header(
             )
             TeacherIconButton(TeacherActions.next(onClick = onNextDateClick))
         }
-
-        Text(
-            text = TimeUtils.getDisplayNameOfDayOfWeek(date),
-            style = MaterialTheme.typography.headlineSmall,
-        )
     }
+}
+
+@Composable
+private fun EventItem(
+    event: Event,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ListItem(
+        modifier = modifier.clickable(onClick = onClick),
+        overlineContent = if (event.isCancelled) {
+            { Text(stringResource(R.string.schedule_event_cancelled)) }
+        } else {
+            null
+        },
+        headlineContent = {
+            Text(TimeUtils.format(event.startTime, event.endTime))
+        },
+        supportingContent = {
+            val text = event.lesson?.let { lesson -> "${lesson.name} ${lesson.schoolClass.name}" }
+                ?: stringResource(R.string.schedule_event)
+            Text(text)
+        },
+    )
 }
 
 @Composable
@@ -183,25 +211,6 @@ private fun LoadingState(modifier: Modifier = Modifier) {
 @Composable
 private fun ErrorState(modifier: Modifier = Modifier) {
     ErrorScreen(modifier = modifier)
-}
-
-@Composable
-private fun EventItem(
-    event: Event,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    ListItem(
-        modifier = modifier.clickable(onClick = onClick),
-        headlineContent = {
-            Text(TimeUtils.format(event.startTime, event.endTime))
-        },
-        supportingContent = {
-            val text = event.lesson?.let { lesson -> "${lesson.name} ${lesson.schoolClass.name}" }
-                ?: stringResource(R.string.schedule_event)
-            Text(text)
-        },
-    )
 }
 
 @Preview
