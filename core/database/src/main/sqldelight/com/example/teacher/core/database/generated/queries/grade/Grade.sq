@@ -47,6 +47,7 @@ getGradeTemplateInfoByGradeTemplateId:
 SELECT
     gt.id AS 'grade_template_id',
     gt.name AS 'grade_name',
+    gt.description AS 'grade_template_description',
     gt.weight AS 'grade_weight',
     gt.is_first_term AS 'grade_is_first_term',
     l.id AS 'lesson_id',

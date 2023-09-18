@@ -1,11 +1,11 @@
 package com.example.teacher.feature.grade
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
@@ -26,13 +26,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.BasicGradeForTemplate
-import com.example.teacher.core.model.data.GradeTemplateInfo
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.BasicGradesForTemplatePreviewParameterProvider
-import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
+import com.example.teacher.core.ui.paramprovider.GradeTemplateInfoPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
@@ -88,6 +87,7 @@ internal fun GradesScreen(
                     .fillMaxSize()
                     .padding(MaterialTheme.spacing.small),
                 gradeName = uiState.gradeTemplateInfo.gradeName,
+                gradeDescription = uiState.gradeTemplateInfo.gradeDescription,
                 gradeTermName = if (uiState.gradeTemplateInfo.isFirstTerm) {
                     uiState.gradeTemplateInfo.lesson.schoolClass.schoolYear.firstTerm.name
                 } else {
@@ -100,10 +100,10 @@ internal fun GradesScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainContent(
     gradeName: String,
+    gradeDescription: String?,
     gradeTermName: String,
     grades: List<BasicGradeForTemplate>,
     onStudentClick: (studentId: Long, gradeId: Long?) -> Unit,
@@ -113,12 +113,8 @@ private fun MainContent(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        stickyHeader {
-            Text(
-                text = stringResource(R.string.grades_grade_with_term, gradeName, gradeTermName),
-                style = MaterialTheme.typography.titleMedium,
-            )
-        }
+        gradeName(gradeName = gradeName, gradeTermName = gradeTermName)
+        gradeDescription(gradeDescription = gradeDescription)
 
         items(grades, key = { grade -> grade.studentId }) { grade ->
             GradeItem(
@@ -132,6 +128,23 @@ private fun MainContent(
             item {
                 TeacherLargeText(stringResource(R.string.grade_no_students))
             }
+        }
+    }
+}
+
+private fun LazyListScope.gradeName(gradeName: String, gradeTermName: String) {
+    item {
+        Text(
+            text = stringResource(R.string.grades_grade_with_term, gradeName, gradeTermName),
+            style = MaterialTheme.typography.titleMedium,
+        )
+    }
+}
+
+private fun LazyListScope.gradeDescription(gradeDescription: String?) {
+    if (gradeDescription != null) {
+        item {
+            Text(text = gradeDescription, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
@@ -167,13 +180,7 @@ private fun GradesScreenPreview(
             val uiState = remember {
                 GradesUiState(
                     grades = grades,
-                    gradeTemplateInfo = GradeTemplateInfo(
-                        gradeTemplateId = 1L,
-                        gradeName = "Dodawanie",
-                        gradeWeight = 3,
-                        isFirstTerm = true,
-                        lesson = LessonPreviewParameterProvider().values.first(),
-                    ),
+                    gradeTemplateInfo = GradeTemplateInfoPreviewParameterProvider().values.first(),
                 )
             }
 

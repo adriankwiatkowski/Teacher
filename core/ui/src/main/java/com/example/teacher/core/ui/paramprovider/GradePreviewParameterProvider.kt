@@ -13,6 +13,7 @@ class GradeTemplateInfoPreviewParameterProvider : PreviewParameterProvider<Grade
         GradeTemplateInfo(
             gradeTemplateId = 1L,
             gradeName = "Dodawanie",
+            gradeDescription = "Dodawanie liczb naturalnych",
             gradeWeight = 3,
             isFirstTerm = true,
             lesson = LessonPreviewParameterProvider().values.first(),

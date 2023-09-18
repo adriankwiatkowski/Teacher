@@ -98,6 +98,7 @@ private fun MainScreen(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
+        // TODO: Show all grades, even if they are not set.
         items(
             studentGradesByLesson,
             key = { item -> item.lessonId },

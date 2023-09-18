@@ -20,6 +20,7 @@ data class BasicGradeTemplate(
 data class GradeTemplateInfo(
     val gradeTemplateId: Long,
     val gradeName: String,
+    val gradeDescription: String?,
     val gradeWeight: Int,
     val isFirstTerm: Boolean,
     val lesson: Lesson,

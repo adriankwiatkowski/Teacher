@@ -65,6 +65,7 @@ internal fun toExternal(
     GradeTemplateInfo(
         gradeTemplateId = gradeInfo.grade_template_id,
         gradeName = gradeInfo.grade_name,
+        gradeDescription = gradeInfo.grade_template_description,
         gradeWeight = gradeInfo.grade_weight.toInt(),
         isFirstTerm = gradeInfo.grade_is_first_term,
         lesson = Lesson(
