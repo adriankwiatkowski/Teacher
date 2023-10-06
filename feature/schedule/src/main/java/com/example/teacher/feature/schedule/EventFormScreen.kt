@@ -1,13 +1,17 @@
 package com.example.teacher.feature.schedule
 
-import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -15,7 +19,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +33,7 @@ import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.component.TeacherButton
-import com.example.teacher.core.ui.component.TeacherSwitch
+import com.example.teacher.core.ui.component.TeacherInputChip
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.result.DeletedScreen
@@ -218,23 +221,34 @@ private fun MainContent(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 private fun Header(
     isLessonForm: Boolean,
     onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.animateContentSize()) {
-        TeacherSwitch(
-            label = stringResource(R.string.schedule_event),
-            checked = !isLessonForm,
-            onCheckedChange = { onIsLessonFormChange(!it) },
-        )
-        Text(
-            modifier = Modifier.padding(horizontal = MaterialTheme.spacing.large),
-            text = stringResource(R.string.schedule_event_switch_info),
-            style = MaterialTheme.typography.bodySmall,
-        )
+    Column(modifier = modifier) {
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .selectableGroup(),
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            TeacherInputChip(
+                label = stringResource(R.string.schedule_class_date),
+                selected = isLessonForm,
+                onClick = { onIsLessonFormChange(true) },
+            )
+
+            Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
+
+            TeacherInputChip(
+                label = stringResource(R.string.schedule_event),
+                selected = !isLessonForm,
+                onClick = { onIsLessonFormChange(false) },
+            )
+        }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
     }
 }

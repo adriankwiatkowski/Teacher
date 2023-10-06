@@ -26,7 +26,6 @@
     <string name="schedule_no_lesson_exists">Nie istnieje jeszcze żaden przedmiot. Musi istnieć przedmiot, żeby można było stworzyć plan zajęć.</string>
     <string name="schedule_schedule_empty">Brak zajęć</string>
     <string name="schedule_event">Wydarzenie</string>
-    <string name="schedule_event_switch_info">Wydarzenie czy termin zajęć?</string>
     <string name="schedule_is_cancelled">Czy odwołane?</string>
     <string name="schedule_event_cancelled">Odwołane</string>
 </resources>
