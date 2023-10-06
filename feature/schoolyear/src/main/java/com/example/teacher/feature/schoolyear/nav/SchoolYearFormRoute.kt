@@ -25,7 +25,8 @@ internal fun SchoolYearFormRoute(
     viewModel: SchoolYearFormViewModel = hiltViewModel(),
 ) {
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
-    val form = viewModel.form
+    val form by viewModel.form.collectAsStateWithLifecycle()
+    val isFormMutated by viewModel.isFormMutated.collectAsStateWithLifecycle()
     val status = form.status
 
     // Observe save.
@@ -46,6 +47,7 @@ internal fun SchoolYearFormRoute(
 
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     BackPressDiscardDialogHandler(
+        enabled = isFormMutated,
         backPressedDispatcher = backPressedDispatcher,
         onDiscard = onNavBack,
     )

@@ -1,8 +1,5 @@
 package com.example.teacher.feature.schoolyear.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,8 +11,11 @@ import com.example.teacher.feature.schoolyear.nav.SchoolYearNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -39,19 +39,24 @@ internal class SchoolYearFormViewModel @Inject constructor(
         .flatMapLatest { schoolYearId -> repository.getSchoolYearById(schoolYearId) }
         .stateIn(initialValue = Result.Loading)
 
-    var form by mutableStateOf(SchoolYearFormProvider.createDefaultForm())
-        private set
+    private val _form = MutableStateFlow(SchoolYearFormProvider.createDefaultForm())
+    val form = _form.asStateFlow()
+
+    private val initialForm = MutableStateFlow(form.value)
+    val isFormMutated = combine(form, initialForm) { form, initialForm -> form != initialForm }
+        .stateIn(false)
 
     init {
         schoolYearResult
             .onEach { schoolYearResult ->
                 val schoolYear = (schoolYearResult as? Result.Success)?.data
                 if (schoolYear == null) {
-                    form = SchoolYearFormProvider.createDefaultForm()
+                    _form.value = SchoolYearFormProvider.createDefaultForm()
+                    initialForm.value = form.value
                     return@onEach
                 }
 
-                form = form.copy(
+                _form.value = form.value.copy(
                     schoolYearName = SchoolYearFormProvider.validateSchoolYearName(schoolYear.name),
                     termForms = listOf(schoolYear.firstTerm, schoolYear.secondTerm).map { term ->
                         TermForm(
@@ -60,54 +65,56 @@ internal class SchoolYearFormViewModel @Inject constructor(
                             endDate = SchoolYearFormProvider.validateEndDate(term.endDate),
                         )
                     },
-                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                    status = if (form.value.status is FormStatus.Success) form.value.status else FormStatus.Idle,
                 )
+                initialForm.value = form.value
             }
             .launchIn(viewModelScope)
     }
 
     fun onSchoolYearNameChange(name: String) {
-        form = form.copy(schoolYearName = SchoolYearFormProvider.validateSchoolYearName(name))
+        _form.value =
+            form.value.copy(schoolYearName = SchoolYearFormProvider.validateSchoolYearName(name))
     }
 
     fun onTermNameChange(index: Int, name: String) {
-        val oldTerms = form.termForms
+        val oldTerms = form.value.termForms
         val newTerms = oldTerms.toMutableList()
         newTerms[index] = newTerms[index].copy(name = SchoolYearFormProvider.validateTermName(name))
 
-        form = form.copy(termForms = newTerms)
+        _form.value = form.value.copy(termForms = newTerms)
     }
 
     fun onStartDateChange(index: Int, date: LocalDate) {
-        val oldTerms = form.termForms
+        val oldTerms = form.value.termForms
         val newTerms = oldTerms.toMutableList()
         newTerms[index] =
             newTerms[index].copy(startDate = SchoolYearFormProvider.validateStartDate(date))
 
-        form = form.copy(termForms = newTerms)
+        _form.value = form.value.copy(termForms = newTerms)
         sanitizeDates(changedIndex = index, isStartDateChanged = true)
     }
 
     fun onEndDateChange(index: Int, date: LocalDate) {
-        val oldTerms = form.termForms
+        val oldTerms = form.value.termForms
         val newTerms = oldTerms.toMutableList()
         newTerms[index] =
             newTerms[index].copy(endDate = SchoolYearFormProvider.validateEndDate(date))
 
-        form = form.copy(termForms = newTerms)
+        _form.value = form.value.copy(termForms = newTerms)
         sanitizeDates(changedIndex = index, isStartDateChanged = false)
     }
 
     fun onAddSchoolYear() {
-        if (!form.isSubmitEnabled) {
+        if (!form.value.isSubmitEnabled) {
             return
         }
 
-        form = form.copy(status = FormStatus.Saving)
+        _form.value = form.value.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-            val firstTerm = form.termForms[0]
-            val secondTerm = form.termForms[1]
-            val schoolYearName = form.schoolYearName.value
+            val firstTerm = form.value.termForms[0]
+            val secondTerm = form.value.termForms[1]
+            val schoolYearName = form.value.schoolYearName.value
 
             repository.insertOrUpdateSchoolYear(
                 id = schoolYearId.value.let { id -> if (id != 0L) id else null },
@@ -121,7 +128,7 @@ internal class SchoolYearFormViewModel @Inject constructor(
             )
 
             if (isActive) {
-                form = form.copy(status = FormStatus.Success)
+                _form.value = form.value.copy(status = FormStatus.Success)
             }
         }
     }
@@ -137,9 +144,9 @@ internal class SchoolYearFormViewModel @Inject constructor(
         changedIndex: Int,
         isStartDateChanged: Boolean,
     ) {
-        form = form.copy(
+        _form.value = form.value.copy(
             termForms = SchoolYearFormProvider.sanitizeDates(
-                form.termForms,
+                form.value.termForms,
                 changedDateIndex = changedIndex,
                 isStartDateChanged = isStartDateChanged,
             )

@@ -1,8 +1,5 @@
 package com.example.teacher.feature.schedule.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -55,13 +52,19 @@ internal class EventFormViewModel @Inject constructor(
     private val _isLessonForm = MutableStateFlow(true)
     val isLessonForm = _isLessonForm.asStateFlow()
 
-    var form by mutableStateOf(EventFormProvider.createDefaultForm())
-        private set
+    private val _form = MutableStateFlow(EventFormProvider.createDefaultForm())
+    val form = _form.asStateFlow()
+
+    private val initialForm = MutableStateFlow(form.value)
+    val isFormMutated = combine(form, initialForm) { form, initialForm -> form != initialForm }
+        .stateIn(false)
 
     init {
         combine(lessonId, isLessonForm) { lessonId, isLessonForm ->
             !isLessonForm || lessonId != DEFAULT_ID
-        }.onEach { isValid -> form = form.copy(isValid = isValid) }.launchIn(viewModelScope)
+        }.onEach { isValid ->
+            _form.value = form.value.copy(isValid = isValid)
+        }.launchIn(viewModelScope)
 
         eventResult
             .onEach { eventResult ->
@@ -71,51 +74,52 @@ internal class EventFormViewModel @Inject constructor(
                 setLessonId(lessonId ?: DEFAULT_ID)
                 _isLessonForm.value = lessonId != null
 
-                form = form.copy(
+                _form.value = form.value.copy(
                     date = event.date,
                     startTime = event.startTime,
                     endTime = event.endTime,
                     isCancelled = event.isCancelled,
-                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                    status = if (form.value.status is FormStatus.Success) form.value.status else FormStatus.Idle,
                 )
+                initialForm.value = form.value
             }
             .launchIn(viewModelScope)
     }
 
     fun onDayChange(day: DayOfWeek) {
-        form = form.copy(day = EventFormProvider.sanitizeDay(day))
+        _form.value = form.value.copy(day = EventFormProvider.sanitizeDay(day))
     }
 
     fun onDateChange(date: LocalDate) {
-        form = form.copy(date = EventFormProvider.sanitizeDate(date))
+        _form.value = form.value.copy(date = EventFormProvider.sanitizeDate(date))
     }
 
     fun onStartTimeChange(startTime: LocalTime) {
-        val timeData = EventFormProvider.sanitizeStartTime(startTime, form.endTime)
-        form = form.copy(
+        val timeData = EventFormProvider.sanitizeStartTime(startTime, form.value.endTime)
+        _form.value = form.value.copy(
             startTime = timeData.startTime,
             endTime = timeData.endTime,
         )
     }
 
     fun onEndTimeChange(endTime: LocalTime) {
-        val timeData = EventFormProvider.sanitizeEndTime(form.startTime, endTime)
-        form = form.copy(
+        val timeData = EventFormProvider.sanitizeEndTime(form.value.startTime, endTime)
+        _form.value = form.value.copy(
             startTime = timeData.startTime,
             endTime = timeData.endTime,
         )
     }
 
     fun onTermSelected(isFirstTermSelected: Boolean) {
-        form = form.copy(isFirstTermSelected = isFirstTermSelected)
+        _form.value = form.value.copy(isFirstTermSelected = isFirstTermSelected)
     }
 
     fun onTypeChange(type: EventType) {
-        form = form.copy(type = type)
+        _form.value = form.value.copy(type = type)
     }
 
     fun onIsCancelledChange(isCancelled: Boolean) {
-        form = form.copy(isCancelled = isCancelled)
+        _form.value = form.value.copy(isCancelled = isCancelled)
     }
 
     fun onIsLessonFormChange(isLessonForm: Boolean) {
@@ -127,6 +131,8 @@ internal class EventFormViewModel @Inject constructor(
     }
 
     fun onSubmit() {
+        val form = form.value
+
         if (!form.isSubmitEnabled) {
             return
         }
@@ -137,7 +143,7 @@ internal class EventFormViewModel @Inject constructor(
         val eventId = eventId.value
         val lessonId = lessonId.value
 
-        form = form.copy(status = FormStatus.Saving)
+        _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
             if (eventId != DEFAULT_ID) {
                 repository.updateEvent(
@@ -170,7 +176,7 @@ internal class EventFormViewModel @Inject constructor(
             }
 
             if (isActive) {
-                form = form.copy(status = FormStatus.Success)
+                _form.value = form.copy(status = FormStatus.Success)
             }
         }
     }

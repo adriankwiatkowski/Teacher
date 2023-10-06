@@ -1,8 +1,5 @@
 package com.example.teacher.feature.lesson.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +10,16 @@ import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.feature.lesson.nav.LessonNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,8 +34,12 @@ internal class LessonFormViewModel @Inject constructor(
     private val schoolClassId: StateFlow<Long> =
         savedStateHandle.getStateFlow(SCHOOL_CLASS_ID_KEY, 0L)
 
-    var form by mutableStateOf(LessonFormProvider.createDefaultForm())
-        private set
+    private val _form = MutableStateFlow(LessonFormProvider.createDefaultForm())
+    val form = _form.asStateFlow()
+
+    private val initialForm = MutableStateFlow(form.value)
+    val isFormMutated = combine(form, initialForm) { form, initialForm -> form != initialForm }
+        .stateIn(false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val lessonResult: StateFlow<Result<Lesson?>> = lessonId
@@ -45,25 +55,28 @@ internal class LessonFormViewModel @Inject constructor(
         lessonResult
             .onEach { lessonResource ->
                 val lesson = (lessonResource as? Result.Success)?.data ?: return@onEach
-                form = form.copy(
+                _form.value = form.value.copy(
                     id = lesson.id,
                     name = LessonFormProvider.validateName(lesson.name),
-                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                    status = if (form.value.status is FormStatus.Success) form.value.status else FormStatus.Idle,
                 )
+                initialForm.value = form.value
             }
             .launchIn(viewModelScope)
     }
 
     fun onNameChange(name: String) {
-        form = form.copy(name = LessonFormProvider.validateName(name))
+        _form.value = form.value.copy(name = LessonFormProvider.validateName(name))
     }
 
     fun onSubmit() {
+        val form = form.value
+
         if (!form.isSubmitEnabled) {
             return
         }
 
-        form = form.copy(status = FormStatus.Saving)
+        _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
             val saved = lessonRepository.insertOrUpdateLesson(
                 id = form.id,
@@ -72,7 +85,8 @@ internal class LessonFormViewModel @Inject constructor(
             )
 
             if (isActive) {
-                form = form.copy(status = if (saved) FormStatus.Success else FormStatus.Error)
+                _form.value =
+                    form.copy(status = if (saved) FormStatus.Success else FormStatus.Error)
             }
         }
     }

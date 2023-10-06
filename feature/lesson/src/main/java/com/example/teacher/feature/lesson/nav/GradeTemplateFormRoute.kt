@@ -29,12 +29,13 @@ internal fun GradeTemplateFormRoute(
     val gradeTemplateResult by viewModel.gradeTemplateResult.collectAsStateWithLifecycle()
     val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
-    val form = viewModel.form
-    val formStatus = form.status
+    val form by viewModel.form.collectAsStateWithLifecycle()
+    val isFormMutated by viewModel.isFormMutated.collectAsStateWithLifecycle()
+    val status = form.status
 
     // Observe save.
-    LaunchedEffect(formStatus) {
-        if (formStatus == FormStatus.Success) {
+    LaunchedEffect(status) {
+        if (status == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.lesson_grade_saved)
             onNavBack()
         }
@@ -49,6 +50,7 @@ internal fun GradeTemplateFormRoute(
 
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     BackPressDiscardDialogHandler(
+        enabled = isFormMutated,
         backPressedDispatcher = backPressedDispatcher,
         onDiscard = onNavBack,
     )

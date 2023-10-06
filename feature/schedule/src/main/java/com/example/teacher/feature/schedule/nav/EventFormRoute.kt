@@ -30,11 +30,13 @@ internal fun EventFormRoute(
     val lessonResult by viewModel.lessonResult.collectAsStateWithLifecycle()
     val isLessonForm by viewModel.isLessonForm.collectAsStateWithLifecycle()
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
-    val form = viewModel.form
+    val form by viewModel.form.collectAsStateWithLifecycle()
+    val isFormMutated by viewModel.isFormMutated.collectAsStateWithLifecycle()
+    val status = form.status
 
     // Observe save.
-    LaunchedEffect(form.status) {
-        if (form.status == FormStatus.Success) {
+    LaunchedEffect(status) {
+        if (status == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.schedule_event_saved)
             onSave()
         }
@@ -49,6 +51,7 @@ internal fun EventFormRoute(
 
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     BackPressDiscardDialogHandler(
+        enabled = isFormMutated,
         backPressedDispatcher = backPressedDispatcher,
         onDiscard = onNavBack,
     )

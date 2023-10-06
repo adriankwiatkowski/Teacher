@@ -1,8 +1,5 @@
 package com.example.teacher.feature.grade.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,8 +14,11 @@ import com.example.teacher.feature.grade.nav.GradeNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
@@ -75,36 +75,44 @@ internal class GradeFormViewModel @Inject constructor(
         }
         .stateIn(initialValue = null)
 
-    var form by mutableStateOf(GradeFormProvider.createDefaultForm())
-        private set
+    private val _form = MutableStateFlow(GradeFormProvider.createDefaultForm())
+    val form = _form.asStateFlow()
+
+    private val initialForm = MutableStateFlow(form.value)
+    val isFormMutated = combine(form, initialForm) { form, initialForm -> form != initialForm }
+        .stateIn(false)
 
     init {
         gradeResult
             .onEach { gradeResult ->
                 val grade = (gradeResult as? Result.Success)?.data
                 if (grade == null) {
-                    form = GradeFormProvider.createDefaultForm(status = FormStatus.Idle)
+                    _form.value = GradeFormProvider.createDefaultForm(status = FormStatus.Idle)
+                    initialForm.value = form.value
                     return@onEach
                 }
 
-                form = form.copy(
+                _form.value = form.value.copy(
                     grade = GradeFormProvider.validateGrade(grade.grade),
-                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                    status = if (form.value.status is FormStatus.Success) form.value.status else FormStatus.Idle,
                 )
+                initialForm.value = form.value
             }
             .launchIn(viewModelScope)
     }
 
     fun onGradeChange(grade: BigDecimal?) {
-        form = form.copy(grade = GradeFormProvider.validateGrade(grade))
+        _form.value = form.value.copy(grade = GradeFormProvider.validateGrade(grade))
     }
 
     fun onSubmit() {
+        val form = form.value
+
         if (!form.isSubmitEnabled) {
             return
         }
 
-        form = form.copy(status = FormStatus.Saving)
+        _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
             repository.insertOrUpdateGrade(
                 id = gradeId.value.let { id -> if (id != 0L) id else null },
@@ -114,7 +122,7 @@ internal class GradeFormViewModel @Inject constructor(
             )
 
             if (isActive) {
-                form = form.copy(status = FormStatus.Success)
+                _form.value = form.copy(status = FormStatus.Success)
             }
         }
     }

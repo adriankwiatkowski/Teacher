@@ -1,8 +1,5 @@
 package com.example.teacher.feature.note.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,8 +13,11 @@ import com.example.teacher.feature.note.nav.NoteNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -41,42 +41,50 @@ internal class NoteFormViewModel @Inject constructor(
         .flatMapLatest { noteId -> repository.getNoteOrNullById(noteId) }
         .stateIn(initialValue = Result.Loading)
 
-    var form by mutableStateOf(NoteFormProvider.createDefaultForm(title = generateNoteTitleUseCase()))
-        private set
+    private val _form =
+        MutableStateFlow(NoteFormProvider.createDefaultForm(title = generateNoteTitleUseCase()))
+    val form = _form.asStateFlow()
+
+    private val initialForm = MutableStateFlow(form.value)
+    val isFormMutated = combine(form, initialForm) { form, initialForm -> form != initialForm }
+        .stateIn(false)
 
     init {
         noteResult
             .onEach { noteResource ->
                 val note = (noteResource as? Result.Success)?.data ?: return@onEach
 
-                form = form.copy(
+                _form.value = form.value.copy(
                     title = NoteFormProvider.validateTitle(note.title),
                     text = NoteFormProvider.validateText(note.text),
                     priority = note.priority,
-                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                    status = if (form.value.status is FormStatus.Success) form.value.status else FormStatus.Idle,
                 )
+                initialForm.value = form.value
             }
             .launchIn(viewModelScope)
     }
 
     fun onTitleChange(title: String) {
-        form = form.copy(title = NoteFormProvider.validateTitle(title))
+        _form.value = form.value.copy(title = NoteFormProvider.validateTitle(title))
     }
 
     fun onTextChange(description: String) {
-        form = form.copy(text = NoteFormProvider.validateText(description))
+        _form.value = form.value.copy(text = NoteFormProvider.validateText(description))
     }
 
     fun onPriorityChange(priority: NotePriority) {
-        form = form.copy(priority = priority)
+        _form.value = form.value.copy(priority = priority)
     }
 
     fun onSubmit() {
+        val form = form.value
+
         if (!form.isSubmitEnabled) {
             return
         }
 
-        form = form.copy(status = FormStatus.Saving)
+        _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
             repository.insertOrUpdateNote(
                 id = noteId.value.let { id -> if (id != 0L) id else null },
@@ -86,7 +94,7 @@ internal class NoteFormViewModel @Inject constructor(
             )
 
             if (isActive) {
-                form = form.copy(status = FormStatus.Success)
+                _form.value = form.copy(status = FormStatus.Success)
             }
         }
     }

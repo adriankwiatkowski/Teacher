@@ -1,8 +1,5 @@
 package com.example.teacher.feature.student.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,8 +11,10 @@ import com.example.teacher.feature.student.nav.StudentNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
@@ -71,13 +70,23 @@ internal class StudentFormViewModel @Inject constructor(
         .flatMapLatest { schoolClassId -> repository.getStudentSchoolClassNameById(schoolClassId) }
         .stateIn(initialValue = null)
 
-    var form by mutableStateOf(StudentFormProvider.createDefaultForm(usedRegisterNumbers = null))
-        private set
+    private val _form =
+        MutableStateFlow(StudentFormProvider.createDefaultForm(usedRegisterNumbers = null))
+    val form = _form.asStateFlow()
+
+    private val initialForm = MutableStateFlow(form.value)
+    val isFormMutated = combine(form, initialForm) { form, initialForm -> form != initialForm }
+        .stateIn(false)
 
     init {
         // Revalidate register number when used register numbers are loaded.
         usedRegisterNumbersWithoutCurrentStudent
-            .onEach { _ -> onRegisterNumberChange(form.registerNumber.value) }
+            .onEach { _ ->
+                onRegisterNumberChange(
+                    registerNumber = form.value.registerNumber.value,
+                    isHumanInput = false,
+                )
+            }
             .launchIn(viewModelScope)
 
         // If updating, fill form with information saved in repository.
@@ -85,7 +94,7 @@ internal class StudentFormViewModel @Inject constructor(
             .onEach { studentResult ->
                 val student = (studentResult as? Result.Success)?.data ?: return@onEach
 
-                form = form.copy(
+                _form.value = form.value.copy(
                     id = student.id,
                     name = StudentFormProvider.validateName(student.name),
                     surname = StudentFormProvider.validateSurname(student.surname),
@@ -95,43 +104,53 @@ internal class StudentFormViewModel @Inject constructor(
                         registerNumber = student.registerNumber.toString(),
                         usedRegisterNumbers = usedRegisterNumbersWithoutCurrentStudent.value,
                     ),
-                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                    status = if (form.value.status is FormStatus.Success) form.value.status else FormStatus.Idle,
                 )
+                initialForm.value = form.value
             }
             .launchIn(viewModelScope)
     }
 
     fun onNameChange(name: String) {
-        form = form.copy(name = StudentFormProvider.validateName(name))
+        _form.value = form.value.copy(name = StudentFormProvider.validateName(name))
     }
 
     fun onSurnameChange(surname: String) {
-        form = form.copy(surname = StudentFormProvider.validateSurname(surname))
+        _form.value = form.value.copy(surname = StudentFormProvider.validateSurname(surname))
     }
 
     fun onEmailChange(email: String) {
-        form = form.copy(email = StudentFormProvider.validateEmail(email))
+        _form.value = form.value.copy(email = StudentFormProvider.validateEmail(email))
     }
 
     fun onPhoneChange(phone: String) {
-        form = form.copy(phone = StudentFormProvider.validatePhone(phone))
+        _form.value = form.value.copy(phone = StudentFormProvider.validatePhone(phone))
     }
 
-    fun onRegisterNumberChange(registerNumber: String?) {
-        form = form.copy(
-            registerNumber = StudentFormProvider.validateRegisterNumber(
-                registerNumber = registerNumber,
-                usedRegisterNumbers = usedRegisterNumbersWithoutCurrentStudent.value,
-            )
+    fun onRegisterNumberChange(registerNumber: String?) =
+        onRegisterNumberChange(registerNumber = registerNumber, isHumanInput = true)
+
+    private fun onRegisterNumberChange(registerNumber: String?, isHumanInput: Boolean) {
+        val validatedRegisterNumber = StudentFormProvider.validateRegisterNumber(
+            registerNumber = registerNumber,
+            usedRegisterNumbers = usedRegisterNumbersWithoutCurrentStudent.value,
         )
+
+        _form.value = form.value.copy(registerNumber = validatedRegisterNumber)
+
+        if (!isHumanInput) {
+            initialForm.value = initialForm.value.copy(registerNumber = validatedRegisterNumber)
+        }
     }
 
     fun onSubmit() {
+        val form = form.value
+
         if (!form.isSubmitEnabled) {
             return
         }
 
-        form = form.copy(status = FormStatus.Saving)
+        _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
             repository.insertOrUpdateStudent(
                 id = form.id,
@@ -144,7 +163,7 @@ internal class StudentFormViewModel @Inject constructor(
             )
 
             if (isActive) {
-                form = form.copy(status = FormStatus.Success)
+                _form.value = form.copy(status = FormStatus.Success)
             }
         }
     }

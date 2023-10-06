@@ -25,12 +25,13 @@ internal fun LessonNoteFormRoute(
 ) {
     val lessonNoteResult by viewModel.noteResult.collectAsStateWithLifecycle()
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
-    val form = viewModel.form
-    val formStatus = form.status
+    val form by viewModel.form.collectAsStateWithLifecycle()
+    val isFormMutated by viewModel.isFormMutated.collectAsStateWithLifecycle()
+    val status = form.status
 
     // Observe save.
-    LaunchedEffect(formStatus) {
-        if (formStatus == FormStatus.Success) {
+    LaunchedEffect(status) {
+        if (status == FormStatus.Success) {
             onShowSnackbar.onShowSnackbar(R.string.lesson_lesson_note_saved)
             onNavBack()
         }
@@ -45,6 +46,7 @@ internal fun LessonNoteFormRoute(
 
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     BackPressDiscardDialogHandler(
+        enabled = isFormMutated,
         backPressedDispatcher = backPressedDispatcher,
         onDiscard = onNavBack,
     )

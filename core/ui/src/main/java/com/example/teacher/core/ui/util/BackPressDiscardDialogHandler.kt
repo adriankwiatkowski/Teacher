@@ -13,11 +13,11 @@ import com.example.teacher.core.ui.component.TeacherDiscardDialog
 
 @Composable
 fun BackPressDiscardDialogHandler(
-    enabled: Boolean = true,
     backPressedDispatcher: OnBackPressedDispatcher? =
         LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
     title: String = stringResource(R.string.ui_discard_title),
     text: String = stringResource(R.string.ui_discard_message),
+    enabled: Boolean,
     onDiscard: () -> Unit,
 ) {
     if (!enabled) {

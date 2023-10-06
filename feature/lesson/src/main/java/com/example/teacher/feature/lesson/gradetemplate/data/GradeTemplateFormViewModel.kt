@@ -1,8 +1,5 @@
 package com.example.teacher.feature.lesson.gradetemplate.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,8 +12,11 @@ import com.example.teacher.feature.lesson.nav.LessonNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -45,51 +45,61 @@ internal class GradeTemplateFormViewModel @Inject constructor(
         .flatMapLatest { lessonId -> repository.getLessonById(lessonId) }
         .stateIn(initialValue = Result.Loading)
 
-    var form by mutableStateOf(GradeTemplateFormProvider.createDefaultForm())
-        private set
+    private val _form = MutableStateFlow(GradeTemplateFormProvider.createDefaultForm())
+    val form = _form.asStateFlow()
+
+    private val initialForm = MutableStateFlow(form.value)
+    val isFormMutated = combine(form, initialForm) { form, initialForm -> form != initialForm }
+        .stateIn(false)
 
     init {
         gradeTemplateResult
             .onEach { gradeTemplateResult ->
                 val grade = (gradeTemplateResult as? Result.Success)?.data
                 if (grade == null) {
-                    form = GradeTemplateFormProvider.createDefaultForm(status = FormStatus.Idle)
+                    _form.value =
+                        GradeTemplateFormProvider.createDefaultForm(status = FormStatus.Idle)
+                    initialForm.value = form.value
                     return@onEach
                 }
 
-                form = form.copy(
+                _form.value = form.value.copy(
                     name = GradeTemplateFormProvider.validateName(grade.name),
                     description = GradeTemplateFormProvider.validateDescription(grade.description),
                     weight = GradeTemplateFormProvider.validateWeight(grade.weight.toString()),
                     isFirstTerm = grade.isFirstTerm,
-                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                    status = if (form.value.status is FormStatus.Success) form.value.status else FormStatus.Idle,
                 )
+                initialForm.value = form.value
             }
             .launchIn(viewModelScope)
     }
 
     fun onNameChange(name: String) {
-        form = form.copy(name = GradeTemplateFormProvider.validateName(name))
+        _form.value = form.value.copy(name = GradeTemplateFormProvider.validateName(name))
     }
 
     fun onDescriptionChange(description: String) {
-        form = form.copy(description = GradeTemplateFormProvider.validateDescription(description))
+        _form.value =
+            form.value.copy(description = GradeTemplateFormProvider.validateDescription(description))
     }
 
     fun onWeightChange(weight: String) {
-        form = form.copy(weight = GradeTemplateFormProvider.validateWeight(weight))
+        _form.value = form.value.copy(weight = GradeTemplateFormProvider.validateWeight(weight))
     }
 
     fun onIsFirstTermChange(isFirstTerm: Boolean) {
-        form = form.copy(isFirstTerm = isFirstTerm)
+        _form.value = form.value.copy(isFirstTerm = isFirstTerm)
     }
 
     fun onSubmit() {
+        val form = form.value
+
         if (!form.isSubmitEnabled) {
             return
         }
 
-        form = form.copy(status = FormStatus.Saving)
+        _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
             repository.insertOrUpdateGradeTemplate(
                 id = gradeTemplateId.value.let { id -> if (id != 0L) id else null },
@@ -101,7 +111,7 @@ internal class GradeTemplateFormViewModel @Inject constructor(
             )
 
             if (isActive) {
-                form = form.copy(status = FormStatus.Success)
+                _form.value = form.copy(status = FormStatus.Success)
             }
         }
     }
