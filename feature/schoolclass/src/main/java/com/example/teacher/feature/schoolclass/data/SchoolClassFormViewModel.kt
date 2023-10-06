@@ -1,8 +1,5 @@
 package com.example.teacher.feature.schoolclass.data
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,8 +12,11 @@ import com.example.teacher.feature.schoolclass.nav.SchoolClassNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -38,8 +38,12 @@ internal class SchoolClassFormViewModel @Inject constructor(
         .flatMapLatest { schoolClassId -> repository.getBasicSchoolClassOrNullById(schoolClassId) }
         .stateIn(initialValue = Result.Loading)
 
-    var form by mutableStateOf(SchoolClassFormProvider.createDefaultForm())
-        private set
+    private val _form = MutableStateFlow(SchoolClassFormProvider.createDefaultForm())
+    val form = _form.asStateFlow()
+
+    private val initialForm = MutableStateFlow(form.value)
+    val isFormMutated = combine(form, initialForm) { form, initialForm -> form != initialForm }
+        .stateIn(false)
 
     val schoolYears = repository.getAllSchoolYears()
         .stateIn(
@@ -53,9 +57,9 @@ internal class SchoolClassFormViewModel @Inject constructor(
             .onEach { schoolYears ->
                 val defaultSchoolYear = schoolYears
                     .firstOrNull { schoolYear ->
-                        schoolYear.id == form.schoolYear.value?.id
+                        schoolYear.id == form.value.schoolYear.value?.id
                     } ?: schoolYears.firstOrNull()
-                onSchoolYearChange(defaultSchoolYear)
+                onSchoolYearChange(schoolYear = defaultSchoolYear, isHumanInput = false)
             }
             .launchIn(viewModelScope)
 
@@ -63,44 +67,55 @@ internal class SchoolClassFormViewModel @Inject constructor(
             .onEach { schoolClassResult ->
                 val schoolClass = (schoolClassResult as? Result.Success)?.data
                 if (schoolClass == null) {
-                    form = SchoolClassFormProvider.createDefaultForm(
-                        schoolYear = form.schoolYear.value,
+                    _form.value = SchoolClassFormProvider.createDefaultForm(
+                        schoolYear = form.value.schoolYear.value,
                     )
+                    initialForm.value = form.value
                     return@onEach
                 }
 
-                form = form.copy(
+                _form.value = form.value.copy(
                     schoolClassName = SchoolClassFormProvider.validateSchoolClassName(schoolClass.name),
                     schoolYear = SchoolClassFormProvider.validateSchoolYear(schoolClass.schoolYear),
-                    status = if (form.status is FormStatus.Success) form.status else FormStatus.Idle,
+                    status = if (form.value.status is FormStatus.Success) form.value.status else FormStatus.Idle,
                 )
+                initialForm.value = form.value
             }
             .launchIn(viewModelScope)
     }
 
     fun onSchoolClassNameChange(name: String) {
-        form = form.copy(schoolClassName = SchoolClassFormProvider.validateSchoolClassName(name))
+        _form.value =
+            form.value.copy(schoolClassName = SchoolClassFormProvider.validateSchoolClassName(name))
     }
 
-    fun onSchoolYearChange(schoolYear: SchoolYear?) {
-        form = form.copy(schoolYear = SchoolClassFormProvider.validateSchoolYear(schoolYear))
+    fun onSchoolYearChange(schoolYear: SchoolYear?) =
+        onSchoolYearChange(schoolYear = schoolYear, isHumanInput = true)
+
+    private fun onSchoolYearChange(schoolYear: SchoolYear?, isHumanInput: Boolean) {
+        val validatedSchoolYear = SchoolClassFormProvider.validateSchoolYear(schoolYear)
+        _form.value = form.value.copy(schoolYear = validatedSchoolYear)
+
+        if (!isHumanInput) {
+            initialForm.value = initialForm.value.copy(schoolYear = validatedSchoolYear)
+        }
     }
 
     fun onSubmit() {
-        if (!form.isSubmitEnabled) {
+        if (!form.value.isSubmitEnabled) {
             return
         }
 
-        form = form.copy(status = FormStatus.Saving)
+        _form.value = form.value.copy(status = FormStatus.Saving)
         viewModelScope.launch {
             repository.insertOrUpdateSchoolClass(
                 id = schoolClassId.value.let { id -> if (id != 0L) id else null },
-                schoolYearId = form.schoolYear.value!!.id,
-                name = form.schoolClassName.value,
+                schoolYearId = form.value.schoolYear.value!!.id,
+                name = form.value.schoolClassName.value,
             )
 
             if (isActive) {
-                form = form.copy(status = FormStatus.Success)
+                _form.value = form.value.copy(status = FormStatus.Success)
             }
         }
     }
