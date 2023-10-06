@@ -4,8 +4,12 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacher.core.ui.component.TeacherDeleteDialog
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.grade.GradesScreen
 import com.example.teacher.feature.grade.R
@@ -32,13 +36,25 @@ internal fun GradesRoute(
         }
     }
 
+    // Handle delete dialog confirmation.
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+    if (showDeleteDialog) {
+        TeacherDeleteDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            onConfirmClick = {
+                viewModel.onDelete()
+                showDeleteDialog = false
+            },
+        )
+    }
+
     GradesScreen(
         uiStateResult = uiStateResult,
         snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = onNavBack,
         isDeleted = isDeleted,
-        onDeleteClick = viewModel::onDelete,
+        onDeleteClick = { showDeleteDialog = true },
         onEditClick = onEditClick,
         onStudentClick = onStudentClick,
     )

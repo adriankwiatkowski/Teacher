@@ -5,7 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
@@ -16,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.ui.component.TeacherDeleteDialog
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.schoolclass.data.SchoolClassFormViewModel
@@ -114,13 +118,25 @@ fun NavGraphBuilder.schoolClassGraph(
                 navController.navigateToSchoolClassFormRoute(schoolClassId = schoolClassId)
             }
 
+            // Handle delete dialog confirmation.
+            var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+            if (showDeleteDialog) {
+                TeacherDeleteDialog(
+                    onDismissRequest = { showDeleteDialog = false },
+                    onConfirmClick = {
+                        viewModel.onDelete()
+                        showDeleteDialog = false
+                    },
+                )
+            }
+
             SchoolClassScaffoldWrapper(
                 showNavigationIcon = true,
                 onNavBack = navController::popBackStack,
                 onShowSnackbar = onShowSnackbar,
                 menuItems = listOf(
                     TeacherActions.edit(onClick = onEditClick),
-                    TeacherActions.delete(onClick = viewModel::onDelete),
+                    TeacherActions.delete(onClick = { showDeleteDialog = true }),
                 ),
                 viewModel = viewModel,
             ) { selectedTab, schoolClass ->

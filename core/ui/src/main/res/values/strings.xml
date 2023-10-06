@@ -36,8 +36,12 @@
     <string name="ui_chart">Wykres</string>
 
     <string name="ui_discard_title">Odrzucić dane?</string>
-    <string name="ui_discard_message">Obecny formularz zostanie odrzucony i nie zostanie zapisany.</string>
+    <string name="ui_discard_message">Formularz zostanie odrzucony i nie zostanie zapisany.</string>
     <string name="ui_discard">Odrzuć</string>
+
+    <string name="ui_remove_title">Usunąć dane?</string>
+    <string name="ui_remove_message">Dane zostaną usunięte i nie będzie można ich przywrócić.</string>
+    <string name="ui_remove">Usuń</string>
 
     <string name="ui_very_long_text" translatable="false">Very very very very very very very very long supportive text</string>
     <string name="ui_supportive_text" translatable="false">Supportive Text</string>

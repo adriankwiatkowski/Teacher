@@ -5,10 +5,14 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.ui.component.TeacherDeleteDialog
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.util.BackPressDiscardDialogHandler
 import com.example.teacher.core.ui.util.OnShowSnackbar
@@ -48,6 +52,18 @@ internal fun GradeTemplateFormRoute(
         }
     }
 
+    // Handle delete dialog confirmation.
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+    if (showDeleteDialog) {
+        TeacherDeleteDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            onConfirmClick = {
+                viewModel.onDelete()
+                showDeleteDialog = false
+            },
+        )
+    }
+
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     BackPressDiscardDialogHandler(
         enabled = isFormMutated,
@@ -76,6 +92,6 @@ internal fun GradeTemplateFormRoute(
         onAddGrade = viewModel::onSubmit,
         isEditMode = isEditMode,
         isDeleted = isDeleted,
-        onDeleteClick = viewModel::onDelete,
+        onDeleteClick = { showDeleteDialog = true },
     )
 }

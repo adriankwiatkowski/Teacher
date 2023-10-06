@@ -1,6 +1,10 @@
 package com.example.teacher.feature.student.nav
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -9,6 +13,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.teacher.core.ui.component.TeacherDeleteDialog
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.util.OnShowSnackbar
 import com.example.teacher.feature.student.data.StudentScaffoldViewModel
@@ -82,13 +87,25 @@ fun NavGraphBuilder.studentGraph(
                 )
             }
 
+            // Handle delete dialog confirmation.
+            var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+            if (showDeleteDialog) {
+                TeacherDeleteDialog(
+                    onDismissRequest = { showDeleteDialog = false },
+                    onConfirmClick = {
+                        viewModel.onDeleteStudent()
+                        showDeleteDialog = false
+                    },
+                )
+            }
+
             StudentScaffoldWrapper(
                 showNavigationIcon = true,
                 onNavBack = navController::popBackStack,
                 onShowSnackbar = onShowSnackbar,
                 menuItems = listOf(
                     TeacherActions.edit(onClick = onEditClick),
-                    TeacherActions.delete(onClick = viewModel::onDeleteStudent),
+                    TeacherActions.delete(onClick = { showDeleteDialog = true }),
                 ),
                 viewModel = viewModel,
             ) { selectedTab, student ->

@@ -5,8 +5,12 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.teacher.core.ui.component.TeacherDeleteDialog
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.util.BackPressDiscardDialogHandler
 import com.example.teacher.core.ui.util.OnShowSnackbar
@@ -44,6 +48,18 @@ internal fun NoteFormRoute(
         }
     }
 
+    // Handle delete dialog confirmation.
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+    if (showDeleteDialog) {
+        TeacherDeleteDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            onConfirmClick = {
+                viewModel.onDeleteNote()
+                showDeleteDialog = false
+            },
+        )
+    }
+
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     BackPressDiscardDialogHandler(
         enabled = isFormMutated,
@@ -56,7 +72,7 @@ internal fun NoteFormRoute(
         snackbarHostState = snackbarHostState,
         showNavigationIcon = showNavigationIcon,
         onNavBack = { backPressedDispatcher?.onBackPressed() },
-        onDeleteNoteClick = viewModel::onDeleteNote,
+        onDeleteNoteClick = { showDeleteDialog = true },
         formStatus = form.status,
         title = form.title,
         onTitleChange = viewModel::onTitleChange,
