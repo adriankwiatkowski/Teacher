@@ -64,6 +64,7 @@ internal class EventFormViewModel @Inject constructor(
             !isLessonForm || lessonId != DEFAULT_ID
         }.onEach { isValid ->
             _form.value = form.value.copy(isValid = isValid)
+            initialForm.value = initialForm.value.copy(isValid = isValid)
         }.launchIn(viewModelScope)
 
         eventResult
