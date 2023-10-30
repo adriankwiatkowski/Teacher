@@ -82,6 +82,9 @@ object DecimalUtils {
     }
 
     fun BigDecimal.safeDivide(divisor: BigDecimal): BigDecimal {
+        if (divisor == BigDecimal.ZERO) {
+            return this
+        }
         return this.divide(divisor, 2, RoundingMode.HALF_UP)
     }
 

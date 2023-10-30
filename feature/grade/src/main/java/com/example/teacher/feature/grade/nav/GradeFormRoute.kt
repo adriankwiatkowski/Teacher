@@ -29,6 +29,8 @@ internal fun GradeFormRoute(
 ) {
     val uiStateResult by viewModel.uiState.collectAsStateWithLifecycle()
     val initialGrade by viewModel.initialGrade.collectAsStateWithLifecycle()
+    val gradeScoreData by viewModel.gradeScoreData.collectAsStateWithLifecycle()
+    val isCalculateFromScoreForm by viewModel.isCalculateFromScoreForm.collectAsStateWithLifecycle()
     val isDeleted by viewModel.isDeleted.collectAsStateWithLifecycle()
     val form by viewModel.form.collectAsStateWithLifecycle()
     val isFormMutated by viewModel.isFormMutated.collectAsStateWithLifecycle()
@@ -77,6 +79,12 @@ internal fun GradeFormRoute(
         initialGrade = initialGrade,
         inputGrade = form.grade.value,
         onGradeChange = viewModel::onGradeChange,
+        gradeScoreData = gradeScoreData,
+        onGradeScoreThresholdChange = viewModel::onGradeScoreThresholdChange,
+        onMaxScoreChange = viewModel::onMaxScoreChange,
+        onStudentScoreChange = viewModel::onStudentScoreChange,
+        isCalculateFromScoreForm = isCalculateFromScoreForm,
+        onIsCalculateFromScoreFormChange = viewModel::onIsCalculateFromScoreForm,
         isSubmitEnabled = form.isSubmitEnabled,
         onSubmit = viewModel::onSubmit,
         isEditMode = isEditMode,

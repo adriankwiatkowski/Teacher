@@ -75,6 +75,12 @@ internal class GradeFormViewModel @Inject constructor(
         }
         .stateIn(initialValue = null)
 
+    private val _isCalculateFromScoreForm = MutableStateFlow(false)
+    val isCalculateFromScoreForm = _isCalculateFromScoreForm.asStateFlow()
+
+    private val _gradeScoreData = MutableStateFlow(GradeScoreDataProvider.createDefault())
+    val gradeScoreData = _gradeScoreData.asStateFlow()
+
     private val _form = MutableStateFlow(GradeFormProvider.createDefaultForm())
     val form = _form.asStateFlow()
 
@@ -103,6 +109,32 @@ internal class GradeFormViewModel @Inject constructor(
 
     fun onGradeChange(grade: BigDecimal?) {
         _form.value = form.value.copy(grade = GradeFormProvider.validateGrade(grade))
+    }
+
+    fun onGradeScoreThresholdChange(grade: BigDecimal, newMinThreshold: Int) {
+        _gradeScoreData.value = GradeScoreDataProvider.validateGradeScores(
+            gradeScoreData = gradeScoreData.value,
+            grade = grade,
+            newMinThreshold = newMinThreshold,
+        )
+    }
+
+    fun onMaxScoreChange(maxScore: String?) {
+        _gradeScoreData.value = gradeScoreData.value.copy(
+            maxScore = GradeScoreDataProvider.validateGradeScore(maxScore)
+        )
+        _gradeScoreData.value = GradeScoreDataProvider.calculateGrade(gradeScoreData.value)
+    }
+
+    fun onStudentScoreChange(studentScore: String?) {
+        _gradeScoreData.value = gradeScoreData.value.copy(
+            studentScore = GradeScoreDataProvider.validateGradeScore(studentScore)
+        )
+        _gradeScoreData.value = GradeScoreDataProvider.calculateGrade(gradeScoreData.value)
+    }
+
+    fun onIsCalculateFromScoreForm(isCalculateFromScoreForm: Boolean) {
+        _isCalculateFromScoreForm.value = isCalculateFromScoreForm
     }
 
     fun onSubmit() {
