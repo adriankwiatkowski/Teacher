@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Grade
 import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.NavigateBefore
 import androidx.compose.material.icons.filled.NavigateNext
 import androidx.compose.material.icons.filled.Notes
@@ -166,6 +167,11 @@ object TeacherIcons {
 
     fun chart(@StringRes text: Int = R.string.ui_activity) = TeacherIcon(
         icon = TeacherIcons.BarChart,
+        text = text,
+    )
+
+    fun info(@StringRes text: Int = R.string.ui_info) = TeacherIcon(
+        icon = TeacherIcons.Info,
         text = text,
     )
 

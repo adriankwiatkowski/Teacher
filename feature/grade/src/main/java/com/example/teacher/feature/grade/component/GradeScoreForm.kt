@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,7 +31,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherIntSlider
+import com.example.teacher.core.ui.component.TextWithIcon
 import com.example.teacher.core.ui.component.form.FormTextField
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.grade.R
@@ -39,7 +42,7 @@ import com.example.teacher.feature.grade.data.GradeScoreDataProvider
 import java.math.BigDecimal
 
 @Composable
-internal fun GradeScoreInput(
+internal fun GradeScoreForm(
     gradeScoreData: GradeScoreData,
     onGradeScoreThresholdChange: (grade: BigDecimal, newMinThreshold: Int) -> Unit,
     onMaxScoreChange: (maxScore: String?) -> Unit,
@@ -73,7 +76,7 @@ internal fun GradeScoreInput(
 
         FormTextField(
             modifier = textFieldModifier,
-            label = stringResource(R.string.grades_grade_max_score_label),
+            label = stringResource(R.string.grade_max_score_label),
             inputField = gradeScoreData.maxScore,
             onValueChange = onMaxScoreChange,
             keyboardOptions = commonKeyboardOptions,
@@ -82,7 +85,7 @@ internal fun GradeScoreInput(
         Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
         FormTextField(
             modifier = textFieldModifier,
-            label = stringResource(R.string.grades_grade_student_score_label),
+            label = stringResource(R.string.grade_student_score_label),
             inputField = gradeScoreData.studentScore,
             onValueChange = onStudentScoreChange,
             keyboardOptions = commonKeyboardOptions,
@@ -94,16 +97,21 @@ internal fun GradeScoreInput(
             val grade = DecimalUtils.toGrade(gradeScoreData.calculatedGrade.grade)
             val percentage = gradeScoreData.calculatedGrade.percentage
             Text(
-                text = "$grade ($percentage%)",
+                text = stringResource(R.string.grade_from_score, grade, percentage),
                 style = MaterialTheme.typography.bodyLarge,
             )
             Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
         }
 
-        Text(
-            text = stringResource(R.string.grades_grade_score_thresholds),
-            style = MaterialTheme.typography.labelLarge,
+        Divider()
+        Spacer(modifier = Modifier.padding(MaterialTheme.spacing.small))
+
+        TextWithIcon(
+            text = stringResource(R.string.grade_score_thresholds_save_info),
+            icon = TeacherIcons.info(),
         )
+        ThresholdsSaveButton(onClick = onSaveGradeScore)
+
         val gradeThresholds = gradeScoreData.gradeScoreThresholds
         for (gradeThreshold in gradeThresholds) {
             key(gradeThreshold.grade.toString()) {
@@ -117,11 +125,7 @@ internal fun GradeScoreInput(
             }
         }
 
-        TeacherButton(
-            modifier = Modifier.fillMaxWidth(),
-            label = stringResource(R.string.grades_grade_score_thresholds_save),
-            onClick = onSaveGradeScore,
-        )
+        ThresholdsSaveButton(onClick = onSaveGradeScore)
     }
 }
 
@@ -142,14 +146,26 @@ private fun ScoreSlider(
     )
 }
 
+@Composable
+private fun ThresholdsSaveButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    TeacherButton(
+        modifier = modifier,
+        label = stringResource(R.string.grade_score_thresholds_save),
+        onClick = onClick,
+    )
+}
+
 @Preview
 @Composable
-private fun GradeScoreInputPreview() {
+private fun GradeScoreFormPreview() {
     TeacherTheme {
         Surface {
             var gradeScoreData by remember { mutableStateOf(GradeScoreDataProvider.createDefault()) }
 
-            GradeScoreInput(
+            GradeScoreForm(
                 modifier = Modifier.verticalScroll(rememberScrollState()),
                 gradeScoreData = gradeScoreData,
                 onGradeScoreThresholdChange = { grade, minThreshold ->

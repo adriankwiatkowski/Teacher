@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -34,7 +35,8 @@ import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.grade.component.GradeFormHeader
-import com.example.teacher.feature.grade.component.GradeInputForm
+import com.example.teacher.feature.grade.component.GradeInputs
+import com.example.teacher.feature.grade.component.GradeScoreForm
 import com.example.teacher.feature.grade.data.GradeFormProvider
 import com.example.teacher.feature.grade.data.GradeFormUiState
 import com.example.teacher.feature.grade.data.GradeScoreData
@@ -57,8 +59,6 @@ internal fun GradeFormScreen(
     onGradeScoreThresholdChange: (grade: BigDecimal, newMinThreshold: Int) -> Unit,
     onMaxScoreChange: (maxScore: String?) -> Unit,
     onStudentScoreChange: (studentScore: String?) -> Unit,
-    isCalculateFromScoreForm: Boolean,
-    onIsCalculateFromScoreFormChange: (isCalculateFromScoreForm: Boolean) -> Unit,
     onSaveGradeScore: () -> Unit,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
@@ -68,6 +68,7 @@ internal fun GradeFormScreen(
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TeacherTopBarDefaults.default()
+    var showBottomSheet by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -106,14 +107,8 @@ internal fun GradeFormScreen(
                     uiState = uiState,
                     initialGrade = initialGrade,
                     inputGrade = inputGrade,
-                    gradeScoreData = gradeScoreData,
                     onGradeChange = onGradeChange,
-                    onGradeScoreThresholdChange = onGradeScoreThresholdChange,
-                    onMaxScoreChange = onMaxScoreChange,
-                    onStudentScoreChange = onStudentScoreChange,
-                    isCalculateFromScoreForm = isCalculateFromScoreForm,
-                    onIsCalculateFromScoreFormChange = onIsCalculateFromScoreFormChange,
-                    onSaveGradeScore = onSaveGradeScore,
+                    onShowGradeScoreForm = { showBottomSheet = true },
                     submitText = if (isEditMode) {
                         stringResource(R.string.grade_edit_grade)
                     } else {
@@ -122,6 +117,21 @@ internal fun GradeFormScreen(
                     isSubmitEnabled = isSubmitEnabled,
                     onSubmit = onSubmit,
                 )
+
+                if (showBottomSheet) {
+                    ModalBottomSheet(onDismissRequest = { showBottomSheet = false }) {
+                        GradeScoreForm(
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState())
+                                .padding(MaterialTheme.spacing.medium),
+                            gradeScoreData = gradeScoreData,
+                            onGradeScoreThresholdChange = onGradeScoreThresholdChange,
+                            onMaxScoreChange = onMaxScoreChange,
+                            onStudentScoreChange = onStudentScoreChange,
+                            onSaveGradeScore = onSaveGradeScore,
+                        )
+                    }
+                }
             }
         }
     }
@@ -132,14 +142,8 @@ private fun MainContent(
     uiState: GradeFormUiState,
     initialGrade: BigDecimal?,
     inputGrade: BigDecimal?,
-    gradeScoreData: GradeScoreData,
     onGradeChange: (grade: BigDecimal?) -> Unit,
-    onGradeScoreThresholdChange: (grade: BigDecimal, newMinThreshold: Int) -> Unit,
-    onMaxScoreChange: (maxScore: String?) -> Unit,
-    onStudentScoreChange: (studentScore: String?) -> Unit,
-    isCalculateFromScoreForm: Boolean,
-    onIsCalculateFromScoreFormChange: (isCalculateFromScoreForm: Boolean) -> Unit,
-    onSaveGradeScore: () -> Unit,
+    onShowGradeScoreForm: () -> Unit,
     submitText: String,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
@@ -154,28 +158,17 @@ private fun MainContent(
             gradeInfo = uiState.gradeTemplateInfo,
             initialGrade = initialGrade,
             inputGrade = inputGrade,
-            isCalculateFromScoreForm = isCalculateFromScoreForm,
-            onIsCalculateFromScoreFormChange = onIsCalculateFromScoreFormChange,
+            onShowGradeScoreForm = onShowGradeScoreForm,
         )
 
-        GradeInputForm(
-            isCalculateFromScoreForm = isCalculateFromScoreForm,
-            gradeScoreData = gradeScoreData,
-            onGradeChange = onGradeChange,
-            onGradeScoreThresholdChange = onGradeScoreThresholdChange,
-            onMaxScoreChange = onMaxScoreChange,
-            onStudentScoreChange = onStudentScoreChange,
-            onSaveGradeScore = onSaveGradeScore,
-        )
+        GradeInputs(onGradeChange = onGradeChange)
 
-        if (!isCalculateFromScoreForm) {
-            TeacherButton(
-                modifier = Modifier.fillMaxWidth(),
-                label = submitText,
-                onClick = onSubmit,
-                enabled = isSubmitEnabled,
-            )
-        }
+        TeacherButton(
+            modifier = Modifier.fillMaxWidth(),
+            label = submitText,
+            onClick = onSubmit,
+            enabled = isSubmitEnabled,
+        )
     }
 }
 
@@ -190,7 +183,6 @@ private fun GradeFormScreenPreview(
     TeacherTheme {
         Surface {
             var form by remember { mutableStateOf(GradeFormProvider.createDefaultForm()) }
-            var isCalculateFromScoreForm by remember { mutableStateOf(false) }
             var gradeScoreData by remember { mutableStateOf(GradeScoreDataProvider.createDefault()) }
 
             GradeFormScreen(
@@ -222,8 +214,6 @@ private fun GradeFormScreenPreview(
                     )
                     gradeScoreData = GradeScoreDataProvider.calculateGrade(gradeScoreData)
                 },
-                isCalculateFromScoreForm = isCalculateFromScoreForm,
-                onIsCalculateFromScoreFormChange = { isCalculateFromScoreForm = it },
                 onSaveGradeScore = {},
                 isSubmitEnabled = form.isSubmitEnabled,
                 onSubmit = {},

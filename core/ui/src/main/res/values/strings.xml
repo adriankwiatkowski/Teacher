@@ -34,6 +34,7 @@
     <string name="ui_attendance">Frekwencja</string>
     <string name="ui_activity">Aktywność</string>
     <string name="ui_chart">Wykres</string>
+    <string name="ui_info">Informacja</string>
 
     <string name="ui_discard_title">Odrzucić dane?</string>
     <string name="ui_discard_message">Formularz zostanie odrzucony i nie zostanie zapisany.</string>

@@ -12,7 +12,7 @@ internal object GradeScoreDataProvider {
     fun validateGradeScore(gradeScore: String?, isEdited: Boolean = true): InputField<Int?> {
         val gradeScoreInt = gradeScore?.toIntOrNull()
         val isError = gradeScore == null || gradeScoreInt == null || gradeScoreInt < 0
-        val supportingText = if (isError) R.string.grades_grade_score_input_error else null
+        val supportingText = if (isError) R.string.grade_score_input_error else null
         return InputField(
             gradeScoreInt,
             supportingText = supportingText,

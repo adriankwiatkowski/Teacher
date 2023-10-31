@@ -1,29 +1,29 @@
 package com.example.teacher.feature.grade.component
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.BasicStudent
 import com.example.teacher.core.model.data.GradeTemplateInfo
-import com.example.teacher.core.ui.component.TeacherInputChip
+import com.example.teacher.core.ui.component.TeacherChip
+import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.grade.R
+import com.example.teacher.feature.grade.data.GradeFormUiState
+import com.example.teacher.feature.grade.paramprovider.GradeFormUiStatePreviewParameterProvider
 import java.math.BigDecimal
 
 @Composable
@@ -32,8 +32,7 @@ internal fun GradeFormHeader(
     gradeInfo: GradeTemplateInfo,
     initialGrade: BigDecimal?,
     inputGrade: BigDecimal?,
-    isCalculateFromScoreForm: Boolean,
-    onIsCalculateFromScoreFormChange: (isCalculateFromScoreForm: Boolean) -> Unit,
+    onShowGradeScoreForm: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val gradeName = gradeInfo.gradeName
@@ -48,7 +47,11 @@ internal fun GradeFormHeader(
             .fillMaxWidth()
             .animateContentSize(),
     ) {
-        Column(modifier = Modifier.padding(MaterialTheme.spacing.small)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(MaterialTheme.spacing.small),
+        ) {
             Text(
                 modifier = modifier,
                 text = student.fullName,
@@ -67,41 +70,12 @@ internal fun GradeFormHeader(
 
             Spacer(modifier = Modifier.padding(MaterialTheme.spacing.medium))
 
-            GradeFormTypeInput(
-                isCalculateFromScoreForm = isCalculateFromScoreForm,
-                onIsCalculateFromScoreFormChange = onIsCalculateFromScoreFormChange,
+            TeacherChip(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                label = stringResource(R.string.grade_score_input),
+                onClick = onShowGradeScoreForm,
             )
-            Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
         }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
-@Composable
-private fun GradeFormTypeInput(
-    isCalculateFromScoreForm: Boolean,
-    onIsCalculateFromScoreFormChange: (isCalculateFromScoreForm: Boolean) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    FlowRow(
-        modifier = modifier
-            .fillMaxWidth()
-            .selectableGroup(),
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        TeacherInputChip(
-            label = stringResource(R.string.grades_grade_button_input),
-            selected = !isCalculateFromScoreForm,
-            onClick = { onIsCalculateFromScoreFormChange(false) },
-        )
-
-        Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
-
-        TeacherInputChip(
-            label = stringResource(R.string.grades_grade_score_input),
-            selected = isCalculateFromScoreForm,
-            onClick = { onIsCalculateFromScoreFormChange(true) },
-        )
     }
 }
 
@@ -115,5 +89,27 @@ private fun toGradeWithLiteral(grade: BigDecimal?): String {
         )
     } else {
         stringResource(R.string.grade_no_grade)
+    }
+}
+
+
+@Preview
+@Composable
+private fun GradeFormHeaderPreview(
+    @PreviewParameter(
+        GradeFormUiStatePreviewParameterProvider::class,
+        limit = 1,
+    ) uiState: GradeFormUiState,
+) {
+    TeacherTheme {
+        Surface {
+            GradeFormHeader(
+                student = uiState.student,
+                gradeInfo = uiState.gradeTemplateInfo,
+                initialGrade = DecimalUtils.Five,
+                inputGrade = DecimalUtils.Four,
+                onShowGradeScoreForm = {},
+            )
+        }
     }
 }

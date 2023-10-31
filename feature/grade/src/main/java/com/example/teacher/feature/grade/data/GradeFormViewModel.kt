@@ -79,9 +79,6 @@ internal class GradeFormViewModel @Inject constructor(
         }
         .stateIn(initialValue = null)
 
-    private val _isCalculateFromScoreForm = MutableStateFlow(false)
-    val isCalculateFromScoreForm = _isCalculateFromScoreForm.asStateFlow()
-
     @OptIn(ExperimentalCoroutinesApi::class)
     private val gradeScoreResult: StateFlow<Result<GradeScore?>> = gradeTemplateId
         .flatMapLatest { gradeTemplateId ->
@@ -149,10 +146,6 @@ internal class GradeFormViewModel @Inject constructor(
             studentScore = GradeScoreDataProvider.validateGradeScore(studentScore)
         )
         _gradeScoreData.value = GradeScoreDataProvider.calculateGrade(gradeScoreData.value)
-    }
-
-    fun onIsCalculateFromScoreForm(isCalculateFromScoreForm: Boolean) {
-        _isCalculateFromScoreForm.value = isCalculateFromScoreForm
     }
 
     fun onSubmit() {

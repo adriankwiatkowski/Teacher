@@ -14,11 +14,11 @@
     <string name="grade_grade_with_literal">%1$s (%2$s)</string>
     <string name="grade_no_students">Nie dodano uczniów do klasy</string>
     <string name="grades_grade_with_term">%1$s (semestr %2$s)</string>
-    <string name="grades_grade_button_input">Oceny</string>
-    <string name="grades_grade_score_input">Punktacja</string>
-    <string name="grades_grade_score_input_error">Wprowadź liczbę dodatnią</string>
-    <string name="grades_grade_max_score_label">Maksymalna liczba punktów</string>
-    <string name="grades_grade_student_score_label">Uzyskana liczba punktów</string>
-    <string name="grades_grade_score_thresholds">Progi</string>
-    <string name="grades_grade_score_thresholds_save">Zapisz progi</string>
+    <string name="grade_score_input">Wylicz z punktacji</string>
+    <string name="grade_score_input_error">Wprowadź liczbę dodatnią</string>
+    <string name="grade_max_score_label">Maksymalna liczba punktów</string>
+    <string name="grade_student_score_label">Uzyskana liczba punktów</string>
+    <string name="grade_score_thresholds_save_info">Progi zapisywane są osobno dla każdej oceny</string>
+    <string name="grade_score_thresholds_save">Zapisz progi</string>
+    <string name="grade_from_score">Ocena z punktacji: %1$s (%2$s)</string>
 </resources>
