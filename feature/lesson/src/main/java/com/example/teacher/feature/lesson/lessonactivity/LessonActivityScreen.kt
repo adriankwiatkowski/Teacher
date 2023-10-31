@@ -1,5 +1,7 @@
 package com.example.teacher.feature.lesson.lessonactivity
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,6 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,12 +48,16 @@ internal fun LessonActivityScreen(
             modifier = Modifier.padding(innerPadding),
             result = lessonActivitiesResult,
         ) { lessonActivities ->
-            MainContent(
-                modifier = Modifier.fillMaxSize(),
-                lessonActivities = lessonActivities,
-                onIncreaseLessonActivity = onIncreaseLessonActivity,
-                onDecreaseLessonActivity = onDecreaseLessonActivity,
-            )
+            if (lessonActivities.isEmpty()) {
+                EmptyState(modifier = Modifier.fillMaxSize())
+            } else {
+                MainContent(
+                    modifier = Modifier.fillMaxSize(),
+                    lessonActivities = lessonActivities,
+                    onIncreaseLessonActivity = onIncreaseLessonActivity,
+                    onDecreaseLessonActivity = onDecreaseLessonActivity,
+                )
+            }
         }
     }
 }
@@ -76,12 +83,6 @@ private fun MainContent(
                 onIncreaseLessonActivity = { onIncreaseLessonActivity(lessonActivity) },
                 onDecreaseLessonActivity = { onDecreaseLessonActivity(lessonActivity) },
             )
-        }
-
-        if (lessonActivities.isEmpty()) {
-            item {
-                TeacherLargeText(stringResource(R.string.lesson_no_students_in_class))
-            }
         }
     }
 }
@@ -117,12 +118,25 @@ private fun LessonActivitySum(
     Text(modifier = modifier, text = "($sumString)")
 }
 
+@Composable
+private fun EmptyState(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        TeacherLargeText(stringResource(R.string.lesson_no_students_in_class))
+    }
+}
+
 @Preview
 @Composable
 private fun ActivityScreenPreview(
     @PreviewParameter(
         LessonActivitiesPreviewParameterProvider::class,
-        limit = 1,
+        limit = 5,
     ) lessonActivities: List<LessonActivity>
 ) {
     TeacherTheme {

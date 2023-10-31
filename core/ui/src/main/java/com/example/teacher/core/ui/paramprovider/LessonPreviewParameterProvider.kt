@@ -6,14 +6,6 @@ import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.model.data.LessonsBySchoolClass
 import com.example.teacher.core.model.data.LessonsByYear
 
-class LessonsPreviewParameterProvider : PreviewParameterProvider<List<Lesson>> {
-    override val values: Sequence<List<Lesson>> = sequenceOf(
-        LessonPreviewParameterProvider()
-            .values
-            .toList(),
-    )
-}
-
 class LessonPreviewParameterProvider : PreviewParameterProvider<Lesson> {
     override val values: Sequence<Lesson> = BasicLessonPreviewParameterProvider()
         .values
@@ -53,7 +45,8 @@ class LessonsByYearPreviewParameterProvider : PreviewParameterProvider<List<Less
                         )
                     }
                 )
-            }
+            },
+        emptyList(),
     )
 
     private var schoolClassId = 0L

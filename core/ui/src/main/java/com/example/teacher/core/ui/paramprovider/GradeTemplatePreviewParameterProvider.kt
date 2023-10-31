@@ -21,6 +21,7 @@ class BasicGradeTemplatesPreviewParameterProvider :
     PreviewParameterProvider<List<BasicGradeTemplate>> {
     override val values: Sequence<List<BasicGradeTemplate>> = sequenceOf(
         BasicGradeTemplatePreviewParameterProvider().values.toList(),
+        emptyList(),
     )
 }
 

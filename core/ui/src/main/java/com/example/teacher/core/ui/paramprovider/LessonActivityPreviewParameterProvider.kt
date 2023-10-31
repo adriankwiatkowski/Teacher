@@ -6,7 +6,8 @@ import com.example.teacher.core.model.data.LessonActivity
 
 class LessonActivitiesPreviewParameterProvider : PreviewParameterProvider<List<LessonActivity>> {
     override val values: Sequence<List<LessonActivity>> = sequenceOf(
-        LessonActivityPreviewParameterProvider().values.toList()
+        LessonActivityPreviewParameterProvider().values.toList(),
+        emptyList(),
     )
 }
 

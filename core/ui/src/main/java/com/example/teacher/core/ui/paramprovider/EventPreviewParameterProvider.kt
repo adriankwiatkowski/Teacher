@@ -8,7 +8,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class EventsPreviewParameterProvider : PreviewParameterProvider<List<Event>> {
-    override val values: Sequence<List<Event>> = sequenceOf(events)
+    override val values: Sequence<List<Event>> = sequenceOf(events, emptyList())
 }
 
 private val events = makeEvents(

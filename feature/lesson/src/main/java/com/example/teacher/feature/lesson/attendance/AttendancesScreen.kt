@@ -2,6 +2,7 @@ package com.example.teacher.feature.lesson.attendance
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -71,12 +73,16 @@ internal fun AttendancesScreen(
             var showStatisticsDialog by rememberSaveable { mutableStateOf(false) }
             val onDismissStatisticDialogRequest = { showStatisticsDialog = false }
 
-            MainContent(
-                modifier = Modifier.fillMaxSize(),
-                scheduleAttendances = scheduleAttendances,
-                onScheduleAttendanceClick = onScheduleAttendanceClick,
-                onShowStatisticsClick = { showStatisticsDialog = true },
-            )
+            if (scheduleAttendances.isEmpty()) {
+                EmptyState(modifier = Modifier.fillMaxSize())
+            } else {
+                MainContent(
+                    modifier = Modifier.fillMaxSize(),
+                    scheduleAttendances = scheduleAttendances,
+                    onScheduleAttendanceClick = onScheduleAttendanceClick,
+                    onShowStatisticsClick = { showStatisticsDialog = true },
+                )
+            }
 
             if (showStatisticsDialog) {
                 AttendanceStatisticsDialog(
@@ -95,14 +101,6 @@ private fun MainContent(
     onShowStatisticsClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (scheduleAttendances.isEmpty()) {
-        TeacherLargeText(
-            modifier = modifier.padding(MaterialTheme.spacing.small),
-            text = stringResource(R.string.lesson_attendance_no_schedule),
-        )
-        return
-    }
-
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
@@ -224,6 +222,19 @@ private fun AttendanceCountItem(
             text = "$label ($count)",
             style = MaterialTheme.typography.labelMedium
         )
+    }
+}
+
+@Composable
+private fun EmptyState(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        TeacherLargeText(stringResource(R.string.lesson_attendance_no_schedule))
     }
 }
 

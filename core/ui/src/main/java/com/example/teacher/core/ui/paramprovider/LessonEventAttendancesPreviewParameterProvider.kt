@@ -7,7 +7,7 @@ import java.time.LocalTime
 
 class LessonEventAttendancesPreviewParameterProvider :
     PreviewParameterProvider<List<LessonEventAttendance>> {
-    override val values: Sequence<List<LessonEventAttendance>> = sequenceOf(data)
+    override val values: Sequence<List<LessonEventAttendance>> = sequenceOf(data, emptyList())
 }
 
 private val data = makeData(

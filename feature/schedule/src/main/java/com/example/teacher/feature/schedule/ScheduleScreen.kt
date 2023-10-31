@@ -84,44 +84,36 @@ private fun MainContent(
     onScheduleClick: (id: Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
-        modifier = modifier,
-        contentPadding = PaddingValues(MaterialTheme.spacing.small),
-    ) {
-        item {
-            Header(
-                date = date,
-                onDateSelected = onDateSelected,
-                onPrevDateClick = onPrevDateClick,
-                onNextDateClick = onNextDateClick,
-            )
-        }
+    Column(modifier = modifier) {
+        Header(
+            modifier = Modifier.padding(MaterialTheme.spacing.small),
+            date = date,
+            onDateSelected = onDateSelected,
+            onPrevDateClick = onPrevDateClick,
+            onNextDateClick = onNextDateClick,
+        )
 
         when (eventsResult) {
             Result.Loading -> {
-                item {
-                    LoadingState()
-                }
+                LoadingState()
             }
 
             is Result.Success -> {
                 val events = eventsResult.data
                 if (events.isEmpty()) {
-                    item {
-                        EmptyState()
-                    }
+                    EmptyState()
                 } else {
-                    events(
-                        events = events,
-                        onScheduleClick = onScheduleClick,
-                    )
+                    LazyColumn(contentPadding = PaddingValues(MaterialTheme.spacing.small)) {
+                        events(
+                            events = events,
+                            onScheduleClick = onScheduleClick,
+                        )
+                    }
                 }
             }
 
             is Result.Error -> {
-                item {
-                    ErrorState()
-                }
+                ErrorState()
             }
         }
     }
@@ -217,7 +209,8 @@ private fun ErrorState(modifier: Modifier = Modifier) {
 @Composable
 private fun ScheduleScreenPreview(
     @PreviewParameter(
-        EventsPreviewParameterProvider::class
+        EventsPreviewParameterProvider::class,
+        limit = 2,
     ) events: List<Event>
 ) {
     TeacherTheme {
@@ -225,7 +218,7 @@ private fun ScheduleScreenPreview(
             ScheduleScreen(
                 eventsResult = Result.Success(events),
                 snackbarHostState = remember { SnackbarHostState() },
-                date = events.first().date,
+                date = events.firstOrNull()?.date ?: TimeUtils.currentDate(),
                 onDateSelected = {},
                 onPrevDateClick = {},
                 onNextDateClick = {},

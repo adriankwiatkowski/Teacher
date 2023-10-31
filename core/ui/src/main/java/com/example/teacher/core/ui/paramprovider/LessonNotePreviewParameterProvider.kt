@@ -6,7 +6,8 @@ import com.example.teacher.core.model.data.BasicLessonNote
 import com.example.teacher.core.model.data.LessonNote
 
 class LessonNotesPreviewParameterProvider : PreviewParameterProvider<List<BasicLessonNote>> {
-    override val values: Sequence<List<BasicLessonNote>> = sequenceOf(listOf(*basicNotes))
+    override val values: Sequence<List<BasicLessonNote>> =
+        sequenceOf(listOf(*basicNotes), emptyList())
 }
 
 class LessonNotePreviewParameterProvider : PreviewParameterProvider<LessonNote> {
