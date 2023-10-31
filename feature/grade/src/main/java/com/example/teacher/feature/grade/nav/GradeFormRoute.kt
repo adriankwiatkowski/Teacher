@@ -85,6 +85,7 @@ internal fun GradeFormRoute(
         onStudentScoreChange = viewModel::onStudentScoreChange,
         isCalculateFromScoreForm = isCalculateFromScoreForm,
         onIsCalculateFromScoreFormChange = viewModel::onIsCalculateFromScoreForm,
+        onSaveGradeScore = viewModel::onSaveGradeScore,
         isSubmitEnabled = form.isSubmitEnabled,
         onSubmit = viewModel::onSubmit,
         isEditMode = isEditMode,

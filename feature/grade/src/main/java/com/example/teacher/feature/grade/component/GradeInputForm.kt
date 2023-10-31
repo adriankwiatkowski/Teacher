@@ -21,6 +21,7 @@ internal fun GradeInputForm(
     onGradeScoreThresholdChange: (grade: BigDecimal, newMinThreshold: Int) -> Unit,
     onMaxScoreChange: (maxScore: String?) -> Unit,
     onStudentScoreChange: (studentScore: String?) -> Unit,
+    onSaveGradeScore: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (isCalculateFromScoreForm) {
@@ -29,6 +30,7 @@ internal fun GradeInputForm(
             onGradeScoreThresholdChange = onGradeScoreThresholdChange,
             onMaxScoreChange = onMaxScoreChange,
             onStudentScoreChange = onStudentScoreChange,
+            onSaveGradeScore = onSaveGradeScore,
         )
     } else {
         GradeInputs(modifier = modifier, onGradeChange = onGradeChange)
@@ -65,6 +67,7 @@ private fun GradeInputFormPreview() {
                     )
                     gradeScoreData = GradeScoreDataProvider.calculateGrade(gradeScoreData)
                 },
+                onSaveGradeScore = {},
             )
         }
     }

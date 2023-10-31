@@ -5,6 +5,8 @@ import com.example.teacher.core.database.datasource.event.EventDataSource
 import com.example.teacher.core.database.datasource.event.EventDataSourceImpl
 import com.example.teacher.core.database.datasource.grade.GradeDataSource
 import com.example.teacher.core.database.datasource.grade.GradeDataSourceImpl
+import com.example.teacher.core.database.datasource.gradescore.GradeScoreDataSource
+import com.example.teacher.core.database.datasource.gradescore.GradeScoreDataSourceImpl
 import com.example.teacher.core.database.datasource.gradetemplate.GradeTemplateDataSource
 import com.example.teacher.core.database.datasource.gradetemplate.GradeTemplateDataSourceImpl
 import com.example.teacher.core.database.datasource.lesson.LessonDataSource
@@ -98,6 +100,15 @@ object DataSourceModule {
         @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): GradeTemplateDataSource {
         return GradeTemplateDataSourceImpl(db, dispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGradeScoreDataSource(
+        db: TeacherDatabase,
+        @DefaultDispatcher dispatcher: CoroutineDispatcher,
+    ): GradeScoreDataSource {
+        return GradeScoreDataSourceImpl(db, dispatcher)
     }
 
     @Provides

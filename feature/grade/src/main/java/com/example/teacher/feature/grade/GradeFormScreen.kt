@@ -59,6 +59,7 @@ internal fun GradeFormScreen(
     onStudentScoreChange: (studentScore: String?) -> Unit,
     isCalculateFromScoreForm: Boolean,
     onIsCalculateFromScoreFormChange: (isCalculateFromScoreForm: Boolean) -> Unit,
+    onSaveGradeScore: () -> Unit,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
     isEditMode: Boolean,
@@ -112,6 +113,7 @@ internal fun GradeFormScreen(
                     onStudentScoreChange = onStudentScoreChange,
                     isCalculateFromScoreForm = isCalculateFromScoreForm,
                     onIsCalculateFromScoreFormChange = onIsCalculateFromScoreFormChange,
+                    onSaveGradeScore = onSaveGradeScore,
                     submitText = if (isEditMode) {
                         stringResource(R.string.grade_edit_grade)
                     } else {
@@ -137,6 +139,7 @@ private fun MainContent(
     onStudentScoreChange: (studentScore: String?) -> Unit,
     isCalculateFromScoreForm: Boolean,
     onIsCalculateFromScoreFormChange: (isCalculateFromScoreForm: Boolean) -> Unit,
+    onSaveGradeScore: () -> Unit,
     submitText: String,
     isSubmitEnabled: Boolean,
     onSubmit: () -> Unit,
@@ -162,6 +165,7 @@ private fun MainContent(
             onGradeScoreThresholdChange = onGradeScoreThresholdChange,
             onMaxScoreChange = onMaxScoreChange,
             onStudentScoreChange = onStudentScoreChange,
+            onSaveGradeScore = onSaveGradeScore,
         )
 
         if (!isCalculateFromScoreForm) {
@@ -220,6 +224,7 @@ private fun GradeFormScreenPreview(
                 },
                 isCalculateFromScoreForm = isCalculateFromScoreForm,
                 onIsCalculateFromScoreFormChange = { isCalculateFromScoreForm = it },
+                onSaveGradeScore = {},
                 isSubmitEnabled = form.isSubmitEnabled,
                 onSubmit = {},
                 isEditMode = false,

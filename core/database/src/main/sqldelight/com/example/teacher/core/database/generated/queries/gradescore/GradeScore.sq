@@ -1,0 +1,52 @@
+getGradeScoreByGradeTemplateId:
+SELECT
+    gs.id,
+    gt.id AS 'grade_template_id',
+    gs.two_minus_min_threshold,
+    gs.two_min_threshold,
+    gs.two_plus_min_threshold,
+    gs.three_minus_min_threshold,
+    gs.three_min_threshold,
+    gs.three_plus_min_threshold,
+    gs.four_minus_min_threshold,
+    gs.four_min_threshold,
+    gs.four_plus_min_threshold,
+    gs.five_minus_min_threshold,
+    gs.five_min_threshold,
+    gs.five_plus_min_threshold,
+    gs.six_minus_min_threshold,
+    gs.six_min_threshold
+FROM grade_score gs
+INNER JOIN grade_template gt ON gt.id = gs.id
+WHERE gt.id = :id;
+
+exists:
+SELECT
+    gs.id
+FROM grade_score gs
+INNER JOIN grade_template gt ON gt.id = gs.id
+WHERE gt.id = :grade_template_id;
+
+insertGradeScore:
+INSERT OR FAIL
+INTO grade_score
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateGradeScore:
+UPDATE grade_score
+SET
+    two_minus_min_threshold = :two_minus_min_threshold,
+    two_min_threshold = :two_min_threshold,
+    two_plus_min_threshold = :two_plus_min_threshold,
+    three_minus_min_threshold = :three_minus_min_threshold,
+    three_min_threshold = :three_min_threshold,
+    three_plus_min_threshold = :three_plus_min_threshold,
+    four_minus_min_threshold = :four_minus_min_threshold,
+    four_min_threshold = :four_min_threshold,
+    four_plus_min_threshold = :four_plus_min_threshold,
+    five_minus_min_threshold = :five_minus_min_threshold,
+    five_min_threshold = :five_min_threshold,
+    five_plus_min_threshold = :five_plus_min_threshold,
+    six_minus_min_threshold = :six_minus_min_threshold,
+    six_min_threshold = :six_min_threshold
+WHERE id = :id;

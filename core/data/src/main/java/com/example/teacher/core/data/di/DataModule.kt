@@ -4,6 +4,8 @@ import com.example.teacher.core.data.repository.event.DatabaseEventRepository
 import com.example.teacher.core.data.repository.event.EventRepository
 import com.example.teacher.core.data.repository.grade.DatabaseGradeRepository
 import com.example.teacher.core.data.repository.grade.GradeRepository
+import com.example.teacher.core.data.repository.gradescore.DatabaseGradeScoreRepository
+import com.example.teacher.core.data.repository.gradescore.GradeScoreRepository
 import com.example.teacher.core.data.repository.gradetemplate.DatabaseGradeTemplateRepository
 import com.example.teacher.core.data.repository.gradetemplate.GradeTemplateRepository
 import com.example.teacher.core.data.repository.lesson.DatabaseLessonRepository
@@ -69,6 +71,11 @@ internal interface DataModule {
     fun bindsGradeTemplateRepository(
         gradeTemplateRepository: DatabaseGradeTemplateRepository,
     ): GradeTemplateRepository
+
+    @Binds
+    fun bindsGradeScoreRepository(
+        gradeScoreRepository: DatabaseGradeScoreRepository,
+    ): GradeScoreRepository
 
     @Binds
     fun bindsGradeRepository(

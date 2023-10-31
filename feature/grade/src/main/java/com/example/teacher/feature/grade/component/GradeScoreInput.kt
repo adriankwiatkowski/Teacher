@@ -14,6 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -27,6 +28,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.DecimalUtils
+import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherIntSlider
 import com.example.teacher.core.ui.component.form.FormTextField
 import com.example.teacher.core.ui.theme.TeacherTheme
@@ -42,6 +44,7 @@ internal fun GradeScoreInput(
     onGradeScoreThresholdChange: (grade: BigDecimal, newMinThreshold: Int) -> Unit,
     onMaxScoreChange: (maxScore: String?) -> Unit,
     onStudentScoreChange: (studentScore: String?) -> Unit,
+    onSaveGradeScore: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -103,14 +106,22 @@ internal fun GradeScoreInput(
         )
         val gradeThresholds = gradeScoreData.gradeScoreThresholds
         for (gradeThreshold in gradeThresholds) {
-            ScoreSlider(
-                grade = gradeThreshold.grade,
-                gradeThreshold = gradeThreshold.minThreshold,
-                onGradeThresholdChange = { newMinThreshold ->
-                    onGradeScoreThresholdChange(gradeThreshold.grade, newMinThreshold)
-                },
-            )
+            key(gradeThreshold.grade.toString()) {
+                ScoreSlider(
+                    grade = gradeThreshold.grade,
+                    gradeThreshold = gradeThreshold.minThreshold,
+                    onGradeThresholdChange = { newMinThreshold ->
+                        onGradeScoreThresholdChange(gradeThreshold.grade, newMinThreshold)
+                    },
+                )
+            }
         }
+
+        TeacherButton(
+            modifier = Modifier.fillMaxWidth(),
+            label = stringResource(R.string.grades_grade_score_thresholds_save),
+            onClick = onSaveGradeScore,
+        )
     }
 }
 
@@ -160,6 +171,7 @@ private fun GradeScoreInputPreview() {
                     )
                     gradeScoreData = GradeScoreDataProvider.calculateGrade(gradeScoreData)
                 },
+                onSaveGradeScore = {},
             )
         }
     }

@@ -90,6 +90,29 @@ CREATE TABLE grade_template
     FOREIGN KEY (lesson_id) REFERENCES lesson (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- Punktacja oceny
+CREATE TABLE grade_score
+(
+    id                        INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    grade_template_id         INTEGER NOT NULL,
+    two_minus_min_threshold   INTEGER NOT NULL,
+    two_min_threshold         INTEGER NOT NULL,
+    two_plus_min_threshold    INTEGER NOT NULL,
+    three_minus_min_threshold INTEGER NOT NULL,
+    three_min_threshold       INTEGER NOT NULL,
+    three_plus_min_threshold  INTEGER NOT NULL,
+    four_minus_min_threshold  INTEGER NOT NULL,
+    four_min_threshold        INTEGER NOT NULL,
+    four_plus_min_threshold   INTEGER NOT NULL,
+    five_minus_min_threshold  INTEGER NOT NULL,
+    five_min_threshold        INTEGER NOT NULL,
+    five_plus_min_threshold   INTEGER NOT NULL,
+    six_minus_min_threshold   INTEGER NOT NULL,
+    six_min_threshold         INTEGER NOT NULL,
+
+    FOREIGN KEY (grade_template_id) REFERENCES grade_template (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE grade
 (
     id                INTEGER            NOT NULL PRIMARY KEY AUTOINCREMENT,

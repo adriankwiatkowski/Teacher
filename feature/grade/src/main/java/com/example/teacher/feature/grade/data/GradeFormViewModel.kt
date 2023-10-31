@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.result.combineResult
 import com.example.teacher.core.data.repository.grade.GradeRepository
+import com.example.teacher.core.data.repository.gradescore.GradeScoreRepository
 import com.example.teacher.core.model.data.BasicStudent
 import com.example.teacher.core.model.data.Grade
+import com.example.teacher.core.model.data.GradeScore
 import com.example.teacher.core.model.data.GradeTemplateInfo
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.feature.grade.nav.GradeNavigation
@@ -24,6 +26,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
@@ -32,6 +35,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class GradeFormViewModel @Inject constructor(
     private val repository: GradeRepository,
+    private val gradeScoreRepository: GradeScoreRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -78,6 +82,13 @@ internal class GradeFormViewModel @Inject constructor(
     private val _isCalculateFromScoreForm = MutableStateFlow(false)
     val isCalculateFromScoreForm = _isCalculateFromScoreForm.asStateFlow()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val gradeScoreResult: StateFlow<Result<GradeScore?>> = gradeTemplateId
+        .flatMapLatest { gradeTemplateId ->
+            gradeScoreRepository.getGradeScoreByGradeTemplateId(gradeTemplateId)
+        }
+        .stateIn(initialValue = Result.Loading)
+
     private val _gradeScoreData = MutableStateFlow(GradeScoreDataProvider.createDefault())
     val gradeScoreData = _gradeScoreData.asStateFlow()
 
@@ -103,6 +114,13 @@ internal class GradeFormViewModel @Inject constructor(
                     status = if (form.value.status is FormStatus.Success) form.value.status else FormStatus.Idle,
                 )
                 initialForm.value = form.value
+            }
+            .launchIn(viewModelScope)
+
+        gradeScoreResult
+            .onEach { gradeScoreResult ->
+                val gradeScore = (gradeScoreResult as? Result.Success)?.data
+                setGradeScoreDataThresholds(gradeScore)
             }
             .launchIn(viewModelScope)
     }
@@ -159,10 +177,29 @@ internal class GradeFormViewModel @Inject constructor(
         }
     }
 
+    fun onSaveGradeScore() {
+        viewModelScope.launch {
+            val gradeScore = (gradeScoreResult.value as? Result.Success)?.data ?: return@launch
+            val updatedGradeScore = gradeScoreData.value.toGradeScore(
+                id = gradeScore.id,
+                gradeTemplateId = gradeTemplateId.value,
+            )
+            gradeScoreRepository.updateGradeScore(updatedGradeScore)
+        }
+    }
+
     fun onDelete() {
         viewModelScope.launch {
             repository.deleteGradeById(gradeId.value)
             savedStateHandle[IS_DELETED_KEY] = true
+        }
+    }
+
+    private fun setGradeScoreDataThresholds(gradeScore: GradeScore?) {
+        _gradeScoreData.update { gradeScoreData ->
+            val gradeScoreThresholds = GradeScoreDataProvider.getGradeScoreThresholds(gradeScore)
+            val updated = gradeScoreData.copy(gradeScoreThresholds = gradeScoreThresholds)
+            GradeScoreDataProvider.calculateGrade(updated)
         }
     }
 

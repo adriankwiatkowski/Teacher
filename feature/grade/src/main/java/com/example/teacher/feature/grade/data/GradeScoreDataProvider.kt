@@ -2,6 +2,7 @@ package com.example.teacher.feature.grade.data
 
 import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.common.utils.DecimalUtils.safeDivide
+import com.example.teacher.core.model.data.GradeScore
 import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.feature.grade.R
 import java.math.BigDecimal
@@ -80,31 +81,73 @@ internal object GradeScoreDataProvider {
             maxScore = validateGradeScore(maxScore, isEdited = false),
             studentScore = validateGradeScore(studentScore, isEdited = false),
             calculatedGrade = null,
-            gradeScoreThresholds = createDefaultGradeScoreThresholds(),
+            gradeScoreThresholds = emptyList(),
         ).let { gradeScoreData -> calculateGrade(gradeScoreData) }
     }
 
-    private fun createDefaultGradeScoreThresholds(): List<GradeScoreThreshold> {
-        return listOf(
-            GradeScoreThreshold(grade = DecimalUtils.TwoMinus, minThreshold = 20),
-            GradeScoreThreshold(grade = DecimalUtils.Two, minThreshold = 25),
-            GradeScoreThreshold(grade = DecimalUtils.TwoPlus, minThreshold = 30),
-
-            GradeScoreThreshold(grade = DecimalUtils.ThreeMinus, minThreshold = 35),
-            GradeScoreThreshold(grade = DecimalUtils.Three, minThreshold = 40),
-            GradeScoreThreshold(grade = DecimalUtils.ThreePlus, minThreshold = 45),
-
-            GradeScoreThreshold(grade = DecimalUtils.FourMinus, minThreshold = 50),
-            GradeScoreThreshold(grade = DecimalUtils.Four, minThreshold = 55),
-            GradeScoreThreshold(grade = DecimalUtils.FourPlus, minThreshold = 60),
-
-            GradeScoreThreshold(grade = DecimalUtils.FiveMinus, minThreshold = 65),
-            GradeScoreThreshold(grade = DecimalUtils.Five, minThreshold = 70),
-            GradeScoreThreshold(grade = DecimalUtils.FivePlus, minThreshold = 75),
-
-            GradeScoreThreshold(grade = DecimalUtils.SixMinus, minThreshold = 80),
-            GradeScoreThreshold(grade = DecimalUtils.Six, minThreshold = 85),
-        )
+    fun getGradeScoreThresholds(gradeScore: GradeScore?): List<GradeScoreThreshold> {
+        return if (gradeScore == null) {
+            emptyList()
+        } else {
+            listOf(
+                GradeScoreThreshold(
+                    DecimalUtils.TwoMinus,
+                    gradeScore.twoMinusMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.Two,
+                    gradeScore.twoMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.TwoPlus,
+                    gradeScore.twoPlusMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.ThreeMinus,
+                    gradeScore.threeMinusMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.Three,
+                    gradeScore.threeMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.ThreePlus,
+                    gradeScore.threePlusMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.FourMinus,
+                    gradeScore.fourMinusMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.Four,
+                    gradeScore.fourMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.FourPlus,
+                    gradeScore.fourPlusMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.FiveMinus,
+                    gradeScore.fiveMinusMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.Five,
+                    gradeScore.fiveMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.FivePlus,
+                    gradeScore.fivePlusMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.SixMinus,
+                    gradeScore.sixMinusMinThreshold.toInt(),
+                ),
+                GradeScoreThreshold(
+                    DecimalUtils.Six,
+                    gradeScore.sixMinThreshold.toInt(),
+                ),
+            )
+        }
     }
 
     private fun getGrade(gradeScoreData: GradeScoreData): GradeWithPercentage? {
