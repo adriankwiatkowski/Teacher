@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.ui.model.TeacherIcon
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
+import kotlin.math.roundToInt
 
 @Composable
 fun TeacherIntSlider(
@@ -52,7 +53,7 @@ fun TeacherIntSlider(
                 Slider(
                     modifier = Modifier.weight(1f),
                     value = value.toFloat(),
-                    onValueChange = { newValue -> onValueChange(newValue.toInt()) },
+                    onValueChange = { newValue -> onValueChange(newValue.roundToInt()) },
                     valueRange = min.toFloat()..max.toFloat(),
                     steps = (max - min) / steps - 1,
                 )
@@ -74,7 +75,7 @@ private fun TeacherIntSliderPreview() {
                 label = "Label",
                 min = 0,
                 max = 100,
-                value = 50,
+                value = 33,
                 onValueChange = { value = it }
             )
         }
