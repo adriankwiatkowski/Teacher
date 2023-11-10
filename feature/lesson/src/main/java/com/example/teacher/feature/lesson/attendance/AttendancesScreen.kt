@@ -1,5 +1,6 @@
 package com.example.teacher.feature.lesson.attendance
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,8 +10,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -45,16 +48,18 @@ import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonEventAttendancesPreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
+import com.example.teacher.core.ui.paramprovider.SchoolYearPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.R
+import com.example.teacher.feature.lesson.attendance.data.AttendancesUiState
 import java.time.LocalDate
 import java.time.LocalTime
 
 @Composable
 internal fun AttendancesScreen(
-    scheduleAttendancesResult: Result<List<LessonEventAttendance>>,
+    attendancesUiStateResult: Result<AttendancesUiState>,
     studentsWithAttendanceResult: Result<List<StudentWithAttendance>>,
     lesson: Lesson,
     snackbarHostState: SnackbarHostState,
@@ -70,17 +75,20 @@ internal fun AttendancesScreen(
     ) { innerPadding ->
         ResultContent(
             modifier = Modifier.padding(innerPadding),
-            result = scheduleAttendancesResult,
-        ) { scheduleAttendances ->
+            result = attendancesUiStateResult,
+        ) { attendancesUiState ->
             var showStatisticsDialog by rememberSaveable { mutableStateOf(false) }
             val onDismissStatisticDialogRequest = { showStatisticsDialog = false }
 
-            if (scheduleAttendances.isEmpty()) {
+            if (attendancesUiState.isEmpty()) {
                 EmptyState(modifier = Modifier.fillMaxSize())
             } else {
                 MainContent(
                     modifier = Modifier.fillMaxSize(),
-                    scheduleAttendances = scheduleAttendances,
+                    lesson = lesson,
+                    firstTermScheduleAttendances = attendancesUiState.firstTermScheduleAttendances,
+                    secondTermScheduleAttendances = attendancesUiState.secondTermScheduleAttendances,
+                    scheduleAttendancesWithoutTerm = attendancesUiState.scheduleAttendancesWithoutTerm,
                     onScheduleAttendanceClick = onScheduleAttendanceClick,
                     onShowStatisticsClick = { showStatisticsDialog = true },
                 )
@@ -99,7 +107,10 @@ internal fun AttendancesScreen(
 
 @Composable
 private fun MainContent(
-    scheduleAttendances: List<LessonEventAttendance>,
+    lesson: Lesson,
+    firstTermScheduleAttendances: List<LessonEventAttendance>,
+    secondTermScheduleAttendances: List<LessonEventAttendance>,
+    scheduleAttendancesWithoutTerm: List<LessonEventAttendance>,
     onScheduleAttendanceClick: (id: Long) -> Unit,
     onShowStatisticsClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -108,33 +119,89 @@ private fun MainContent(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        item {
-            TeacherButton(
-                modifier = Modifier.fillParentMaxWidth(),
-                label = stringResource(R.string.lesson_attendance_statistics),
-                onClick = onShowStatisticsClick,
+        val schoolYear = lesson.schoolClass.schoolYear
+
+        statisticsButton(onClick = onShowStatisticsClick)
+
+        termHeader(termName = schoolYear.firstTerm.name)
+        scheduleAttendances(
+            scheduleAttendances = firstTermScheduleAttendances,
+            onScheduleAttendanceClick = onScheduleAttendanceClick,
+        )
+
+        termHeader(termName = schoolYear.secondTerm.name)
+        scheduleAttendances(
+            scheduleAttendances = secondTermScheduleAttendances,
+            onScheduleAttendanceClick = onScheduleAttendanceClick,
+        )
+
+        if (scheduleAttendancesWithoutTerm.isNotEmpty()) {
+            termHeader(termName = null)
+            scheduleAttendances(
+                scheduleAttendances = scheduleAttendancesWithoutTerm,
+                onScheduleAttendanceClick = onScheduleAttendanceClick,
             )
-
-            Spacer(Modifier.padding(MaterialTheme.spacing.small))
         }
+    }
+}
 
-        items(scheduleAttendances, key = { it.eventId }) { scheduleAttendance ->
-            Surface(tonalElevation = if (scheduleAttendance.isCancelled) 5.dp else 0.dp) {
-                AttendanceItem(
-                    date = scheduleAttendance.date,
-                    startTime = scheduleAttendance.startTime,
-                    endTime = scheduleAttendance.endTime,
-                    isCancelled = scheduleAttendance.isCancelled,
-                    presentCount = scheduleAttendance.presentCount,
-                    lateCount = scheduleAttendance.lateCount,
-                    absentCount = scheduleAttendance.absentCount,
-                    excusedAbsenceCount = scheduleAttendance.excusedAbsenceCount,
-                    exemptionCount = scheduleAttendance.exemptionCount,
-                    attendanceNotSetCount = scheduleAttendance.attendanceNotSetCount,
-                    onClick = { onScheduleAttendanceClick(scheduleAttendance.eventId) },
-                )
-            }
+@OptIn(ExperimentalFoundationApi::class)
+private fun LazyListScope.termHeader(termName: String?) {
+    stickyHeader {
+        Surface(modifier = Modifier.fillParentMaxWidth()) {
+            Text(
+                modifier = Modifier.padding(MaterialTheme.spacing.small),
+                style = MaterialTheme.typography.headlineSmall,
+                text = if (termName != null) {
+                    stringResource(R.string.lesson_term, termName)
+                } else {
+                    stringResource(R.string.lesson_attendance_no_term)
+                },
+            )
         }
+    }
+}
+
+private fun LazyListScope.scheduleAttendances(
+    scheduleAttendances: List<LessonEventAttendance>,
+    onScheduleAttendanceClick: (id: Long) -> Unit,
+) {
+    items(scheduleAttendances, key = { it.eventId }) { scheduleAttendance ->
+        Surface(tonalElevation = if (scheduleAttendance.isCancelled) 5.dp else 0.dp) {
+            AttendanceItem(
+                date = scheduleAttendance.date,
+                startTime = scheduleAttendance.startTime,
+                endTime = scheduleAttendance.endTime,
+                isCancelled = scheduleAttendance.isCancelled,
+                presentCount = scheduleAttendance.presentCount,
+                lateCount = scheduleAttendance.lateCount,
+                absentCount = scheduleAttendance.absentCount,
+                excusedAbsenceCount = scheduleAttendance.excusedAbsenceCount,
+                exemptionCount = scheduleAttendance.exemptionCount,
+                attendanceNotSetCount = scheduleAttendance.attendanceNotSetCount,
+                onClick = { onScheduleAttendanceClick(scheduleAttendance.eventId) },
+            )
+        }
+    }
+
+    if (scheduleAttendances.isEmpty()) {
+        item {
+            ListItem(headlineContent = {
+                Text(stringResource(R.string.lesson_attendance_no_events_in_term))
+            })
+        }
+    }
+}
+
+private fun LazyListScope.statisticsButton(onClick: () -> Unit) {
+    item {
+        TeacherButton(
+            modifier = Modifier.fillParentMaxWidth(),
+            label = stringResource(R.string.lesson_attendance_statistics),
+            onClick = onClick,
+        )
+
+        Spacer(Modifier.height(MaterialTheme.spacing.small))
     }
 }
 
@@ -245,14 +312,37 @@ private fun EmptyState(
 private fun AttendancesScreenPreview(
     @PreviewParameter(
         LessonEventAttendancesPreviewParameterProvider::class
-    ) data: List<LessonEventAttendance>
+    ) attendances: List<LessonEventAttendance>
 ) {
     TeacherTheme {
         Surface {
             val lesson = remember { LessonPreviewParameterProvider().values.first() }
+            val schoolYear = remember { SchoolYearPreviewParameterProvider().values.first() }
+
+            val attendancesUiState = remember(attendances) {
+                val firstTermScheduleAttendances = attendances.filter { attendance ->
+                    val term = schoolYear.firstTerm
+                    TimeUtils.isBetween(attendance.date, term.startDate, term.endDate)
+                }
+                val secondTermScheduleAttendances = attendances.filter { attendance ->
+                    val term = schoolYear.secondTerm
+                    TimeUtils.isBetween(attendance.date, term.startDate, term.endDate)
+                }
+                val scheduleAttendancesWithoutTerm = attendances.filter { attendance ->
+                    val isInFirstTerm = attendance in firstTermScheduleAttendances
+                    val isInSecondTerm = attendance in secondTermScheduleAttendances
+                    !isInFirstTerm && !isInSecondTerm
+                }
+
+                AttendancesUiState(
+                    firstTermScheduleAttendances = firstTermScheduleAttendances,
+                    secondTermScheduleAttendances = secondTermScheduleAttendances,
+                    scheduleAttendancesWithoutTerm = scheduleAttendancesWithoutTerm,
+                )
+            }
 
             AttendancesScreen(
-                scheduleAttendancesResult = Result.Success(data),
+                attendancesUiStateResult = Result.Success(attendancesUiState),
                 studentsWithAttendanceResult = Result.Loading,
                 lesson = lesson,
                 snackbarHostState = remember { SnackbarHostState() },

@@ -3,6 +3,7 @@ package com.example.teacher.core.database.querymapper
 import com.example.teacher.core.database.generated.queries.lesson.GetLessonById
 import com.example.teacher.core.database.generated.queries.lesson.GetLessons
 import com.example.teacher.core.database.generated.queries.lesson.GetLessonsBySchoolClassId
+import com.example.teacher.core.database.generated.queries.lesson.GetSchoolYearByLessonId
 import com.example.teacher.core.model.data.BasicLesson
 import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.Lesson
@@ -133,6 +134,29 @@ internal fun toExternal(lesson: GetLessonById?): Lesson? = run {
             ),
             studentCount = lesson.student_count,
             lessonCount = lesson.lesson_count,
+        ),
+    )
+}
+
+internal fun toExternalSchoolYear(schoolYear: GetSchoolYearByLessonId?): SchoolYear? = run {
+    if (schoolYear == null) {
+        return@run null
+    }
+
+    SchoolYear(
+        id = schoolYear.school_year_id,
+        name = schoolYear.school_year_name,
+        firstTerm = Term(
+            id = schoolYear.term_first_id,
+            name = schoolYear.term_first_name,
+            startDate = schoolYear.term_first_start_date,
+            endDate = schoolYear.term_first_end_date,
+        ),
+        secondTerm = Term(
+            id = schoolYear.term_second_id,
+            name = schoolYear.term_second_name,
+            startDate = schoolYear.term_second_start_date,
+            endDate = schoolYear.term_second_end_date,
         ),
     )
 }

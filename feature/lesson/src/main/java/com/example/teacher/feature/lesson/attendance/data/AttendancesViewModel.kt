@@ -4,8 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.common.result.combineResult
+import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.data.repository.lessonattendance.LessonAttendanceRepository
 import com.example.teacher.core.model.data.LessonEventAttendance
+import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.model.data.StudentWithAttendance
 import com.example.teacher.feature.lesson.nav.LessonNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,8 +29,39 @@ internal class AttendancesViewModel @Inject constructor(
     private val lessonId = savedStateHandle.getStateFlow(LESSON_ID_KEY, 0L)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val attendancesResult: StateFlow<Result<List<LessonEventAttendance>>> = lessonId
+    private val attendancesResult: StateFlow<Result<List<LessonEventAttendance>>> = lessonId
         .flatMapLatest { lessonId -> repository.getLessonEventAttendancesByLessonId(lessonId) }
+        .stateIn(initialValue = Result.Loading)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val schoolYearResult: StateFlow<Result<SchoolYear>> = lessonId
+        .flatMapLatest { lessonId -> repository.getSchoolYearByLessonId(lessonId) }
+        .stateIn(initialValue = Result.Loading)
+
+    val attendancesUiStateResult: StateFlow<Result<AttendancesUiState>> = attendancesResult
+        .combineResult(schoolYearResult) { attendances, schoolYear ->
+            val firstTermScheduleAttendances = attendances.filter { attendance ->
+                val term = schoolYear.firstTerm
+                TimeUtils.isBetween(attendance.date, term.startDate, term.endDate)
+            }
+            val secondTermScheduleAttendances = attendances.filter { attendance ->
+                val term = schoolYear.secondTerm
+                TimeUtils.isBetween(attendance.date, term.startDate, term.endDate)
+            }
+            val scheduleAttendancesWithoutTerm = attendances.filter { attendance ->
+                val isInFirstTerm = attendance in firstTermScheduleAttendances
+                val isInSecondTerm = attendance in secondTermScheduleAttendances
+                !isInFirstTerm && !isInSecondTerm
+            }
+
+            Result.Success(
+                AttendancesUiState(
+                    firstTermScheduleAttendances = firstTermScheduleAttendances,
+                    secondTermScheduleAttendances = secondTermScheduleAttendances,
+                    scheduleAttendancesWithoutTerm = scheduleAttendancesWithoutTerm,
+                )
+            )
+        }
         .stateIn(initialValue = Result.Loading)
 
     @OptIn(ExperimentalCoroutinesApi::class)

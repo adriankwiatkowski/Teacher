@@ -5,6 +5,7 @@ import com.example.teacher.core.model.data.Attendance
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.LessonAttendance
 import com.example.teacher.core.model.data.LessonEventAttendance
+import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.model.data.StudentWithAttendance
 import kotlinx.coroutines.flow.Flow
 
@@ -21,6 +22,8 @@ interface LessonAttendanceRepository {
     fun getStudentsWithAttendanceByLessonId(
         lessonId: Long
     ): Flow<Result<List<StudentWithAttendance>>>
+
+    fun getSchoolYearByLessonId(lessonId: Long): Flow<Result<SchoolYear>>
 
     suspend fun insertOrUpdateLessonAttendance(
         eventId: Long,

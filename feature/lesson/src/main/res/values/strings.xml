@@ -67,6 +67,8 @@
 
     <string name="lesson_term_label">Semestr</string>
     <string name="lesson_term">Semestr %1$s</string>
+    <string name="lesson_attendance_no_term">Poza semestrem</string>
+    <string name="lesson_attendance_no_events_in_term">Brak zajęć w semestrze</string>
     <string name="lesson_first_term">I</string>
     <string name="lesson_second_term">II</string>
 

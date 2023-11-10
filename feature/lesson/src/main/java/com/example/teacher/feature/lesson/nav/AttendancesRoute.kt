@@ -17,11 +17,11 @@ internal fun AttendancesRoute(
     onAddScheduleClick: () -> Unit,
     viewModel: AttendancesViewModel = hiltViewModel(),
 ) {
-    val attendancesResult by viewModel.attendancesResult.collectAsStateWithLifecycle()
+    val attendancesUiStateResult by viewModel.attendancesUiStateResult.collectAsStateWithLifecycle()
     val studentsWithAttendanceResult by viewModel.studentsWithAttendanceResult.collectAsStateWithLifecycle()
 
     AttendancesScreen(
-        scheduleAttendancesResult = attendancesResult,
+        attendancesUiStateResult = attendancesUiStateResult,
         studentsWithAttendanceResult = studentsWithAttendanceResult,
         lesson = lesson,
         snackbarHostState = snackbarHostState,

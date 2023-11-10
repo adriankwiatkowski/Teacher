@@ -26,6 +26,7 @@ internal class LessonAttendanceDataSourceImpl @Inject constructor(
 ) : LessonAttendanceDataSource {
 
     private val queries = db.lessonAttendanceQueries
+    private val lessonQueries = db.lessonQueries
 
     override fun getLessonEventAttendancesByLessonId(
         lessonId: Long
@@ -52,7 +53,7 @@ internal class LessonAttendanceDataSourceImpl @Inject constructor(
             .getStudentsWithAttendanceByLessonId(lessonId)
             .asFlow()
             .mapToList(dispatcher)
-        val schoolYear = queries
+        val schoolYear = lessonQueries
             .getSchoolYearByLessonId(lessonId)
             .asFlow()
             .mapToOne(dispatcher)

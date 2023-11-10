@@ -5,11 +5,13 @@ import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.result.asResult
 import com.example.teacher.core.common.result.asResultNotNull
 import com.example.teacher.core.database.datasource.event.EventDataSource
+import com.example.teacher.core.database.datasource.lesson.LessonDataSource
 import com.example.teacher.core.database.datasource.lessonattendance.LessonAttendanceDataSource
 import com.example.teacher.core.model.data.Attendance
 import com.example.teacher.core.model.data.Event
 import com.example.teacher.core.model.data.LessonAttendance
 import com.example.teacher.core.model.data.LessonEventAttendance
+import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.model.data.StudentWithAttendance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 internal class DatabaseLessonAttendanceRepository @Inject constructor(
+    private val lessonDataSource: LessonDataSource,
     private val eventDataSource: EventDataSource,
     private val dataSource: LessonAttendanceDataSource,
     @ApplicationScope private val scope: CoroutineScope,
@@ -45,6 +48,12 @@ internal class DatabaseLessonAttendanceRepository @Inject constructor(
     ): Flow<Result<List<StudentWithAttendance>>> = dataSource
         .getStudentsWithAttendanceByLessonId(lessonId)
         .asResult()
+
+    override fun getSchoolYearByLessonId(
+        lessonId: Long
+    ): Flow<Result<SchoolYear>> = lessonDataSource
+        .getSchoolYearByLessonId(lessonId)
+        .asResultNotNull()
 
     override suspend fun insertOrUpdateLessonAttendance(
         eventId: Long,

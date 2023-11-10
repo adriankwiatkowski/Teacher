@@ -5,7 +5,7 @@ import com.example.teacher.core.common.utils.DecimalUtils.toPercentage
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.database.generated.queries.lessonattendance.GetLessonAttendancesByEventId
 import com.example.teacher.core.database.generated.queries.lessonattendance.GetLessonEventsByLessonId
-import com.example.teacher.core.database.generated.queries.lessonattendance.GetSchoolYearByLessonId
+import com.example.teacher.core.database.generated.queries.lesson.GetSchoolYearByLessonId
 import com.example.teacher.core.database.generated.queries.lessonattendance.GetStudentsWithAttendanceByLessonId
 import com.example.teacher.core.model.data.Attendance
 import com.example.teacher.core.model.data.BasicStudent

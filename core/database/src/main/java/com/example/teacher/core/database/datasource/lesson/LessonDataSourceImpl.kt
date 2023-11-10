@@ -4,13 +4,15 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
+import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.querymapper.toExternalLessons
 import com.example.teacher.core.database.querymapper.toExternalLessonsByYear
-import com.example.teacher.core.database.generated.TeacherDatabase
+import com.example.teacher.core.database.querymapper.toExternalSchoolYear
 import com.example.teacher.core.model.data.BasicLesson
 import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.model.data.LessonsByYear
+import com.example.teacher.core.model.data.SchoolYear
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -62,6 +64,14 @@ internal class LessonDataSourceImpl(
             .getSchoolClassNameById(schoolClassId)
             .asFlow()
             .mapToOneOrNull(dispatcher)
+
+    override fun getSchoolYearByLessonId(lessonId: Long): Flow<SchoolYear?> =
+        queries
+            .getSchoolYearByLessonId(lessonId)
+            .asFlow()
+            .mapToOneOrNull(dispatcher)
+            .map(::toExternalSchoolYear)
+            .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateLesson(
         id: Long?,
