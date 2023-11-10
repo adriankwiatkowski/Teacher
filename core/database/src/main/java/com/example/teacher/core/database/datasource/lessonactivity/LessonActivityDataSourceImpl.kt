@@ -3,8 +3,8 @@ package com.example.teacher.core.database.datasource.lessonactivity
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.example.teacher.core.common.di.DefaultDispatcher
-import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
+import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.model.data.LessonActivity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +31,8 @@ internal class LessonActivityDataSourceImpl(
         id: Long?,
         lessonId: Long,
         studentId: Long,
-        sum: Long
+        sum: Long,
+        isFirstTerm: Boolean,
     ): Unit = withContext(dispatcher) {
         if (id == null) {
             queries.insertLessonActivity(
@@ -39,6 +40,7 @@ internal class LessonActivityDataSourceImpl(
                 lesson_id = lessonId,
                 student_id = studentId,
                 sum = sum,
+                is_first_term = isFirstTerm,
             )
         } else {
             queries.updateLessonActivity(

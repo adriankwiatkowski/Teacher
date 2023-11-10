@@ -7,5 +7,11 @@ interface LessonActivityDataSource {
 
     fun getLessonActivitiesByLessonId(lessonId: Long): Flow<List<LessonActivity>>
 
-    suspend fun insertOrUpdateLessonActivity(id: Long?, lessonId: Long, studentId: Long, sum: Long)
+    suspend fun insertOrUpdateLessonActivity(
+        id: Long?,
+        lessonId: Long,
+        studentId: Long,
+        sum: Long,
+        isFirstTerm: Boolean,
+    )
 }

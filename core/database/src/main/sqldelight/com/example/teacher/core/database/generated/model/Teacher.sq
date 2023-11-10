@@ -133,6 +133,7 @@ CREATE TABLE lesson_activity
     lesson_id  INTEGER NOT NULL,
     student_id INTEGER NOT NULL,
     sum        INTEGER NOT NULL,
+    is_first_term INTEGER AS Boolean NOT NULL,
 
     FOREIGN KEY (lesson_id) REFERENCES lesson (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (student_id) REFERENCES student (id) ON DELETE CASCADE ON UPDATE CASCADE

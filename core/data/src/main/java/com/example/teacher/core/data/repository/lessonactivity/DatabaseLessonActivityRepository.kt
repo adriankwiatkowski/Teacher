@@ -22,29 +22,27 @@ class DatabaseLessonActivityRepository @Inject constructor(
         .asResult()
 
     override suspend fun decreaseLessonActivity(lessonActivity: LessonActivity) {
-        scope.launch {
-            val sum = lessonActivity.sum
-            val newSum = if (sum != null) sum - 1L else -1L
+        val sum = lessonActivity.sum
+        val newSum = if (sum != null) sum - 1L else -1L
 
-            dataSource.insertOrUpdateLessonActivity(
-                id = lessonActivity.id,
-                lessonId = lessonActivity.lesson.id,
-                studentId = lessonActivity.student.id,
-                sum = newSum,
-            )
-        }
+        upsertLessonActivity(lessonActivity = lessonActivity, newSum = newSum)
     }
 
     override suspend fun increaseLessonActivity(lessonActivity: LessonActivity) {
-        scope.launch {
-            val sum = lessonActivity.sum
-            val newSum = if (sum != null) sum + 1L else 1L
+        val sum = lessonActivity.sum
+        val newSum = if (sum != null) sum + 1L else 1L
 
+        upsertLessonActivity(lessonActivity = lessonActivity, newSum = newSum)
+    }
+
+    private suspend fun upsertLessonActivity(lessonActivity: LessonActivity, newSum: Long) {
+        scope.launch {
             dataSource.insertOrUpdateLessonActivity(
                 id = lessonActivity.id,
                 lessonId = lessonActivity.lesson.id,
                 studentId = lessonActivity.student.id,
                 sum = newSum,
+                isFirstTerm = lessonActivity.isFirstTerm,
             )
         }
     }

@@ -30,7 +30,7 @@ internal class GradeTemplatesViewModel @Inject constructor(
         .flatMapLatest { lessonId -> repository.getGradeTemplatesByLessonId(lessonId) }
         .stateIn(initialValue = Result.Loading)
 
-    val gradeTemplatesResult: StateFlow<Result<GradeTemplatesUiState>> = gradesResult
+    val gradeTemplateUiStateResult: StateFlow<Result<GradeTemplatesUiState>> = gradesResult
         .mapResult { grades ->
             val firstTermGrades = grades.filter { grade -> grade.isFirstTerm }
             val secondTermGrades = grades.filter { grade -> !grade.isFirstTerm }

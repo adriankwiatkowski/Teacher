@@ -13,8 +13,8 @@ class LessonActivitiesPreviewParameterProvider : PreviewParameterProvider<List<L
 
 class LessonActivityPreviewParameterProvider : PreviewParameterProvider<LessonActivity> {
     override val values: Sequence<LessonActivity> = students
-        .map { student ->
-            LessonActivity(
+        .flatMap { student ->
+            val lessonActivity = LessonActivity(
                 id = null,
                 lesson = BasicLesson(
                     id = 1L,
@@ -23,6 +23,12 @@ class LessonActivityPreviewParameterProvider : PreviewParameterProvider<LessonAc
                 ),
                 student = student,
                 sum = null,
+                isFirstTerm = true,
+            )
+
+            listOf(
+                lessonActivity,
+                lessonActivity.copy(isFirstTerm = false),
             )
         }
 

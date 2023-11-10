@@ -2,6 +2,7 @@ getLessonActivitiesByLessonId:
 SELECT
     la.id,
     la.sum,
+    la.is_first_term,
     l.id AS 'lesson_id',
     l.name AS 'lesson_name',
     l.school_class_id AS 'school_class_id',
@@ -21,7 +22,7 @@ ORDER BY s.register_number;
 insertLessonActivity:
 INSERT OR FAIL
 INTO lesson_activity
-VALUES (?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?);
 
 updateLessonActivity:
 UPDATE lesson_activity

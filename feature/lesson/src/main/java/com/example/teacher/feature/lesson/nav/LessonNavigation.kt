@@ -174,7 +174,10 @@ fun NavGraphBuilder.lessonGraph(
                         onAddScheduleClick = { onAddScheduleClick(lessonId) }
                     )
 
-                    LessonTab.Activity -> LessonActivityRoute(snackbarHostState = snackbarHostState)
+                    LessonTab.Activity -> LessonActivityRoute(
+                        snackbarHostState = snackbarHostState,
+                        lesson = lesson,
+                    )
 
                     LessonTab.Notes -> NotesRoute(
                         snackbarHostState = snackbarHostState,

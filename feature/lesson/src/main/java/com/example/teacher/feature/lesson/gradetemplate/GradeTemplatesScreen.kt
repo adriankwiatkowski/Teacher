@@ -36,7 +36,7 @@ import com.example.teacher.feature.lesson.gradetemplate.data.GradeTemplatesUiSta
 
 @Composable
 internal fun GradeTemplatesScreen(
-    gradeTemplatesResult: Result<GradeTemplatesUiState>,
+    gradeTemplateUiStateResult: Result<GradeTemplatesUiState>,
     snackbarHostState: SnackbarHostState,
     lesson: Lesson,
     onGradeClick: (gradeId: Long) -> Unit,
@@ -45,8 +45,8 @@ internal fun GradeTemplatesScreen(
 ) {
     ResultContent(
         modifier = modifier,
-        result = gradeTemplatesResult,
-    ) { gradeTemplates ->
+        result = gradeTemplateUiStateResult,
+    ) { gradeTemplateUiState ->
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
             floatingActionButton = { TeacherFab(action = TeacherActions.add(onAddGradeClick)) },
@@ -56,8 +56,8 @@ internal fun GradeTemplatesScreen(
                     .fillMaxSize()
                     .padding(innerPadding),
                 lesson = lesson,
-                firstTermGrades = gradeTemplates.firstTermGrades,
-                secondTermGrades = gradeTemplates.secondTermGrades,
+                firstTermGrades = gradeTemplateUiState.firstTermGrades,
+                secondTermGrades = gradeTemplateUiState.secondTermGrades,
                 onGradeClick = onGradeClick,
             )
         }
@@ -128,7 +128,7 @@ private fun GradeTemplatesScreenPreview(
 ) {
     TeacherTheme {
         Surface {
-            val gradeTemplates = remember(grades) {
+            val gradeTemplateUiState = remember(grades) {
                 GradeTemplatesUiState(
                     firstTermGrades = grades.filter { grade -> grade.isFirstTerm },
                     secondTermGrades = grades.filter { grade -> !grade.isFirstTerm }
@@ -137,7 +137,7 @@ private fun GradeTemplatesScreenPreview(
             val lesson = remember { LessonPreviewParameterProvider().values.first() }
 
             GradeTemplatesScreen(
-                gradeTemplatesResult = Result.Success(gradeTemplates),
+                gradeTemplateUiStateResult = Result.Success(gradeTemplateUiState),
                 snackbarHostState = remember { SnackbarHostState() },
                 lesson = lesson,
                 onGradeClick = {},

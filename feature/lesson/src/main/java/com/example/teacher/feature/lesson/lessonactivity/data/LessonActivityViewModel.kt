@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.common.result.mapResult
 import com.example.teacher.core.data.repository.lessonactivity.LessonActivityRepository
 import com.example.teacher.core.model.data.LessonActivity
 import com.example.teacher.feature.lesson.nav.LessonNavigation
@@ -26,9 +27,25 @@ internal class LessonActivityViewModel @Inject constructor(
     private val lessonId = savedStateHandle.getStateFlow(LESSON_ID_KEY, 0L)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val lessonActivitiesResult: StateFlow<Result<List<LessonActivity>>> = lessonId
+    private val lessonActivitiesResult: StateFlow<Result<List<LessonActivity>>> = lessonId
         .flatMapLatest { lessonId -> repository.getLessonActivitiesByLessonId(lessonId) }
         .stateIn(initialValue = Result.Loading)
+
+    val lessonActivityUiStateResult: StateFlow<Result<LessonActivityUiState>> =
+        lessonActivitiesResult
+            .mapResult { lessonActivities ->
+                val firstTermActivities =
+                    lessonActivities.filter { activity -> activity.isFirstTerm }
+                val secondTermActivities =
+                    lessonActivities.filter { activity -> !activity.isFirstTerm }
+                Result.Success(
+                    LessonActivityUiState(
+                        firstTermLessonActivities = firstTermActivities,
+                        secondTermLessonActivities = secondTermActivities,
+                    )
+                )
+            }
+            .stateIn(initialValue = Result.Loading)
 
     fun onDecreaseLessonActivity(lessonActivity: LessonActivity) {
         viewModelScope.launch {

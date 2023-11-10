@@ -1,11 +1,13 @@
 package com.example.teacher.feature.lesson.lessonactivity
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -22,19 +24,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.model.data.LessonActivity
 import com.example.teacher.core.ui.component.TeacherIconButton
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonActivitiesPreviewParameterProvider
+import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.R
+import com.example.teacher.feature.lesson.lessonactivity.data.LessonActivityUiState
 
 @Composable
 internal fun LessonActivityScreen(
-    lessonActivitiesResult: Result<List<LessonActivity>>,
+    lessonActivityUiStateResult: Result<LessonActivityUiState>,
+    lesson: Lesson,
     snackbarHostState: SnackbarHostState,
     onIncreaseLessonActivity: (lessonActivity: LessonActivity) -> Unit,
     onDecreaseLessonActivity: (lessonActivity: LessonActivity) -> Unit,
@@ -46,14 +52,19 @@ internal fun LessonActivityScreen(
     ) { innerPadding ->
         ResultContent(
             modifier = Modifier.padding(innerPadding),
-            result = lessonActivitiesResult,
-        ) { lessonActivities ->
-            if (lessonActivities.isEmpty()) {
+            result = lessonActivityUiStateResult,
+        ) { lessonActivityUiState ->
+            val isEmpty = lessonActivityUiState.firstTermLessonActivities.isEmpty() &&
+                    lessonActivityUiState.secondTermLessonActivities.isEmpty()
+
+            if (isEmpty) {
                 EmptyState(modifier = Modifier.fillMaxSize())
             } else {
                 MainContent(
                     modifier = Modifier.fillMaxSize(),
-                    lessonActivities = lessonActivities,
+                    lesson = lesson,
+                    firstTermLessonActivities = lessonActivityUiState.firstTermLessonActivities,
+                    secondTermLessonActivities = lessonActivityUiState.secondTermLessonActivities,
                     onIncreaseLessonActivity = onIncreaseLessonActivity,
                     onDecreaseLessonActivity = onDecreaseLessonActivity,
                 )
@@ -64,7 +75,9 @@ internal fun LessonActivityScreen(
 
 @Composable
 private fun MainContent(
-    lessonActivities: List<LessonActivity>,
+    lesson: Lesson,
+    firstTermLessonActivities: List<LessonActivity>,
+    secondTermLessonActivities: List<LessonActivity>,
     onIncreaseLessonActivity: (lessonActivity: LessonActivity) -> Unit,
     onDecreaseLessonActivity: (lessonActivity: LessonActivity) -> Unit,
     modifier: Modifier = Modifier,
@@ -73,17 +86,57 @@ private fun MainContent(
         modifier = modifier,
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
-        items(
-            lessonActivities,
-            key = { lessonActivity -> lessonActivity.student.id },
-        ) { lessonActivity ->
-            LessonActivityItem(
-                studentFullName = lessonActivity.student.fullName,
-                lessonActivitySum = lessonActivity.sum,
-                onIncreaseLessonActivity = { onIncreaseLessonActivity(lessonActivity) },
-                onDecreaseLessonActivity = { onDecreaseLessonActivity(lessonActivity) },
+        val schoolYear = lesson.schoolClass.schoolYear
+
+        termHeader(schoolYear.firstTerm.name)
+        lessonActivities(
+            lessonActivities = firstTermLessonActivities,
+            isFirstTerm = true,
+            onIncreaseLessonActivity = onIncreaseLessonActivity,
+            onDecreaseLessonActivity = onDecreaseLessonActivity,
+        )
+
+        termHeader(schoolYear.secondTerm.name)
+        lessonActivities(
+            lessonActivities = secondTermLessonActivities,
+            isFirstTerm = false,
+            onIncreaseLessonActivity = onIncreaseLessonActivity,
+            onDecreaseLessonActivity = onDecreaseLessonActivity,
+        )
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+private fun LazyListScope.termHeader(termName: String) {
+    stickyHeader {
+        Surface(modifier = Modifier.fillParentMaxWidth()) {
+            Text(
+                modifier = Modifier.padding(MaterialTheme.spacing.small),
+                style = MaterialTheme.typography.headlineSmall,
+                text = stringResource(R.string.lesson_term, termName),
             )
         }
+    }
+}
+
+private fun LazyListScope.lessonActivities(
+    lessonActivities: List<LessonActivity>,
+    isFirstTerm: Boolean,
+    onIncreaseLessonActivity: (lessonActivity: LessonActivity) -> Unit,
+    onDecreaseLessonActivity: (lessonActivity: LessonActivity) -> Unit,
+) {
+    items(
+        lessonActivities,
+        key = { lessonActivity ->
+            "${lessonActivity.student.id}-${if (isFirstTerm) "0" else "1"}"
+        },
+    ) { lessonActivity ->
+        LessonActivityItem(
+            studentFullName = lessonActivity.student.fullName,
+            lessonActivitySum = lessonActivity.sum,
+            onIncreaseLessonActivity = { onIncreaseLessonActivity(lessonActivity) },
+            onDecreaseLessonActivity = { onDecreaseLessonActivity(lessonActivity) },
+        )
     }
 }
 
@@ -141,8 +194,17 @@ private fun ActivityScreenPreview(
 ) {
     TeacherTheme {
         Surface {
+            val lessonActivityUiState = remember(lessonActivities) {
+                LessonActivityUiState(
+                    firstTermLessonActivities = lessonActivities.filter { it.isFirstTerm },
+                    secondTermLessonActivities = lessonActivities.filter { !it.isFirstTerm },
+                )
+            }
+            val lesson = remember { LessonPreviewParameterProvider().values.first() }
+
             LessonActivityScreen(
-                lessonActivitiesResult = Result.Success(lessonActivities),
+                lessonActivityUiStateResult = Result.Success(lessonActivityUiState),
+                lesson = lesson,
                 snackbarHostState = remember { SnackbarHostState() },
                 onIncreaseLessonActivity = {},
                 onDecreaseLessonActivity = {},

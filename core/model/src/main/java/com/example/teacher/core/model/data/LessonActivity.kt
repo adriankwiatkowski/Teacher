@@ -5,4 +5,5 @@ data class LessonActivity(
     val lesson: BasicLesson,
     val student: BasicStudent,
     val sum: Long?,
+    val isFirstTerm: Boolean,
 )
