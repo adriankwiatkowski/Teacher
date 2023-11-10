@@ -26,13 +26,13 @@ import com.example.teacher.core.model.data.BasicGradeTemplate
 import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.result.ResultContent
-import com.example.teacher.core.ui.paramprovider.BasicGradeTemplatesPreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.gradetemplate.data.GradeTemplatesUiState
+import com.example.teacher.feature.lesson.paramprovider.GradeTemplatesUiStatePreviewParameterProvider
 
 @Composable
 internal fun GradeTemplatesScreen(
@@ -122,18 +122,12 @@ private fun LazyListScope.grades(
 @Composable
 private fun GradeTemplatesScreenPreview(
     @PreviewParameter(
-        BasicGradeTemplatesPreviewParameterProvider::class,
+        GradeTemplatesUiStatePreviewParameterProvider::class,
         limit = 5,
-    ) grades: List<BasicGradeTemplate>
+    ) gradeTemplateUiState: GradeTemplatesUiState
 ) {
     TeacherTheme {
         Surface {
-            val gradeTemplateUiState = remember(grades) {
-                GradeTemplatesUiState(
-                    firstTermGrades = grades.filter { grade -> grade.isFirstTerm },
-                    secondTermGrades = grades.filter { grade -> !grade.isFirstTerm }
-                )
-            }
             val lesson = remember { LessonPreviewParameterProvider().values.first() }
 
             GradeTemplatesScreen(

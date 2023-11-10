@@ -29,13 +29,13 @@ import com.example.teacher.core.model.data.LessonActivity
 import com.example.teacher.core.ui.component.TeacherIconButton
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
-import com.example.teacher.core.ui.paramprovider.LessonActivitiesPreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.lessonactivity.data.LessonActivityUiState
+import com.example.teacher.feature.lesson.paramprovider.LessonActivityUiStatePreviewParameterProvider
 
 @Composable
 internal fun LessonActivityScreen(
@@ -188,18 +188,12 @@ private fun EmptyState(
 @Composable
 private fun ActivityScreenPreview(
     @PreviewParameter(
-        LessonActivitiesPreviewParameterProvider::class,
+        LessonActivityUiStatePreviewParameterProvider::class,
         limit = 5,
-    ) lessonActivities: List<LessonActivity>
+    ) lessonActivityUiState: LessonActivityUiState
 ) {
     TeacherTheme {
         Surface {
-            val lessonActivityUiState = remember(lessonActivities) {
-                LessonActivityUiState(
-                    firstTermLessonActivities = lessonActivities.filter { it.isFirstTerm },
-                    secondTermLessonActivities = lessonActivities.filter { !it.isFirstTerm },
-                )
-            }
             val lesson = remember { LessonPreviewParameterProvider().values.first() }
 
             LessonActivityScreen(

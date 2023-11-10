@@ -46,14 +46,13 @@ import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
-import com.example.teacher.core.ui.paramprovider.LessonEventAttendancesPreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
-import com.example.teacher.core.ui.paramprovider.SchoolYearPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.R
 import com.example.teacher.feature.lesson.attendance.data.AttendancesUiState
+import com.example.teacher.feature.lesson.paramprovider.AttendancesUiStatePreviewParameterProvider
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -311,35 +310,12 @@ private fun EmptyState(
 @Composable
 private fun AttendancesScreenPreview(
     @PreviewParameter(
-        LessonEventAttendancesPreviewParameterProvider::class
-    ) attendances: List<LessonEventAttendance>
+        AttendancesUiStatePreviewParameterProvider::class
+    ) attendancesUiState: AttendancesUiState
 ) {
     TeacherTheme {
         Surface {
             val lesson = remember { LessonPreviewParameterProvider().values.first() }
-            val schoolYear = remember { SchoolYearPreviewParameterProvider().values.first() }
-
-            val attendancesUiState = remember(attendances) {
-                val firstTermScheduleAttendances = attendances.filter { attendance ->
-                    val term = schoolYear.firstTerm
-                    TimeUtils.isBetween(attendance.date, term.startDate, term.endDate)
-                }
-                val secondTermScheduleAttendances = attendances.filter { attendance ->
-                    val term = schoolYear.secondTerm
-                    TimeUtils.isBetween(attendance.date, term.startDate, term.endDate)
-                }
-                val scheduleAttendancesWithoutTerm = attendances.filter { attendance ->
-                    val isInFirstTerm = attendance in firstTermScheduleAttendances
-                    val isInSecondTerm = attendance in secondTermScheduleAttendances
-                    !isInFirstTerm && !isInSecondTerm
-                }
-
-                AttendancesUiState(
-                    firstTermScheduleAttendances = firstTermScheduleAttendances,
-                    secondTermScheduleAttendances = secondTermScheduleAttendances,
-                    scheduleAttendancesWithoutTerm = scheduleAttendancesWithoutTerm,
-                )
-            }
 
             AttendancesScreen(
                 attendancesUiStateResult = Result.Success(attendancesUiState),
