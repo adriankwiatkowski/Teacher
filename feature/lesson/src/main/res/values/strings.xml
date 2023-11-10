@@ -69,4 +69,20 @@
     <string name="lesson_term">Semestr %1$s</string>
     <string name="lesson_first_term">I</string>
     <string name="lesson_second_term">II</string>
+
+    <string-array name="lesson_suggestions">
+        <item>Matematyka</item>
+        <item>Język polski</item>
+        <item>Język obcy</item>
+        <item>Historia</item>
+        <item>Plastyka</item>
+        <item>Technika</item>
+        <item>Przyroda</item>
+        <item>Muzyka</item>
+        <item>Informatyka</item>
+        <item>Zajęcia z wychowawcą</item>
+        <item>Wychowanie fizyczne (WF)</item>
+        <item>Religia</item>
+        <item>Etyka</item>
+    </string-array>
 </resources>

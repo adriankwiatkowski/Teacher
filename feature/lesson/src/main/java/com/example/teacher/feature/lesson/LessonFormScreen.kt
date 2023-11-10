@@ -26,8 +26,10 @@ import androidx.compose.ui.input.key.isShiftPressed
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -37,8 +39,8 @@ import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
+import com.example.teacher.core.ui.component.form.FormAutoCompleteTextField
 import com.example.teacher.core.ui.component.form.FormStatusContent
-import com.example.teacher.core.ui.component.form.FormTextField
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
@@ -148,22 +150,25 @@ private fun MainContent(
                 }
             }
         val commonKeyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.Sentences,
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Text,
         )
         val commonKeyboardActions = KeyboardActions(onNext = { moveNext() })
 
-        FormTextField(
+        FormAutoCompleteTextField(
             modifier = textFieldModifier,
             inputField = name,
             onValueChange = { onNameChange(it) },
-            label = stringResource(R.string.lesson_lesson),
+            onSuggestionSelect = { onNameChange(it) },
+            suggestions = stringArrayResource(R.array.lesson_suggestions).toList(),
             leadingIcon = {
                 val icon = TeacherIcons.subject()
                 Icon(imageVector = icon.icon, contentDescription = stringResource(icon.text))
             },
             keyboardOptions = commonKeyboardOptions,
             keyboardActions = commonKeyboardActions,
+            readOnly = false,
         )
 
         TeacherButton(
