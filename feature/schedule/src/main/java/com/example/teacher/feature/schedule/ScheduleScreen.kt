@@ -177,8 +177,11 @@ private fun EventItem(
             Text(TimeUtils.format(event.startTime, event.endTime))
         },
         supportingContent = {
-            val text = event.lesson?.let { lesson -> "${lesson.name} ${lesson.schoolClass.name}" }
-                ?: stringResource(R.string.schedule_event)
+            val text = when {
+                event.lesson != null -> "${event.lesson!!.name} ${event.lesson!!.schoolClass.name}"
+                event.name != null -> event.name!!
+                else -> stringResource(R.string.schedule_event)
+            }
             Text(text)
         },
     )

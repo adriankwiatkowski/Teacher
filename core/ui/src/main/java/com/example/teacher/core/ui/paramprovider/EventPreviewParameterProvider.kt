@@ -48,6 +48,7 @@ private fun makeEvents(
                     name = "Matematyka",
                     schoolClass = BasicSchoolClassPreviewParameterProvider().values.first()
                 ),
+                name = "Event #${index.toLong() * 2}",
                 date = simpleEvent.date,
                 startTime = simpleEvent.startTime,
                 endTime = simpleEvent.endTime,
@@ -56,6 +57,7 @@ private fun makeEvents(
             Event(
                 id = index.toLong() * 2 + 1,
                 lesson = null,
+                name = "Event #${index.toLong() * 2 + 1}",
                 date = simpleEvent.date,
                 startTime = simpleEvent.startTime,
                 endTime = simpleEvent.endTime,

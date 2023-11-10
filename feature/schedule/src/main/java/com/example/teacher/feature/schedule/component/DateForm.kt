@@ -25,9 +25,12 @@ import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.component.TeacherSwitch
+import com.example.teacher.core.ui.component.form.FormTextField
+import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.schedule.R
+import com.example.teacher.feature.schedule.data.EventFormProvider
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
@@ -39,6 +42,8 @@ internal fun DateForm(
     onLessonPickerClick: () -> Unit,
     firstTermName: String,
     secondTermName: String,
+    name: InputField<String>,
+    onNameChange: (name: String) -> Unit,
     day: DayOfWeek,
     onDayChange: (day: DayOfWeek) -> Unit,
     date: LocalDate,
@@ -75,9 +80,16 @@ internal fun DateForm(
 
             if (showLessonPicker) {
                 LessonPicker(lesson = lesson, onLessonPickerClick = onLessonPickerClick)
-                Divider()
-                Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
+            } else {
+                FormTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    inputField = name,
+                    onValueChange = { onNameChange(it) },
+                    label = stringResource(R.string.schedule_event_name_label),
+                )
             }
+            Divider()
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.large))
 
             if (showTermPicker) {
                 LessonTermPicker(
@@ -134,6 +146,7 @@ internal fun DateForm(
 private fun DateFormPreview() {
     TeacherTheme {
         Surface {
+            var name by remember { mutableStateOf(EventFormProvider.validateName("")) }
             var day by remember { mutableStateOf(TimeUtils.monday()) }
             var date by remember { mutableStateOf(TimeUtils.currentDate()) }
             var startTime by remember { mutableStateOf(TimeUtils.localTimeOf(8, 0)) }
@@ -148,6 +161,8 @@ private fun DateFormPreview() {
                 onLessonPickerClick = {},
                 firstTermName = "I",
                 secondTermName = "II",
+                name = name,
+                onNameChange = { name = EventFormProvider.validateName(it) },
                 day = day,
                 onDayChange = { day = it },
                 date = date,

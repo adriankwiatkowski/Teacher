@@ -10,6 +10,7 @@
     <string name="schedule_once">Jednorazowe</string>
     <string name="schedule_weekly">Cotygodniowe</string>
     <string name="schedule_every_two_weeks">Co 2 tygodnie</string>
+    <string name="schedule_event_name_label">Nazwa wydarzenia</string>
     <string name="schedule_date">Data</string>
     <string name="schedule_day">Dzień</string>
     <string name="schedule_event_saved">Zapisano termin</string>

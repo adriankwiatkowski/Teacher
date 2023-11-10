@@ -44,6 +44,7 @@ internal class DatabaseEventRepository @Inject constructor(
         .asResult()
 
     override suspend fun insertEvent(
+        name: String,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
@@ -56,6 +57,7 @@ internal class DatabaseEventRepository @Inject constructor(
                     EventDto(
                         id = null,
                         lessonId = null,
+                        name = name,
                         date = date,
                         startTime = startTime,
                         endTime = endTime,
@@ -68,6 +70,7 @@ internal class DatabaseEventRepository @Inject constructor(
 
     override suspend fun insertLessonSchedule(
         lessonId: Long,
+        name: String,
         day: DayOfWeek,
         date: LocalDate,
         startTime: LocalTime,
@@ -88,6 +91,7 @@ internal class DatabaseEventRepository @Inject constructor(
                         EventDto(
                             id = null,
                             lessonId = lessonId,
+                            name = name,
                             date = date,
                             startTime = startTime,
                             endTime = endTime,
@@ -125,6 +129,7 @@ internal class DatabaseEventRepository @Inject constructor(
     override suspend fun updateEvent(
         id: Long,
         lessonId: Long?,
+        name: String,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
@@ -134,6 +139,7 @@ internal class DatabaseEventRepository @Inject constructor(
             eventDataSource.updateEvent(
                 id = id,
                 lessonId = lessonId,
+                name = name,
                 date = date,
                 startTime = startTime,
                 endTime = endTime,

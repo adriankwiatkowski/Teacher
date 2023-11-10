@@ -63,6 +63,7 @@ internal fun EventFormScreen(
     showDayPicker: Boolean,
     showTypeControls: Boolean,
     onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
+    onNameChange: (name: String) -> Unit,
     onDayChange: (day: DayOfWeek) -> Unit,
     onDateChange: (date: LocalDate) -> Unit,
     onStartTimeChange: (date: LocalTime) -> Unit,
@@ -123,6 +124,7 @@ internal fun EventFormScreen(
                 showDayPicker = showDayPicker,
                 showTypeControls = showTypeControls,
                 onIsLessonFormChange = onIsLessonFormChange,
+                onNameChange = onNameChange,
                 onDayChange = onDayChange,
                 onDateChange = onDateChange,
                 onStartTimeChange = onStartTimeChange,
@@ -152,6 +154,7 @@ private fun MainContent(
     showDayPicker: Boolean,
     showTypeControls: Boolean,
     onIsLessonFormChange: (isLessonFormChange: Boolean) -> Unit,
+    onNameChange: (name: String) -> Unit,
     onDayChange: (day: DayOfWeek) -> Unit,
     onDateChange: (date: LocalDate) -> Unit,
     onStartTimeChange: (date: LocalTime) -> Unit,
@@ -191,6 +194,8 @@ private fun MainContent(
                 ?: stringResource(R.string.schedule_first_term),
             secondTermName = schoolYear?.secondTerm?.name
                 ?: stringResource(R.string.schedule_second_term),
+            name = eventForm.name,
+            onNameChange = onNameChange,
             day = eventForm.day,
             onDayChange = onDayChange,
             date = eventForm.date,
@@ -283,6 +288,9 @@ private fun EventFormScreenPreview(
                 showDayPicker = showDayPicker,
                 showTypeControls = isLessonForm,
                 onIsLessonFormChange = { isLessonForm = it },
+                onNameChange = {
+                    form = form.copy(name = EventFormProvider.validateName(it))
+                },
                 onDayChange = {
                     form = form.copy(day = EventFormProvider.sanitizeDay(it))
                 },

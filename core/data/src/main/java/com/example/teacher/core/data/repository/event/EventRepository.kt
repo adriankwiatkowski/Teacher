@@ -18,6 +18,7 @@ interface EventRepository {
     fun getLessonOrNullById(lessonId: Long): Flow<Result<Lesson?>>
 
     suspend fun insertEvent(
+        name: String,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
@@ -27,6 +28,7 @@ interface EventRepository {
 
     suspend fun insertLessonSchedule(
         lessonId: Long,
+        name: String,
         day: DayOfWeek,
         date: LocalDate,
         startTime: LocalTime,
@@ -39,6 +41,7 @@ interface EventRepository {
     suspend fun updateEvent(
         id: Long,
         lessonId: Long?,
+        name: String,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,

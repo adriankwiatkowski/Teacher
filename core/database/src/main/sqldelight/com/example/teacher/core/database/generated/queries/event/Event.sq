@@ -1,6 +1,7 @@
 getEvents:
 SELECT
     e.id,
+    e.name,
     e.date,
     e.start_time,
     e.end_time,
@@ -33,6 +34,7 @@ ORDER BY e.start_time ASC;
 getEventById:
 SELECT
     e.id,
+    e.name,
     e.date,
     e.start_time,
     e.end_time,
@@ -71,12 +73,13 @@ WHERE l.id = :id;
 insertEvent:
 INSERT OR FAIL
 INTO event
-VALUES (?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?);
 
 updateEvent:
 UPDATE event
 SET
     lesson_id = :lesson_id,
+    `name` = :name,
     `date` = :date,
     start_time = :start_time,
     end_time = :end_time,

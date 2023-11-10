@@ -17,6 +17,7 @@ interface EventDataSource {
     suspend fun updateEvent(
         id: Long,
         lessonId: Long?,
+        name: String,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,

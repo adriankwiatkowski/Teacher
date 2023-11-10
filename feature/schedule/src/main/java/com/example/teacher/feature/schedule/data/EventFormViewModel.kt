@@ -60,8 +60,12 @@ internal class EventFormViewModel @Inject constructor(
         .stateIn(false)
 
     init {
-        combine(lessonId, isLessonForm) { lessonId, isLessonForm ->
-            !isLessonForm || lessonId != DEFAULT_ID
+        combine(lessonId, isLessonForm, form) { lessonId, isLessonForm, form ->
+            if (isLessonForm) {
+                lessonId != DEFAULT_ID
+            } else {
+                form.name.isValid
+            }
         }.onEach { isValid ->
             _form.value = form.value.copy(isValid = isValid)
             initialForm.value = initialForm.value.copy(isValid = isValid)
@@ -76,6 +80,7 @@ internal class EventFormViewModel @Inject constructor(
                 _isLessonForm.value = lessonId != null
 
                 _form.value = form.value.copy(
+                    name = EventFormProvider.validateName(event.name),
                     date = event.date,
                     startTime = event.startTime,
                     endTime = event.endTime,
@@ -85,6 +90,10 @@ internal class EventFormViewModel @Inject constructor(
                 initialForm.value = form.value
             }
             .launchIn(viewModelScope)
+    }
+
+    fun onNameChange(name: String) {
+        _form.value = form.value.copy(name = EventFormProvider.validateName(name))
     }
 
     fun onDayChange(day: DayOfWeek) {
@@ -150,6 +159,7 @@ internal class EventFormViewModel @Inject constructor(
                 repository.updateEvent(
                     id = eventId,
                     lessonId = if (isLessonForm.value) lessonId else null,
+                    name = form.name.value,
                     date = form.date,
                     startTime = form.startTime,
                     endTime = form.endTime,
@@ -158,6 +168,7 @@ internal class EventFormViewModel @Inject constructor(
             } else if (isLessonForm.value) {
                 repository.insertLessonSchedule(
                     lessonId = lessonId,
+                    name = form.name.value,
                     day = form.day,
                     date = form.date,
                     startTime = form.startTime,
@@ -168,6 +179,7 @@ internal class EventFormViewModel @Inject constructor(
                 )
             } else {
                 repository.insertEvent(
+                    name = form.name.value,
                     date = form.date,
                     startTime = form.startTime,
                     endTime = form.endTime,

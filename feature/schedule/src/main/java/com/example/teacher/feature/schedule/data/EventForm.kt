@@ -2,11 +2,13 @@ package com.example.teacher.feature.schedule.data
 
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.model.InputField
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 
 internal data class EventForm(
+    val name: InputField<String>,
     val day: DayOfWeek,
     val date: LocalDate,
     val startTime: LocalTime,

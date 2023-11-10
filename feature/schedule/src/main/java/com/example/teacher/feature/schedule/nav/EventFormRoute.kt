@@ -92,6 +92,7 @@ internal fun EventFormRoute(
         showDayPicker = showDayPicker,
         showTypeControls = showTypeControls,
         onIsLessonFormChange = viewModel::onIsLessonFormChange,
+        onNameChange = viewModel::onNameChange,
         onDayChange = viewModel::onDayChange,
         onDateChange = viewModel::onDateChange,
         onStartTimeChange = viewModel::onStartTimeChange,

@@ -44,6 +44,7 @@ CREATE TABLE event
 (
     id           INTEGER            NOT NULL PRIMARY KEY AUTOINCREMENT,
     lesson_id    INTEGER, -- Nullable reference
+    `name`       TEXT               NOT NULL,
     `date`       TEXT AS LocalDate  NOT NULL,
     start_time   TEXT AS LocalTime  NOT NULL,
     end_time     TEXT AS LocalTime  NOT NULL,

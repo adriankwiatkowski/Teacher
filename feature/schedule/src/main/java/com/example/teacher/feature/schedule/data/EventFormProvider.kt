@@ -1,14 +1,27 @@
 package com.example.teacher.feature.schedule.data
 
+import androidx.core.text.trimmedLength
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.model.data.EventType
 import com.example.teacher.core.ui.model.FormStatus
+import com.example.teacher.core.ui.model.InputField
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlin.math.min
 
 internal object EventFormProvider {
+
+    fun validateName(name: String?, isEdited: Boolean = true): InputField<String> {
+        val trimmedLength = name?.trimmedLength() ?: 0
+        val charCountLimit = 60
+        return InputField(
+            name ?: "",
+            counter = trimmedLength to charCountLimit,
+            isError = trimmedLength !in 1..charCountLimit,
+            isEdited = isEdited,
+        )
+    }
 
     fun sanitizeDay(day: DayOfWeek): DayOfWeek {
         return day
@@ -63,6 +76,7 @@ internal object EventFormProvider {
     }
 
     fun createDefaultForm(
+        name: String = "",
         day: DayOfWeek = TimeUtils.monday(),
         date: LocalDate = TimeUtils.currentDate(),
         startTime: LocalTime = TimeUtils.localTimeOf(8, 0),
@@ -71,10 +85,12 @@ internal object EventFormProvider {
         isFirstTermSelected: Boolean = true,
         type: EventType = EventType.Weekly,
         status: FormStatus = FormStatus.Idle,
+        isEdited: Boolean = false,
     ): EventForm {
         val timeData = sanitizeStartTime(startTime, endTime)
 
         return EventForm(
+            name = validateName(name, isEdited = isEdited),
             day = sanitizeDay(day),
             date = sanitizeDate(date),
             startTime = timeData.startTime,

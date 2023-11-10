@@ -48,6 +48,7 @@ internal class EventDataSourceImpl @Inject constructor(
                 eventQueries.insertEvent(
                     id = eventDto.id,
                     lesson_id = eventDto.lessonId,
+                    name = eventDto.name,
                     date = eventDto.date,
                     start_time = eventDto.startTime,
                     end_time = eventDto.endTime,
@@ -60,6 +61,7 @@ internal class EventDataSourceImpl @Inject constructor(
     override suspend fun updateEvent(
         id: Long,
         lessonId: Long?,
+        name: String,
         date: LocalDate,
         startTime: LocalTime,
         endTime: LocalTime,
@@ -71,6 +73,7 @@ internal class EventDataSourceImpl @Inject constructor(
             eventQueries.updateEvent(
                 id = id,
                 lesson_id = lessonId,
+                name = name,
                 date = date,
                 start_time = startTime,
                 end_time = endTime,
