@@ -2,8 +2,10 @@ package com.example.teacher.core.database.querymapper
 
 import com.example.teacher.core.common.utils.DecimalUtils.safeDivide
 import com.example.teacher.core.common.utils.DecimalUtils.toPercentage
+import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.database.generated.queries.lessonattendance.GetLessonAttendancesByEventId
 import com.example.teacher.core.database.generated.queries.lessonattendance.GetLessonEventsByLessonId
+import com.example.teacher.core.database.generated.queries.lessonattendance.GetSchoolYearByLessonId
 import com.example.teacher.core.database.generated.queries.lessonattendance.GetStudentsWithAttendanceByLessonId
 import com.example.teacher.core.model.data.Attendance
 import com.example.teacher.core.model.data.BasicStudent
@@ -62,34 +64,35 @@ internal fun toExternalLessonEventAttendances(
 }
 
 internal fun toStudentsWithAttendanceExternal(
-    attendances: List<GetStudentsWithAttendanceByLessonId>
+    attendances: List<GetStudentsWithAttendanceByLessonId>,
+    schoolYear: GetSchoolYearByLessonId,
 ): List<StudentWithAttendance> {
     val presentAttendancesValues =
         setOf(Attendance.Present, Attendance.Late, Attendance.ExcusedAbsence, Attendance.Exemption)
 
-    return attendances
-        .groupBy { attendance -> attendance.student_id }
+    return attendances.groupBy { attendance -> attendance.student_id }
         .map { (_, attendances) ->
-            val notEmptyAttendances = attendances.filter { attendance ->
-                attendance.attendance_text != null && !attendance.event_is_cancelled
+            val firstTermAttendances = attendances.filter { attendance ->
+                attendance.attendance_text != null && !attendance.event_is_cancelled && TimeUtils.isBetween(
+                    attendance.event_date,
+                    schoolYear.term_first_start_date,
+                    schoolYear.term_first_end_date,
+                )
+            }
+            val secondTermAttendances = attendances.filter { attendance ->
+                attendance.attendance_text != null && !attendance.event_is_cancelled && TimeUtils.isBetween(
+                    attendance.event_date,
+                    schoolYear.term_second_start_date,
+                    schoolYear.term_second_end_date,
+                )
             }
 
-            val attendanceAveragePercentage = if (notEmptyAttendances.isEmpty()) {
-                BigDecimal.valueOf(1L).toPercentage()
-            } else {
-                val presentAttendances = notEmptyAttendances.filter { attendance ->
-                    val actualAttendance =
-                        attendance.attendance_text?.let { text -> Attendance.of(text) }
-                    actualAttendance in presentAttendancesValues
-                }
-
-                BigDecimal.valueOf(presentAttendances.size.toLong())
-                    .safeDivide(BigDecimal.valueOf(notEmptyAttendances.size.toLong()))
-                    .toPercentage()
-            }
+            val firstTermAverageAttendancePercentage =
+                getAverageAttendancePercentage(firstTermAttendances, presentAttendancesValues)
+            val secondTermAverageAttendancePercentage =
+                getAverageAttendancePercentage(secondTermAttendances, presentAttendancesValues)
 
             val studentData = attendances.first()
-
             StudentWithAttendance(
                 student = BasicStudent(
                     id = studentData.student_id,
@@ -100,7 +103,24 @@ internal fun toStudentsWithAttendanceExternal(
                     email = studentData.student_email,
                     phone = studentData.student_phone,
                 ),
-                averageAttendancePercentage = attendanceAveragePercentage,
+                firstTermAverageAttendancePercentage = firstTermAverageAttendancePercentage,
+                secondTermAverageAttendancePercentage = secondTermAverageAttendancePercentage,
             )
         }
+}
+
+private fun getAverageAttendancePercentage(
+    attendances: List<GetStudentsWithAttendanceByLessonId>,
+    presentAttendancesValues: Set<Attendance>,
+) = if (attendances.isEmpty()) {
+    BigDecimal.valueOf(1L).toPercentage()
+} else {
+    val presentAttendances = attendances.filter { attendance ->
+        val actualAttendance = attendance.attendance_text?.let { text -> Attendance.of(text) }
+        actualAttendance in presentAttendancesValues
+    }
+
+    BigDecimal.valueOf(presentAttendances.size.toLong())
+        .safeDivide(BigDecimal.valueOf(attendances.size.toLong()))
+        .toPercentage()
 }

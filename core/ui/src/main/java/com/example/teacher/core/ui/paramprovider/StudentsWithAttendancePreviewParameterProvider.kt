@@ -20,14 +20,16 @@ private val studentsWithAttendance = attendanceAverageRange
 
         buildList {
             for (i in 0..<steps) {
-                val newStudent = student.copy(id = ++studentId)
+                val newStudent =
+                    student.copy(id = ++studentId, name = "Jan Kowalski", surname = "#$studentId")
                 var average = BigDecimal.valueOf(averageFromRange.toLong())
                 average += step * BigDecimal.valueOf(i.toLong())
 
                 add(
                     StudentWithAttendance(
                         student = newStudent,
-                        averageAttendancePercentage = average
+                        firstTermAverageAttendancePercentage = average,
+                        secondTermAverageAttendancePercentage = BigDecimal("100.00") - average,
                     )
                 )
 

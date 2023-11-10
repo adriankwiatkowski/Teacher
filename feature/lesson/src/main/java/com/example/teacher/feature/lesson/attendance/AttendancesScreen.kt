@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.common.utils.TimeUtils
+import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.model.data.LessonEventAttendance
 import com.example.teacher.core.model.data.StudentWithAttendance
 import com.example.teacher.core.ui.component.TeacherButton
@@ -43,8 +44,8 @@ import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.TeacherLargeText
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonEventAttendancesPreviewParameterProvider
+import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacher.core.ui.provider.TeacherActions
-import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.R
@@ -55,6 +56,7 @@ import java.time.LocalTime
 internal fun AttendancesScreen(
     scheduleAttendancesResult: Result<List<LessonEventAttendance>>,
     studentsWithAttendanceResult: Result<List<StudentWithAttendance>>,
+    lesson: Lesson,
     snackbarHostState: SnackbarHostState,
     onScheduleAttendanceClick: (id: Long) -> Unit,
     onAddScheduleClick: () -> Unit,
@@ -87,6 +89,7 @@ internal fun AttendancesScreen(
             if (showStatisticsDialog) {
                 AttendanceStatisticsDialog(
                     studentsWithAttendanceResult = studentsWithAttendanceResult,
+                    lesson = lesson,
                     onDismissRequest = onDismissStatisticDialogRequest,
                 )
             }
@@ -109,7 +112,6 @@ private fun MainContent(
             TeacherButton(
                 modifier = Modifier.fillParentMaxWidth(),
                 label = stringResource(R.string.lesson_attendance_statistics),
-                icon = TeacherIcons.chart(),
                 onClick = onShowStatisticsClick,
             )
 
@@ -247,9 +249,12 @@ private fun AttendancesScreenPreview(
 ) {
     TeacherTheme {
         Surface {
+            val lesson = remember { LessonPreviewParameterProvider().values.first() }
+
             AttendancesScreen(
                 scheduleAttendancesResult = Result.Success(data),
                 studentsWithAttendanceResult = Result.Loading,
+                lesson = lesson,
                 snackbarHostState = remember { SnackbarHostState() },
                 onScheduleAttendanceClick = {},
                 onAddScheduleClick = {},

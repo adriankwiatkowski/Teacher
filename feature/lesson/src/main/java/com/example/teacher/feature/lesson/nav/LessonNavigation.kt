@@ -170,6 +170,7 @@ fun NavGraphBuilder.lessonGraph(
 
                     LessonTab.Attendance -> AttendancesRoute(
                         snackbarHostState = snackbarHostState,
+                        lesson = lesson,
                         onScheduleAttendanceClick = navController::navigateToLessonAttendanceFormRoute,
                         onAddScheduleClick = { onAddScheduleClick(lessonId) }
                     )

@@ -4,5 +4,6 @@ import java.math.BigDecimal
 
 data class StudentWithAttendance(
     val student: BasicStudent,
-    val averageAttendancePercentage: BigDecimal,
+    val firstTermAverageAttendancePercentage: BigDecimal,
+    val secondTermAverageAttendancePercentage: BigDecimal,
 )
