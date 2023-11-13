@@ -14,7 +14,7 @@ data class Student(
 
 data class BasicStudent(
     val id: Long,
-    val classId: Long,
+    val schoolClassId: Long,
     val registerNumber: Long,
     val name: String,
     val surname: String,

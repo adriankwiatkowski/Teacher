@@ -37,7 +37,7 @@ class BasicStudentPreviewParameterProvider : PreviewParameterProvider<BasicStude
     ).mapIndexed { index, (name, surname) ->
         BasicStudent(
             id = index + 1L,
-            classId = index.toLong(),
+            schoolClassId = index.toLong(),
             registerNumber = index + 1L,
             name = name,
             surname = surname,

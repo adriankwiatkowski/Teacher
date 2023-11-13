@@ -25,7 +25,7 @@ internal fun toExternal(
         isCancelled = lessonAttendance.event_is_cancelled,
         student = BasicStudent(
             id = lessonAttendance.student_id,
-            classId = lessonAttendance.school_class_id,
+            schoolClassId = lessonAttendance.school_class_id,
             registerNumber = lessonAttendance.student_register_number,
             name = lessonAttendance.student_name,
             surname = lessonAttendance.student_surname,
@@ -96,7 +96,7 @@ internal fun toStudentsWithAttendanceExternal(
             StudentWithAttendance(
                 student = BasicStudent(
                     id = studentData.student_id,
-                    classId = studentData.school_class_id,
+                    schoolClassId = studentData.school_class_id,
                     registerNumber = studentData.student_register_number,
                     name = studentData.student_name,
                     surname = studentData.student_surname,

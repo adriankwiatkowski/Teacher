@@ -43,7 +43,7 @@ internal fun toExternal(
         students = students.map { student ->
             BasicStudent(
                 id = student.id,
-                classId = student.school_class_id,
+                schoolClassId = student.school_class_id,
                 registerNumber = student.register_number,
                 name = student.name,
                 surname = student.surname,

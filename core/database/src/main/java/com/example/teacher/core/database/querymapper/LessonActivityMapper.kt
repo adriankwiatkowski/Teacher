@@ -60,7 +60,7 @@ private fun GetLessonActivitiesByLessonId.toDefaultLessonActivity(): LessonActiv
         ),
         student = BasicStudent(
             id = student_id,
-            classId = school_class_id,
+            schoolClassId = school_class_id,
             registerNumber = student_register_number,
             name = student_name,
             surname = student_surname,
@@ -80,7 +80,7 @@ private fun GetLessonActivitiesByLessonId.toLessonActivity(): LessonActivity = L
     ),
     student = BasicStudent(
         id = student_id,
-        classId = school_class_id,
+        schoolClassId = school_class_id,
         registerNumber = student_register_number,
         name = student_name,
         surname = student_surname,

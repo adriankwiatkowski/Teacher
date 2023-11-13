@@ -19,7 +19,7 @@ class LessonActivityPreviewParameterProvider : PreviewParameterProvider<LessonAc
                 lesson = BasicLesson(
                     id = 1L,
                     name = "1A",
-                    schoolClassId = student.classId,
+                    schoolClassId = student.schoolClassId,
                 ),
                 student = student,
                 sum = null,
