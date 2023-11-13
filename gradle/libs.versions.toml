@@ -10,6 +10,7 @@ compose = "1.5.1"
 androidxActivity = "1.7.2"
 androidxComposeBom = "2023.09.00"
 androidxComposeRuntimeTracing = "1.0.0-alpha04"
+androidxTestRunner = "1.5.2"
 lifecycle = "2.6.2"
 nav = "2.7.2"
 
@@ -79,6 +80,7 @@ sqldelight-coroutines = { group = "app.cash.sqldelight", name = "coroutines-exte
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspresso" }
