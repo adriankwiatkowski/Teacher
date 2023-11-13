@@ -198,11 +198,12 @@ private fun MainContent(
         )
 
         FormTextField(
-            modifier = textFieldModifier,
+            modifier = Modifier.fillMaxWidth(),
             inputField = description,
             onValueChange = { onDescriptionChange(it) },
             label = stringResource(R.string.lesson_description),
-            keyboardOptions = commonKeyboardOptions,
+            minLines = 10,
+            keyboardOptions = commonKeyboardOptions.copy(imeAction = ImeAction.Default),
             keyboardActions = commonKeyboardActions,
         )
 
