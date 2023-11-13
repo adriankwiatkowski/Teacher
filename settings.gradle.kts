@@ -5,6 +5,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -12,8 +13,12 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Teacher"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
+
 include(":core:model")
 include(":core:common")
 include(":core:domain")
@@ -22,6 +27,8 @@ include(":core:datastore")
 include(":core:database")
 include(":core:auth")
 include(":core:ui")
+include(":core:testing")
+
 include(":feature:schedule")
 include(":feature:schoolclass")
 include(":feature:schoolyear")
@@ -32,4 +39,3 @@ include(":feature:grade")
 include(":feature:note")
 include(":feature:auth")
 include(":feature:settings")
-include(":core:testing")

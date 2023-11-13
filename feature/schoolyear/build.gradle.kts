@@ -44,10 +44,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:model"))
-    implementation(project(":core:data"))
-    implementation(project(":core:ui"))
+    implementation(projects.core.common)
+    implementation(projects.core.model)
+    implementation(projects.core.data)
+    implementation(projects.core.ui)
 
     // Desugar
     coreLibraryDesugaring(libs.desugar.jdk)

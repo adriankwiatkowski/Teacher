@@ -45,8 +45,8 @@ sqldelight {
 }
 
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:model"))
+    implementation(projects.core.common)
+    implementation(projects.core.model)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

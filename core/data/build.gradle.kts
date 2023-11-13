@@ -36,10 +36,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:database"))
-    implementation(project(":core:datastore"))
-    implementation(project(":core:model"))
+    implementation(projects.core.common)
+    implementation(projects.core.database)
+    implementation(projects.core.datastore)
+    implementation(projects.core.model)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
