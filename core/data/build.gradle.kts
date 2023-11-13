@@ -13,7 +13,7 @@ android {
     defaultConfig {
         minSdk = 21
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.teacher.core.testing.TeacherTestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -40,6 +40,8 @@ dependencies {
     implementation(projects.core.database)
     implementation(projects.core.datastore)
     implementation(projects.core.model)
+    testImplementation(projects.core.testing)
+    androidTestImplementation(projects.core.testing)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

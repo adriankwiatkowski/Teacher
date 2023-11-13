@@ -47,7 +47,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.teacher.core.testing.TeacherTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -103,6 +103,8 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.auth)
     implementation(projects.core.ui)
+    testImplementation(projects.core.testing)
+    androidTestImplementation(projects.core.testing)
 
     implementation(projects.feature.auth)
     implementation(projects.feature.schedule)

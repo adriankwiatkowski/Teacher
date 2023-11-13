@@ -14,7 +14,7 @@ android {
     defaultConfig {
         minSdk = 21
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.teacher.core.testing.TeacherTestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -47,6 +47,8 @@ sqldelight {
 dependencies {
     implementation(projects.core.common)
     implementation(projects.core.model)
+    testImplementation(projects.core.testing)
+    androidTestImplementation(projects.core.testing)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

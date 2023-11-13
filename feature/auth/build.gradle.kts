@@ -11,7 +11,7 @@ android {
     defaultConfig {
         minSdk = 21
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.teacher.core.testing.TeacherTestRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -41,6 +41,8 @@ android {
 
 dependencies {
     implementation(projects.core.ui)
+    testImplementation(projects.core.testing)
+    androidTestImplementation(projects.core.testing)
 
     implementation(libs.bundles.androidx)
 
