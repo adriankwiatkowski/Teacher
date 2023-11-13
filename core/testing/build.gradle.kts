@@ -43,10 +43,12 @@ dependencies {
 
     implementation(libs.bundles.androidx)
 
-    api(libs.junit4)
     api(libs.androidx.test.runner)
     api(libs.hilt.android.testing)
+    api(libs.junit4)
     api(libs.kotlinx.coroutines.test)
+    api(libs.turbine)
+
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
