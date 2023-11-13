@@ -53,7 +53,10 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
+    // SQLDelight
     implementation(libs.sqldelight.android)
+    testImplementation(libs.sqldelight.android)
+    testImplementation(libs.sqldelight.driver)
     implementation(libs.sqldelight.coroutines)
 
     implementation(libs.bundles.androidx)

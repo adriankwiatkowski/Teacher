@@ -23,3 +23,13 @@ data class BasicStudent(
 ) {
     val fullName = "$name $surname"
 }
+
+fun Student.toBasic() = BasicStudent(
+    id = id,
+    schoolClassId = schoolClass.id,
+    registerNumber = registerNumber,
+    name = name,
+    surname = surname,
+    email = email,
+    phone = phone,
+)
