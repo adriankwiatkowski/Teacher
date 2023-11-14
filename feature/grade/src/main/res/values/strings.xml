@@ -14,6 +14,7 @@
     <string name="grade_grade_with_literal">%1$s (%2$s)</string>
     <string name="grade_no_students">Nie dodano uczniów do klasy</string>
     <string name="grades_grade_with_term">%1$s (semestr %2$s)</string>
+    <string name="grades_grade_average">Średnia %1$s</string>
     <string name="grade_score_input">Wylicz z punktacji</string>
     <string name="grade_score_input_error">Wprowadź liczbę dodatnią</string>
     <string name="grade_max_score_label">Maksymalna liczba punktów</string>

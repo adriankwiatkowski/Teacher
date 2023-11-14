@@ -87,6 +87,7 @@ internal fun GradesScreen(
                     .fillMaxSize()
                     .padding(MaterialTheme.spacing.small),
                 gradeName = uiState.gradeTemplateInfo.gradeName,
+                gradeAverage = uiState.gradeTemplateInfo.averageGrade,
                 gradeDescription = uiState.gradeTemplateInfo.gradeDescription,
                 gradeTermName = if (uiState.gradeTemplateInfo.isFirstTerm) {
                     uiState.gradeTemplateInfo.lesson.schoolClass.schoolYear.firstTerm.name
@@ -103,6 +104,7 @@ internal fun GradesScreen(
 @Composable
 private fun MainContent(
     gradeName: String,
+    gradeAverage: BigDecimal?,
     gradeDescription: String?,
     gradeTermName: String,
     grades: List<BasicGradeForTemplate>,
@@ -114,6 +116,7 @@ private fun MainContent(
         contentPadding = PaddingValues(MaterialTheme.spacing.small),
     ) {
         gradeName(gradeName = gradeName, gradeTermName = gradeTermName)
+        gradeAverage(gradeAverage = gradeAverage)
         gradeDescription(gradeDescription = gradeDescription)
 
         items(grades, key = { grade -> grade.studentId }) { grade ->
@@ -138,6 +141,16 @@ private fun LazyListScope.gradeName(gradeName: String, gradeTermName: String) {
             text = stringResource(R.string.grades_grade_with_term, gradeName, gradeTermName),
             style = MaterialTheme.typography.titleMedium,
         )
+    }
+}
+
+private fun LazyListScope.gradeAverage(gradeAverage: BigDecimal?) {
+    if (gradeAverage != null) {
+        item {
+            val text =
+                stringResource(R.string.grades_grade_average, DecimalUtils.toLiteral(gradeAverage))
+            Text(text = text, style = MaterialTheme.typography.bodyMedium)
+        }
     }
 }
 

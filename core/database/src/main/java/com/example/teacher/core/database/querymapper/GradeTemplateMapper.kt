@@ -45,16 +45,3 @@ internal fun toExternal(
             averageGrade = averageGrade,
         )
     }
-
-//internal fun toExternal(
-//    gradeTemplates: List<GetGradeTemplatesByLessonId>
-//): List<BasicGradeTemplate> = gradeTemplates.map { grade ->
-//    BasicGradeTemplate(
-//        id = grade.id,
-//        lessonId = grade.lesson_id,
-//        name = grade.name,
-//        weight = grade.weight.toInt(),
-//        isFirstTerm = grade.grade_is_first_term,
-//        averageGrade = null,
-//    )
-//}

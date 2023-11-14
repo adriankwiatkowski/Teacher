@@ -26,5 +26,6 @@ data class GradeTemplateInfo(
     val gradeDescription: String?,
     val gradeWeight: Int,
     val isFirstTerm: Boolean,
+    val averageGrade: BigDecimal?,
     val lesson: Lesson,
 )

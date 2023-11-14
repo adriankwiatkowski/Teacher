@@ -1,13 +1,16 @@
 package com.example.teacher.core.database.querymapper
 
+import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.database.generated.queries.grade.GetGradeById
 import com.example.teacher.core.database.generated.queries.grade.GetGradeTemplateInfoByGradeTemplateId
 import com.example.teacher.core.database.generated.queries.grade.GetGradesByGradeTemplateId
+import com.example.teacher.core.database.generated.queries.grade.GetStudentGradesByGradeTemplateId
 import com.example.teacher.core.model.data.BasicGradeForTemplate
 import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.Grade
 import com.example.teacher.core.model.data.GradeTemplate
 import com.example.teacher.core.model.data.GradeTemplateInfo
+import com.example.teacher.core.model.data.GradeWithWeight
 import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.model.data.Term
@@ -56,11 +59,15 @@ internal fun toExternal(
 }
 
 internal fun toExternal(
-    gradeInfo: GetGradeTemplateInfoByGradeTemplateId?
+    gradeInfo: GetGradeTemplateInfoByGradeTemplateId?,
+    grades: List<GetStudentGradesByGradeTemplateId>,
 ): GradeTemplateInfo? = run {
     if (gradeInfo == null) {
         return@run null
     }
+
+    val studentGrades = grades.map { GradeWithWeight(it.grade, gradeInfo.grade_weight.toInt()) }
+    val averageGrade = DecimalUtils.calculateWeightedAverage(studentGrades)
 
     GradeTemplateInfo(
         gradeTemplateId = gradeInfo.grade_template_id,
@@ -68,6 +75,7 @@ internal fun toExternal(
         gradeDescription = gradeInfo.grade_template_description,
         gradeWeight = gradeInfo.grade_weight.toInt(),
         isFirstTerm = gradeInfo.grade_is_first_term,
+        averageGrade = averageGrade,
         lesson = Lesson(
             id = gradeInfo.lesson_id,
             name = gradeInfo.lesson_name,

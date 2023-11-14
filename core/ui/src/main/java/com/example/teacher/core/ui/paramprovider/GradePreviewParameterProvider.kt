@@ -16,6 +16,7 @@ class GradeTemplateInfoPreviewParameterProvider : PreviewParameterProvider<Grade
             gradeDescription = "Dodawanie liczb naturalnych",
             gradeWeight = 3,
             isFirstTerm = true,
+            averageGrade = DecimalUtils.Five,
             lesson = LessonPreviewParameterProvider().values.first(),
         ),
     )

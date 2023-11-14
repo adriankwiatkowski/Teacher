@@ -74,6 +74,14 @@ INNER JOIN term t1 ON sy.term_first_id = t1.id
 INNER JOIN term t2 ON sy.term_second_id = t2.id
 WHERE gt.id = :id;
 
+getStudentGradesByGradeTemplateId:
+SELECT
+    g.id AS 'grade_id',
+    g.grade AS 'grade'
+FROM grade_template gt
+INNER JOIN grade g ON g.grade_template_id = gt.id
+WHERE gt.id = :id;
+
 insertGrade:
 INSERT OR FAIL
 INTO grade

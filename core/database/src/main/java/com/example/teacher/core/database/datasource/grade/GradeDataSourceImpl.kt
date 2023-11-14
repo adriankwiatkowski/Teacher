@@ -5,13 +5,14 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
 import com.example.teacher.core.common.utils.TimeUtils
-import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
+import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.model.data.BasicGradeForTemplate
 import com.example.teacher.core.model.data.Grade
 import com.example.teacher.core.model.data.GradeTemplateInfo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -44,13 +45,18 @@ internal class GradeDataSourceImpl(
 
     override fun getGradeTemplateInfoByGradeTemplateId(
         gradeTemplateId: Long
-    ): Flow<GradeTemplateInfo?> =
-        queries
+    ): Flow<GradeTemplateInfo?> {
+        val gradeTemplateInfoFlow = queries
             .getGradeTemplateInfoByGradeTemplateId(gradeTemplateId)
             .asFlow()
             .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+        val studentGradesFlow = queries
+            .getStudentGradesByGradeTemplateId(gradeTemplateId)
+            .asFlow()
+            .mapToList(dispatcher)
+
+        return combine(gradeTemplateInfoFlow, studentGradesFlow, ::toExternal)
+    }
 
     override suspend fun insertOrUpdateGrade(
         id: Long?,
