@@ -44,6 +44,8 @@
     <string name="lesson_description">Opis</string>
     <string name="lesson_weight">Waga</string>
     <string name="lesson_weight_data">Waga %1$s</string>
+    <string name="lesson_average_grade">Średnia %1$s</string>
+    <string name="lesson_weight_and_average">%1$s · %2$s</string>
     <string name="lesson_no_grades_in_term">Brak ocen w semestrze</string>
     <string name="lesson_no_activity">brak aktywności</string>
 

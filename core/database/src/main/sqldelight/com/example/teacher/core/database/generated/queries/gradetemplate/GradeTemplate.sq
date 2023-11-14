@@ -15,9 +15,15 @@ SELECT
     gt.lesson_id,
     gt.name,
     gt.weight,
-    gt.is_first_term AS 'grade_is_first_term'
+    gt.is_first_term AS 'grade_is_first_term',
+    s.id AS 'student_id',
+    g.id AS 'grade_id',
+    g.grade AS 'grade'
 FROM grade_template gt
 INNER JOIN lesson l ON l.id = gt.lesson_id
+INNER JOIN school_class sc ON sc.id = l.school_class_id
+LEFT JOIN student s ON s.school_class_id = sc.id
+LEFT JOIN grade g ON g.student_id = s.id AND g.grade_template_id = gt.id
 WHERE l.id = :id;
 
 insertGradeTemplate:

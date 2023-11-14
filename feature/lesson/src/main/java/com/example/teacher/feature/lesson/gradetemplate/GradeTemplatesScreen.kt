@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
+import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.BasicGradeTemplate
 import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.component.TeacherFab
@@ -104,11 +105,7 @@ private fun LazyListScope.grades(
     onGradeClick: (gradeId: Long) -> Unit,
 ) {
     items(grades, key = { item -> item.id }) { grade ->
-        ListItem(
-            modifier = Modifier.clickable(onClick = { onGradeClick(grade.id) }),
-            headlineContent = { Text(grade.name) },
-            supportingContent = { Text(stringResource(R.string.lesson_weight_data, grade.weight)) },
-        )
+        GradeTemplateItem(gradeTemplate = grade, onClick = { onGradeClick(grade.id) })
     }
 
     if (grades.isEmpty()) {
@@ -116,6 +113,38 @@ private fun LazyListScope.grades(
             ListItem(headlineContent = { Text(stringResource(R.string.lesson_no_grades_in_term)) })
         }
     }
+}
+
+@Composable
+private fun GradeTemplateItem(
+    gradeTemplate: BasicGradeTemplate,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ListItem(
+        modifier = modifier.clickable(onClick = onClick),
+        headlineContent = {
+            Text(gradeTemplate.name)
+        },
+        supportingContent = {
+            val weight = stringResource(R.string.lesson_weight_data, gradeTemplate.weight)
+
+            val averageGrade = gradeTemplate.averageGrade
+            val average = if (averageGrade != null) {
+                stringResource(R.string.lesson_average_grade, DecimalUtils.toLiteral(averageGrade))
+            } else {
+                null
+            }
+
+            val text = if (average != null) {
+                stringResource(R.string.lesson_weight_and_average, weight, average)
+            } else {
+                weight
+            }
+
+            Text(text)
+        },
+    )
 }
 
 @Preview

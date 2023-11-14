@@ -1,5 +1,7 @@
 package com.example.teacher.core.model.data
 
+import java.math.BigDecimal
+
 data class GradeTemplate(
     val id: Long,
     val lessonId: Long,
@@ -15,6 +17,7 @@ data class BasicGradeTemplate(
     val name: String,
     val weight: Int,
     val isFirstTerm: Boolean,
+    val averageGrade: BigDecimal?,
 )
 
 data class GradeTemplateInfo(

@@ -1,6 +1,6 @@
 package com.example.teacher.core.common.utils
 
-import com.example.teacher.core.model.data.GradeWithAverage
+import com.example.teacher.core.model.data.GradeWithWeight
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -61,7 +61,7 @@ object DecimalUtils {
         return grade.setScale(2, RoundingMode.HALF_UP).toPlainString()
     }
 
-    fun calculateWeightedAverage(grades: List<GradeWithAverage>): BigDecimal? {
+    fun calculateWeightedAverage(grades: List<GradeWithWeight>): BigDecimal? {
         return if (grades.isNotEmpty()) {
             val weightSum = grades.sumOf { it.weight }
 

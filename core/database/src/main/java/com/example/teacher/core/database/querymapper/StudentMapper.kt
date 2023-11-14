@@ -7,7 +7,7 @@ import com.example.teacher.core.database.generated.queries.student.GetStudentGra
 import com.example.teacher.core.database.generated.queries.student.GetStudentsBySchoolClassId
 import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.BasicStudent
-import com.example.teacher.core.model.data.GradeWithAverage
+import com.example.teacher.core.model.data.GradeWithWeight
 import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.model.data.Student
 import com.example.teacher.core.model.data.StudentGrade
@@ -140,7 +140,7 @@ private fun calculateAverage(grades: List<GetStudentGradesById>): BigDecimal? {
                 return@mapNotNull null
             }
 
-            GradeWithAverage(grade.grade, grade.grade_template_weight.toInt())
+            GradeWithWeight(grade.grade, grade.grade_template_weight.toInt())
         }
 
     return DecimalUtils.calculateWeightedAverage(studentGrades)

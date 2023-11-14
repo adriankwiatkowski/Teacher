@@ -1,6 +1,7 @@
 package com.example.teacher.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.BasicGradeTemplate
 import com.example.teacher.core.model.data.GradeTemplate
 
@@ -33,6 +34,7 @@ class BasicGradeTemplatePreviewParameterProvider : PreviewParameterProvider<Basi
             name = "Dodawanie",
             weight = 1,
             isFirstTerm = true,
+            averageGrade = null,
         ),
         BasicGradeTemplate(
             id = 2L,
@@ -40,6 +42,7 @@ class BasicGradeTemplatePreviewParameterProvider : PreviewParameterProvider<Basi
             name = "Odejmowanie",
             weight = 2,
             isFirstTerm = true,
+            averageGrade = DecimalUtils.Two,
         ),
         BasicGradeTemplate(
             id = 1L,
@@ -47,6 +50,7 @@ class BasicGradeTemplatePreviewParameterProvider : PreviewParameterProvider<Basi
             name = "Mnożenie",
             weight = 3,
             isFirstTerm = true,
+            averageGrade = DecimalUtils.Three,
         ),
         BasicGradeTemplate(
             id = 2L,
@@ -54,6 +58,7 @@ class BasicGradeTemplatePreviewParameterProvider : PreviewParameterProvider<Basi
             name = "Dzielenie",
             weight = 4,
             isFirstTerm = true,
+            averageGrade = DecimalUtils.Four,
         ),
         BasicGradeTemplate(
             id = 1L,
@@ -61,6 +66,7 @@ class BasicGradeTemplatePreviewParameterProvider : PreviewParameterProvider<Basi
             name = "Trygonometria",
             weight = 5,
             isFirstTerm = false,
+            averageGrade = DecimalUtils.Five,
         ),
         BasicGradeTemplate(
             id = 1L,
@@ -68,6 +74,7 @@ class BasicGradeTemplatePreviewParameterProvider : PreviewParameterProvider<Basi
             name = "Pochodne",
             weight = 6,
             isFirstTerm = false,
+            averageGrade = DecimalUtils.Six,
         ),
         BasicGradeTemplate(
             id = 1L,
@@ -75,6 +82,12 @@ class BasicGradeTemplatePreviewParameterProvider : PreviewParameterProvider<Basi
             name = "Całki",
             weight = 1,
             isFirstTerm = false,
+            averageGrade = DecimalUtils.calculateArithmeticAverage(
+                listOf(
+                    DecimalUtils.Three,
+                    DecimalUtils.Six,
+                ),
+            )!!,
         ),
     ).mapIndexed { index, basicGradeTemplate -> basicGradeTemplate.copy(id = index + 1L) }
 }
