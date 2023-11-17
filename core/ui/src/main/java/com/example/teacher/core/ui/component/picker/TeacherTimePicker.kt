@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,6 +31,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.ui.component.TeacherChip
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import java.time.LocalTime
 
@@ -67,6 +69,10 @@ fun TeacherTimePicker(
         modifier = modifier,
         onClick = { showDialog = true },
         label = label,
+        trailingIcon = {
+            val icon = TeacherIcons.time()
+            Icon(imageVector = icon.icon, contentDescription = null)
+        },
     )
 }
 

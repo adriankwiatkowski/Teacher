@@ -3,6 +3,7 @@ package com.example.teacher.core.ui.component.picker
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -20,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.teacher.core.common.utils.TimeUtils
 import com.example.teacher.core.ui.R
 import com.example.teacher.core.ui.component.TeacherChip
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import java.time.LocalDate
 
@@ -70,6 +72,10 @@ fun TeacherDatePicker(
         modifier = modifier,
         onClick = { showDialog = true },
         label = label,
+        trailingIcon = {
+            val icon = TeacherIcons.date()
+            Icon(imageVector = icon.icon, contentDescription = null)
+        },
     )
 }
 

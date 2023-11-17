@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import com.example.teacher.core.ui.R
 import com.example.teacher.core.ui.component.TeacherChip
 import com.example.teacher.core.ui.component.TeacherRadioButton
 import com.example.teacher.core.ui.component.TeacherTextButton
+import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import java.time.DayOfWeek
 
@@ -47,6 +49,10 @@ fun TeacherDayPicker(
         modifier = modifier,
         onClick = { showDialog = true },
         label = label,
+        trailingIcon = {
+            val icon = TeacherIcons.dayPick()
+            Icon(imageVector = icon.icon, contentDescription = null)
+        },
     )
 }
 

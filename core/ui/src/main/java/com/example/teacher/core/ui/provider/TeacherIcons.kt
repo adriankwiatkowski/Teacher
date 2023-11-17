@@ -2,11 +2,13 @@ package com.example.teacher.core.ui.provider
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
@@ -172,6 +174,21 @@ object TeacherIcons {
 
     fun info(@StringRes text: Int = R.string.ui_info) = TeacherIcon(
         icon = TeacherIcons.Info,
+        text = text,
+    )
+
+    fun date(@StringRes text: Int = R.string.ui_date) = TeacherIcon(
+        icon = TeacherIcons.CalendarMonth,
+        text = text,
+    )
+
+    fun dayPick(@StringRes text: Int = R.string.ui_day_pick) = TeacherIcon(
+        icon = TeacherIcons.CalendarMonth,
+        text = text,
+    )
+
+    fun time(@StringRes text: Int = R.string.ui_time) = TeacherIcon(
+        icon = TeacherIcons.AccessTime,
         text = text,
     )
 
