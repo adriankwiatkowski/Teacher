@@ -108,10 +108,15 @@ fun TeacherTheme(
             val window = (view.context as Activity).window
             val insets = WindowCompat.getInsetsController(window, view)
 
-            window.statusBarColor = color
-            window.navigationBarColor = color
-            insets.isAppearanceLightStatusBars = !darkTheme
-            insets.isAppearanceLightNavigationBars = !darkTheme
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                window.statusBarColor = color
+                insets.isAppearanceLightStatusBars = !darkTheme
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                window.navigationBarColor = color
+                insets.isAppearanceLightNavigationBars = !darkTheme
+            }
         }
     }
 
