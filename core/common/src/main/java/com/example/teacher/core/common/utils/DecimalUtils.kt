@@ -27,8 +27,8 @@ object DecimalUtils {
     val SixMinus = BigDecimal("5.75")
     val Six = BigDecimal("6.00")
 
-    val MinGrade = BigDecimal("1.00")
-    val MaxGrade = BigDecimal("6.00")
+    val MinGrade = One
+    val MaxGrade = Six
 
     fun toGrade(grade: BigDecimal): String {
         return when (grade) {
