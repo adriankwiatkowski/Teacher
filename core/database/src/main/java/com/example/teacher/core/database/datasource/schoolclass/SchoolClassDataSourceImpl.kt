@@ -4,8 +4,8 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
-import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
+import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.SchoolClass
 import com.example.teacher.core.model.data.SchoolClassesByYear
@@ -25,13 +25,12 @@ internal class SchoolClassDataSourceImpl(
     private val studentQueries = db.studentQueries
     private val lessonQueries = db.lessonQueries
 
-    override fun getBasicSchoolClassById(id: Long): Flow<BasicSchoolClass?> =
-        schoolClassQueries
-            .getSchoolClassById(id)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getBasicSchoolClassById(id: Long): Flow<BasicSchoolClass?> = schoolClassQueries
+        .getSchoolClassById(id)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
     override fun getSchoolClassById(id: Long): Flow<SchoolClass?> {
         val schoolClassFlow = schoolClassQueries
@@ -55,13 +54,12 @@ internal class SchoolClassDataSourceImpl(
         ).flowOn(dispatcher)
     }
 
-    override fun getAllSchoolClasses(): Flow<List<SchoolClassesByYear>> =
-        schoolClassQueries
-            .getAllSchoolClasses()
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getAllSchoolClasses(): Flow<List<SchoolClassesByYear>> = schoolClassQueries
+        .getAllSchoolClasses()
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateSchoolClass(
         id: Long?,

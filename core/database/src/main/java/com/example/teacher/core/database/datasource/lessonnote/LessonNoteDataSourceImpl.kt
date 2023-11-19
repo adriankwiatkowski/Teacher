@@ -4,8 +4,8 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
-import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
+import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.model.data.BasicLessonNote
 import com.example.teacher.core.model.data.LessonNote
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,21 +21,19 @@ internal class LessonNoteDataSourceImpl(
 
     private val queries = db.lessonNoteQueries
 
-    override fun getLessonNotesByLessonId(lessonId: Long): Flow<List<BasicLessonNote>> =
-        queries
-            .getLessonNotesByLessonId(lessonId)
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getLessonNotesByLessonId(lessonId: Long): Flow<List<BasicLessonNote>> = queries
+        .getLessonNotesByLessonId(lessonId)
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
-    override fun getLessonNoteById(id: Long): Flow<LessonNote?> =
-        queries
-            .getLessonNoteById(id)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getLessonNoteById(id: Long): Flow<LessonNote?> = queries
+        .getLessonNoteById(id)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateLessonNote(
         id: Long?,

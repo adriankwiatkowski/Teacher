@@ -5,9 +5,9 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
+import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.querymapper.toExternalStudentGrades
-import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.model.data.BasicStudent
 import com.example.teacher.core.model.data.Student
 import com.example.teacher.core.model.data.StudentGradesByLesson
@@ -25,47 +25,49 @@ internal class StudentDataSourceImpl(
     private val queries = db.studentQueries
     private val schoolClassQueries = db.schoolClassQueries
 
-    override fun getBasicStudentById(id: Long): Flow<BasicStudent?> =
-        queries
-            .getBasicStudentById(id)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getBasicStudentById(id: Long): Flow<BasicStudent?> = queries
+        .getBasicStudentById(id)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
-    override fun getStudentById(id: Long): Flow<Student?> =
-        queries
-            .getStudentById(id)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getStudentById(id: Long): Flow<Student?> = queries
+        .getStudentById(id)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
-    override fun getStudentsBySchoolClassId(schoolClassId: Long): Flow<List<BasicStudent>> =
-        queries
-            .getStudentsBySchoolClassId(schoolClassId)
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getStudentsBySchoolClassId(
+        schoolClassId: Long
+    ): Flow<List<BasicStudent>> = queries
+        .getStudentsBySchoolClassId(schoolClassId)
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
-    override fun getUsedRegisterNumbersBySchoolClassId(schoolClassId: Long): Flow<List<Long>> =
-        queries.getUsedRegisterNumbersBySchoolClassId(schoolClassId)
-            .asFlow()
-            .mapToList(dispatcher)
+    override fun getUsedRegisterNumbersBySchoolClassId(
+        schoolClassId: Long
+    ): Flow<List<Long>> = queries.getUsedRegisterNumbersBySchoolClassId(schoolClassId)
+        .asFlow()
+        .mapToList(dispatcher)
 
-    override fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> =
-        schoolClassQueries.getSchoolClassNameById(schoolClassId)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
+    override fun getStudentSchoolClassNameById(
+        schoolClassId: Long
+    ): Flow<String?> = schoolClassQueries.getSchoolClassNameById(schoolClassId)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
 
-    override fun getStudentGradesById(studentId: Long): Flow<List<StudentGradesByLesson>> =
-        queries
-            .getStudentGradesById(studentId)
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternalStudentGrades)
-            .flowOn(dispatcher)
+    override fun getStudentGradesById(
+        studentId: Long
+    ): Flow<List<StudentGradesByLesson>> = queries
+        .getStudentGradesById(studentId)
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternalStudentGrades)
+        .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateStudent(
         id: Long?,

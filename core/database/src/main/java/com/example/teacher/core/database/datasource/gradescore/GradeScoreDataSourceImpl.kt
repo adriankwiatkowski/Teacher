@@ -22,23 +22,24 @@ internal class GradeScoreDataSourceImpl(
 
     private val queries = db.gradeScoreQueries
 
-    override fun getGradeScoreByGradeTemplateId(gradeTemplateId: Long): Flow<GradeScore?> =
-        queries.transactionWithResult {
-            val exists = queries.exists(gradeTemplateId).executeAsOneOrNull() != null
+    override fun getGradeScoreByGradeTemplateId(
+        gradeTemplateId: Long
+    ): Flow<GradeScore?> = queries.transactionWithResult {
+        val exists = queries.exists(gradeTemplateId).executeAsOneOrNull() != null
 
-            if (!exists) {
-                CoroutineScope(dispatcher).launch {
-                    insertDefaultGradeScore(gradeTemplateId)
-                }
+        if (!exists) {
+            CoroutineScope(dispatcher).launch {
+                insertDefaultGradeScore(gradeTemplateId)
             }
-
-            queries
-                .getGradeScoreByGradeTemplateId(gradeTemplateId)
-                .asFlow()
-                .mapToOne(dispatcher)
-                .map(::toExternal)
-                .flowOn(dispatcher)
         }
+
+        queries
+            .getGradeScoreByGradeTemplateId(gradeTemplateId)
+            .asFlow()
+            .mapToOne(dispatcher)
+            .map(::toExternal)
+            .flowOn(dispatcher)
+    }
 
     override suspend fun updateGradeScore(
         gradeScore: GradeScore

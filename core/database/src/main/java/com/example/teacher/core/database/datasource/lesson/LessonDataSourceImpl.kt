@@ -27,51 +27,49 @@ internal class LessonDataSourceImpl(
     private val queries = db.lessonQueries
     private val schoolClassQueries = db.schoolClassQueries
 
-    override fun getLessons(): Flow<List<Lesson>> =
-        queries
-            .getLessons()
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternalLessons)
-            .flowOn(dispatcher)
+    override fun getLessons(): Flow<List<Lesson>> = queries
+        .getLessons()
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternalLessons)
+        .flowOn(dispatcher)
 
-    override fun getLessonsByYear(): Flow<List<LessonsByYear>> =
-        queries
-            .getLessons()
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternalLessonsByYear)
-            .flowOn(dispatcher)
+    override fun getLessonsByYear(): Flow<List<LessonsByYear>> = queries
+        .getLessons()
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternalLessonsByYear)
+        .flowOn(dispatcher)
 
-    override fun getLessonById(id: Long): Flow<Lesson?> =
-        queries
-            .getLessonById(id)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getLessonById(id: Long): Flow<Lesson?> = queries
+        .getLessonById(id)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
-    override fun getLessonsBySchoolClassId(schoolClassId: Long): Flow<List<BasicLesson>> =
-        queries
-            .getLessonsBySchoolClassId(schoolClassId)
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getLessonsBySchoolClassId(
+        schoolClassId: Long
+    ): Flow<List<BasicLesson>> = queries
+        .getLessonsBySchoolClassId(schoolClassId)
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
-    override fun getStudentSchoolClassNameById(schoolClassId: Long): Flow<String?> =
-        schoolClassQueries
-            .getSchoolClassNameById(schoolClassId)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
+    override fun getStudentSchoolClassNameById(
+        schoolClassId: Long
+    ): Flow<String?> = schoolClassQueries
+        .getSchoolClassNameById(schoolClassId)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
 
-    override fun getSchoolYearByLessonId(lessonId: Long): Flow<SchoolYear?> =
-        queries
-            .getSchoolYearByLessonId(lessonId)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternalSchoolYear)
-            .flowOn(dispatcher)
+    override fun getSchoolYearByLessonId(lessonId: Long): Flow<SchoolYear?> = queries
+        .getSchoolYearByLessonId(lessonId)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
+        .map(::toExternalSchoolYear)
+        .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateLesson(
         id: Long?,

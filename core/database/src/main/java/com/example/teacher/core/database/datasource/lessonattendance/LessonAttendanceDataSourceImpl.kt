@@ -30,21 +30,21 @@ internal class LessonAttendanceDataSourceImpl @Inject constructor(
 
     override fun getLessonEventAttendancesByLessonId(
         lessonId: Long
-    ): Flow<List<LessonEventAttendance>> =
-        queries
-            .getLessonEventsByLessonId(lessonId)
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternalLessonEventAttendances)
-            .flowOn(dispatcher)
+    ): Flow<List<LessonEventAttendance>> = queries
+        .getLessonEventsByLessonId(lessonId)
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternalLessonEventAttendances)
+        .flowOn(dispatcher)
 
-    override fun getLessonAttendancesByEventId(eventId: Long): Flow<List<LessonAttendance>> =
-        queries
-            .getLessonAttendancesByEventId(eventId)
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getLessonAttendancesByEventId(
+        eventId: Long
+    ): Flow<List<LessonAttendance>> = queries
+        .getLessonAttendancesByEventId(eventId)
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
     override fun getStudentsWithAttendanceByLessonId(
         lessonId: Long

@@ -24,21 +24,19 @@ internal class EventDataSourceImpl @Inject constructor(
 
     private val eventQueries = db.eventQueries
 
-    override fun getEvents(date: LocalDate): Flow<List<Event>> =
-        eventQueries
-            .getEvents(date)
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getEvents(date: LocalDate): Flow<List<Event>> = eventQueries
+        .getEvents(date)
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
-    override fun getEventById(eventId: Long): Flow<Event?> =
-        eventQueries
-            .getEventById(eventId)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getEventById(eventId: Long): Flow<Event?> = eventQueries
+        .getEventById(eventId)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
     override suspend fun insertEvents(
         eventDtos: List<EventDto>,

@@ -19,13 +19,12 @@ internal class LessonActivityDataSourceImpl(
 
     private val queries = db.lessonActivityQueries
 
-    override fun getLessonActivitiesByLessonId(lessonId: Long): Flow<List<LessonActivity>> =
-        queries
-            .getLessonActivitiesByLessonId(lessonId)
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getLessonActivitiesByLessonId(lessonId: Long): Flow<List<LessonActivity>> = queries
+        .getLessonActivitiesByLessonId(lessonId)
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateLessonActivity(
         id: Long?,

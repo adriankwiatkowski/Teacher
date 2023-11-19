@@ -25,23 +25,21 @@ internal class GradeDataSourceImpl(
 
     private val queries = db.gradeQueries
 
-    override fun getGradeById(id: Long): Flow<Grade?> =
-        queries
-            .getGradeById(id)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getGradeById(id: Long): Flow<Grade?> = queries
+        .getGradeById(id)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
     override fun getGradesByGradeTemplateId(
         gradeTemplateId: Long
-    ): Flow<List<BasicGradeForTemplate>> =
-        queries
-            .getGradesByGradeTemplateId(gradeTemplateId)
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    ): Flow<List<BasicGradeForTemplate>> = queries
+        .getGradesByGradeTemplateId(gradeTemplateId)
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
     override fun getGradeTemplateInfoByGradeTemplateId(
         gradeTemplateId: Long

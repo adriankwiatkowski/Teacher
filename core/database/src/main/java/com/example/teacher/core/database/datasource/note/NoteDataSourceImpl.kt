@@ -4,8 +4,8 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.example.teacher.core.common.di.DefaultDispatcher
-import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.database.generated.TeacherDatabase
+import com.example.teacher.core.database.querymapper.toExternal
 import com.example.teacher.core.model.data.Note
 import com.example.teacher.core.model.data.NotePriority
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,21 +21,19 @@ internal class NoteDataSourceImpl(
 
     private val queries = db.noteQueries
 
-    override fun getNotes(): Flow<List<Note>> =
-        queries
-            .getNotes()
-            .asFlow()
-            .mapToList(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getNotes(): Flow<List<Note>> = queries
+        .getNotes()
+        .asFlow()
+        .mapToList(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
-    override fun getNoteById(id: Long): Flow<Note?> =
-        queries
-            .getNoteById(id)
-            .asFlow()
-            .mapToOneOrNull(dispatcher)
-            .map(::toExternal)
-            .flowOn(dispatcher)
+    override fun getNoteById(id: Long): Flow<Note?> = queries
+        .getNoteById(id)
+        .asFlow()
+        .mapToOneOrNull(dispatcher)
+        .map(::toExternal)
+        .flowOn(dispatcher)
 
     override suspend fun insertOrUpdateNote(
         id: Long?,
