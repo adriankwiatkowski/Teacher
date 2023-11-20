@@ -40,9 +40,6 @@ class StudentDataSourceTest {
     @Before
     fun createDb() {
         val driver = LogSqliteDriver(JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)) {
-            if (it.contains("CREATE TABLE", ignoreCase = true)) {
-                return@LogSqliteDriver
-            }
             if (it.contains("INSERT", ignoreCase = true)) {
                 println(it)
             }
