@@ -27,6 +27,9 @@ internal class AuthImpl @Inject constructor() : Auth {
         return true
     }
 
+    override fun canAuthenticate(context: Context): Boolean =
+        canAuthenticate(context = context, launchBiometricSettings = false)
+
     private fun setBiometricPromptInfo(title: String): BiometricPrompt.PromptInfo {
         val builder = BiometricPrompt.PromptInfo.Builder()
             .setTitle(title)
@@ -62,9 +65,6 @@ internal class AuthImpl @Inject constructor() : Auth {
 
         return BiometricPrompt(activity, executor, callback)
     }
-
-    override fun canAuthenticate(context: Context): Boolean =
-        canAuthenticate(context = context, launchBiometricSettings = false)
 
     private fun canAuthenticate(context: Context, launchBiometricSettings: Boolean): Boolean {
         val biometricManager = BiometricManager.from(context)
