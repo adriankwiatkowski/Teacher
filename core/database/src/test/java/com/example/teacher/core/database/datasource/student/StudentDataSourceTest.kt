@@ -40,7 +40,9 @@ class StudentDataSourceTest {
     @Before
     fun createDb() {
         val driver = LogSqliteDriver(JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)) {
-            if (it.contains("INSERT", ignoreCase = true)) {
+            val containsInsert = it.contains("INSERT", ignoreCase = true)
+            val containsSelect = it.contains("SELECT", ignoreCase = true)
+            if (containsInsert || containsSelect) {
                 println(it)
             }
         }
