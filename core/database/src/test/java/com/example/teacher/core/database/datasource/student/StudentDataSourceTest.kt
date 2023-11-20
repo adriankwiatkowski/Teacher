@@ -16,6 +16,7 @@ import com.example.teacher.core.model.data.BasicStudent
 import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.model.data.Term
 import com.example.teacher.core.model.data.toBasic
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -33,6 +34,7 @@ class StudentDataSourceTest {
     private lateinit var schoolYearDataSource: SchoolYearDataSource
     private lateinit var schoolClassDataSource: SchoolClassDataSource
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = UnconfinedTestDispatcher()
 
     @Before
