@@ -18,7 +18,7 @@
     <string name="student_grade_average">Średnia: %1$s</string>
     <string name="student_empty_grades">Uczeń nie ma żadnej oceny</string>
     <string name="student_empty_notes">Uczeń nie ma żadnej uwagi</string>
-    <string name="student_email_supporting_text">Może być pusty</string>
+    <string name="student_email_supporting_text">Email może być pusty</string>
     <string name="student_phone_supporting_text">Telefon musi zawierać 9 cyfr (może być pusty)</string>
     <string name="student_register_number_supporting_text">Numer ucznia musi być liczbą (może być pusty)</string>
     <string name="student_register_number_supporting_text_error">Inny uczeń ma już ten numer w dzienniku (stary numer zostanie nadpisany)</string>

@@ -1,5 +1,6 @@
 package com.example.teacher.feature.student.data
 
+import android.util.Patterns
 import androidx.core.text.trimmedLength
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
@@ -30,13 +31,18 @@ internal object StudentFormProvider {
     }
 
     fun validateEmail(email: String?, isEdited: Boolean = true): InputField<String?> {
-        val trimmedLength = email?.trimmedLength() ?: 0
-        val charCountLimit = 60
+        val trimmedEmail = email?.trim()
+
+        val isError = if (trimmedEmail.isNullOrBlank()) {
+            false
+        } else {
+            !Patterns.EMAIL_ADDRESS.matcher(trimmedEmail).matches()
+        }
+
         return InputField(
             email,
             supportingText = R.string.student_email_supporting_text,
-            counter = trimmedLength to charCountLimit,
-            isError = false,
+            isError = isError,
             isEdited = isEdited,
             isRequired = false,
         )
