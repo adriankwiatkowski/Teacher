@@ -3,6 +3,7 @@ package com.example.teacher.core.common.utils
 import com.example.teacher.core.model.data.GradeWithWeight
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.text.NumberFormat
 
 object DecimalUtils {
 
@@ -58,7 +59,8 @@ object DecimalUtils {
     }
 
     fun toLiteral(grade: BigDecimal): String {
-        return grade.setScale(2, RoundingMode.HALF_UP).toPlainString()
+        val roundedGrade = grade.setScale(2, RoundingMode.HALF_UP)
+        return NumberFormat.getNumberInstance().format(roundedGrade)
     }
 
     fun calculateWeightedAverage(grades: List<GradeWithWeight>): BigDecimal? {
