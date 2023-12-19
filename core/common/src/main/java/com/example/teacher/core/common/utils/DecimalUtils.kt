@@ -60,7 +60,10 @@ object DecimalUtils {
 
     fun toLiteral(grade: BigDecimal): String {
         val roundedGrade = grade.setScale(2, RoundingMode.HALF_UP)
-        return NumberFormat.getNumberInstance().format(roundedGrade)
+        return NumberFormat.getNumberInstance().apply {
+            minimumFractionDigits = 2
+            maximumFractionDigits = 2
+        }.format(roundedGrade)
     }
 
     fun calculateWeightedAverage(grades: List<GradeWithWeight>): BigDecimal? {
