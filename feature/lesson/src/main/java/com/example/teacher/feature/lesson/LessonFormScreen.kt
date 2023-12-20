@@ -16,7 +16,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -90,7 +89,6 @@ internal fun LessonFormScreen(
                         .padding(MaterialTheme.spacing.small)
                         .fillMaxSize()
                         .verticalScroll(rememberScrollState()),
-                    schoolClassName = schoolClassName,
                     name = name,
                     onNameChange = onNameChange,
                     submitText = if (lesson == null) {
@@ -108,7 +106,6 @@ internal fun LessonFormScreen(
 
 @Composable
 private fun MainContent(
-    schoolClassName: String,
     name: InputField<String>,
     onNameChange: (String) -> Unit,
     submitText: String,
@@ -117,11 +114,6 @@ private fun MainContent(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        Text(
-            text = stringResource(R.string.lesson_school_class, schoolClassName),
-            style = MaterialTheme.typography.headlineMedium,
-        )
-
         val focusManager = LocalFocusManager.current
         val movePrev = { focusManager.moveFocus(FocusDirection.Up) }
         val moveNext = { focusManager.moveFocus(FocusDirection.Down) }
