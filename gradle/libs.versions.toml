@@ -1,26 +1,26 @@
 [versions]
 androidGradlePlugin = "8.2.0"
-kotlin = "1.9.0"
+kotlin = "1.9.21"
 kotlinxCoroutines = "1.7.3"
 
 androidCore = "1.12.0"
 androidxAppCompat = "1.6.1"
 
-compose = "1.5.1"
-androidxActivity = "1.7.2"
-androidxComposeBom = "2023.09.00"
-androidxComposeRuntimeTracing = "1.0.0-alpha04"
+compose = "1.5.7"
+androidxActivity = "1.8.2"
+androidxComposeBom = "2023.10.01"
+androidxComposeRuntimeTracing = "1.0.0-beta01"
 androidxTestRunner = "1.5.2"
 lifecycle = "2.6.2"
-nav = "2.7.2"
+nav = "2.7.6"
 
 sqldelight = "2.0.0"
 
-hiltAndroid = '2.47'
-hilt = "2.47"
-hiltNavigationCompose = "1.0.0"
+hiltAndroid = '2.48'
+hilt = "2.48"
+hiltNavigationCompose = "1.1.0"
 
-desugarJdk = "2.0.3"
+desugarJdk = "2.0.4"
 
 datastorePreferences = "1.0.0"
 
