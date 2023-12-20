@@ -209,7 +209,7 @@ private fun AttendanceDialog(
         title = { Text(stringResource(R.string.lesson_set_attendance)) },
         text = {
             Column {
-                Text(studentFullName)
+                Text(text = studentFullName, style = MaterialTheme.typography.titleMedium)
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())

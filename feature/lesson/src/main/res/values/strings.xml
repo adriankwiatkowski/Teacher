@@ -2,9 +2,9 @@
 <resources>
     <string name="lesson_attendance_title">Wystawienie frekwencji</string>
     <string name="lesson_set_attendance">Wystaw frekwencję</string>
-    <string name="lesson_present">obecny</string>
-    <string name="lesson_late">spóźniony</string>
-    <string name="lesson_absent">nieobecny</string>
+    <string name="lesson_present">obecność</string>
+    <string name="lesson_late">spóźnienie</string>
+    <string name="lesson_absent">nieobecność</string>
     <string name="lesson_excused_absence">nieobecność usprawiedliwiona</string>
     <string name="lesson_exemption">zwolnienie</string>
     <string name="lesson_no_attendance">brak</string>
