@@ -116,7 +116,7 @@ internal class DatabaseEventRepository @Inject constructor(
                 }
 
                 when (type) {
-                    EventType.Once -> addDate(date) // TODO: Probably should check if date is in any term.
+                    EventType.Once -> addDate(date)
                     EventType.Weekly -> addDatesInTerm(daysOffset = 7)
                     EventType.EveryTwoWeeks -> addDatesInTerm(daysOffset = 14)
                 }
