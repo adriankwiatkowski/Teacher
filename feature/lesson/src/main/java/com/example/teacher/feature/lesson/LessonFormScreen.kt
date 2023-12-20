@@ -10,7 +10,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -36,7 +35,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.ui.component.TeacherButton
-import com.example.teacher.core.ui.component.TeacherFab
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
 import com.example.teacher.core.ui.component.form.FormAutoCompleteTextField
@@ -45,7 +43,6 @@ import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
 import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
-import com.example.teacher.core.ui.provider.TeacherActions
 import com.example.teacher.core.ui.provider.TeacherIcons
 import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
@@ -85,13 +82,6 @@ internal fun LessonFormScreen(
                     closeIcon = true,
                 )
             },
-            floatingActionButton = {
-                TeacherFab(
-                    action = TeacherActions.add(onClick = onAddLessonClick),
-                    visible = isSubmitEnabled,
-                )
-            },
-            floatingActionButtonPosition = FabPosition.End,
         ) { innerPadding ->
             ResultContent(result = lessonResult) { lesson ->
                 MainContent(
