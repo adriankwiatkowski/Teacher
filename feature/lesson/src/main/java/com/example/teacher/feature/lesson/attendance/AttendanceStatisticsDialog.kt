@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -27,6 +26,7 @@ import com.example.teacher.core.model.data.Lesson
 import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.model.data.StudentWithAttendance
 import com.example.teacher.core.ui.component.TeacherLargeText
+import com.example.teacher.core.ui.component.TeacherTextButton
 import com.example.teacher.core.ui.component.result.ResultContent
 import com.example.teacher.core.ui.paramprovider.LessonPreviewParameterProvider
 import com.example.teacher.core.ui.paramprovider.StudentsWithAttendancePreviewParameterProvider
@@ -34,7 +34,6 @@ import com.example.teacher.core.ui.theme.TeacherTheme
 import com.example.teacher.core.ui.theme.spacing
 import com.example.teacher.feature.lesson.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AttendanceStatisticsDialog(
     studentsWithAttendanceResult: Result<List<StudentWithAttendance>>,
@@ -42,14 +41,15 @@ internal fun AttendanceStatisticsDialog(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    AlertDialog(modifier = modifier, onDismissRequest = onDismissRequest) {
-        Surface {
+    AlertDialog(
+        modifier = modifier,
+        onDismissRequest = onDismissRequest,
+        title = { Title() },
+        text = {
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Title()
-
                 ResultContent(result = studentsWithAttendanceResult) { studentsWithAttendance ->
                     if (studentsWithAttendance.isEmpty()) {
                         EmptyState()
@@ -61,8 +61,14 @@ internal fun AttendanceStatisticsDialog(
                     }
                 }
             }
-        }
-    }
+        },
+        confirmButton = {
+            TeacherTextButton(
+                label = stringResource(com.example.teacher.core.ui.R.string.ui_ok),
+                onClick = onDismissRequest,
+            )
+        },
+    )
 }
 
 @Composable
@@ -122,9 +128,11 @@ private fun EmptyState(modifier: Modifier = Modifier) {
 
 @Composable
 private fun Title(modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Text(
-            modifier = Modifier.padding(MaterialTheme.spacing.small),
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(MaterialTheme.spacing.small),
             text = stringResource(R.string.lesson_attendance_statistics_title),
             style = MaterialTheme.typography.titleLarge,
         )
