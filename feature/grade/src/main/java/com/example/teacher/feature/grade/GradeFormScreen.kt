@@ -69,7 +69,6 @@ internal fun GradeFormScreen(
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TeacherTopBarDefaults.default()
-    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -101,6 +100,23 @@ internal fun GradeFormScreen(
                 formStatus = formStatus,
                 savingText = stringResource(R.string.grade_saving_grade),
             ) {
+                var showBottomSheet by rememberSaveable { mutableStateOf(false) }
+
+                if (showBottomSheet) {
+                    ModalBottomSheet(onDismissRequest = { showBottomSheet = false }) {
+                        GradeScoreForm(
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState())
+                                .padding(MaterialTheme.spacing.medium),
+                            gradeScoreData = gradeScoreData,
+                            onGradeScoreThresholdChange = onGradeScoreThresholdChange,
+                            onMaxScoreChange = onMaxScoreChange,
+                            onStudentScoreChange = onStudentScoreChange,
+                            onSaveGradeScore = onSaveGradeScore,
+                        )
+                    }
+                }
+
                 MainContent(
                     modifier = modifier
                         .fillMaxSize()
@@ -118,21 +134,6 @@ internal fun GradeFormScreen(
                     isSubmitEnabled = isSubmitEnabled,
                     onSubmit = onSubmit,
                 )
-
-                if (showBottomSheet) {
-                    ModalBottomSheet(onDismissRequest = { showBottomSheet = false }) {
-                        GradeScoreForm(
-                            modifier = Modifier
-                                .verticalScroll(rememberScrollState())
-                                .padding(MaterialTheme.spacing.medium),
-                            gradeScoreData = gradeScoreData,
-                            onGradeScoreThresholdChange = onGradeScoreThresholdChange,
-                            onMaxScoreChange = onMaxScoreChange,
-                            onStudentScoreChange = onStudentScoreChange,
-                            onSaveGradeScore = onSaveGradeScore,
-                        )
-                    }
-                }
             }
         }
     }
