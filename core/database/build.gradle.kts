@@ -27,6 +27,8 @@ android {
         }
     }
     compileOptions {
+        // Flag to enable support for the new language APIs
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -57,6 +59,8 @@ dependencies {
     testImplementation(libs.sqldelight.android)
     testImplementation(libs.sqldelight.driver)
     implementation(libs.sqldelight.coroutines)
+
+    coreLibraryDesugaring(libs.desugar.jdk)
 
     implementation(libs.bundles.androidx)
 

@@ -26,6 +26,8 @@ android {
         }
     }
     compileOptions {
+        // Flag to enable support for the new language APIs
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -54,6 +56,8 @@ dependencies {
     kapt(libs.hilt.compiler)
     // Hilt Navigation Compose
     implementation(libs.hilt.nav.compose)
+
+    coreLibraryDesugaring(libs.desugar.jdk)
 
     implementation(libs.bundles.androidx)
 

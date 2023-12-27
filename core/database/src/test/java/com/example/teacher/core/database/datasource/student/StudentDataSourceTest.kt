@@ -1,16 +1,11 @@
 package com.example.teacher.core.database.datasource.student
 
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
-import app.cash.sqldelight.logs.LogSqliteDriver
 import com.example.teacher.core.common.utils.TimeUtils
-import com.example.teacher.core.database.adapter.BigDecimalColumnAdapter
-import com.example.teacher.core.database.adapter.DateColumnAdapter
-import com.example.teacher.core.database.adapter.TimeColumnAdapter
+import com.example.teacher.core.database.createTeacherDatabase
 import com.example.teacher.core.database.datasource.schoolclass.SchoolClassDataSource
 import com.example.teacher.core.database.datasource.schoolclass.SchoolClassDataSourceImpl
 import com.example.teacher.core.database.datasource.schoolyear.SchoolYearDataSource
 import com.example.teacher.core.database.datasource.schoolyear.SchoolYearDataSourceImpl
-import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.model.data.BasicSchoolClass
 import com.example.teacher.core.model.data.BasicStudent
 import com.example.teacher.core.model.data.SchoolYear
@@ -21,12 +16,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
-import com.example.teacher.core.database.generated.model.Event as EventEntity
-import com.example.teacher.core.database.generated.model.Grade as GradeEntity
-import com.example.teacher.core.database.generated.model.Grade_template as GradeTemplateEntity
-import com.example.teacher.core.database.generated.model.Term as TermEntity
 
 class StudentDataSourceTest {
 
@@ -38,39 +30,8 @@ class StudentDataSourceTest {
     private val testDispatcher = UnconfinedTestDispatcher()
 
     @Before
-    fun createDb() {
-        val driver = LogSqliteDriver(JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)) {
-            val containsInsert = it.contains("INSERT", ignoreCase = true)
-            val containsSelect = it.contains("SELECT", ignoreCase = true)
-            if (containsInsert || containsSelect) {
-                println(it)
-            }
-        }
-
-        val bigDecimalAdapter = BigDecimalColumnAdapter
-        val dateAdapter = DateColumnAdapter
-        val timeAdapter = TimeColumnAdapter
-
-        TeacherDatabase.Schema.create(driver)
-        val db = TeacherDatabase(
-            driver = driver,
-            gradeAdapter = GradeEntity.Adapter(
-                gradeAdapter = bigDecimalAdapter,
-                dateAdapter = dateAdapter,
-            ),
-            grade_templateAdapter = GradeTemplateEntity.Adapter(
-                dateAdapter = dateAdapter,
-            ),
-            eventAdapter = EventEntity.Adapter(
-                dateAdapter = dateAdapter,
-                start_timeAdapter = timeAdapter,
-                end_timeAdapter = timeAdapter,
-            ),
-            termAdapter = TermEntity.Adapter(
-                start_dateAdapter = dateAdapter,
-                end_dateAdapter = dateAdapter,
-            ),
-        )
+    fun setUp() {
+        val db = createTeacherDatabase()
 
         studentDataSource = StudentDataSourceImpl(db, testDispatcher)
         schoolYearDataSource = SchoolYearDataSourceImpl(db, testDispatcher)
@@ -142,6 +103,36 @@ class StudentDataSourceTest {
     }
 
     @Test
+    fun studentDataSource_updateStudent_happyPath() = runTest {
+        insertSchoolClass(testSchoolClass())
+        val student = testStudent()
+        studentDataSource.insertOrUpdateStudent(
+            id = null,
+            schoolClassId = student.schoolClassId,
+            registerNumber = student.registerNumber,
+            name = student.name,
+            surname = student.surname,
+            email = student.email,
+            phone = student.phone,
+        )
+
+        studentDataSource.insertOrUpdateStudent(
+            id = 1L,
+            schoolClassId = student.schoolClassId,
+            registerNumber = student.registerNumber,
+            name = "Updated Name",
+            surname = student.surname,
+            email = student.email,
+            phone = student.phone,
+        )
+
+        val actual = studentDataSource.getStudentById(1L).first()
+
+        assertNotNull(actual)
+        assertEquals("Updated Name", actual?.name)
+    }
+
+    @Test
     fun studentDataSource_fetchesItemsByRegisterNumber() = runTest {
         insertSchoolClass(testSchoolClass())
         val students = listOf(
@@ -191,6 +182,29 @@ class StudentDataSourceTest {
 
         assertEquals(1, studentsBeforeDeletion.size)
         assertEquals(0, studentsAfterDeletion.size)
+    }
+
+    @Test
+    fun studentDataSource_deleteStudentByNonExistentId_ok() = runTest {
+        insertSchoolClass(testSchoolClass())
+        val student = testStudent()
+
+        studentDataSource.insertOrUpdateStudent(
+            id = null,
+            schoolClassId = student.schoolClassId,
+            registerNumber = student.registerNumber,
+            name = student.name,
+            surname = student.surname,
+            email = student.email,
+            phone = student.phone,
+        )
+
+        val studentsBeforeDeletion = studentDataSource.getStudentsBySchoolClassId(1L).first()
+        studentDataSource.deleteStudentById(2L)
+        val studentsAfterDeletion = studentDataSource.getStudentsBySchoolClassId(1L).first()
+
+        assertEquals(1, studentsBeforeDeletion.size)
+        assertEquals(1, studentsAfterDeletion.size)
     }
 
     private suspend fun insertSchoolClass(basicSchoolClass: BasicSchoolClass) {

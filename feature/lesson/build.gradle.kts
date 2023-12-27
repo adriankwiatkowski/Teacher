@@ -26,6 +26,8 @@ android {
         }
     }
     compileOptions {
+        // Flag to enable support for the new language APIs
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -48,6 +50,8 @@ dependencies {
     implementation(projects.core.ui)
     testImplementation(projects.core.testing)
     androidTestImplementation(projects.core.testing)
+
+    coreLibraryDesugaring(libs.desugar.jdk)
 
     // Hilt
     implementation(libs.hilt.android)
