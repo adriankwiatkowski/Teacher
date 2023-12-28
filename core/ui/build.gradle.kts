@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -39,6 +41,14 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+        unitTests.all {
+            it.jvmArgs("-noverify")
+        }
+    }
 }
 
 dependencies {
@@ -46,6 +56,11 @@ dependencies {
     implementation(projects.core.model)
     testImplementation(projects.core.testing)
     androidTestImplementation(projects.core.testing)
+
+    implementation(libs.hilt.android)
+    testImplementation(libs.hilt.android.testing)
+    kapt(libs.hilt.compiler)
+    kaptTest(libs.hilt.compiler)
 
     coreLibraryDesugaring(libs.desugar.jdk)
 
@@ -57,11 +72,19 @@ dependencies {
     androidTestImplementation(composeBom)
 
     // Share compose dependencies.
+    api(libs.kotlinx.coroutines.android)
+    api(libs.kotlinx.coroutines.test)
     api(libs.bundles.compose)
+    testApi(libs.bundles.test.compose)
     debugApi(libs.bundles.debug.compose)
     androidTestApi(libs.bundles.android.test.compose)
 
     testImplementation(libs.junit4)
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

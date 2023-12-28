@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -38,12 +40,25 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+        unitTests.all {
+            it.jvmArgs("-noverify")
+        }
+    }
 }
 
 dependencies {
     implementation(projects.core.ui)
     testImplementation(projects.core.testing)
     androidTestImplementation(projects.core.testing)
+
+    implementation(libs.hilt.android)
+    testImplementation(libs.hilt.android.testing)
+    kapt(libs.hilt.compiler)
+    kaptTest(libs.hilt.compiler)
 
     coreLibraryDesugaring(libs.desugar.jdk)
 
@@ -52,4 +67,9 @@ dependencies {
     testImplementation(libs.junit4)
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

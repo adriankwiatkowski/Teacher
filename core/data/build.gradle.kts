@@ -55,3 +55,8 @@ dependencies {
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}

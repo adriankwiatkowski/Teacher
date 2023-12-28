@@ -8,7 +8,8 @@ import java.math.BigDecimal
 internal object GradeFormProvider {
 
     fun validateGrade(grade: BigDecimal?, isEdited: Boolean = true): InputField<BigDecimal?> {
-        val isError = grade == null || grade < DecimalUtils.MinGrade || grade > DecimalUtils.MaxGrade
+        val isError =
+            grade == null || grade < DecimalUtils.MinGrade || grade > DecimalUtils.MaxGrade
         return InputField(
             grade,
             isError = isError,

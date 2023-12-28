@@ -40,7 +40,9 @@ dependencies {
     implementation(projects.core.common)
 
     implementation(libs.hilt.android)
+    testImplementation(libs.hilt.android.testing)
     kapt(libs.hilt.compiler)
+    kaptTest(libs.hilt.compiler)
 
     coreLibraryDesugaring(libs.desugar.jdk)
 
@@ -49,9 +51,15 @@ dependencies {
     api(libs.androidx.test.runner)
     api(libs.hilt.android.testing)
     api(libs.junit4)
+    api(libs.kotlinx.coroutines.android)
     api(libs.kotlinx.coroutines.test)
     api(libs.turbine)
 
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

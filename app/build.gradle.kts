@@ -67,6 +67,8 @@ android {
             isMinifyEnabled = false
             applicationIdSuffix = ".debug"
             isDebuggable = true
+            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
         }
     }
     compileOptions {
@@ -87,6 +89,14 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+        unitTests.all {
+            it.jvmArgs("-noverify")
+        }
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -98,7 +108,14 @@ dependencies {
     // Compose Bom
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
+    testImplementation(composeBom)
+    debugImplementation(composeBom)
     androidTestImplementation(composeBom)
+
+    implementation(libs.bundles.compose)
+    testImplementation(libs.bundles.test.compose)
+    debugImplementation(libs.bundles.debug.compose)
+    androidTestImplementation(libs.bundles.android.test.compose)
 
     implementation(projects.core.common)
     implementation(projects.core.model)
@@ -126,13 +143,16 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    testImplementation(libs.hilt.android.testing)
     kapt(libs.hilt.compiler)
+    kaptTest(libs.hilt.compiler)
     // Hilt Navigation Compose
     implementation(libs.hilt.nav.compose)
 
     coreLibraryDesugaring(libs.desugar.jdk)
 
     testImplementation(libs.junit4)
+    testImplementation(libs.bundles.test.compose)
     androidTestImplementation(libs.junit.ext)
     androidTestImplementation(libs.androidx.test.espresso.core)
 }
