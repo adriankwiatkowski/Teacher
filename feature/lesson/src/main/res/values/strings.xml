@@ -16,7 +16,6 @@
     <string name="lesson_no_attendance_short">niezaznaczone</string>
 
     <string name="lesson_attendance_no_schedule">Nie dodano planu zajęć.</string>
-    <string name="lesson_attendance_add_schedule">Dodaj plan zajęć</string>
     <string name="lesson_attendance_edit_event">Edytuj dane</string>
     <string name="lesson_attendance_statistics">Statystyki</string>
     <string name="lesson_attendance_statistics_title">Frekwencja</string>

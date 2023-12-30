@@ -48,6 +48,8 @@ dependencies {
 
     implementation(libs.bundles.androidx)
 
+    implementation(libs.sqldelight.driver)
+
     api(libs.androidx.test.runner)
     api(libs.hilt.android.testing)
     api(libs.junit4)

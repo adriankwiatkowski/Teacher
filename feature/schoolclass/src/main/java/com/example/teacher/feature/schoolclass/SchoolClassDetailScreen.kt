@@ -96,17 +96,18 @@ private fun TermItem(
             style = MaterialTheme.typography.titleMedium,
         )
 
-        TermDate(date = startDate)
+        TermDate(date = startDate, isStartDate = true)
 
         Spacer(Modifier.height(MaterialTheme.spacing.small))
 
-        TermDate(date = endDate)
+        TermDate(date = endDate, isStartDate = false)
     }
 }
 
 @Composable
 private fun TermDate(
     date: LocalDate,
+    isStartDate: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -114,10 +115,17 @@ private fun TermDate(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            modifier = Modifier.weight(1f, fill = false),
-            text = stringResource(R.string.school_class_term_start, TimeUtils.format(date)),
-        )
+        if (isStartDate) {
+            Text(
+                modifier = Modifier.weight(1f, fill = false),
+                text = stringResource(R.string.school_class_term_start, TimeUtils.format(date)),
+            )
+        } else {
+            Text(
+                modifier = Modifier.weight(1f, fill = false),
+                text = stringResource(R.string.school_class_term_end, TimeUtils.format(date)),
+            )
+        }
         Spacer(Modifier.width(MaterialTheme.spacing.small))
         Icon(
             imageVector = TeacherIcons.date().icon,

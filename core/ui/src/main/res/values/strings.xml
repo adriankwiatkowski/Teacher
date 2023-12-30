@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="ui_navigate_back">Przejdź do poprzedniego ekranu</string>
-    <string name="ui_close">Zamknij</string>
     <string name="ui_add">Dodaj</string>
     <string name="ui_edit">Edytuj</string>
     <string name="ui_warning">Ostrzeżenie</string>
@@ -33,7 +32,6 @@
     <string name="ui_grades">Oceny</string>
     <string name="ui_attendance">Frekwencja</string>
     <string name="ui_activity">Aktywność</string>
-    <string name="ui_chart">Wykres</string>
     <string name="ui_info">Informacja</string>
     <string name="ui_date">Data</string>
     <string name="ui_day_pick">Dzień</string>

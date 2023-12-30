@@ -31,7 +31,7 @@ private fun makeNotes(vararg data: Pair<String, String>): Array<Note> =
     }.toTypedArray()
 
 private fun makeNote(id: Long, title: String, text: String): Note {
-    val priorities = NotePriority.values()
+    val priorities = NotePriority.entries
     return Note(
         id = id,
         title = title,

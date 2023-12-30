@@ -9,6 +9,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.teacher.core.ui.theme.TeacherTheme
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -25,11 +26,13 @@ class InputChipTest {
     fun labelExists() {
         rule.apply {
             setContent {
-                TeacherInputChip(
-                    label = label,
-                    selected = true,
-                    onClick = {},
-                )
+                TeacherTheme(darkTheme = false) {
+                    TeacherInputChip(
+                        label = label,
+                        selected = true,
+                        onClick = {},
+                    )
+                }
             }
 
             onNodeWithText(label).assertIsDisplayed()
@@ -41,11 +44,13 @@ class InputChipTest {
         rule.apply {
             var clicked by mutableStateOf(false)
             setContent {
-                TeacherInputChip(
-                    label = label,
-                    selected = true,
-                    onClick = { clicked = true },
-                )
+                TeacherTheme(darkTheme = true) {
+                    TeacherInputChip(
+                        label = label,
+                        selected = true,
+                        onClick = { clicked = true },
+                    )
+                }
             }
 
             onNodeWithText(label).performClick()

@@ -1,7 +1,5 @@
 package com.example.teacher.core.ui.component
 
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertAll
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.hasClickAction
@@ -9,7 +7,7 @@ import androidx.compose.ui.test.isSelectable
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.onChildren
-import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.printToLog
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.teacher.core.ui.provider.TeacherIcons
@@ -34,13 +32,9 @@ class NavigationBarTest {
     @Test
     fun childrenExist() {
         val bars = 3
-        val tag = "TAG"
 
         rule.setContent {
-            TeacherNavigationBar(
-                modifier = Modifier.testTag(tag),
-                visible = true,
-            ) {
+            TeacherNavigationBar(visible = true) {
                 for (i in 0..<bars) {
                     TeacherNavigationBarItem(
                         selected = i == 0,
@@ -53,7 +47,8 @@ class NavigationBarTest {
             }
         }
 
-        rule.onNodeWithTag(tag, useUnmergedTree = true)
+        rule.onRoot(useUnmergedTree = true)
+            .onChild()
             .apply { printToLog("NavigationBar") }
             .onChild()
             .onChildren()

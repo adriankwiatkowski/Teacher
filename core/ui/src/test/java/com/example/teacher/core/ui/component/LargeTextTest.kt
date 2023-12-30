@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.teacher.core.ui.theme.TeacherTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -24,7 +25,11 @@ class LargeTextTest {
 
     @Test
     fun textIsDisplayed() {
-        rule.setContent { TeacherLargeText(text) }
+        rule.setContent {
+            TeacherTheme(dynamicColor = false) {
+                TeacherLargeText(text)
+            }
+        }
 
         rule.onNodeWithText(text).assertIsDisplayed()
     }

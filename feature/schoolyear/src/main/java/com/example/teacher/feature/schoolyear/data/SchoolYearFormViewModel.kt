@@ -35,7 +35,7 @@ internal class SchoolYearFormViewModel @Inject constructor(
     val isDeleted = savedStateHandle.getStateFlow(IS_DELETED_KEY, false)
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val schoolYearResult: StateFlow<Result<SchoolYear?>> = schoolYearId
+    val schoolYearResult: StateFlow<Result<SchoolYear?>> = schoolYearId
         .flatMapLatest { schoolYearId -> repository.getSchoolYearById(schoolYearId) }
         .stateIn(initialValue = Result.Loading)
 

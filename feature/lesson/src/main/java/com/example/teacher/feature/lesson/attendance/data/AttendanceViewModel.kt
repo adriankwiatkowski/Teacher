@@ -100,9 +100,3 @@ internal class AttendanceViewModel @Inject constructor(
         private const val EVENT_ID_KEY = LessonNavigation.eventIdArg
     }
 }
-
-internal data class DialogState(
-    val studentId: Long,
-    val studentFullName: String,
-    val attendance: Attendance?,
-)

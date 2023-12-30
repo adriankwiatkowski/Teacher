@@ -58,10 +58,15 @@ dependencies {
     implementation(projects.core.ui)
     testImplementation(projects.core.testing)
     androidTestImplementation(projects.core.testing)
+    testImplementation(projects.core.database)
 
     // Hilt
     implementation(libs.hilt.android)
+    testImplementation(libs.hilt.android.testing)
     kapt(libs.hilt.compiler)
+    kaptTest(libs.hilt.compiler)
+    kapt(libs.hiltx.compiler)
+    kaptTest(libs.hiltx.compiler)
     // Hilt Navigation Compose
     implementation(libs.hilt.nav.compose)
 
@@ -69,6 +74,9 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk)
 
     implementation(libs.bundles.androidx)
+
+    testImplementation(libs.bundles.test.compose)
+    debugImplementation(libs.bundles.debug.compose)
 
     testImplementation(libs.junit4)
     androidTestImplementation(libs.junit.ext)
