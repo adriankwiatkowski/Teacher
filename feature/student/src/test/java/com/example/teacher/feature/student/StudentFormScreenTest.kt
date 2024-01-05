@@ -115,8 +115,8 @@ class StudentFormScreenTest {
         val viewModel = StudentFormViewModel(studentRepository, savedStateHandle)
         rule.setContent { StudentFormScreen(viewModel) }
 
-        rule.onRoot().printToLog("Student Form")
         rule.waitUntil { viewModel.studentResult.value is Result.Success }
+        rule.onRoot().printToLog("Student Form")
 
         studentDataSource.getStudentById(1L).test {
             assertNull(awaitItem())
