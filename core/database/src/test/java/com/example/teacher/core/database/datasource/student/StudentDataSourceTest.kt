@@ -17,6 +17,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 
@@ -55,7 +56,7 @@ class StudentDataSourceTest {
         val studentById = studentDataSource.getStudentById(1L).first()
         val studentsBySchoolClass = studentDataSource.getStudentsBySchoolClassId(1L).first()
 
-        assertEquals(null, studentById)
+        assertNull(studentById)
         assertEquals(emptyList<BasicStudent>(), studentsBySchoolClass)
     }
 
