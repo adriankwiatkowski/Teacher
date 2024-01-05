@@ -1,6 +1,9 @@
 package com.example.teacher.core.database.datasource.note
 
-import com.example.teacher.core.database.createTeacherDatabase
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import app.cash.sqldelight.logs.LogSqliteDriver
+import com.example.teacher.core.database.di.DatabaseModule
+import com.example.teacher.core.database.generated.TeacherDatabase
 import com.example.teacher.core.model.data.Note
 import com.example.teacher.core.model.data.NotePriority
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,7 +24,16 @@ class NoteDataSourceTest {
 
     @Before
     fun setUp() {
-        val db = createTeacherDatabase()
+        val driver = LogSqliteDriver(JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)) {
+            val containsInsert = it.contains("INSERT", ignoreCase = true)
+            val containsSelect = it.contains("SELECT", ignoreCase = true)
+            if (containsInsert || containsSelect) {
+                println(it)
+            }
+        }
+
+        TeacherDatabase.Schema.create(driver)
+        val db = DatabaseModule.provideTeacherDatabase(driver)
         noteDataSource = NoteDataSourceImpl(db, testDispatcher)
     }
 
