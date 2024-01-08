@@ -26,7 +26,7 @@ internal suspend fun givenGrade(
     id: Long? = null,
     grade: BigDecimal = DecimalUtils.Five,
 ) {
-    gradeDataSource.insertOrUpdateGrade(
+    gradeDataSource.upsertGrade(
         id = id,
         gradeTemplateId = gradeTemplateId,
         studentId = studentId,
@@ -43,7 +43,7 @@ internal suspend fun givenGradeTemplate(
     weight: Int = 3,
     isFirstTerm: Boolean = true,
 ) {
-    gradeTemplateDataSource.insertOrUpdateGradeTemplate(
+    gradeTemplateDataSource.upsertGradeTemplate(
         id = id,
         lessonId = lessonId,
         name = name,
@@ -61,7 +61,7 @@ internal suspend fun givenStudentNote(
     description: String = "",
     isNegative: Boolean = false,
 ) {
-    studentNoteDataSource.insertOrUpdateStudentNote(
+    studentNoteDataSource.upsertStudentNote(
         id = id,
         studentId = studentId,
         title = title,
@@ -79,7 +79,7 @@ internal suspend fun givenStudent(
     email: String? = null,
     phone: String? = null,
 ) {
-    studentDataSource.insertOrUpdateStudent(
+    studentDataSource.upsertStudent(
         id = id,
         schoolClassId = schoolClassId,
         registerNumber = null,
@@ -96,7 +96,7 @@ internal suspend fun givenLessonAttendance(
     studentId: Long,
     attendance: Attendance = Attendance.Present,
 ) {
-    lessonAttendanceDataSource.insertOrUpdateLessonAttendance(
+    lessonAttendanceDataSource.upsertLessonAttendance(
         eventId = eventId,
         studentId = studentId,
         attendance = attendance,
@@ -132,7 +132,7 @@ internal suspend fun givenLesson(
     id: Long? = null,
     name: String = "Name",
 ) {
-    lessonDataSource.insertOrUpdateLesson(id = id, schoolClassId = schoolClassId, name = name)
+    lessonDataSource.upsertLesson(id = id, schoolClassId = schoolClassId, name = name)
 }
 
 internal suspend fun givenSchoolClass(
@@ -140,7 +140,7 @@ internal suspend fun givenSchoolClass(
     schoolYearDataSource: SchoolYearDataSource,
     basicSchoolClass: BasicSchoolClass,
 ) {
-    schoolYearDataSource.insertOrUpdateSchoolYear(
+    schoolYearDataSource.upsertSchoolYear(
         id = null,
         schoolYearName = basicSchoolClass.schoolYear.name,
         termFirstName = basicSchoolClass.schoolYear.firstTerm.name,
@@ -151,7 +151,7 @@ internal suspend fun givenSchoolClass(
         termSecondEndDate = basicSchoolClass.schoolYear.secondTerm.endDate,
     )
 
-    schoolClassDataSource.insertOrUpdateSchoolClass(
+    schoolClassDataSource.upsertSchoolClass(
         id = null,
         schoolYearId = basicSchoolClass.schoolYear.id,
         name = basicSchoolClass.name

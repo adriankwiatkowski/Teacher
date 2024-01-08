@@ -35,7 +35,7 @@ internal class LessonNoteDataSourceImpl(
         .map(::toExternal)
         .flowOn(dispatcher)
 
-    override suspend fun insertOrUpdateLessonNote(
+    override suspend fun upsertLessonNote(
         id: Long?,
         lessonId: Long,
         title: String,

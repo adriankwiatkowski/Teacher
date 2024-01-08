@@ -101,7 +101,7 @@ class NoteDataSourceTest {
         text: String = "Text",
         priority: NotePriority = NotePriority.Medium,
     ): Note {
-        noteDataSource.insertOrUpdateNote(
+        noteDataSource.upsertNote(
             id = id,
             title = title,
             text = text,

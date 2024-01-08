@@ -90,7 +90,7 @@ internal class NotesScreenTest {
 
     private suspend fun givenNotes(limit: Int = Int.MAX_VALUE) {
         for (note in notes.take(limit)) {
-            noteRepository.insertOrUpdateNote(
+            noteRepository.upsertNote(
                 id = null,
                 title = note.title,
                 text = note.text,

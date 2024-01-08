@@ -81,7 +81,7 @@ internal class NoteFormViewModel @Inject constructor(
 
         _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-            repository.insertOrUpdateLessonNote(
+            repository.upsertLessonNote(
                 id = noteId.value.let { id -> if (id != 0L) id else null },
                 lessonId = lessonId.value,
                 title = form.title.value.trim(),

@@ -69,7 +69,7 @@ internal class StudentDataSourceImpl(
         .map(::toExternalStudentGrades)
         .flowOn(dispatcher)
 
-    override suspend fun insertOrUpdateStudent(
+    override suspend fun upsertStudent(
         id: Long?,
         schoolClassId: Long,
         registerNumber: Long?,

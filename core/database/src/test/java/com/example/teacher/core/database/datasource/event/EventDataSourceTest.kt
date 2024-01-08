@@ -133,7 +133,7 @@ class EventDataSourceTest {
     }
 
     private suspend fun givenLesson(schoolClassId: Long) {
-        lessonDataSource.insertOrUpdateLesson(
+        lessonDataSource.upsertLesson(
             id = null,
             schoolClassId = schoolClassId,
             name = "Lesson",
@@ -141,7 +141,7 @@ class EventDataSourceTest {
     }
 
     private suspend fun givenSchoolClass(basicSchoolClass: BasicSchoolClass) {
-        schoolYearDataSource.insertOrUpdateSchoolYear(
+        schoolYearDataSource.upsertSchoolYear(
             id = null,
             schoolYearName = basicSchoolClass.schoolYear.name,
             termFirstName = basicSchoolClass.schoolYear.firstTerm.name,
@@ -152,7 +152,7 @@ class EventDataSourceTest {
             termSecondEndDate = basicSchoolClass.schoolYear.secondTerm.endDate,
         )
 
-        schoolClassDataSource.insertOrUpdateSchoolClass(
+        schoolClassDataSource.upsertSchoolClass(
             id = null,
             schoolYearId = basicSchoolClass.schoolYear.id,
             name = basicSchoolClass.name

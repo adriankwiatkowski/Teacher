@@ -22,7 +22,7 @@ internal class DatabaseSchoolYearRepository @Inject constructor(
 
     override fun getAllSchoolYears(): Flow<List<SchoolYear>> = dataSource.getAllSchoolYears()
 
-    override suspend fun insertOrUpdateSchoolYear(
+    override suspend fun upsertSchoolYear(
         id: Long?,
         schoolYearName: String,
         termFirstName: String,
@@ -33,7 +33,7 @@ internal class DatabaseSchoolYearRepository @Inject constructor(
         termSecondEndDate: LocalDate,
     ) {
         scope.launch {
-            dataSource.insertOrUpdateSchoolYear(
+            dataSource.upsertSchoolYear(
                 id = id,
                 schoolYearName = schoolYearName,
                 termFirstName = termFirstName,

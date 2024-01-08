@@ -157,7 +157,7 @@ internal class GradeFormViewModel @Inject constructor(
 
         _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-            repository.insertOrUpdateGrade(
+            repository.upsertGrade(
                 id = gradeId.value.let { id -> if (id != 0L) id else null },
                 studentId = studentId.value,
                 gradeTemplateId = gradeTemplateId.value,

@@ -65,7 +65,7 @@ internal class LessonAttendanceDataSourceImpl @Inject constructor(
         ).flowOn(dispatcher)
     }
 
-    override suspend fun insertOrUpdateLessonAttendance(
+    override suspend fun upsertLessonAttendance(
         eventId: Long,
         studentId: Long,
         attendance: Attendance,

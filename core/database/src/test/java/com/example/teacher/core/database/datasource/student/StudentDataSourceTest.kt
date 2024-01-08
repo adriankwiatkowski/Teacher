@@ -43,7 +43,7 @@ class StudentDataSourceTest {
     fun studentDataSource_insertWithoutSchoolClass_fails() = runTest {
         val student = testStudent()
 
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = null,
             schoolClassId = student.schoolClassId,
             registerNumber = student.registerNumber,
@@ -65,7 +65,7 @@ class StudentDataSourceTest {
         insertSchoolClass(testSchoolClass())
         val student = testStudent(id = 1L, registerNumber = 3L, classId = 1L)
 
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = null,
             schoolClassId = student.schoolClassId,
             registerNumber = student.registerNumber,
@@ -87,7 +87,7 @@ class StudentDataSourceTest {
         insertSchoolClass(testSchoolClass())
         val student = testStudent()
 
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = null,
             schoolClassId = student.schoolClassId,
             registerNumber = student.registerNumber,
@@ -107,7 +107,7 @@ class StudentDataSourceTest {
     fun studentDataSource_updateStudent_happyPath() = runTest {
         insertSchoolClass(testSchoolClass())
         val student = testStudent()
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = null,
             schoolClassId = student.schoolClassId,
             registerNumber = student.registerNumber,
@@ -117,7 +117,7 @@ class StudentDataSourceTest {
             phone = student.phone,
         )
 
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = 1L,
             schoolClassId = student.schoolClassId,
             registerNumber = student.registerNumber,
@@ -143,7 +143,7 @@ class StudentDataSourceTest {
         )
 
         for (student in students) {
-            studentDataSource.insertOrUpdateStudent(
+            studentDataSource.upsertStudent(
                 id = null,
                 schoolClassId = student.schoolClassId,
                 registerNumber = student.registerNumber,
@@ -167,7 +167,7 @@ class StudentDataSourceTest {
         insertSchoolClass(testSchoolClass())
         val student = testStudent()
 
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = null,
             schoolClassId = student.schoolClassId,
             registerNumber = student.registerNumber,
@@ -190,7 +190,7 @@ class StudentDataSourceTest {
         insertSchoolClass(testSchoolClass())
         val student = testStudent()
 
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = null,
             schoolClassId = student.schoolClassId,
             registerNumber = student.registerNumber,
@@ -209,7 +209,7 @@ class StudentDataSourceTest {
     }
 
     private suspend fun insertSchoolClass(basicSchoolClass: BasicSchoolClass) {
-        schoolYearDataSource.insertOrUpdateSchoolYear(
+        schoolYearDataSource.upsertSchoolYear(
             id = null,
             schoolYearName = basicSchoolClass.schoolYear.name,
             termFirstName = basicSchoolClass.schoolYear.firstTerm.name,
@@ -220,7 +220,7 @@ class StudentDataSourceTest {
             termSecondEndDate = basicSchoolClass.schoolYear.secondTerm.endDate,
         )
 
-        schoolClassDataSource.insertOrUpdateSchoolClass(
+        schoolClassDataSource.upsertSchoolClass(
             id = null,
             schoolYearId = basicSchoolClass.schoolYear.id,
             name = basicSchoolClass.name

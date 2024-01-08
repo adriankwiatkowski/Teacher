@@ -10,7 +10,7 @@ interface GradeTemplateDataSource {
 
     fun getGradeTemplatesByLessonId(lessonId: Long): Flow<List<BasicGradeTemplate>>
 
-    suspend fun insertOrUpdateGradeTemplate(
+    suspend fun upsertGradeTemplate(
         id: Long?,
         name: String,
         description: String?,

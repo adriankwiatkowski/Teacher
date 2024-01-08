@@ -17,7 +17,7 @@ interface StudentRepository {
 
     fun getStudentGradesById(studentId: Long): Flow<Result<List<StudentGradesByLesson>>>
 
-    suspend fun insertOrUpdateStudent(
+    suspend fun upsertStudent(
         id: Long?,
         schoolClassId: Long,
         registerNumber: Long?,

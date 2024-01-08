@@ -19,7 +19,7 @@ interface StudentDataSource {
 
     fun getStudentGradesById(studentId: Long): Flow<List<StudentGradesByLesson>>
 
-    suspend fun insertOrUpdateStudent(
+    suspend fun upsertStudent(
         id: Long?,
         schoolClassId: Long,
         registerNumber: Long?,

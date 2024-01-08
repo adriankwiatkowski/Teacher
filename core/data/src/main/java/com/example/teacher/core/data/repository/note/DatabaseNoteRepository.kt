@@ -28,14 +28,14 @@ internal class DatabaseNoteRepository @Inject constructor(
     override fun getNoteById(id: Long): Flow<Result<Note>> = getNoteOrNullById(id)
         .notNull()
 
-    override suspend fun insertOrUpdateNote(
+    override suspend fun upsertNote(
         id: Long?,
         title: String,
         text: String,
-        priority: NotePriority
+        priority: NotePriority,
     ) {
         scope.launch {
-            dataSource.insertOrUpdateNote(
+            dataSource.upsertNote(
                 id = id,
                 title = title,
                 text = text,

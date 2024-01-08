@@ -99,7 +99,7 @@ class SchoolClassDataSourceTest {
     }
 
     private suspend fun givenSchoolClass(basicSchoolClass: BasicSchoolClass, id: Long? = null) {
-        schoolYearDataSource.insertOrUpdateSchoolYear(
+        schoolYearDataSource.upsertSchoolYear(
             id = null,
             schoolYearName = basicSchoolClass.schoolYear.name,
             termFirstName = basicSchoolClass.schoolYear.firstTerm.name,
@@ -110,7 +110,7 @@ class SchoolClassDataSourceTest {
             termSecondEndDate = basicSchoolClass.schoolYear.secondTerm.endDate,
         )
 
-        schoolClassDataSource.insertOrUpdateSchoolClass(
+        schoolClassDataSource.upsertSchoolClass(
             id = id,
             schoolYearId = basicSchoolClass.schoolYear.id,
             name = basicSchoolClass.name

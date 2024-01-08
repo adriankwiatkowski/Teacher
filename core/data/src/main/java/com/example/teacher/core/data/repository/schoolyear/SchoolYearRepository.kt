@@ -11,7 +11,7 @@ interface SchoolYearRepository {
 
     fun getAllSchoolYears(): Flow<List<SchoolYear>>
 
-    suspend fun insertOrUpdateSchoolYear(
+    suspend fun upsertSchoolYear(
         id: Long?,
         schoolYearName: String,
         termFirstName: String,

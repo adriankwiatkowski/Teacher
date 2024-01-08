@@ -71,7 +71,7 @@ internal class LessonDataSourceImpl(
         .map(::toExternalSchoolYear)
         .flowOn(dispatcher)
 
-    override suspend fun insertOrUpdateLesson(
+    override suspend fun upsertLesson(
         id: Long?,
         schoolClassId: Long,
         name: String,

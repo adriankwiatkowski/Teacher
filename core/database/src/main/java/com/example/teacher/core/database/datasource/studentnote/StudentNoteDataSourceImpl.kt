@@ -49,7 +49,7 @@ internal class StudentNoteDataSourceImpl(
             "${data.name} ${data.surname}"
         }
 
-    override suspend fun insertOrUpdateStudentNote(
+    override suspend fun upsertStudentNote(
         id: Long?,
         studentId: Long,
         title: String,

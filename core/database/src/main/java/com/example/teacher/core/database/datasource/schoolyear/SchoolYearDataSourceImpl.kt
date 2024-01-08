@@ -46,7 +46,7 @@ internal class SchoolYearDataSourceImpl(
             .let(::toExternal)
     }
 
-    override suspend fun insertOrUpdateSchoolYear(
+    override suspend fun upsertSchoolYear(
         id: Long?,
         schoolYearName: String,
         termFirstName: String,

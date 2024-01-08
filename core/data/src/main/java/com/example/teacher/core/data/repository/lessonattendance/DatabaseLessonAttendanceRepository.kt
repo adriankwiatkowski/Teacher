@@ -55,13 +55,13 @@ internal class DatabaseLessonAttendanceRepository @Inject constructor(
         .getSchoolYearByLessonId(lessonId)
         .asResultNotNull()
 
-    override suspend fun insertOrUpdateLessonAttendance(
+    override suspend fun upsertLessonAttendance(
         eventId: Long,
         studentId: Long,
-        attendance: Attendance
+        attendance: Attendance,
     ) {
         scope.launch {
-            dataSource.insertOrUpdateLessonAttendance(
+            dataSource.upsertLessonAttendance(
                 eventId = eventId,
                 studentId = studentId,
                 attendance = attendance,

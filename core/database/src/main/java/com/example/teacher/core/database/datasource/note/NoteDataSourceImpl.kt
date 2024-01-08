@@ -35,7 +35,7 @@ internal class NoteDataSourceImpl(
         .map(::toExternal)
         .flowOn(dispatcher)
 
-    override suspend fun insertOrUpdateNote(
+    override suspend fun upsertNote(
         id: Long?,
         title: String,
         text: String,

@@ -38,7 +38,7 @@ internal class GradeTemplateDataSourceImpl(
         .map(::toExternal)
         .flowOn(dispatcher)
 
-    override suspend fun insertOrUpdateGradeTemplate(
+    override suspend fun upsertGradeTemplate(
         id: Long?,
         name: String,
         description: String?,

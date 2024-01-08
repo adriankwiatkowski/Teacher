@@ -18,12 +18,7 @@ interface GradeRepository {
 
     fun getStudentById(id: Long): Flow<Result<BasicStudent>>
 
-    suspend fun insertOrUpdateGrade(
-        id: Long?,
-        studentId: Long,
-        gradeTemplateId: Long,
-        grade: BigDecimal,
-    )
+    suspend fun upsertGrade(id: Long?, studentId: Long, gradeTemplateId: Long, grade: BigDecimal)
 
     suspend fun deleteGradeById(id: Long)
 

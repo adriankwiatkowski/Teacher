@@ -67,7 +67,7 @@ class LessonNoteDataSourceTest {
         givenSchoolClass(testSchoolClass())
         givenLesson(schoolClassId = 1L)
 
-        lessonNoteDataSource.insertOrUpdateLessonNote(
+        lessonNoteDataSource.upsertLessonNote(
             id = null,
             lessonId = 1L,
             title = "Title",
@@ -87,7 +87,7 @@ class LessonNoteDataSourceTest {
         givenLesson(schoolClassId = 1L)
         givenNote(lessonId = 1L)
 
-        lessonNoteDataSource.insertOrUpdateLessonNote(
+        lessonNoteDataSource.upsertLessonNote(
             id = 1L,
             lessonId = 1L,
             title = "Updated Title",
@@ -119,7 +119,7 @@ class LessonNoteDataSourceTest {
         title: String = "Title",
         description: String = "",
     ) {
-        lessonNoteDataSource.insertOrUpdateLessonNote(
+        lessonNoteDataSource.upsertLessonNote(
             id = id,
             lessonId = lessonId,
             title = title,
@@ -132,11 +132,11 @@ class LessonNoteDataSourceTest {
         id: Long? = null,
         name: String = "Name",
     ) {
-        lessonDataSource.insertOrUpdateLesson(id = id, schoolClassId = schoolClassId, name = name)
+        lessonDataSource.upsertLesson(id = id, schoolClassId = schoolClassId, name = name)
     }
 
     private suspend fun givenSchoolClass(basicSchoolClass: BasicSchoolClass) {
-        schoolYearDataSource.insertOrUpdateSchoolYear(
+        schoolYearDataSource.upsertSchoolYear(
             id = null,
             schoolYearName = basicSchoolClass.schoolYear.name,
             termFirstName = basicSchoolClass.schoolYear.firstTerm.name,
@@ -147,7 +147,7 @@ class LessonNoteDataSourceTest {
             termSecondEndDate = basicSchoolClass.schoolYear.secondTerm.endDate,
         )
 
-        schoolClassDataSource.insertOrUpdateSchoolClass(
+        schoolClassDataSource.upsertSchoolClass(
             id = null,
             schoolYearId = basicSchoolClass.schoolYear.id,
             name = basicSchoolClass.name

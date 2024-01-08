@@ -28,7 +28,7 @@ internal class DatabaseStudentNoteRepository @Inject constructor(
     override fun getStudentFullNameNameById(studentId: Long): Flow<String?> =
         dataSource.getStudentFullNameNameById(studentId)
 
-    override suspend fun insertOrUpdateStudentNote(
+    override suspend fun upsertStudentNote(
         id: Long?,
         studentId: Long,
         title: String,
@@ -36,7 +36,7 @@ internal class DatabaseStudentNoteRepository @Inject constructor(
         isNegative: Boolean,
     ) {
         scope.launch {
-            dataSource.insertOrUpdateStudentNote(
+            dataSource.upsertStudentNote(
                 id = id,
                 studentId = studentId,
                 title = title,

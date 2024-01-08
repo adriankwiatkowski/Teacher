@@ -11,12 +11,7 @@ interface LessonNoteRepository {
 
     fun getLessonNoteOrNullById(id: Long): Flow<Result<LessonNote?>>
 
-    suspend fun insertOrUpdateLessonNote(
-        id: Long?,
-        lessonId: Long,
-        title: String,
-        text: String,
-    )
+    suspend fun upsertLessonNote(id: Long?, lessonId: Long, title: String, text: String)
 
     suspend fun deleteLessonNoteById(id: Long)
 }

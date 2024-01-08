@@ -90,7 +90,7 @@ class SchoolYearDataSourceTest {
             endDate = TimeUtils.plusDays(TimeUtils.currentDate(), 3),
         ),
     ): SchoolYear {
-        schoolYearDataSource.insertOrUpdateSchoolYear(
+        schoolYearDataSource.upsertSchoolYear(
             id = id,
             schoolYearName = name,
             termFirstName = firstTerm.name,

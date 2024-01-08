@@ -26,7 +26,7 @@ internal class LessonActivityDataSourceImpl(
         .map(::toExternal)
         .flowOn(dispatcher)
 
-    override suspend fun insertOrUpdateLessonActivity(
+    override suspend fun upsertLessonActivity(
         id: Long?,
         lessonId: Long,
         studentId: Long,

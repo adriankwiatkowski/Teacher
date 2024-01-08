@@ -56,7 +56,7 @@ internal class GradeDataSourceImpl(
         return combine(gradeTemplateInfoFlow, studentGradesFlow, ::toExternal)
     }
 
-    override suspend fun insertOrUpdateGrade(
+    override suspend fun upsertGrade(
         id: Long?,
         studentId: Long,
         gradeTemplateId: Long,

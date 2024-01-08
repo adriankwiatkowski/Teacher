@@ -86,7 +86,7 @@ class StudentNoteDataSourceTest {
         givenSchoolClass(testSchoolClass())
         givenStudent(schoolClassId = 1L)
 
-        studentNoteDataSource.insertOrUpdateStudentNote(
+        studentNoteDataSource.upsertStudentNote(
             id = null,
             studentId = 1L,
             title = "Title",
@@ -107,7 +107,7 @@ class StudentNoteDataSourceTest {
         givenStudent(schoolClassId = 1L)
         givenNote(studentId = 1L)
 
-        studentNoteDataSource.insertOrUpdateStudentNote(
+        studentNoteDataSource.upsertStudentNote(
             id = 1L,
             studentId = 1L,
             title = "Updated Title",
@@ -140,7 +140,7 @@ class StudentNoteDataSourceTest {
         description: String = "",
         isNegative: Boolean = false,
     ) {
-        studentNoteDataSource.insertOrUpdateStudentNote(
+        studentNoteDataSource.upsertStudentNote(
             id = id,
             studentId = studentId,
             title = title,
@@ -157,7 +157,7 @@ class StudentNoteDataSourceTest {
         email: String? = null,
         phone: String? = null,
     ) {
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = id,
             schoolClassId = schoolClassId,
             registerNumber = null,
@@ -169,7 +169,7 @@ class StudentNoteDataSourceTest {
     }
 
     private suspend fun givenSchoolClass(basicSchoolClass: BasicSchoolClass) {
-        schoolYearDataSource.insertOrUpdateSchoolYear(
+        schoolYearDataSource.upsertSchoolYear(
             id = null,
             schoolYearName = basicSchoolClass.schoolYear.name,
             termFirstName = basicSchoolClass.schoolYear.firstTerm.name,
@@ -180,7 +180,7 @@ class StudentNoteDataSourceTest {
             termSecondEndDate = basicSchoolClass.schoolYear.secondTerm.endDate,
         )
 
-        schoolClassDataSource.insertOrUpdateSchoolClass(
+        schoolClassDataSource.upsertSchoolClass(
             id = null,
             schoolYearId = basicSchoolClass.schoolYear.id,
             name = basicSchoolClass.name

@@ -25,11 +25,7 @@ interface LessonAttendanceRepository {
 
     fun getSchoolYearByLessonId(lessonId: Long): Flow<Result<SchoolYear>>
 
-    suspend fun insertOrUpdateLessonAttendance(
-        eventId: Long,
-        studentId: Long,
-        attendance: Attendance,
-    )
+    suspend fun upsertLessonAttendance(eventId: Long, studentId: Long, attendance: Attendance)
 
     suspend fun deleteLessonAttendance(eventId: Long, studentId: Long)
 }

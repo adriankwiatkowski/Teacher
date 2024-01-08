@@ -78,7 +78,7 @@ internal class LessonFormViewModel @Inject constructor(
 
         _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-            val saved = lessonRepository.insertOrUpdateLesson(
+            val saved = lessonRepository.upsertLesson(
                 id = form.id,
                 schoolClassId = schoolClassId.value,
                 name = form.name.value.trim(),

@@ -34,7 +34,7 @@ internal class DatabaseGradeTemplateRepository @Inject constructor(
         .getLessonById(lessonId)
         .asResultNotNull()
 
-    override suspend fun insertOrUpdateGradeTemplate(
+    override suspend fun upsertGradeTemplate(
         id: Long?,
         name: String,
         description: String?,
@@ -43,7 +43,7 @@ internal class DatabaseGradeTemplateRepository @Inject constructor(
         lessonId: Long,
     ) {
         scope.launch {
-            dataSource.insertOrUpdateGradeTemplate(
+            dataSource.upsertGradeTemplate(
                 id = id,
                 name = name,
                 description = description,

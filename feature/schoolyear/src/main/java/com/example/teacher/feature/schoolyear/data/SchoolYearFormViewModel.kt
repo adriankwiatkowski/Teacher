@@ -116,7 +116,7 @@ internal class SchoolYearFormViewModel @Inject constructor(
             val secondTerm = form.value.termForms[1]
             val schoolYearName = form.value.schoolYearName.value
 
-            repository.insertOrUpdateSchoolYear(
+            repository.upsertSchoolYear(
                 id = schoolYearId.value.let { id -> if (id != 0L) id else null },
                 schoolYearName = schoolYearName,
                 termFirstName = firstTerm.name.value,

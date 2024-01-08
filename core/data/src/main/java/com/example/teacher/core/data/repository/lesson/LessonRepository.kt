@@ -17,7 +17,7 @@ interface LessonRepository {
 
     fun getSchoolClassNameById(schoolClassId: Long): Flow<String?>
 
-    suspend fun insertOrUpdateLesson(id: Long?, schoolClassId: Long, name: String): Boolean
+    suspend fun upsertLesson(id: Long?, schoolClassId: Long, name: String): Boolean
 
     suspend fun deleteLessonById(id: Long)
 }

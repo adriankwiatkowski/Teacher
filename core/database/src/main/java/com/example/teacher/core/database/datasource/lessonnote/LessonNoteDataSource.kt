@@ -10,12 +10,7 @@ interface LessonNoteDataSource {
 
     fun getLessonNoteById(id: Long): Flow<LessonNote?>
 
-    suspend fun insertOrUpdateLessonNote(
-        id: Long?,
-        lessonId: Long,
-        title: String,
-        text: String,
-    )
+    suspend fun upsertLessonNote(id: Long?, lessonId: Long, title: String, text: String)
 
     suspend fun deleteLessonNoteById(id: Long)
 }

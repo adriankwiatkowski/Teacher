@@ -38,9 +38,9 @@ internal class DatabaseSchoolClassRepository @Inject constructor(
     override fun getAllSchoolYears(): Flow<List<SchoolYear>> =
         schoolYearDataSource.getAllSchoolYears()
 
-    override suspend fun insertOrUpdateSchoolClass(id: Long?, schoolYearId: Long, name: String) {
+    override suspend fun upsertSchoolClass(id: Long?, schoolYearId: Long, name: String) {
         scope.launch {
-            dataSource.insertOrUpdateSchoolClass(id = id, schoolYearId = schoolYearId, name = name)
+            dataSource.upsertSchoolClass(id = id, schoolYearId = schoolYearId, name = name)
         }
     }
 

@@ -13,7 +13,7 @@ interface SchoolClassDataSource {
 
     fun getAllSchoolClasses(): Flow<List<SchoolClassesByYear>>
 
-    suspend fun insertOrUpdateSchoolClass(id: Long?, schoolYearId: Long, name: String)
+    suspend fun upsertSchoolClass(id: Long?, schoolYearId: Long, name: String)
 
     suspend fun deleteSchoolClassById(id: Long)
 }

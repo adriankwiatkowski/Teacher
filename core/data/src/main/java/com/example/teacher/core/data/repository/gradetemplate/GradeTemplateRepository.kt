@@ -14,7 +14,7 @@ interface GradeTemplateRepository {
 
     fun getLessonById(lessonId: Long): Flow<Result<Lesson>>
 
-    suspend fun insertOrUpdateGradeTemplate(
+    suspend fun upsertGradeTemplate(
         id: Long?,
         name: String,
         description: String?,

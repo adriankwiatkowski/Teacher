@@ -14,11 +14,7 @@ interface LessonAttendanceDataSource {
 
     fun getStudentsWithAttendanceByLessonId(lessonId: Long): Flow<List<StudentWithAttendance>>
 
-    suspend fun insertOrUpdateLessonAttendance(
-        eventId: Long,
-        studentId: Long,
-        attendance: Attendance,
-    )
+    suspend fun upsertLessonAttendance(eventId: Long, studentId: Long, attendance: Attendance)
 
     suspend fun deleteLessonAttendance(eventId: Long, studentId: Long)
 }

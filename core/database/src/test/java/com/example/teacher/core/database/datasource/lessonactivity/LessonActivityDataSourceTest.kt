@@ -63,7 +63,7 @@ class LessonActivityDataSourceTest {
         givenLesson(schoolClassId = 1L)
         givenStudent(schoolClassId = 1L)
 
-        lessonActivityDataSource.insertOrUpdateLessonActivity(
+        lessonActivityDataSource.upsertLessonActivity(
             id = null,
             lessonId = 1L,
             studentId = 1L,
@@ -84,7 +84,7 @@ class LessonActivityDataSourceTest {
         givenStudent(schoolClassId = 1L)
         givenLessonActivity(lessonId = 1L, studentId = 1L, sum = 10)
 
-        lessonActivityDataSource.insertOrUpdateLessonActivity(
+        lessonActivityDataSource.upsertLessonActivity(
             id = 1L,
             lessonId = 1L,
             studentId = 1L,
@@ -105,7 +105,7 @@ class LessonActivityDataSourceTest {
         sum: Long = 0,
         isFirstTerm: Boolean = true,
     ) {
-        lessonActivityDataSource.insertOrUpdateLessonActivity(
+        lessonActivityDataSource.upsertLessonActivity(
             id = id,
             lessonId = lessonId,
             studentId = studentId,
@@ -119,7 +119,7 @@ class LessonActivityDataSourceTest {
         id: Long? = null,
         name: String = "Name",
     ) {
-        lessonDataSource.insertOrUpdateLesson(id = id, schoolClassId = schoolClassId, name = name)
+        lessonDataSource.upsertLesson(id = id, schoolClassId = schoolClassId, name = name)
     }
 
     private suspend fun givenStudent(
@@ -130,7 +130,7 @@ class LessonActivityDataSourceTest {
         email: String? = null,
         phone: String? = null,
     ) {
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = id,
             schoolClassId = schoolClassId,
             registerNumber = null,
@@ -142,7 +142,7 @@ class LessonActivityDataSourceTest {
     }
 
     private suspend fun givenSchoolClass(basicSchoolClass: BasicSchoolClass) {
-        schoolYearDataSource.insertOrUpdateSchoolYear(
+        schoolYearDataSource.upsertSchoolYear(
             id = null,
             schoolYearName = basicSchoolClass.schoolYear.name,
             termFirstName = basicSchoolClass.schoolYear.firstTerm.name,
@@ -153,7 +153,7 @@ class LessonActivityDataSourceTest {
             termSecondEndDate = basicSchoolClass.schoolYear.secondTerm.endDate,
         )
 
-        schoolClassDataSource.insertOrUpdateSchoolClass(
+        schoolClassDataSource.upsertSchoolClass(
             id = null,
             schoolYearId = basicSchoolClass.schoolYear.id,
             name = basicSchoolClass.name

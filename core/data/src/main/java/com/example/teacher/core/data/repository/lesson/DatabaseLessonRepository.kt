@@ -41,14 +41,10 @@ internal class DatabaseLessonRepository @Inject constructor(
     override fun getSchoolClassNameById(schoolClassId: Long): Flow<String?> = dataSource
         .getStudentSchoolClassNameById(schoolClassId)
 
-    override suspend fun insertOrUpdateLesson(
-        id: Long?,
-        schoolClassId: Long,
-        name: String,
-    ): Boolean {
+    override suspend fun upsertLesson(id: Long?, schoolClassId: Long, name: String): Boolean {
         return withContext(scope.coroutineContext + dispatcher) {
             try {
-                dataSource.insertOrUpdateLesson(
+                dataSource.upsertLesson(
                     id = id,
                     schoolClassId = schoolClassId,
                     name = name,

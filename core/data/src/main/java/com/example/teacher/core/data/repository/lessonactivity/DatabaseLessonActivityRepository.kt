@@ -37,7 +37,7 @@ class DatabaseLessonActivityRepository @Inject constructor(
 
     private suspend fun upsertLessonActivity(lessonActivity: LessonActivity, newSum: Long) {
         scope.launch {
-            dataSource.insertOrUpdateLessonActivity(
+            dataSource.upsertLessonActivity(
                 id = lessonActivity.id,
                 lessonId = lessonActivity.lesson.id,
                 studentId = lessonActivity.student.id,

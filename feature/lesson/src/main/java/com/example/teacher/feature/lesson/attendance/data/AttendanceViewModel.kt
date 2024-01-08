@@ -70,7 +70,7 @@ internal class AttendanceViewModel @Inject constructor(
 
         viewModelScope.launch {
             if (attendance != null) {
-                repository.insertOrUpdateLessonAttendance(
+                repository.upsertLessonAttendance(
                     eventId = eventId,
                     studentId = studentId,
                     attendance = attendance,

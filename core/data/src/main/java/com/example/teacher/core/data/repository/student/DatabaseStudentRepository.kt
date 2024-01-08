@@ -40,7 +40,7 @@ internal class DatabaseStudentRepository @Inject constructor(
         .getStudentGradesById(studentId)
         .asResult()
 
-    override suspend fun insertOrUpdateStudent(
+    override suspend fun upsertStudent(
         id: Long?,
         schoolClassId: Long,
         registerNumber: Long?,
@@ -50,7 +50,7 @@ internal class DatabaseStudentRepository @Inject constructor(
         phone: String?,
     ) {
         scope.launch {
-            dataSource.insertOrUpdateStudent(
+            dataSource.upsertStudent(
                 id = id,
                 schoolClassId = schoolClassId,
                 registerNumber = registerNumber,

@@ -14,7 +14,7 @@ interface GradeDataSource {
 
     fun getGradeTemplateInfoByGradeTemplateId(gradeTemplateId: Long): Flow<GradeTemplateInfo?>
 
-    suspend fun insertOrUpdateGrade(
+    suspend fun upsertGrade(
         id: Long?,
         studentId: Long,
         gradeTemplateId: Long,

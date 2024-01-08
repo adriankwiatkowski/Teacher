@@ -44,14 +44,14 @@ internal class DatabaseGradeRepository @Inject constructor(
         .getBasicStudentById(id)
         .asResultNotNull()
 
-    override suspend fun insertOrUpdateGrade(
+    override suspend fun upsertGrade(
         id: Long?,
         studentId: Long,
         gradeTemplateId: Long,
         grade: BigDecimal,
     ) {
         scope.launch {
-            dataSource.insertOrUpdateGrade(
+            dataSource.upsertGrade(
                 id = id,
                 studentId = studentId,
                 gradeTemplateId = gradeTemplateId,

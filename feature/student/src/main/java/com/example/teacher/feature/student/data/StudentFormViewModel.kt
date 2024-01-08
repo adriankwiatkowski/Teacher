@@ -152,7 +152,7 @@ internal class StudentFormViewModel @Inject constructor(
 
         _form.value = form.copy(status = FormStatus.Saving)
         viewModelScope.launch {
-            repository.insertOrUpdateStudent(
+            repository.upsertStudent(
                 id = form.id,
                 schoolClassId = schoolClassId.value,
                 registerNumber = form.registerNumber.value?.trim()?.toLongOrNull(),

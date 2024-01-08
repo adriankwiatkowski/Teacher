@@ -26,14 +26,9 @@ internal class DatabaseLessonNoteRepository @Inject constructor(
         .getLessonNoteById(id)
         .asResult()
 
-    override suspend fun insertOrUpdateLessonNote(
-        id: Long?,
-        lessonId: Long,
-        title: String,
-        text: String
-    ) {
+    override suspend fun upsertLessonNote(id: Long?, lessonId: Long, title: String, text: String) {
         scope.launch {
-            dataSource.insertOrUpdateLessonNote(
+            dataSource.upsertLessonNote(
                 id = id,
                 lessonId = lessonId,
                 title = title,

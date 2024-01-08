@@ -127,7 +127,7 @@ class GradeTemplateDataSourceTest {
         weight: Int = 3,
         isFirstTerm: Boolean = true,
     ) {
-        gradeTemplateDataSource.insertOrUpdateGradeTemplate(
+        gradeTemplateDataSource.upsertGradeTemplate(
             id = id,
             lessonId = lessonId,
             name = name,
@@ -142,11 +142,11 @@ class GradeTemplateDataSourceTest {
         id: Long? = null,
         name: String = "Name",
     ) {
-        lessonDataSource.insertOrUpdateLesson(id = id, schoolClassId = schoolClassId, name = name)
+        lessonDataSource.upsertLesson(id = id, schoolClassId = schoolClassId, name = name)
     }
 
     private suspend fun givenSchoolClass(basicSchoolClass: BasicSchoolClass) {
-        schoolYearDataSource.insertOrUpdateSchoolYear(
+        schoolYearDataSource.upsertSchoolYear(
             id = null,
             schoolYearName = basicSchoolClass.schoolYear.name,
             termFirstName = basicSchoolClass.schoolYear.firstTerm.name,
@@ -157,7 +157,7 @@ class GradeTemplateDataSourceTest {
             termSecondEndDate = basicSchoolClass.schoolYear.secondTerm.endDate,
         )
 
-        schoolClassDataSource.insertOrUpdateSchoolClass(
+        schoolClassDataSource.upsertSchoolClass(
             id = null,
             schoolYearId = basicSchoolClass.schoolYear.id,
             name = basicSchoolClass.name

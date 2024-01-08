@@ -20,11 +20,7 @@ interface LessonDataSource {
 
     fun getSchoolYearByLessonId(lessonId: Long): Flow<SchoolYear?>
 
-    suspend fun insertOrUpdateLesson(
-        id: Long?,
-        schoolClassId: Long,
-        name: String,
-    )
+    suspend fun upsertLesson(id: Long?, schoolClassId: Long, name: String)
 
     suspend fun deleteLessonById(id: Long)
 }

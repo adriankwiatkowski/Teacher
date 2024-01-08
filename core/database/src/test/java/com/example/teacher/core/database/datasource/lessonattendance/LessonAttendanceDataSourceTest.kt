@@ -163,7 +163,7 @@ class LessonAttendanceDataSourceTest {
         studentId: Long,
         attendance: Attendance = Attendance.Present,
     ) {
-        lessonAttendanceDataSource.insertOrUpdateLessonAttendance(
+        lessonAttendanceDataSource.upsertLessonAttendance(
             eventId = eventId,
             studentId = studentId,
             attendance = attendance,
@@ -195,7 +195,7 @@ class LessonAttendanceDataSourceTest {
         id: Long? = null,
         name: String = "Name",
     ) {
-        lessonDataSource.insertOrUpdateLesson(id = id, schoolClassId = schoolClassId, name = name)
+        lessonDataSource.upsertLesson(id = id, schoolClassId = schoolClassId, name = name)
     }
 
     private suspend fun givenStudent(
@@ -206,7 +206,7 @@ class LessonAttendanceDataSourceTest {
         email: String? = null,
         phone: String? = null,
     ) {
-        studentDataSource.insertOrUpdateStudent(
+        studentDataSource.upsertStudent(
             id = id,
             schoolClassId = schoolClassId,
             registerNumber = null,
@@ -218,7 +218,7 @@ class LessonAttendanceDataSourceTest {
     }
 
     private suspend fun givenSchoolClass(basicSchoolClass: BasicSchoolClass) {
-        schoolYearDataSource.insertOrUpdateSchoolYear(
+        schoolYearDataSource.upsertSchoolYear(
             id = null,
             schoolYearName = basicSchoolClass.schoolYear.name,
             termFirstName = basicSchoolClass.schoolYear.firstTerm.name,
@@ -229,7 +229,7 @@ class LessonAttendanceDataSourceTest {
             termSecondEndDate = basicSchoolClass.schoolYear.secondTerm.endDate,
         )
 
-        schoolClassDataSource.insertOrUpdateSchoolClass(
+        schoolClassDataSource.upsertSchoolClass(
             id = null,
             schoolYearId = basicSchoolClass.schoolYear.id,
             name = basicSchoolClass.name

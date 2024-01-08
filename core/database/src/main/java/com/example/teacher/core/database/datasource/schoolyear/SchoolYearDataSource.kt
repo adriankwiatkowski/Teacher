@@ -12,7 +12,7 @@ interface SchoolYearDataSource {
 
     suspend fun getSchoolYearByLessonId(lessonId: Long): SchoolYear?
 
-    suspend fun insertOrUpdateSchoolYear(
+    suspend fun upsertSchoolYear(
         id: Long?,
         schoolYearName: String,
         termFirstName: String,

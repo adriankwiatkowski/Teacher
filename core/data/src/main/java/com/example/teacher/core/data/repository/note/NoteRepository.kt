@@ -13,12 +13,7 @@ interface NoteRepository {
 
     fun getNoteById(id: Long): Flow<Result<Note>>
 
-    suspend fun insertOrUpdateNote(
-        id: Long?,
-        title: String,
-        text: String,
-        priority: NotePriority,
-    )
+    suspend fun upsertNote(id: Long?, title: String, text: String, priority: NotePriority)
 
     suspend fun deleteNoteById(id: Long)
 }
