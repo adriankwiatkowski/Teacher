@@ -12,7 +12,7 @@ class LessonActivitiesPreviewParameterProvider : PreviewParameterProvider<List<L
 }
 
 class LessonActivityPreviewParameterProvider : PreviewParameterProvider<LessonActivity> {
-    override val values: Sequence<LessonActivity> = students
+    override val values: Sequence<LessonActivity> = BasicStudentPreviewParameterProvider().values
         .flatMap { student ->
             val lessonActivity = LessonActivity(
                 id = null,
@@ -31,8 +31,4 @@ class LessonActivityPreviewParameterProvider : PreviewParameterProvider<LessonAc
                 lessonActivity.copy(isFirstTerm = false),
             )
         }
-
-    companion object {
-        private val students = BasicStudentPreviewParameterProvider().values
-    }
 }

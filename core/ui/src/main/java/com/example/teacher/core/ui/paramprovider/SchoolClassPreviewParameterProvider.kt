@@ -2,26 +2,7 @@ package com.example.teacher.core.ui.paramprovider
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacher.core.model.data.BasicSchoolClass
-import com.example.teacher.core.model.data.SchoolClass
 import com.example.teacher.core.model.data.SchoolClassesByYear
-
-class SchoolClassPreviewParameterProvider : PreviewParameterProvider<SchoolClass> {
-
-    override val values: Sequence<SchoolClass> = BasicSchoolClassPreviewParameterProvider()
-        .values
-        .map { basicSchoolClass ->
-            SchoolClass(
-                id = basicSchoolClass.id,
-                name = basicSchoolClass.name,
-                schoolYear = basicSchoolClass.schoolYear,
-                students = students,
-                lessons = lessons,
-            )
-        }
-
-    private val lessons = BasicLessonPreviewParameterProvider().values.toList()
-    private val students = BasicStudentPreviewParameterProvider().values.toList()
-}
 
 class SchoolClassesByYearPreviewParameterProvider :
     PreviewParameterProvider<List<SchoolClassesByYear>> {

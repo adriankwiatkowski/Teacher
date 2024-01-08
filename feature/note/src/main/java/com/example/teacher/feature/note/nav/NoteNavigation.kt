@@ -20,7 +20,7 @@ object NoteNavigation {
     const val notesRoute = notesScreen
 }
 
-private const val noteFormRoute = "$noteFormScreen?$noteIdArg={$noteIdArg}"
+internal const val noteFormRoute = "$noteFormScreen?$noteIdArg={$noteIdArg}"
 
 fun NavController.navigateToNotesRoute(navOptions: NavOptions? = null) {
     this.navigate(notesRoute, navOptions)

@@ -60,6 +60,7 @@ androidx-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-v
 androidx-lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 # Navigation
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav" }
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "nav" }
 
 # Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
@@ -109,7 +110,7 @@ compose = [
     "androidx-navigation-compose",
 ]
 debug-compose = ["androidx-compose-ui-tooling", "androidx-compose-ui-testManifest"]
-test-compose = ["androidx-compose-ui-test", "robolectric"]
+test-compose = ["androidx-compose-ui-test", "androidx-navigation-testing", "robolectric"]
 android-test-compose = ["androidx-compose-ui-test"]
 
 [plugins]

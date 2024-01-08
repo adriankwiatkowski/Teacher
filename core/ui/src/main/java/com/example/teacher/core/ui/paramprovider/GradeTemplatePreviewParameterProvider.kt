@@ -3,20 +3,6 @@ package com.example.teacher.core.ui.paramprovider
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.teacher.core.common.utils.DecimalUtils
 import com.example.teacher.core.model.data.BasicGradeTemplate
-import com.example.teacher.core.model.data.GradeTemplate
-
-class GradeTemplatePreviewParameterProvider : PreviewParameterProvider<GradeTemplate> {
-    override val values: Sequence<GradeTemplate> = sequenceOf(
-        GradeTemplate(
-            id = 1L,
-            lessonId = 1L,
-            name = "Dodawanie",
-            description = "Sprawdzian z dodawania",
-            weight = 1,
-            isFirstTerm = true,
-        )
-    )
-}
 
 class BasicGradeTemplatesPreviewParameterProvider :
     PreviewParameterProvider<List<BasicGradeTemplate>> {

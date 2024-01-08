@@ -42,11 +42,10 @@ private fun makeNotes(vararg data: Pair<String, String>): Array<BasicLessonNote>
             id = index.toLong(),
             title = title,
             text = text,
-            lessonId = 1L,
         )
     }.toTypedArray()
 
-private fun makeNote(id: Long, title: String, text: String, lessonId: Long): BasicLessonNote {
+private fun makeNote(id: Long, title: String, text: String, lessonId: Long = 1L): BasicLessonNote {
     return BasicLessonNote(
         id = id,
         title = title,
