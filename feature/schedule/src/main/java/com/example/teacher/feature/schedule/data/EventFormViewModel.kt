@@ -105,7 +105,7 @@ internal class EventFormViewModel @Inject constructor(
     }
 
     fun onStartTimeChange(startTime: LocalTime) {
-        val timeData = EventFormProvider.sanitizeStartTime(startTime, form.value.endTime)
+        val timeData = EventFormProvider.sanitizeStartTime(startTime)
         _form.value = form.value.copy(
             startTime = timeData.startTime,
             endTime = timeData.endTime,

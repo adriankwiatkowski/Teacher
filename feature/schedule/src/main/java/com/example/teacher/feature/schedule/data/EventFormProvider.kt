@@ -32,11 +32,10 @@ internal object EventFormProvider {
     }
 
     @Suppress("NAME_SHADOWING")
-    fun sanitizeStartTime(startTime: LocalTime, endTime: LocalTime): TimeData {
+    fun sanitizeStartTime(startTime: LocalTime): TimeData {
         require(DefaultMinuteDiff in 1..59)
 
         var startTime = startTime
-        var endTime = endTime
 
         val startTimeHour = TimeUtils.localTimeHour(startTime)
         var startTimeMinute = TimeUtils.localTimeMinute(startTime)
@@ -46,15 +45,12 @@ internal object EventFormProvider {
             startTimeMinute = TimeUtils.localTimeMinute(startTime)
         }
 
-        if (!TimeUtils.isBefore(startTime, endTime)) {
-            // Don't allow end time to be before start time.
-            val minutesToAdd = if (startTimeHour == 23) {
-                min(DefaultMinuteDiff, 60 - 1 - startTimeMinute)
-            } else {
-                DefaultMinuteDiff
-            }.toLong()
-            endTime = TimeUtils.plusTime(startTime, 0, minutesToAdd)
-        }
+        val minutesToAdd = if (startTimeHour == 23) {
+            min(DefaultMinuteDiff, 60 - 1 - startTimeMinute)
+        } else {
+            DefaultMinuteDiff
+        }.toLong()
+        val endTime = TimeUtils.plusTime(startTime, 0, minutesToAdd)
 
         return TimeData(startTime, endTime)
     }
@@ -87,7 +83,7 @@ internal object EventFormProvider {
         status: FormStatus = FormStatus.Idle,
         isEdited: Boolean = false,
     ): EventForm {
-        val timeData = sanitizeStartTime(startTime, endTime)
+        val timeData = sanitizeEndTime(startTime, endTime)
 
         return EventForm(
             name = validateName(name, isEdited = isEdited),

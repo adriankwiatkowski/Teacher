@@ -77,14 +77,14 @@ internal class AuthImpl @Inject constructor() : Auth {
         if (result == BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED) {
             // Prompts the user to create credentials that your app accepts.
             if (launchBiometricSettings) {
-                lunchBiometricSettings(context)
+                launchBiometricSettings(context)
             }
         }
 
         return false
     }
 
-    private fun lunchBiometricSettings(context: Context) {
+    private fun launchBiometricSettings(context: Context) {
         val enrollIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                 putExtra(Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED, authenticators)

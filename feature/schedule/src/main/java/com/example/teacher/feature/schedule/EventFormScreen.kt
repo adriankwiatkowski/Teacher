@@ -298,7 +298,7 @@ private fun EventFormScreenPreview(
                     form = form.copy(date = EventFormProvider.sanitizeDate(it))
                 },
                 onStartTimeChange = {
-                    val timeData = EventFormProvider.sanitizeStartTime(it, form.endTime)
+                    val timeData = EventFormProvider.sanitizeStartTime(it)
                     form = form.copy(
                         startTime = timeData.startTime,
                         endTime = timeData.endTime,
