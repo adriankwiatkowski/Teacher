@@ -49,7 +49,6 @@ internal class DatabaseEventRepository @Inject constructor(
         startTime: LocalTime,
         endTime: LocalTime,
         isCancelled: Boolean,
-        type: EventType,
     ) {
         scope.launch {
             eventDataSource.insertEvents(

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.data.repository.schoolyear.SchoolYearRepository
+import com.example.teacher.core.domain.GenerateSchoolYearNameUseCase
 import com.example.teacher.core.model.data.SchoolYear
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.feature.schoolyear.nav.SchoolYearNavigation
@@ -29,6 +30,7 @@ import javax.inject.Inject
 internal class SchoolYearFormViewModel @Inject constructor(
     private val repository: SchoolYearRepository,
     private val savedStateHandle: SavedStateHandle,
+    generateSchoolYearNameUseCase: GenerateSchoolYearNameUseCase,
 ) : ViewModel() {
 
     private val schoolYearId = savedStateHandle.getStateFlow(SCHOOL_YEAR_ID_KEY, 0L)
@@ -39,7 +41,8 @@ internal class SchoolYearFormViewModel @Inject constructor(
         .flatMapLatest { schoolYearId -> repository.getSchoolYearById(schoolYearId) }
         .stateIn(initialValue = Result.Loading)
 
-    private val _form = MutableStateFlow(SchoolYearFormProvider.createDefaultForm())
+    private val _form =
+        MutableStateFlow(SchoolYearFormProvider.createDefaultForm(generateSchoolYearNameUseCase))
     val form = _form.asStateFlow()
 
     private val initialForm = MutableStateFlow(form.value)
@@ -51,7 +54,8 @@ internal class SchoolYearFormViewModel @Inject constructor(
             .onEach { schoolYearResult ->
                 val schoolYear = (schoolYearResult as? Result.Success)?.data
                 if (schoolYear == null) {
-                    _form.value = SchoolYearFormProvider.createDefaultForm()
+                    _form.value =
+                        SchoolYearFormProvider.createDefaultForm(generateSchoolYearNameUseCase)
                     initialForm.value = form.value
                     return@onEach
                 }

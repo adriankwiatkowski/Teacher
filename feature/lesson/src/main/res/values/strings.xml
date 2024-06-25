@@ -1,91 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="lesson_attendance_title">Wystawienie frekwencji</string>
-    <string name="lesson_set_attendance">Wystaw frekwencję</string>
-    <string name="lesson_present">obecność</string>
-    <string name="lesson_late">spóźnienie</string>
-    <string name="lesson_absent">nieobecność</string>
-    <string name="lesson_excused_absence">nieobecność usprawiedliwiona</string>
-    <string name="lesson_exemption">zwolnienie</string>
-    <string name="lesson_no_attendance">brak</string>
-    <string name="lesson_present_short">ob</string>
-    <string name="lesson_late_short">sp</string>
-    <string name="lesson_absent_short">nb</string>
-    <string name="lesson_excused_absence_short">u</string>
-    <string name="lesson_exemption_short">zw</string>
-    <string name="lesson_no_attendance_short">niezaznaczone</string>
+    <string name="lesson_attendance_title">Attendance</string>
+    <string name="lesson_set_attendance">Set attendance</string>
+    <string name="lesson_present">present</string>
+    <string name="lesson_late">late</string>
+    <string name="lesson_absent">absent</string>
+    <string name="lesson_excused_absence">excused absence</string>
+    <string name="lesson_exemption">exemption</string>
+    <string name="lesson_no_attendance">not set</string>
+    <string name="lesson_present_short">pres</string>
+    <string name="lesson_late_short">late</string>
+    <string name="lesson_absent_short">absent</string>
+    <string name="lesson_excused_absence_short">excused</string>
+    <string name="lesson_exemption_short">exempt</string>
+    <string name="lesson_no_attendance_short">na</string>
 
-    <string name="lesson_attendance_no_schedule">Nie dodano planu zajęć.</string>
-    <string name="lesson_attendance_edit_event">Edytuj dane</string>
-    <string name="lesson_attendance_statistics">Statystyki</string>
-    <string name="lesson_attendance_statistics_title">Frekwencja</string>
-    <string name="lesson_attendance_cancelled">Zajęcia odwołane</string>
-    <string name="lesson_attendance_cancelled_with_date">%1$s (odwołane)</string>
+    <string name="lesson_attendance_no_schedule">No schedule added.</string>
+    <string name="lesson_attendance_edit_event">Edit data</string>
+    <string name="lesson_attendance_statistics">Statistics</string>
+    <string name="lesson_attendance_statistics_title">Attendance</string>
+    <string name="lesson_attendance_cancelled">Class canceled</string>
+    <string name="lesson_attendance_cancelled_with_date">%1$s (canceled)</string>
 
-    <string name="lesson_date">Data %1$s</string>
-    <string name="lesson_time">Godzina %1$s</string>
+    <string name="lesson_date">Date %1$s</string>
+    <string name="lesson_time">Time %1$s</string>
 
-    <string name="lesson_grades">Oceny</string>
-    <string name="lesson_attendance">Obecność</string>
-    <string name="lesson_activity">Aktywność</string>
-    <string name="lesson_notes">Notatki</string>
-    <string name="lesson_grade_weight_error">Waga musi być liczbą od 1 do 6</string>
+    <string name="lesson_grades">Grades</string>
+    <string name="lesson_attendance">Attendance</string>
+    <string name="lesson_activity">Activity</string>
+    <string name="lesson_notes">Notes</string>
+    <string name="lesson_grade_weight_error">Weight must be a number from 1 to 6</string>
 
-    <string name="lesson_grade">Ocena</string>
-    <string name="lesson_grade_saved">Zapisano ocenę</string>
-    <string name="lesson_grade_deleted">Usunięto ocenę</string>
-    <string name="lesson_saving_grade">Zapisywanie oceny…</string>
-    <string name="lesson_edit_grade">Edytuj ocenę</string>
-    <string name="lesson_save_grade">Dodaj ocenę</string>
+    <string name="lesson_grade">Grade</string>
+    <string name="lesson_grade_deleted">Grade deleted</string>
+    <string name="lesson_saving_grade">Saving grade…</string>
+    <string name="lesson_edit_grade">Edit grade</string>
+    <string name="lesson_save_grade">Add grade</string>
 
-    <string name="lesson_title">Tytuł</string>
-    <string name="lesson_name">Nazwa</string>
-    <string name="lesson_description">Opis</string>
-    <string name="lesson_weight">Waga</string>
-    <string name="lesson_weight_data">Waga %1$s</string>
-    <string name="lesson_average_grade">Średnia %1$s</string>
+    <string name="lesson_title">Title</string>
+    <string name="lesson_name">Name</string>
+    <string name="lesson_description">Description</string>
+    <string name="lesson_weight">Weight</string>
+    <string name="lesson_weight_data">Weight %1$s</string>
+    <string name="lesson_average_grade">Average %1$s</string>
     <string name="lesson_weight_and_average">%1$s · %2$s</string>
-    <string name="lesson_no_grades_in_term">Brak ocen w semestrze</string>
-    <string name="lesson_no_activity">brak aktywności</string>
+    <string name="lesson_no_grades_in_term">No grades in term</string>
+    <string name="lesson_no_activity">no activity</string>
 
-    <string name="lesson_saving_lesson">Zapisywanie przedmiotu…</string>
-    <string name="lesson_lesson_saved">Zapisano zajęcia</string>
-    <string name="lesson_lesson_deleted">Usunięto zajęcia</string>
-    <string name="lesson_saving_lesson_note">Zapisywanie notatki z zajęć…</string>
-    <string name="lesson_lesson_note_saved">Zapisano notatkę z zajęć</string>
-    <string name="lesson_lesson_note_deleted">Usunięto notatkę z zajęć</string>
+    <string name="lesson_saving_lesson">Saving subject…</string>
+    <string name="lesson_lesson_deleted">Subject deleted</string>
+    <string name="lesson_saving_lesson_note">Saving subject note…</string>
+    <string name="lesson_lesson_note_deleted">Subject note deleted</string>
 
-    <string name="lesson_note_form_title">Notatka z zajęć</string>
-    <string name="lesson_edit_note">Edytuj notatkę</string>
-    <string name="lesson_add_note">Dodaj notatkę</string>
-    <string name="lesson_empty_notes">Nie napisano jeszcze żadnej notatki</string>
+    <string name="lesson_note_form_title">Subject note</string>
+    <string name="lesson_edit_note">Edit note</string>
+    <string name="lesson_add_note">Add note</string>
+    <string name="lesson_empty_notes">No note has been written yet</string>
 
-    <string name="lesson_school_class">Klasa %1$s</string>
-    <string name="lesson_add_lesson">Dodaj przedmiot</string>
-    <string name="lesson_edit_lesson">Edytuj przedmiot</string>
-    <string name="lesson_lesson">Przedmiot</string>
-    <string name="lesson_no_students_in_class">Nie dodano uczniów do klasy</string>
+    <string name="lesson_school_class">Class %1$s</string>
+    <string name="lesson_add_lesson">Add subject</string>
+    <string name="lesson_edit_lesson">Edit subject</string>
+    <string name="lesson_lesson">Subject</string>
+    <string name="lesson_no_students_in_class">No students added to the class</string>
 
-    <string name="lesson_term_label">Semestr</string>
-    <string name="lesson_term">Semestr %1$s</string>
-    <string name="lesson_attendance_no_term">Poza semestrem</string>
-    <string name="lesson_attendance_no_events_in_term">Brak zajęć w semestrze</string>
+    <string name="lesson_term_label">Term</string>
+    <string name="lesson_term">Term %1$s</string>
+    <string name="lesson_attendance_no_term">Out of term</string>
+    <string name="lesson_attendance_no_events_in_term">No classes in the term</string>
     <string name="lesson_first_term">I</string>
     <string name="lesson_second_term">II</string>
 
     <string-array name="lesson_suggestions">
-        <item>Matematyka</item>
-        <item>Język polski</item>
-        <item>Język obcy</item>
-        <item>Historia</item>
-        <item>Plastyka</item>
-        <item>Technika</item>
-        <item>Przyroda</item>
-        <item>Muzyka</item>
-        <item>Informatyka</item>
-        <item>Zajęcia z wychowawcą</item>
-        <item>Wychowanie fizyczne (WF)</item>
-        <item>Religia</item>
-        <item>Etyka</item>
+        <item>Mathematics</item>
+        <item>Polish language</item>
+        <item>Foreign language</item>
+        <item>History</item>
+        <item>Plastics</item>
+        <item>Technology</item>
+        <item>Biology</item>
+        <item>Music</item>
+        <item>Computer science</item>
+        <item>Physical Education (P.E.)</item>
+        <item>Religion</item>
+        <item>Ethics</item>
     </string-array>
 </resources>

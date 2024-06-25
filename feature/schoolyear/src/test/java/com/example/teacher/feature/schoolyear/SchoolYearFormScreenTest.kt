@@ -23,13 +23,13 @@ import com.example.teacher.core.common.result.Result
 import com.example.teacher.core.data.repository.schoolyear.SchoolYearRepository
 import com.example.teacher.core.database.datasource.schoolclass.SchoolClassDataSource
 import com.example.teacher.core.database.datasource.schoolyear.SchoolYearDataSource
+import com.example.teacher.core.domain.GenerateSchoolYearNameUseCase
 import com.example.teacher.core.testing.HiltTestActivity
 import com.example.teacher.feature.schoolyear.data.SchoolYearFormViewModel
 import com.example.teacher.feature.schoolyear.nav.SchoolYearNavigation
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -94,7 +94,11 @@ class SchoolYearFormScreenTest {
         val submitMatcher =
             hasClickAction() and hasText(rule.activity.getString(R.string.school_year_edit_school_year))
         val savedStateHandle = SavedStateHandle(mapOf(SchoolYearNavigation.schoolYearIdArg to 1L))
-        val viewModel = SchoolYearFormViewModel(schoolYearRepository, savedStateHandle)
+        val viewModel = SchoolYearFormViewModel(
+            schoolYearRepository,
+            savedStateHandle,
+            GenerateSchoolYearNameUseCase(rule.activity),
+        )
         rule.setContent { SchoolYearFormScreen(viewModel, isEditMode = true) }
 
         rule.waitUntil { viewModel.schoolYearResult.value is Result.Success }

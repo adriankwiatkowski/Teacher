@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ui_navigate_back">Przejdź do poprzedniego ekranu</string>
-    <string name="ui_add">Dodaj</string>
-    <string name="ui_edit">Edytuj</string>
-    <string name="ui_warning">Ostrzeżenie</string>
-    <string name="ui_delete">Usuń</string>
-    <string name="ui_schedule">Plan zajęć</string>
-    <string name="ui_school_classes">Klasy</string>
-    <string name="ui_notes">Notatki</string>
-    <string name="ui_settings">Ustawienia</string>
-    <string name="ui_loading">Wczytywanie…</string>
-    <string name="ui_saving">Zapisywanie…</string>
-    <string name="ui_form_error">Wystąpił nieoczekiwany błąd podczas zapisywania</string>
-    <string name="ui_unexpected_error">Wystąpił nieoczekiwany błąd</string>
-    <string name="ui_data_deleted">Usunięto dane</string>
-    <string name="ui_required">Wymagane*</string>
+    <string name="ui_navigate_back">Go to previous screen</string>
+    <string name="ui_add">Add</string>
+    <string name="ui_edit">Edit</string>
+    <string name="ui_warning">Warning</string>
+    <string name="ui_delete">Delete</string>
+    <string name="ui_schedule">Schedule</string>
+    <string name="ui_school_classes">School classes</string>
+    <string name="ui_notes">Notes</string>
+    <string name="ui_settings">Settings</string>
+    <string name="ui_loading">Loading…</string>
+    <string name="ui_saving">Saving…</string>
+    <string name="ui_form_error">An unexpected error occurred while saving</string>
+    <string name="ui_unexpected_error">An unexpected error occurred</string>
+    <string name="ui_data_deleted">Deleted data</string>
+    <string name="ui_required">Required*</string>
     <string name="ui_ok">OK</string>
-    <string name="ui_cancel">Anuluj</string>
-    <string name="ui_minus">Odejmij</string>
-    <string name="ui_plus">Dodaj</string>
-    <string name="ui_subject">Przedmiot</string>
-    <string name="ui_navigate_before">Cofnij się</string>
-    <string name="ui_navigate_next">Przejdź do przodu</string>
-    <string name="ui_person">Osoba</string>
-    <string name="ui_group_of_people">Osoby</string>
-    <string name="ui_register_book">Dziennik</string>
-    <string name="ui_content_copy">Skopiuj zawartość</string>
-    <string name="ui_phone">Telefon</string>
+    <string name="ui_cancel">Cancel</string>
+    <string name="ui_minus">Subtract</string>
+    <string name="ui_plus">Add</string>
+    <string name="ui_subject">Subject</string>
+    <string name="ui_navigate_before">Navigate before</string>
+    <string name="ui_navigate_next">Navigate next</string>
+    <string name="ui_person">Person</string>
+    <string name="ui_group_of_people">People</string>
+    <string name="ui_register_book">Register book</string>
+    <string name="ui_content_copy">Copy content</string>
+    <string name="ui_phone">Phone</string>
     <string name="ui_email">Email</string>
-    <string name="ui_details">Dane</string>
-    <string name="ui_grades">Oceny</string>
-    <string name="ui_attendance">Frekwencja</string>
-    <string name="ui_activity">Aktywność</string>
-    <string name="ui_info">Informacja</string>
-    <string name="ui_date">Data</string>
-    <string name="ui_day_pick">Dzień</string>
-    <string name="ui_time">Czas</string>
+    <string name="ui_details">Details</string>
+    <string name="ui_grades">Grades</string>
+    <string name="ui_attendance">Attendance</string>
+    <string name="ui_activity">Activity</string>
+    <string name="ui_info">Information</string>
+    <string name="ui_date">Date</string>
+    <string name="ui_day_pick">Day</string>
+    <string name="ui_time">Time</string>
 
-    <string name="ui_discard_title">Odrzucić dane?</string>
-    <string name="ui_discard_message">Formularz zostanie odrzucony i nie zostanie zapisany.</string>
-    <string name="ui_discard">Odrzuć</string>
+    <string name="ui_discard_title">Discard data</string>
+    <string name="ui_discard_message">The form will be rejected and will not be saved.</string>
+    <string name="ui_discard">Discard</string>
 
-    <string name="ui_remove_title">Usunąć dane?</string>
-    <string name="ui_remove_message">Dane zostaną usunięte i nie będzie można ich przywrócić.</string>
-    <string name="ui_remove">Usuń</string>
+    <string name="ui_remove_title">Delete data</string>
+    <string name="ui_remove_message">The data will be deleted and cannot be restored</string>
+    <string name="ui_remove">Delete</string>
 
     <string name="ui_very_long_text" translatable="false">Very very very very very very very very long supportive text</string>
     <string name="ui_supportive_text" translatable="false">Supportive Text</string>
-    <string name="ui_tab_1" translatable="false">Dane</string>
-    <string name="ui_tab_2" translatable="false">Oceny</string>
-    <string name="ui_tab_3" translatable="false">Uwagi</string>
+    <string name="ui_tab_1" translatable="false">Data</string>
+    <string name="ui_tab_2" translatable="false">Grades</string>
+    <string name="ui_tab_3" translatable="false">Notes</string>
 </resources>

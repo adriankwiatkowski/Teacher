@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ui_navigate_back">Przejdź do poprzedniego ekranu</string>
+    <string name="ui_add">Dodaj</string>
+    <string name="ui_edit">Edytuj</string>
+    <string name="ui_warning">Ostrzeżenie</string>
+    <string name="ui_delete">Usuń</string>
+    <string name="ui_schedule">Plan zajęć</string>
+    <string name="ui_school_classes">Klasy</string>
+    <string name="ui_notes">Notatki</string>
+    <string name="ui_settings">Ustawienia</string>
+    <string name="ui_loading">Wczytywanie…</string>
+    <string name="ui_saving">Zapisywanie…</string>
+    <string name="ui_form_error">Wystąpił nieoczekiwany błąd podczas zapisywania</string>
+    <string name="ui_unexpected_error">Wystąpił nieoczekiwany błąd</string>
+    <string name="ui_data_deleted">Usunięto dane</string>
+    <string name="ui_required">Wymagane*</string>
+    <string name="ui_ok">OK</string>
+    <string name="ui_cancel">Anuluj</string>
+    <string name="ui_minus">Odejmij</string>
+    <string name="ui_plus">Dodaj</string>
+    <string name="ui_subject">Przedmiot</string>
+    <string name="ui_navigate_before">Cofnij się</string>
+    <string name="ui_navigate_next">Przejdź do przodu</string>
+    <string name="ui_person">Osoba</string>
+    <string name="ui_group_of_people">Osoby</string>
+    <string name="ui_register_book">Dziennik</string>
+    <string name="ui_content_copy">Skopiuj zawartość</string>
+    <string name="ui_phone">Telefon</string>
+    <string name="ui_email">Email</string>
+    <string name="ui_details">Dane</string>
+    <string name="ui_grades">Oceny</string>
+    <string name="ui_attendance">Frekwencja</string>
+    <string name="ui_activity">Aktywność</string>
+    <string name="ui_info">Informacja</string>
+    <string name="ui_date">Data</string>
+    <string name="ui_day_pick">Dzień</string>
+    <string name="ui_time">Czas</string>
+
+    <string name="ui_discard_title">Odrzucić dane?</string>
+    <string name="ui_discard_message">Formularz zostanie odrzucony i nie zostanie zapisany.</string>
+    <string name="ui_discard">Odrzuć</string>
+
+    <string name="ui_remove_title">Usunąć dane?</string>
+    <string name="ui_remove_message">Dane zostaną usunięte i nie będzie można ich przywrócić.</string>
+    <string name="ui_remove">Usuń</string>
+</resources>

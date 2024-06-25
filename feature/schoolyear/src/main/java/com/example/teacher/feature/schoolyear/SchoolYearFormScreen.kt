@@ -20,9 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.teacher.core.domain.GenerateSchoolYearNameUseCase
 import com.example.teacher.core.ui.component.TeacherButton
 import com.example.teacher.core.ui.component.TeacherTopBar
 import com.example.teacher.core.ui.component.TeacherTopBarDefaults
@@ -234,7 +236,12 @@ private fun TeamFormItem(
 private fun SchoolYearFormScreenPreview() {
     TeacherTheme {
         Surface {
-            val form = SchoolYearFormProvider.createDefaultForm()
+            val context = LocalContext.current
+            val form = remember {
+                SchoolYearFormProvider.createDefaultForm(
+                    GenerateSchoolYearNameUseCase(context.applicationContext)
+                )
+            }
 
             SchoolYearFormScreen(
                 snackbarHostState = remember { SnackbarHostState() },

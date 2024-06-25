@@ -183,7 +183,6 @@ internal class EventFormViewModel @Inject constructor(
                     date = form.date,
                     startTime = form.startTime,
                     endTime = form.endTime,
-                    type = form.type,
                     isCancelled = form.isCancelled,
                 )
             }

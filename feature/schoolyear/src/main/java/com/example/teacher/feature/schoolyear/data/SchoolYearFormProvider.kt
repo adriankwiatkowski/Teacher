@@ -2,6 +2,7 @@ package com.example.teacher.feature.schoolyear.data
 
 import androidx.core.text.trimmedLength
 import com.example.teacher.core.common.utils.TimeUtils
+import com.example.teacher.core.domain.GenerateSchoolYearNameUseCase
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.model.InputField
 import java.time.LocalDate
@@ -67,6 +68,7 @@ internal object SchoolYearFormProvider {
     }
 
     fun createDefaultForm(
+        generateSchoolYearNameUseCase: GenerateSchoolYearNameUseCase,
         firstTermName: String? = null,
         secondTermName: String? = null,
         schoolYearName: String? = null,
@@ -78,7 +80,10 @@ internal object SchoolYearFormProvider {
 
         val startYear = LocalDate.now().year
         val endYear = startYear + 1
-        val name = schoolYearName ?: "Rok $startYear/$endYear"
+        val name = schoolYearName ?: generateSchoolYearNameUseCase(
+            startYear.toString(),
+            endYear.toString()
+        )
 
         val termForms = sanitizeDates(
             termForms = listOf(firstTermForm, secondTermForm),

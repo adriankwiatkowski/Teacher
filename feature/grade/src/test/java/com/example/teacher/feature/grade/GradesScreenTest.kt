@@ -19,7 +19,6 @@ import com.example.teacher.feature.grade.data.GradesUiState
 import com.example.teacher.feature.grade.data.GradesViewModel
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

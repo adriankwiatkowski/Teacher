@@ -36,7 +36,6 @@ import com.example.teacher.feature.schedule.nav.ScheduleNavigation
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -120,6 +119,8 @@ class EventFormScreenTest {
         val okMatcher = hasText(rule.activity.getString(com.example.teacher.core.ui.R.string.ui_ok))
         val cancelMatcher =
             hasText(rule.activity.getString(com.example.teacher.core.ui.R.string.ui_cancel))
+        val saveButtonMatcher =
+            hasClickAction() and hasText(rule.activity.getString(R.string.schedule_add_event_date))
         val savedStateHandle = SavedStateHandle(mapOf(ScheduleNavigation.lessonIdArg to 1L))
         val viewModel = EventFormViewModel(eventRepository, savedStateHandle)
         rule.setContent { EventFormScreen(viewModel, lessonResult) }
@@ -139,7 +140,7 @@ class EventFormScreenTest {
         rule.onNodeWithText(rule.activity.getString(R.string.schedule_weekly)).performClick()
         rule.onNodeWithText(rule.activity.getString(R.string.schedule_is_cancelled)).performClick()
         rule.onNodeWithText(rule.activity.getString(R.string.schedule_is_cancelled)).performClick()
-        rule.onNodeWithText(rule.activity.getString(R.string.schedule_add_event_date))
+        rule.onNode(saveButtonMatcher)
             .assertIsEnabled()
             .performClick()
     }
@@ -147,6 +148,8 @@ class EventFormScreenTest {
     @Test
     fun eventUpdateWorks() = runTest {
         givenEvent(eventDataSource)
+        val saveButtonMatcher =
+            hasClickAction() and hasText(rule.activity.getString(R.string.schedule_add_event_date))
         val savedStateHandle = SavedStateHandle(mapOf(ScheduleNavigation.eventIdArg to 1L))
         val viewModel = EventFormViewModel(eventRepository, savedStateHandle)
         rule.setContent { EventFormScreen(viewModel) }
@@ -154,7 +157,7 @@ class EventFormScreenTest {
         rule.waitUntil { viewModel.eventResult.value is Result.Success }
         rule.onRoot().printToLog("Event Form")
 
-        rule.onNodeWithText(rule.activity.getString(R.string.schedule_add_event_date))
+        rule.onNode(saveButtonMatcher)
             .assertIsEnabled()
             .performClick()
     }
@@ -165,7 +168,8 @@ class EventFormScreenTest {
             hasClickAction() and hasText(rule.activity.getString(R.string.schedule_event))
         val eventNameInputMatcher =
             hasText(rule.activity.getString(R.string.schedule_event_name_label), substring = true)
-        val saveButtonMatcher = hasText(rule.activity.getString(R.string.schedule_add_event_date))
+        val saveButtonMatcher =
+            hasClickAction() and hasText(rule.activity.getString(R.string.schedule_add_event_date))
         val viewModel = ViewModelProvider(rule.activity)[EventFormViewModel::class.java]
         rule.setContent { EventFormScreen(viewModel) }
         rule.onRoot().printToLog("Event Form")

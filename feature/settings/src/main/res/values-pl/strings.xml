@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Ustawienia</string>
+    <string name="theme">Motyw</string>
+    <string name="system_default">Ustawienie domyślne systemu</string>
+    <string name="light">Jasny</string>
+    <string name="dark">Ciemny</string>
+    <string name="dynamic_theme">Dynamiczny motyw</string>
+    <string name="use_dynamic_theme">Używaj dynamicznych kolorów</string>
+    <string name="settings_dynamic_theme_info">Spersonalizuj aplikację używając kolorów ze swojej tapety oraz innych ustawień</string>
+</resources>

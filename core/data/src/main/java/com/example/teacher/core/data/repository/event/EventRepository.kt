@@ -23,7 +23,6 @@ interface EventRepository {
         startTime: LocalTime,
         endTime: LocalTime,
         isCancelled: Boolean,
-        type: EventType,
     )
 
     suspend fun insertLessonSchedule(

@@ -3,6 +3,7 @@ package com.example.teacher.feature.lesson.attendance
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
@@ -32,7 +33,6 @@ import com.example.teacher.feature.lesson.testSchoolClass
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -120,6 +120,7 @@ class AttendanceScreenTest {
         givenLesson(lessonDataSource, schoolClassId = 1L)
         givenEvent(eventDataSource, lessonId = 1L, isCancelled = true)
         givenLessonAttendance(lessonAttendanceDataSource, eventId = 1L, studentId = 1L)
+        val titleMatcher = hasText(rule.activity.getString(R.string.lesson_set_attendance))
         val savedStateHandle = SavedStateHandle(mapOf(LessonNavigation.eventIdArg to 1L))
         val viewModel = AttendanceViewModel(lessonAttendanceRepository, savedStateHandle)
 
@@ -149,7 +150,7 @@ class AttendanceScreenTest {
         rule.waitUntil { viewModel.lessonAttendancesResult.value is Result.Success }
 
         rule.onNodeWithText("Name Surname").performClick()
-        rule.onNodeWithText(rule.activity.getString(R.string.lesson_set_attendance))
+        rule.onNode(titleMatcher)
             .assertExists()
     }
 
@@ -160,6 +161,7 @@ class AttendanceScreenTest {
         givenLesson(lessonDataSource, schoolClassId = 1L)
         givenEvent(eventDataSource, lessonId = 1L)
         givenLessonAttendance(lessonAttendanceDataSource, eventId = 1L, studentId = 1L)
+        val titleMatcher = hasText(rule.activity.getString(R.string.lesson_set_attendance))
         val savedStateHandle = SavedStateHandle(mapOf(LessonNavigation.eventIdArg to 1L))
         val viewModel = AttendanceViewModel(lessonAttendanceRepository, savedStateHandle)
 
@@ -189,11 +191,11 @@ class AttendanceScreenTest {
         rule.waitUntil { viewModel.lessonAttendancesResult.value is Result.Success }
 
         rule.onNodeWithText("Name Surname").performClick()
-        rule.onNodeWithText(rule.activity.getString(R.string.lesson_set_attendance)).assertExists()
+        rule.onNode(titleMatcher).assertExists()
 
         rule.onNodeWithText(rule.activity.getString(com.example.teacher.core.ui.R.string.ui_cancel))
             .performClick()
-        rule.onNodeWithText(rule.activity.getString(R.string.lesson_set_attendance))
+        rule.onNode(titleMatcher)
             .assertDoesNotExist()
     }
 
@@ -204,6 +206,7 @@ class AttendanceScreenTest {
         givenLesson(lessonDataSource, schoolClassId = 1L)
         givenEvent(eventDataSource, lessonId = 1L)
         givenLessonAttendance(lessonAttendanceDataSource, eventId = 1L, studentId = 1L)
+        val titleMatcher = hasText(rule.activity.getString(R.string.lesson_set_attendance))
         val savedStateHandle = SavedStateHandle(mapOf(LessonNavigation.eventIdArg to 1L))
         val viewModel = AttendanceViewModel(lessonAttendanceRepository, savedStateHandle)
 
@@ -233,13 +236,13 @@ class AttendanceScreenTest {
         rule.waitUntil { viewModel.lessonAttendancesResult.value is Result.Success }
 
         rule.onNodeWithText("Name Surname").performClick()
-        rule.onNodeWithText(rule.activity.getString(R.string.lesson_set_attendance)).assertExists()
+        rule.onNode(titleMatcher).assertExists()
 
         rule.onNodeWithText(rule.activity.getString(R.string.lesson_late))
             .performClick()
         rule.onNodeWithText(rule.activity.getString(com.example.teacher.core.ui.R.string.ui_ok))
             .performClick()
-        rule.onNodeWithText(rule.activity.getString(R.string.lesson_set_attendance))
+        rule.onNode(titleMatcher)
             .assertDoesNotExist()
     }
 
@@ -250,6 +253,7 @@ class AttendanceScreenTest {
         givenLesson(lessonDataSource, schoolClassId = 1L)
         givenEvent(eventDataSource, lessonId = 1L)
         givenLessonAttendance(lessonAttendanceDataSource, eventId = 1L, studentId = 1L)
+        val titleMatcher = hasText(rule.activity.getString(R.string.lesson_set_attendance))
         val savedStateHandle = SavedStateHandle(mapOf(LessonNavigation.eventIdArg to 1L))
         val viewModel = AttendanceViewModel(lessonAttendanceRepository, savedStateHandle)
 
@@ -279,13 +283,13 @@ class AttendanceScreenTest {
         rule.waitUntil { viewModel.lessonAttendancesResult.value is Result.Success }
 
         rule.onNodeWithText("Name Surname").performClick()
-        rule.onNodeWithText(rule.activity.getString(R.string.lesson_set_attendance)).assertExists()
+        rule.onNode(titleMatcher).assertExists()
 
         rule.onNodeWithText(rule.activity.getString(R.string.lesson_no_attendance))
             .performClick()
         rule.onNodeWithText(rule.activity.getString(com.example.teacher.core.ui.R.string.ui_ok))
             .performClick()
-        rule.onNodeWithText(rule.activity.getString(R.string.lesson_set_attendance))
+        rule.onNode(titleMatcher)
             .assertDoesNotExist()
     }
 }

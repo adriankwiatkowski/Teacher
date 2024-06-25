@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="domain_note_title">Notatka z dnia %1$s</string>
+    <string name="domain_note_title">Note of %1$s</string>
+    <string name="domain_school_year_name">Year %1$s/%2$s</string>
 </resources>

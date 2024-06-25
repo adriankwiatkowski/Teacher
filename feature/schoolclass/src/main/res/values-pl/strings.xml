@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="school_class_students_with_data">Uczniowie (%1$s)</string>
+    <string name="school_class_lessons">Zajęcia (%1$s)</string>
+    <string name="school_class_term_name">Semestr %1$s</string>
+    <string name="school_class_term_start">Rozpoczęcie semestru: %1$s</string>
+    <string name="school_class_term_end">Zakończenie semestru: %1$s</string>
+    <string name="school_class_no_school_year">Żeby stworzyć klasę musisz najpierw dodać rok szkolny.</string>
+    <string name="school_class_add_school_year">Dodaj nowy rok szkolny</string>
+    <string name="school_class_edit_school_year">Edytuj rok szkolny</string>
+    <string name="school_class_school_year">Rok szkolny</string>
+    <string name="school_class_email">Email: %1$s</string>
+    <string name="school_class_phone">Telefon: %1$s</string>
+    <string name="school_class_saving_school_class">Zapisywanie klasy…</string>
+    <string name="school_class_school_class_deleted">Usunięto klasę</string>
+    <string name="school_class_add_school_class">Dodaj klasę</string>
+    <string name="school_class_edit_school_class">Edytuj klasę</string>
+    <string name="school_class">Klasa %1$s</string>
+    <string name="school_classes_empty">Nie istnieje jeszcze żadna klasa</string>
+    <string name="school_class_form_title">Stwórz nową klasę</string>
+    <string name="school_class_form_edit_title">Edytuj klasę</string>
+    <string name="school_class_name_label">Nazwa klasy</string>
+    <string name="school_class_prefix">"(Klasa) "</string>
+    <string name="school_class_no_students_in_class">Nie dodano uczniów do klasy</string>
+    <string name="school_class_no_lessons_in_class">Nie dodano przedmiotów do klasy</string>
+    <string name="school_class_details">Dane</string>
+    <string name="school_class_students">Uczniowie</string>
+    <string name="school_class_subjects">Przedmioty</string>
+    <string name="school_class_label">Klasa</string>
+    <string name="school_class_pick_random_student_title">Losowanie ucznia</string>
+    <string name="school_class_pick_random_student">Wylosuj ucznia</string>
+    <string name="school_class_random_student_label">Wylosowany uczeń:</string>
+</resources>

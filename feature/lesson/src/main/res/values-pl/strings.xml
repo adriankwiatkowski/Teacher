@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lesson_attendance_title">Wystawienie frekwencji</string>
+    <string name="lesson_set_attendance">Wystaw frekwencję</string>
+    <string name="lesson_present">obecność</string>
+    <string name="lesson_late">spóźnienie</string>
+    <string name="lesson_absent">nieobecność</string>
+    <string name="lesson_excused_absence">nieobecność usprawiedliwiona</string>
+    <string name="lesson_exemption">zwolnienie</string>
+    <string name="lesson_no_attendance">brak</string>
+    <string name="lesson_present_short">ob</string>
+    <string name="lesson_late_short">sp</string>
+    <string name="lesson_absent_short">nb</string>
+    <string name="lesson_excused_absence_short">u</string>
+    <string name="lesson_exemption_short">zw</string>
+    <string name="lesson_no_attendance_short">niezaznaczone</string>
+
+    <string name="lesson_attendance_no_schedule">Nie dodano planu zajęć.</string>
+    <string name="lesson_attendance_edit_event">Edytuj dane</string>
+    <string name="lesson_attendance_statistics">Statystyki</string>
+    <string name="lesson_attendance_statistics_title">Frekwencja</string>
+    <string name="lesson_attendance_cancelled">Zajęcia odwołane</string>
+    <string name="lesson_attendance_cancelled_with_date">%1$s (odwołane)</string>
+
+    <string name="lesson_date">Data %1$s</string>
+    <string name="lesson_time">Godzina %1$s</string>
+
+    <string name="lesson_grades">Oceny</string>
+    <string name="lesson_attendance">Obecność</string>
+    <string name="lesson_activity">Aktywność</string>
+    <string name="lesson_notes">Notatki</string>
+    <string name="lesson_grade_weight_error">Waga musi być liczbą od 1 do 6</string>
+
+    <string name="lesson_grade">Ocena</string>
+    <string name="lesson_grade_deleted">Usunięto ocenę</string>
+    <string name="lesson_saving_grade">Zapisywanie oceny…</string>
+    <string name="lesson_edit_grade">Edytuj ocenę</string>
+    <string name="lesson_save_grade">Dodaj ocenę</string>
+
+    <string name="lesson_title">Tytuł</string>
+    <string name="lesson_name">Nazwa</string>
+    <string name="lesson_description">Opis</string>
+    <string name="lesson_weight">Waga</string>
+    <string name="lesson_weight_data">Waga %1$s</string>
+    <string name="lesson_average_grade">Średnia %1$s</string>
+    <string name="lesson_weight_and_average">%1$s · %2$s</string>
+    <string name="lesson_no_grades_in_term">Brak ocen w semestrze</string>
+    <string name="lesson_no_activity">brak aktywności</string>
+
+    <string name="lesson_saving_lesson">Zapisywanie przedmiotu…</string>
+    <string name="lesson_lesson_deleted">Usunięto zajęcia</string>
+    <string name="lesson_saving_lesson_note">Zapisywanie notatki z zajęć…</string>
+    <string name="lesson_lesson_note_deleted">Usunięto notatkę z zajęć</string>
+
+    <string name="lesson_note_form_title">Notatka z zajęć</string>
+    <string name="lesson_edit_note">Edytuj notatkę</string>
+    <string name="lesson_add_note">Dodaj notatkę</string>
+    <string name="lesson_empty_notes">Nie napisano jeszcze żadnej notatki</string>
+
+    <string name="lesson_school_class">Klasa %1$s</string>
+    <string name="lesson_add_lesson">Dodaj przedmiot</string>
+    <string name="lesson_edit_lesson">Edytuj przedmiot</string>
+    <string name="lesson_lesson">Przedmiot</string>
+    <string name="lesson_no_students_in_class">Nie dodano uczniów do klasy</string>
+
+    <string name="lesson_term_label">Semestr</string>
+    <string name="lesson_term">Semestr %1$s</string>
+    <string name="lesson_attendance_no_term">Poza semestrem</string>
+    <string name="lesson_attendance_no_events_in_term">Brak zajęć w semestrze</string>
+    <string name="lesson_first_term">I</string>
+    <string name="lesson_second_term">II</string>
+
+    <string-array name="lesson_suggestions">
+        <item>Matematyka</item>
+        <item>Język polski</item>
+        <item>Język obcy</item>
+        <item>Historia</item>
+        <item>Plastyka</item>
+        <item>Technika</item>
+        <item>Przyroda</item>
+        <item>Muzyka</item>
+        <item>Informatyka</item>
+        <item>Wychowanie fizyczne (WF)</item>
+        <item>Religia</item>
+        <item>Etyka</item>
+    </string-array>
+</resources>
