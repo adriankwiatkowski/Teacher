@@ -58,7 +58,8 @@ SELECT
     s.id,
     s.register_number
 FROM student s
-WHERE s.register_number = :register_number;
+INNER JOIN school_class sc ON s.school_class_id = sc.id
+WHERE sc.id = :school_class_id AND s.register_number = :register_number;
 
 getUsedRegisterNumbersBySchoolClassId:
 SELECT

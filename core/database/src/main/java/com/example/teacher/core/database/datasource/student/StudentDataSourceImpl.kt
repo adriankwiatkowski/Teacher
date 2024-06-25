@@ -132,7 +132,10 @@ internal class StudentDataSourceImpl(
 
         // Register number collision.
         if (registerNumber != null && registerNumber in usedRegisterNumbers) {
-            val otherStudent = queries.getStudentByRegisterNumber(registerNumber).executeAsOne()
+            val otherStudent = queries.getStudentByRegisterNumber(
+                school_class_id = schoolClassId,
+                register_number = registerNumber
+            ).executeAsOne()
 
             if (id == null) {
                 // Current student doesn't exist, so we can't simply swap register numbers.
