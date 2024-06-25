@@ -36,7 +36,6 @@ internal fun NoteFormRoute(
     // Observe save.
     LaunchedEffect(status) {
         if (status == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.note_note_saved)
             onNavBack()
         }
     }

@@ -40,7 +40,6 @@ internal fun GradeTemplateFormRoute(
     // Observe save.
     LaunchedEffect(status) {
         if (status == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.lesson_grade_saved)
             onNavBack()
         }
     }

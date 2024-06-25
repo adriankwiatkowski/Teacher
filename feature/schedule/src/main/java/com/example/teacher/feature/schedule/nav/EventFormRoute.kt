@@ -41,7 +41,6 @@ internal fun EventFormRoute(
     // Observe save.
     LaunchedEffect(status) {
         if (status == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.schedule_event_saved)
             onSave()
         }
     }

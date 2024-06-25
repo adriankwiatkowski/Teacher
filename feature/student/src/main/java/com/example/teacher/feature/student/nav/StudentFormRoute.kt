@@ -9,8 +9,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.util.BackPressDiscardDialogHandler
-import com.example.teacher.core.ui.util.OnShowSnackbar
-import com.example.teacher.feature.student.R
 import com.example.teacher.feature.student.StudentFormScreen
 import com.example.teacher.feature.student.data.StudentFormViewModel
 
@@ -19,7 +17,6 @@ internal fun StudentFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: OnShowSnackbar,
     viewModel: StudentFormViewModel = hiltViewModel(),
 ) {
     val studentResult by viewModel.studentResult.collectAsStateWithLifecycle()
@@ -31,7 +28,6 @@ internal fun StudentFormRoute(
     // Observe save.
     LaunchedEffect(status) {
         if (status == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.student_saved)
             onNavBack()
         }
     }

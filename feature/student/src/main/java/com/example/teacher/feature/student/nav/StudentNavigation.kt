@@ -150,7 +150,6 @@ fun NavGraphBuilder.studentGraph(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
             snackbarHostState = snackbarHostState,
-            onShowSnackbar = onShowSnackbar,
         )
     }
 }

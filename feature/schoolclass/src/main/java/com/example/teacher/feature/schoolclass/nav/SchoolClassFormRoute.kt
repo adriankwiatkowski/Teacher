@@ -9,8 +9,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.teacher.core.ui.model.FormStatus
 import com.example.teacher.core.ui.util.BackPressDiscardDialogHandler
-import com.example.teacher.core.ui.util.OnShowSnackbar
-import com.example.teacher.feature.schoolclass.R
 import com.example.teacher.feature.schoolclass.SchoolClassFormScreen
 import com.example.teacher.feature.schoolclass.data.SchoolClassFormViewModel
 
@@ -19,7 +17,6 @@ internal fun SchoolClassFormRoute(
     showNavigationIcon: Boolean,
     onNavBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    onShowSnackbar: OnShowSnackbar,
     isEditMode: Boolean,
     onAddSchoolYear: () -> Unit,
     onEditSchoolYear: (schoolYearId: Long) -> Unit,
@@ -33,7 +30,6 @@ internal fun SchoolClassFormRoute(
     // Observe save.
     LaunchedEffect(status) {
         if (status == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.school_class_school_class_saved)
             onNavBack()
         }
     }

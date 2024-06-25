@@ -207,7 +207,6 @@ fun NavGraphBuilder.schoolClassGraph(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
             snackbarHostState = snackbarHostState,
-            onShowSnackbar = onShowSnackbar,
             isEditMode = isEditMode,
             onAddSchoolYear = navigateToSchoolYearForm,
             onEditSchoolYear = navigateToSchoolYearEditForm,

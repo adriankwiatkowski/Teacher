@@ -284,7 +284,6 @@ fun NavGraphBuilder.lessonGraph(
             showNavigationIcon = true,
             onNavBack = navController::popBackStack,
             snackbarHostState = snackbarHostState,
-            onShowSnackbar = onShowSnackbar,
         )
     }
 }

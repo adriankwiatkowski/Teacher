@@ -36,7 +36,6 @@ internal fun SchoolYearFormRoute(
     // Observe save.
     LaunchedEffect(status) {
         if (status == FormStatus.Success) {
-            onShowSnackbar.onShowSnackbar(R.string.school_year_saved)
             onNavBack()
         }
     }
